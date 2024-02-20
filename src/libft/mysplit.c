@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/pipex.h"
+#include "libft.h"
 
 static int	ft_countwords(char *s, char sep)
 {
@@ -56,7 +56,7 @@ static int	ft_numberchar(char *s, char sep)
 	return (numberchar);
 }
 
-static int	ft_givestring(char *s, char sep, char *dest)
+static int	ft_givestring(char *s, char sep, char *dest,char n)
 {
 	int	i;
 	int	j;
@@ -73,7 +73,7 @@ static int	ft_givestring(char *s, char sep, char *dest)
 			i++;
 			j++;
 		}
-		dest[j] = '/';
+		dest[j] = n;
 		if (s[i] == sep)
 			return (i);
 	}
@@ -91,7 +91,7 @@ static void	*free_malloc(char **s, int i)
 	return (NULL);
 }
 
-char	**mysplit(char const *s, char c)
+char	**mysplit(char const *s, char c, char n)
 {
 	char	**str;
 	int		i;
@@ -112,7 +112,7 @@ char	**mysplit(char const *s, char c)
 				sizeof(char));
 		if (!str[i])
 			return (free_malloc(str, i - 1));
-		k = ft_givestring((char *)(s + p), c, str[i]);
+		k = ft_givestring((char *)(s + p), c, str[i], n);
 		p = p + k;
 		i++;
 	}
