@@ -18,6 +18,7 @@
 #include <readline/history.h>
 #include <sys/types.h>
 
+
 typedef struct  s_redir
 {
 	char *str;
@@ -45,3 +46,4 @@ char *ft_strtok(char *str, const char *delimiters);
 // this will make a treatment to the sting. 
 int ft_parse_handler(char *str, const char *delimiters);
 char *ft_create_string(char *line);
+int ft_special_case(char *modified_line, int j, char **line);
