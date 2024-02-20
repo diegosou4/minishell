@@ -10,6 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef MINI_H
+# define MINI_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h> // Signal handler.
@@ -38,7 +41,7 @@ typedef struct  s_cmd
 }				t_cmd;
 // Parsign handler. 
 
-void *ft_parse_manager();
+void *ft_parse_manager(char **env);
 
 
 // Parsing utils. 
@@ -47,3 +50,11 @@ char *ft_strtok(char *str, const char *delimiters);
 int ft_parse_handler(char *str, const char *delimiters);
 char *ft_create_string(char *line);
 int ft_special_case(char *modified_line, int j, char **line);
+
+
+// Get Path
+char	*ft_getenv(char **env);
+#endif
+
+
+
