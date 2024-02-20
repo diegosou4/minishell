@@ -26,27 +26,23 @@ char *ft_lexer_analysis(char *tokens)
 
 static char *ft_string_handle(char * line, char *modified_line)
 {
-    size_t i;
     size_t j;
     char flag;
     char *ptr;
 
     ptr = line;
     flag = 0;
-    i = 0;
     j = 0;
     while (*ptr)
     {
         if (flag == 0 && (*ptr == '\"' || *ptr == '\''))
-            flag = line[i];
+            flag = *ptr;
         else if (flag == *ptr)
             flag = 0; 
         if (flag == 0 && *ptr == ' ') 
             *ptr = '2';
         else if (flag == 0) 
-        {
                 j = ft_special_case(modified_line, j, &ptr);
-        }
         modified_line[j++] = *ptr;
         ptr++;
     }
