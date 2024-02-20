@@ -12,8 +12,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <signal.h> // Signal handler.
 #include "src/libft/libft.h"
-
+#include <readline/readline.h>
+#include <readline/history.h>
+#include <sys/types.h>
 
 typedef struct  s_redir
 {
@@ -32,5 +35,13 @@ typedef struct  s_cmd
 	struct  s_cmd *next;
 	
 }				t_cmd;
+// Parsign handler. 
+
+void *ft_parse_manager();
 
 
+// Parsing utils. 
+char *ft_strtok(char *str, const char *delimiters);
+// this will make a treatment to the sting. 
+int ft_parse_handler(char *str, const char *delimiters);
+void ft_create_string(char *line);
