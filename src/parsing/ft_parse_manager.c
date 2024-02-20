@@ -2,11 +2,15 @@
 
 
 
-void *ft_parse_manager()
+void *ft_parse_manager(char **env)
 {
     char *line;
     // char *new_line;
 
+    char *path;
+
+    path = ft_getenv(env);
+    printf("Paths %s \n",path);
     while (1)
     {
         line = readline("🐧>shell:$");
