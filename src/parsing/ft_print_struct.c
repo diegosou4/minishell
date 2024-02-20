@@ -38,7 +38,7 @@ void printstruct(t_cmd *commands)
         printf("Path: %s\n", ptr->path);
         printf("Args: ");
         printdp(ptr->args);
-        printf("FILE 1 %i FILE 2 %i \n", ptr->fd[0], ptr->fd[1]);
+        printf("FILE 1 %i \nFILE 2 %i \n", ptr->fd[0], ptr->fd[1]);
         if(ptr->redir != NULL)
         {
             t_redir *pr;
