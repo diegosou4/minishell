@@ -16,20 +16,27 @@
 
 int ft_special_case(char *modified_line, int j, char **line)
 {
-    if(**line == '>')
+    char c;
+    c = **line;
+    char s;
+    if(c == '>' || c == '<')
     {
         modified_line[j++] = '2';
-        modified_line[j++] = '>';
+        modified_line[j++] = c;
         (*line)++;
-        if(**line == '>')
+    }
+    while(**line == ' ' || **line == '>' || **line == '<')
+    {
+        s = **line;
+        if(s == '>' || s == '<')
         {
-            modified_line[j++] = '>';
+            modified_line[j++] = s;
             (*line)++;
         }
         while(**line == ' ')
             (*line)++;
-            
-        modified_line[j++] = '2';
-    }
-    return(j);
+    }  
+    if(c == '>' || c == '<')
+         modified_line[j++] = '2';
+    return(j); 
 }
