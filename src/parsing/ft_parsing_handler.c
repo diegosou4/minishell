@@ -41,17 +41,56 @@ static char *ft_string_handle(char * line, char *modified_line)
             flag = 0; 
         if (flag == 0 && line[i] == ' ') 
             line[i] = '2';
-        else if (flag == 0 ) 
-            ft_special_char(line);
+        // else if (flag == 0 ) 
+        //     ft_special_char(line);
         modified_line[j++] = line[i++];
     }
     return (modified_line);
 }
 
-void ft_create_string(char *line)
+int ft_parse_handler(char *str, const char *delimiters)
 {
-    line = ft_string_handle(line, ft_calloc(ft_strlen(line), sizeof(char*)));
+    char **token_holder;
+    int i = 0;
+    
+    token_holder = (char **)malloc(sizeof(char *) * ft_strlen(str)); // Allocate memory for 100 pointers
+    if (!token_holder)
+    {
+        perror("Memory allocation failed");
+        exit(EXIT_FAILURE);
+    }
 
-    printf("new_line: \n%s\n", line);
+    // Tokenize the string using ft_strtok
+    char *tokens = ft_strtok(str, delimiters);
+    while (tokens != NULL)
+    {
+        token_holder[i] = tokens;
+        tokens = ft_strtok(NULL, delimiters);
+        i++;
+    }
+
+    // Set the last element of token_holder to NULL
+    token_holder[i] = NULL;
+
+    // Print the tokens
+    int j = 0;
+    while (token_holder[j] != NULL)
+    {
+        // printf("token : :%s:\n", token_holder[j]);
+        ft_lexer_analysis(token_holder[j]);
+        j++;
+    }
+    free(token_holder);
+    return 0;
+}
+
+char *ft_create_string(char *line)
+{
+    char *new_line;
+
+    new_line = ft_calloc(ft_strlen(line), sizeof(char*));
+    new_line = ft_string_handle(line, new_line);
+    ft_parse_handler(new_line, "|");
+    return (new_line);
     free(line);
 }
