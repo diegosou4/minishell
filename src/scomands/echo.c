@@ -10,4 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../includes/mini.h"
 
+
+
+void echo(int fd ,char *str) 
+{
+    int size;
+    size = ft_strlen(str);
+    write(fd,str,size);
+}
