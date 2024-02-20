@@ -15,25 +15,22 @@
 #include "src/libft/libft.h"
 
 
-typedef struct pipe
+typedef struct  s_redir
+{
+	char *str;
+	int		fd;
+	struct  s_redir *next;
+}				t_redir;
+
+
+typedef struct  s_cmd
 {
 	char *path;
 	char		**args;
-	int 	here_doc;
 	int		fd[2];
-	int 	append;
-	struct pipe *next;
+	t_redir *redir;
+	struct  s_cmd *next;
 	
-}				t_pipe;
+}				t_cmd;
 
-typedef struct words
-{
-	char *value;
-	int flag;
-} t_words;
 
-typedef struct words_containt
-{
-	t_words *next;
-
-};
