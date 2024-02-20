@@ -44,4 +44,4 @@ void *ft_parse_manager();
 char *ft_strtok(char *str, const char *delimiters);
 // this will make a treatment to the sting. 
 int ft_parse_handler(char *str, const char *delimiters);
-void ft_create_string(char *line);
+char *ft_create_string(char *line);
