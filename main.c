@@ -6,13 +6,13 @@
 
 */
 
-int main(int argc, char *argv[]) 
+int main(int argc, char *argv[],char **env) 
 {
     /*
         1. We can add the signal hanlder, in this part.
     */
    if (argc == 1 && argv[0])
    {
-    ft_parse_manager();
+    ft_parse_manager(env);
    }
 }
