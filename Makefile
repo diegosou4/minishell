@@ -22,7 +22,7 @@ LIB = ft_isalpha.c ft_isdigit.c ft_isalnum.c \
 PARSE = ft_special.c ft_parse_manager.c ft_utils.c\
       ft_parsing_handler.c ft_getenv.c
 
-COMANDS = ft_echo.c
+COMANDS = ft_echo.c ft_pwd.c
 
 COMANDS_SRC = $(addprefix ./src/scomands/, $(COMANDS))
 PARSE_SRC = $(addprefix ./src/parsing/, $(PARSE))

@@ -56,7 +56,8 @@ char *ft_create_string(char *line);
 void ft_echo(int fd ,char *str, int flag);
 int ft_whitespace(char *line);
 // Get Path
-char	*ft_getenv(char **env);
+char	*ft_getenv(char **env, char *str);
+char    *ft_getpwd(char **env,char *str);
 #endif
 
 

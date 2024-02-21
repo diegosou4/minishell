@@ -89,10 +89,11 @@ int ft_parse_handler(char *str, const char *delimiters)
 char *ft_create_string(char *line)
 {
     char *new_line;
-
+    
     new_line = ft_calloc(ft_strlen(line), sizeof(char*));
     new_line = ft_string_handle(line, new_line);
-    ft_parse_handler(new_line, "|");
+   // ft_parse_handler(new_line, "|");
+
     return (new_line);
     free(line);
 }
