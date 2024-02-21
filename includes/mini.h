@@ -53,7 +53,7 @@ int ft_special_case(char *modified_line, int j, char **line);
 int ft_parse_handler(char *str, const char *delimiters);
 char *ft_create_string(char *line);
 
-
+void ft_echo(int fd ,char *str, int flag);
 int ft_whitespace(char *line);
 // Get Path
 char	*ft_getenv(char **env);

@@ -17,14 +17,17 @@ LIB = ft_isalpha.c ft_isdigit.c ft_isalnum.c \
       ft_lstadd_back.c \
       ft_lstadd_front.c ft_lstiter.c \
       ft_lstdelone.c ft_lstclear.c ft_strpbrk.c\
-      ft_lstmap.c
+      ft_lstmap.c ft_strstr.c
 
 PARSE = ft_special.c ft_parse_manager.c ft_utils.c\
       ft_parsing_handler.c #ft_getenv.c
 
+COMANDS = ft_echo.c
+
+COMANDS_SRC = $(addprefix ./src/scomands/, $(COMANDS))
 PARSE_SRC = $(addprefix ./src/parsing/, $(PARSE))
 LIB_SRC = $(addprefix ./src/libft/, $(LIB))
 
 all:
-	${CC} ${CFLAGS} ${LIB_SRC} ${PARSE_SRC} -g main.c -o ${NAME}
+	${CC} ${CFLAGS} ${LIB_SRC} ${COMANDS_SRC} ${PARSE_SRC} -g main.c -o ${NAME}
 

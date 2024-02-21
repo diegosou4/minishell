@@ -12,11 +12,12 @@
 
 #include "../../includes/mini.h"
 
-
-
-void echo(int fd ,char *str) 
+void ft_echo(int fd ,char *str, int flag) 
 {
-    int size;
-    size = ft_strlen(str);
-    write(fd,str,size);
+    if(flag == 1)
+    {
+         ft_putstr_fd(str,fd);
+         ft_putstr_fd("\n",fd);
+    }else
+        ft_putstr_fd(str,fd);
 }
