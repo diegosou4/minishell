@@ -1,29 +1,45 @@
 #include "../../includes/mini.h"
 
+
 char *ft_lexer_analysis(char *tokens)
 {
-    char *token;
-    const char *delimiter;
+    char delimiter;
     char **delimiter_holder;
     int i = -1;
+    t_cmd token_structure;
 
     delimiter_holder = (char **)malloc(sizeof(char *) * 1000);
-    delimiter = "2";
-    token = ft_strtok(tokens, delimiter);
-    while (token != NULL)
+    delimiter = '2';
+    delimiter_holder = ft_split(tokens, delimiter);
+    while (delimiter_holder[++i])
     {
-        if(token[0])
-        {
-            delimiter_holder[++i] = token;
-            printf(":%s:\n", delimiter_holder[i]);
-        }
-        token = ft_strtok(NULL, delimiter);
+        delimiter_holder[0];
+        printf(":%s:\n", delimiter_holder);
     }
     free(delimiter_holder);
-
     return NULL;
 }
 
+int ft_parse_handler(char *str, const char *delimiters)
+{
+    char **token_holder;
+    
+    token_holder = (char **)malloc(sizeof(char *) * ft_strlen(str)); // Allocate memory for 100 pointers
+    if (!token_holder && !delimiters)
+    {
+        perror("Memory allocation failed");
+        exit(EXIT_FAILURE);
+    }
+    token_holder = ft_split(str, '3');
+    int j = 0;
+    while (token_holder[j] != NULL)
+    {
+        ft_lexer_analysis(token_holder[j]);
+        j++;
+    }
+    free(token_holder);
+    return 0;
+}
 
 static char *ft_string_handle(char * line, char *modified_line)
 {
@@ -50,11 +66,14 @@ static char *ft_string_handle(char * line, char *modified_line)
             if (j == -2)
                 return("NUlo");
         }
+        if (flag == 0 && *ptr == '|')
+            *ptr = '3';
         modified_line[j++] = *ptr;
         ptr++;
     }
     return (modified_line);
 }
+
 /*
 int ft_parse_handler(char *str, const char *delimiters)
 {
@@ -127,14 +146,16 @@ t_cmd   *returnmystruct(char *newline)
    return(commands);
 }
 
-char *ft_create_string(char *line)
-{
-    char *new_line;
-    int i;
     t_cmd *comands;
     i = 0;
     new_line = ft_calloc(ft_strlen(line), sizeof(char*));
     new_line = ft_string_handle(line, new_line);
     comands = returnmystruct(new_line);
-    return (new_line);
+    char *ptr = ft_strdup(line);
+    i = 0;
+    new_line = ft_calloc(ft_strlen(line), sizeof(char*));
+    new_line = ft_string_handle(ptr, new_line);
+    printf(":%s:\n", new_line);
+    if (new_line)
+        ft_parse_handler(new_line, "|");
 }

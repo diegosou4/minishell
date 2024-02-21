@@ -52,6 +52,10 @@ int ft_special_case(char *modified_line, int j, char **line)
             return(-2);
         ft_space(line);
     }
+    else if (c[0] == '|')
+    {
+        modified_line[j++] = '3';
+    }
     while(**line == '>' || **line == '<')
     {
         c[1] = **line;

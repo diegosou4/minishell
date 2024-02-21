@@ -1,6 +1,6 @@
 NAME = minishell
 
-CFLAGS = -Wall -Wextra -Werror -lreadline -I./
+CFLAGS = -lreadline -Wall -Wextra -Werror -I./
 CC = cc
 
 LIB = ft_isalpha.c ft_isdigit.c ft_isalnum.c \
