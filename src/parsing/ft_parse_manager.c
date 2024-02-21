@@ -16,10 +16,12 @@ void	*ft_parse_manager(char **env)
 {
 	char	*line;
 	char	*path;
-
-	path = ft_getenv(env);
-	printf("Paths %s \n", path);
-	while (1 && env)
+	char 	*pwd;
+	path = ft_getenv(env, "PATH=/");
+	//printf("Paths %s \n", path);
+	pwd = ft_getpwd(env,"PWD=/");
+	printf("/%s \n", pwd);
+	while (1)
 	{
 		line = readline("🐧>shell:$");
 		if (!line)
