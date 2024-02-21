@@ -22,16 +22,27 @@ char    *ft_getpwd(char **env,char *str)
 
 
 
-char *ft_ls(char *pwd, char *newlocal)
+char *ft_cd(char *newlocal, char *old)
 {
+
     char *backsplash;
     backsplash = ft_strjoin("/",newlocal);
     char *newpwd;
-    newpwd = ft_strjoin(pwd,backsplash);
-    if(access(newpwd, F_OK) == 0)
+    newpwd = ft_strjoin(old,backsplash);
+    int result = chdir(newpwd);
+    if(result == 0)
     {
-        free(pwd);
-        pwd = ft_strdup(newpwd);
-    }   
-    return(pwd);
+        free(backsplash);
+        old = ft_strdup(newpwd);
+    }else
+    {
+        perror("Error ");
+        free(backsplash);
+        free(newpwd);
+        return(NULL);
+    }
+    return(NULL);
 }
+
+
+   
