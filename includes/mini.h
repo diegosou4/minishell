@@ -56,7 +56,8 @@ int ft_whitespace(char *line);
 // Get Path
 char	*ft_getenv(char **env, char *str);
 char    *ft_getpwd(char **env,char *str);
-
+t_cmd *cmdnew(char *args);
+void cmdinback(t_cmd **comands,char *args);
 char *ft_cd(char *newlocal, char *old);
 #endif
 
