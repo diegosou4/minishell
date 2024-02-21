@@ -15,8 +15,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <signal.h> // Signal handler.
 #include "src/libft/libft.h"
-
+#include <readline/readline.h>
+#include <readline/history.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 typedef struct  s_redir
 {
@@ -52,9 +56,8 @@ int ft_whitespace(char *line);
 // Get Path
 char	*ft_getenv(char **env, char *str);
 char    *ft_getpwd(char **env,char *str);
+
+char *ft_cd(char *newlocal, char *old);
 #endif
 
 
-
-void printdp(char **str);
-void printstruct(t_cmd *commands);
