@@ -25,7 +25,7 @@
 typedef struct  s_redir
 {
 	char *str;
-	int		fd;
+	int		out;
 	struct  s_redir *next;
 }				t_redir;
 
@@ -49,7 +49,7 @@ char *ft_strtok(char *str, const char *delimiters);
 // this will make a treatment to the sting. 
 int ft_special_case(char *modified_line, int j, char **line);
 int ft_parse_handler(char *str, const char *delimiters);
-char *ft_create_string(char *line);
+char *ft_create_string(char *line, char **env);
 
 void ft_echo(int fd ,char *str, int flag);
 int ft_whitespace(char *line);
@@ -59,6 +59,10 @@ char    *ft_getpwd(char **env,char *str);
 t_cmd *cmdnew(char *args);
 void cmdinback(t_cmd **comands,char *args);
 char *ft_cd(char *newlocal, char *old);
+void ft_expand(t_cmd **commads, char **cpyenv);
+
+char	*ask_acess(char *comand, char *path);
+
 #endif
 
 
