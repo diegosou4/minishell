@@ -56,7 +56,7 @@ static int	ft_numberchar(char *s, char sep)
 	return (numberchar);
 }
 
-static int	ft_givestring(char *s, char sep, char *dest,char n)
+static int	ft_givestring(char *s, char sep, char *dest, char n)
 {
 	int	i;
 	int	j;

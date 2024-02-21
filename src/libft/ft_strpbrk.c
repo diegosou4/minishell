@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strstok.c                                       :+:      :+:    :+:   */
+/*   ft_strpbrk.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juan-pma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:14:35 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/02/20 14:17:07 by juan-pma         ###   ########.fr       */
+/*   Updated: 2024/02/21 09:14:05 by juan-pma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,24 @@ DESCRIPTION
        of the bytes in the string accept.
 */
 
-char*	ft_strpbrk(const char* str, const char* charset)
+char	*ft_strpbrk(const char *str, const char *charset)
 {
-	const char*	s;
-	const char*	c;
+	const char	*s;
+	const char	*c;
 
 	s = str;
 	while (*s != '\0')
 	{
 		c = charset;
-		while(*c != '\0')
+		while (*c != '\0')
 		{
 			if (*s == *c)
 			{
-				return (char*)s;
+				return ((char *)s);
 			}
 			c++;
 		}
 		s++;
 	}
-	return NULL;
+	return (NULL);
 }
