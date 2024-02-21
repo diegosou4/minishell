@@ -286,7 +286,8 @@ t_cmd   *returnmystruct(char *newline)
     }
    return(commands);
 }
-
+char *ft_create_string(char *line)
+{
     t_cmd *comands;
     i = 0;
     new_line = ft_calloc(ft_strlen(line), sizeof(char*));
