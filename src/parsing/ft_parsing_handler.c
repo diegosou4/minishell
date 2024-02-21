@@ -127,7 +127,7 @@ t_cmd   *returnmystruct(char *newline)
    return(commands);
 }
 
-char *ft_create_string(char *line)
+char *ft_create_string(char *line, char **env)
 {
     char *new_line;
     int i;
@@ -136,5 +136,6 @@ char *ft_create_string(char *line)
     new_line = ft_calloc(ft_strlen(line), sizeof(char*));
     new_line = ft_string_handle(line, new_line);
     comands = returnmystruct(new_line);
+    ft_expand(&comands,env);
     return (new_line);
 }

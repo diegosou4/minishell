@@ -15,10 +15,8 @@
 void	*ft_parse_manager(char **env)
 {
 	char	*line;
-	char	*path;
+	//char	*path;
 	//char 	*pwd;
-	path = ft_getenv(env, "PATH=/");
-	printf("Paths %s \n", path);
 	//pwd = ft_getpwd(env,"PWD=/");
 	//printf("/%s \n", pwd);
 	while (1)
@@ -27,7 +25,7 @@ void	*ft_parse_manager(char **env)
 		if (!line)
 			break ;
 		add_history(line);
-		ft_create_string(line);
+		ft_create_string(line,env);
 		free(line);
 	}
 	return (NULL);
