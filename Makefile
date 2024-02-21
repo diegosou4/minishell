@@ -20,7 +20,8 @@ LIB = ft_isalpha.c ft_isdigit.c ft_isalnum.c \
       ft_lstmap.c ft_strstr.c
 
 PARSE = ft_special.c ft_parse_manager.c ft_utils.c\
-      ft_parsing_handler.c ft_getenv.c
+      ft_parsing_handler.c ft_getenv.c ft_expand.c \
+      ft_checkpath.c
 
 COMANDS = ft_echo.c ft_pwd.c
 
