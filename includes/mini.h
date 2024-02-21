@@ -16,7 +16,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "src/libft/libft.h"
-
+#include <readline/readline.h>
+#include <readline/history.h>
 
 typedef struct  s_redir
 {
