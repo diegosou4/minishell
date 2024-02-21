@@ -60,7 +60,8 @@ t_cmd *cmdnew(char *args);
 void cmdinback(t_cmd **comands,char *args);
 char *ft_cd(char *newlocal, char *old);
 void ft_expand(t_cmd **commads, char **cpyenv);
-
+char **ft_arrcpy(char **str);
+t_cmd   *returnmystruct(char *newline);
 char	*ask_acess(char *comand, char *path);
 
 #endif
