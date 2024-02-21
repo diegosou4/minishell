@@ -1,6 +1,6 @@
 NAME = minishell
 
-CFLAGS = -Wall -Wextra -Werror -lreadline -I./
+CFLAGS = -lreadline -Wall -Wextra -Werror -I./
 CC = cc
 
 LIB = ft_isalpha.c ft_isdigit.c ft_isalnum.c \
@@ -20,7 +20,7 @@ LIB = ft_isalpha.c ft_isdigit.c ft_isalnum.c \
       ft_lstmap.c ft_strstr.c
 
 PARSE = ft_special.c ft_parse_manager.c ft_utils.c\
-      ft_parsing_handler.c #ft_getenv.c
+      ft_parsing_handler.c ft_getenv.c
 
 COMANDS = ft_echo.c ft_pwd.c
 
