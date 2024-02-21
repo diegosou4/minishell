@@ -37,3 +37,48 @@ void ft_expand(t_cmd **commads, char **cpyenv)
         newptr = newptr->next;
     }
 }
+
+
+static char *ft_strcpy(char *dest, const char *src) 
+{
+    while (*src) 
+    {
+        *dest = *src;
+        dest++;
+        src++;
+    }
+    *dest = '\0';
+    return dest;
+}
+
+char **ft_arrcpy(char **str) 
+{
+    int i = 0;
+    int j = 0;
+    char **str_copy ;
+    if (!str || !str[0])
+        return NULL;    
+    while (str[i]) 
+        i++;    
+    str_copy = (char **)malloc((i + 1) * sizeof(char *));
+    if (!str_copy) 
+        return NULL;
+    while (j < i) 
+    {
+        int len = strlen(str[j]);
+        str_copy[j] = (char *)malloc((len + 1) * sizeof(char));
+        if (!str_copy[j]) {
+            // memory allocation failed, free previously allocated memory
+            for (int k = 0; k < j; k++) {
+                free(str_copy[k]);
+            }
+            free(str_copy);
+            return NULL;
+        }
+        ft_strcpy(str_copy[j], str[j]);
+        j++;
+    }
+    return(str_copy);
+}
+
+
