@@ -20,7 +20,7 @@ LIB = ft_isalpha.c ft_isdigit.c ft_isalnum.c \
       ft_lstmap.c
 
 PARSE = ft_special.c ft_parse_manager.c ft_utils.c\
-      ft_parsing_handler.c ft_getenv.c
+      ft_parsing_handler.c #ft_getenv.c
 
 PARSE_SRC = $(addprefix ./src/parsing/, $(PARSE))
 LIB_SRC = $(addprefix ./src/libft/, $(LIB))
