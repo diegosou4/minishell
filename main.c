@@ -19,7 +19,7 @@
     */
 
 int	main(int argc, char *argv[], char **env)
-{
+{  
 	if (argc == 1 && argv[0])
 		ft_parse_manager(env);
 }
