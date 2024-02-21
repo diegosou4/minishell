@@ -24,6 +24,7 @@ char *ft_lexer_analysis(char *tokens)
     return NULL;
 }
 
+
 static char *ft_string_handle(char * line, char *modified_line)
 {
     size_t j;
@@ -42,7 +43,7 @@ static char *ft_string_handle(char * line, char *modified_line)
         if (flag == 0 && *ptr == ' ') 
             *ptr = '2';
         else if (flag == 0) 
-                j = ft_special_case(modified_line, j, &ptr);
+               j = ft_special_case(modified_line, j, &ptr);
         modified_line[j++] = *ptr;
         ptr++;
     }
