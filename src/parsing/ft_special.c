@@ -2,24 +2,35 @@
 
 #include "../../includes/mini.h"
 
-
-int ft_whitespace(char *line)
+static int ft_check(char *line, char c)
 {
-    if(*line == ' ')
+    int i;
+    char special;
+    char different;
+
+    i = 0;
+    if(line[i] == ' ')
     {
-    while(*line == ' ')
-    {
-        line++;
+        while(*line == ' ')
+            line++;
+        special = *line;
+        if(special == '>' || special == '<')
+        {
+            printf("parse error found near '%c'\n", special);
+            return(-1);
+        }
     }
-    if(*line == '>' || *line == '<')
+    if(c == '>')
+        different = '<';
+    if(c == '<')
+        different = '>';
+    if(*line == different)
     {
-        printf("Error");
-        return(-1);
-    }
+        printf("parse error found near '%c'\n", different);
+            return(-1);
     }
     return(0);
 }
-
 
 int ft_special_case(char *modified_line, int j, char **line)
 {
@@ -30,7 +41,11 @@ int ft_special_case(char *modified_line, int j, char **line)
         modified_line[j++] = '2';
         modified_line[j++] = c[0];
         (*line)++;
-        ft_whitespace(*line);
+        if (ft_check(*line, c[0]) == -1)
+        {
+            return(-2);
+        }
+        
     }
     while(**line == '>' || **line == '<')
     {
@@ -45,5 +60,5 @@ int ft_special_case(char *modified_line, int j, char **line)
     }  
     if(c[0] == '>' || c[0] == '<')
          modified_line[j++] = '2';
-    return(j); 
+    return(j);  
 }

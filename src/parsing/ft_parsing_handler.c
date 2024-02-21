@@ -27,7 +27,7 @@ char *ft_lexer_analysis(char *tokens)
 
 static char *ft_string_handle(char * line, char *modified_line)
 {
-    size_t j;
+    int j;
     char flag;
     char *ptr;
 
@@ -42,8 +42,12 @@ static char *ft_string_handle(char * line, char *modified_line)
             flag = 0; 
         if (flag == 0 && *ptr == ' ') 
             *ptr = '2';
-        else if (flag == 0) 
-               j = ft_special_case(modified_line, j, &ptr);
+        else if (flag == 0)
+        {
+            j = ft_special_case(modified_line, j, &ptr);
+            if (j == -2)
+                return(NULL);
+        }
         modified_line[j++] = *ptr;
         ptr++;
     }
@@ -92,8 +96,8 @@ char *ft_create_string(char *line)
     
     new_line = ft_calloc(ft_strlen(line), sizeof(char*));
     new_line = ft_string_handle(line, new_line);
-   // ft_parse_handler(new_line, "|");
-
+    if (new_line)
+        ft_parse_handler(new_line, "|");
     return (new_line);
     free(line);
 }
