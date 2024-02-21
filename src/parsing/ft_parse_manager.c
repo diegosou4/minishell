@@ -19,7 +19,7 @@ void	*ft_parse_manager(char **env)
 
 	path = ft_getenv(env);
 	printf("Paths %s \n", path);
-	while (1)
+	while (1 && env)
 	{
 		line = readline("🐧>shell:$");
 		if (!line)
