@@ -62,3 +62,31 @@ char	*ft_strtok(char *str, const char *delimiters)
 	}
 	return (token_start);
 }
+
+t_cmd *cmdnew(char *args)
+{
+	t_cmd *comands;
+
+	comands = (t_cmd *)ft_calloc(sizeof(t_cmd), 1);
+	comands->args = ft_split(args,'2');
+	comands->next = NULL;
+	
+	return(comands);
+}
+
+void cmdinback(t_cmd **comands,char *args)
+{
+	t_cmd *ptr;
+	t_cmd *last;
+
+	last = cmdnew(args);
+	if(last == NULL)
+		return;
+	ptr = *(comands);
+	while(ptr->next != NULL)
+	{
+		ptr = ptr->next;
+	}
+	ptr->next = last;
+
+}
