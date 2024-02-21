@@ -12,6 +12,7 @@
 
 #include "../../includes/mini.h"
 
+
 /*
  * 1. This function will create tokens, based 
  * on a string. The return value, is a pointer (char *) 
@@ -93,3 +94,4 @@ void cmdinback(t_cmd **comands,char *args)
 	ptr->next = last;
 
 }
+
