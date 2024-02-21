@@ -21,7 +21,7 @@ char	*ft_getenv(char **env, char *str)
 	{
 		p = ft_strnstr(*env, str, ft_strlen(str));
 		if (p != NULL)
-			return (p + 5);
+			return (p + 4);
 		env++;
 	}
 	return (NULL);
