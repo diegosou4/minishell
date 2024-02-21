@@ -27,3 +27,6 @@ char	*ft_getenv(char **env, char *str)
 	return (NULL);
 }
 
+
+
+
