@@ -57,6 +57,7 @@ char				*ft_itoa(int n);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void				ft_striteri(char *s, void (*f)(unsigned int, char *));
 char				*ft_strpbrk(const char *str, const char *charset);
+char	*ft_strstr(char *str, char *to_find);
 // Output Fuctions
 void				ft_putchar_fd(char c, int fd);
 void				ft_putstr_fd(char *s, int fd);
