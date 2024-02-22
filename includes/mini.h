@@ -28,26 +28,7 @@ typedef enum s_bool{
 	FALSE,
 } t_bool;
 
-typedef struct  s_redir
-{
-	char *str;
-	int 	in;
-	int		out;
-	struct  s_redir *next;
-}				t_redir;
-
-
-typedef struct  s_cmd
-{
-	char *path;
-	t_bool	literal;
-	t_bool	fint_variable;
-	char		**args;
-	int		fd[2];
-	t_redir *redir;
-	struct  s_cmd *next;
-	
-}				t_cmd;
+                                                 
 // Parsign handler. 
 
 void *ft_parse_manager(char **env);
@@ -74,11 +55,14 @@ t_cmd   *returnmystruct(char *newline);
 char	*ask_acess(char *comand, char *path);
 
 // Struct redir
-void checkredir(t_cmd **commands);
-t_redir *redirnew(char *filename,int flag,char *path);
-void changeredir(char *filename,t_redir *redir,char *path);
+
+t_redir *redirnew(void);
+//t_redir *addredirnew(int flag);
+void add_redir(t_cmd **commands);
 // Checker quotes. 
 void ft_checker_quotes(char *str, t_cmd *structure);
+int flag_redir(char *str);
+char *findpath(char **args, int flag, int location);
 
 #endif
 
