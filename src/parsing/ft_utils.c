@@ -19,6 +19,9 @@ t_cmd *cmdnew(char *args)
 	comands = (t_cmd *)ft_calloc(sizeof(t_cmd), 1);
 	comands->args = ft_split(args,'2');
 	comands->next = NULL;
+	comands->fd[0] = -1;
+	comands->fd[1] = -1;
+	comands->redir = NULL;
 	
 	return(comands);
 }

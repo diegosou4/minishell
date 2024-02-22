@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "../../includes/mini.h"
 
 static	char *ft_string_handle(char *line, char *modified_line)
@@ -45,31 +46,52 @@ static	char *ft_string_handle(char *line, char *modified_line)
 	return (modified_line);
 }
 
-t_cmd	*returnmystruct(char *newline)
+char *ft_lexer_analysis(char *tokens)
 {
-	t_cmd	*commands;
-	char	**arr;
-	int	i;
-	char	**args;
+    char *token;
+    const char *delimiter;
+    char **delimiter_holder;
+    int i = -1;
 
-	arr = ft_split(newline,'3');
-	i = 1;
-	char **arr_cpy = ft_doublepointecpy(arr);
-	while (*arr_cpy)
-	{
-		printf("hola :%s:\n", *arr_cpy);
-		arr_cpy++;
-	}
-	commands = cmdnew(arr[0]);
-	while (arr[i] != NULL && arr_cpy)
-	{
-		cmdinback(&commands,arr[i]);
-		i++;
-	}
-	t_cmd *ptr;
-	ptr = commands;
-	while (ptr != NULL)
-	{
+    delimiter_holder = (char **)malloc(sizeof(char *) * 1000);
+    delimiter = "2";
+    token = ft_strtok(tokens, delimiter);
+    while (token != NULL)
+    {
+        if(token[0])
+        {
+            delimiter_holder[++i] = token;
+            printf(":%s:\n", delimiter_holder[i]);
+        }
+        token = ft_strtok(NULL, delimiter);
+    }
+    free(delimiter_holder);
+
+    return NULL;
+}
+
+t_cmd   *returnmystruct(char *newline)
+{
+    t_cmd *commands;
+   
+    char **arr;
+    arr = ft_split(newline,'3');
+    int i;
+    i = 1;
+    commands = cmdnew(arr[0]);
+    while(arr[i] != NULL)
+    {
+        cmdinback(&commands,arr[i]);
+        i++;
+    }
+    t_cmd *ptr;
+
+    ptr = commands;
+
+    while(ptr != NULL)
+    {
+        char **args;
+
         args = ptr->args;
         int k;
         k = 0;
@@ -84,14 +106,15 @@ t_cmd	*returnmystruct(char *newline)
    return(commands);
 }
 
-char	*ft_create_string(char *line)
-{
-	char *new_line;
-	t_cmd *comands;
 
-	new_line = ft_calloc(ft_strlen(line), sizeof(char*));
-	new_line = ft_string_handle(line, new_line);
-	if (new_line)
-		comands = returnmystruct(new_line);
-	return (new_line);
+char *ft_create_string(char *line, char **env)
+{
+    char *new_line;
+    t_cmd *comands;
+    new_line = ft_calloc(ft_strlen(line), sizeof(char*));
+    new_line = ft_string_handle(line, new_line);
+    comands = returnmystruct(new_line);
+    ft_expand(&comands,env);
+    return (new_line);
 }
+
