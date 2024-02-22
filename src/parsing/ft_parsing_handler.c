@@ -99,7 +99,7 @@ t_cmd   *returnmystruct(char *newline)
         while(args[k] != NULL)
         {
 			ft_checker_quotes(args[k], ptr);
-            printf("%s\n",args[k]);
+            printf("comand struct :%s:\n",args[k]);
             k++;
         } 
         printf("next struct -->\n");
@@ -115,7 +115,6 @@ char *ft_create_string(char *line, char **env)
     t_cmd *comands;
     new_line = ft_calloc(ft_strlen(line), sizeof(char*));
     new_line = ft_string_handle(line, new_line);
-	printf("This is the sting :%s:\n", new_line);
 	if (new_line)
 	{
     	comands = returnmystruct(new_line);
