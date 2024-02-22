@@ -61,16 +61,19 @@ void ft_checker_quotes(char *str, t_cmd *structure)
     int len;
 
     len = ft_strlen(str);
-    if (str[0] == '\'' && str[len - 1] == '\'')
-        structure->literal = TRUE;
-    else if (str[0] == '\"' && ft_strchr((const char *) str, '$'))
+    if (str[0] == '\"' && ft_strchr((const char *) str, '$'))
     {
-        printf("variable found we need to expand \n");
+        printf("variable found we need to expand :%s: \n", str);
         structure->fint_variable = TRUE;
 
     }
+    if ((str[0] == '\'' && str[len - 1] == '\'')
+        || (str[0] == '\"' && str[len - 1] == '\"'))
+    {
+        str[len - 1] = '\0';
+        structure->literal = TRUE;
+        ft_memmove(str, (str + 1), len - 1);
+    }
     else if (ft_strchr((const char *) str, '$'))
-        printf("variable found \n");
-    printf("checker quotes :%s:\n", str);
-
+        structure->fint_variable = TRUE;
 }
