@@ -28,7 +28,27 @@ typedef enum s_bool{
 	FALSE,
 } t_bool;
 
-                                                 
+typedef struct  s_redir
+{
+	char *str;
+	int 	in;
+	int		out;
+	int  	append;
+	struct  s_redir *next;
+}				t_redir;
+
+
+typedef struct  s_cmd
+{
+	char *path;
+	t_bool	literal;
+	t_bool	fint_variable;
+	char		**args;
+	int		fd[2];
+	t_redir *redir;
+	struct  s_cmd *next;
+	
+}				t_cmd;
 // Parsign handler. 
 
 void *ft_parse_manager(char **env);
