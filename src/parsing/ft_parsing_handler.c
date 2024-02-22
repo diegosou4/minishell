@@ -66,6 +66,8 @@ static	char *ft_string_handle(char *line, char *modified_line)
 		modified_line[j++] = *ptr;
 		if (flag == 0 && *ptr == '\'')
 			modified_line[j++] = '2';
+		else if (flag == 0 && *ptr == '\"')
+			modified_line[j++] = '2';
 		ptr++;
 	}
 	return (modified_line);
@@ -98,7 +100,7 @@ t_cmd   *returnmystruct(char *newline)
         k = 0;
         while(args[k] != NULL)
         {
-			ft_checker_quotes(args[k], ptr);
+			// ft_checker_quotes(args[k], ptr);
             printf("comand struct :%s:\n",args[k]);
             k++;
         } 
@@ -115,12 +117,11 @@ char *ft_create_string(char *line, char **env)
     t_cmd *comands;
     new_line = ft_calloc(ft_strlen(line), sizeof(char*));
     new_line = ft_string_handle(line, new_line);
-    comands = returnmystruct(new_line);
-    ft_expand(&comands,env);
 	if (new_line)
 	{
     	comands = returnmystruct(new_line);
     	ft_expand(&comands,env);
+  		checkredir(&comands);
 	}
     add_redir(&comands);
     return (new_line);
