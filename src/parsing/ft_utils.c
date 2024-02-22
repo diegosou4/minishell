@@ -39,9 +39,12 @@ void cmdinback(t_cmd **comands,char *args)
 	ptr->next = last;
 
 }
-
-static char *ft_strcpy(char *dest, const char *src) {
-    while (*src) {
+char *ft_strcpy(char *dest, const char *src) 
+{
+    if (!src)
+        return (NULL);
+    while (*src) 
+    {
         *dest = *src;
         dest++;
         src++;
@@ -51,37 +54,25 @@ static char *ft_strcpy(char *dest, const char *src) {
 }
 
 char **ft_doublepointecpy(char **str) {
-    if (!str || !str[0]) {
-        return NULL;
-    }
 
-    int i = 0;
-    while (str[i]) {
+    int len;
+    int i; 
+    char **str_copy;
+    int j;
+
+    j = 0;
+    i  = 0;
+    if (!str || !str[0])
+        return NULL;
+    while (str[i])
         i++;
-    }
-
-    char **str_copy = (char **)malloc((i + 1) * sizeof(char *));
-    if (!str_copy) {
-        return NULL;
-    }
-
-    int j = 0;
+    str_copy = (char **)ft_calloc((i + 1), sizeof(char *));
     while (j < i) {
-        int len = strlen(str[j]);
-        str_copy[j] = (char *)malloc((len + 1) * sizeof(char));
-        if (!str_copy[j]) {
-            // memory allocation failed, free previously allocated memory
-            for (int k = 0; k < j; k++) {
-                free(str_copy[k]);
-            }
-            free(str_copy);
-            return NULL;
-        }
+        len = strlen(str[j]);
+        str_copy[j] = (char *)ft_calloc((len + 1), sizeof(char));
         ft_strcpy(str_copy[j], str[j]);
         j++;
     }
-
-    // don't forget to terminate the new array with a NULL pointer
     str_copy[i] = NULL;
     return str_copy;
 }
