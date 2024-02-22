@@ -91,6 +91,7 @@ char *ft_create_string(char *line, char **env)
     new_line = ft_string_handle(line, new_line);
     comands = returnmystruct(new_line);
     ft_expand(&comands,env);
+    checkredir(&comands);
     return (new_line);
 }
 

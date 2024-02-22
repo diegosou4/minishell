@@ -56,30 +56,6 @@ char *ft_strcpy(char *dest, const char *src)
     return dest;
 }
 
-char **ft_doublepointecpy(char **str) {
-
-    int len;
-    int i; 
-    char **str_copy;
-    int j;
-
-    j = 0;
-    i  = 0;
-    if (!str || !str[0])
-        return NULL;
-    while (str[i])
-        i++;
-    str_copy = (char **)ft_calloc((i + 1), sizeof(char *));
-    while (j < i) {
-        len = strlen(str[j]);
-        str_copy[j] = (char *)ft_calloc((len + 1), sizeof(char));
-        ft_strcpy(str_copy[j], str[j]);
-        j++;
-    }
-    str_copy[i] = NULL;
-    return str_copy;
-}
-
 void ft_checker_quotes(char *str)
 {
     int len;
