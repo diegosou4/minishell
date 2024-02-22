@@ -20,11 +20,11 @@ t_redir *redirnew(void)
     redir = (t_redir *) ft_calloc(sizeof(t_redir),1);
     if(redir == NULL)
         return NULL;
-    redir->str = NULL;
+    redir->pathout = NULL;
+    redir->pathin = NULL;
     redir->in = -1;
     redir->out = -1;
     redir->append = 0;
-    redir->next = NULL;
     return(redir);
 }
 
