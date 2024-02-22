@@ -32,3 +32,5 @@ LIB_SRC = $(addprefix ./src/libft/, $(LIB))
 all:
 	${CC} ${CFLAGS} ${LIB_SRC} ${COMANDS_SRC} ${PARSE_SRC} -g main.c -o ${NAME}
 
+valgrind:
+		valgrind --leak-check=full ./${NAME}
