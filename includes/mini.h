@@ -22,6 +22,11 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+typedef enum s_bool{
+	TRUE,
+	FALSE,
+} t_bool;
+
 typedef struct  s_redir
 {
 	char *str;
@@ -33,6 +38,7 @@ typedef struct  s_redir
 typedef struct  s_cmd
 {
 	char *path;
+	t_bool	literal;
 	char		**args;
 	int		fd[2];
 	t_redir *redir;

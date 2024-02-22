@@ -46,30 +46,6 @@ static	char *ft_string_handle(char *line, char *modified_line)
 	return (modified_line);
 }
 
-char *ft_lexer_analysis(char *tokens)
-{
-    char *token;
-    const char *delimiter;
-    char **delimiter_holder;
-    int i = -1;
-
-    delimiter_holder = (char **)malloc(sizeof(char *) * 1000);
-    delimiter = "2";
-    token = ft_strtok(tokens, delimiter);
-    while (token != NULL)
-    {
-        if(token[0])
-        {
-            delimiter_holder[++i] = token;
-            printf(":%s:\n", delimiter_holder[i]);
-        }
-        token = ft_strtok(NULL, delimiter);
-    }
-    free(delimiter_holder);
-
-    return NULL;
-}
-
 t_cmd   *returnmystruct(char *newline)
 {
     t_cmd *commands;
