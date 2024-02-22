@@ -76,3 +76,15 @@ char **ft_doublepointecpy(char **str) {
     str_copy[i] = NULL;
     return str_copy;
 }
+
+void ft_checker_quotes(char *str)
+{
+    int len;
+
+    len = ft_strlen(str);
+    if (str[0])
+    if (str[len - 1] == '\"' || str[len - 1] == '\'')
+        str[len - 1] = '\0';
+    printf("checker quotes :%s:\n", str);
+
+}
