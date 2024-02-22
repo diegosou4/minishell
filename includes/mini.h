@@ -41,6 +41,7 @@ typedef struct  s_cmd
 {
 	char *path;
 	t_bool	literal;
+	t_bool	fint_variable;
 	char		**args;
 	int		fd[2];
 	t_redir *redir;
@@ -76,6 +77,9 @@ char	*ask_acess(char *comand, char *path);
 void checkredir(t_cmd **commands);
 t_redir *redirnew(char *filename,int flag,char *path);
 void changeredir(char *filename,t_redir *redir,char *path);
+// Checker quotes. 
+void ft_checker_quotes(char *str, t_cmd *structure);
+
 #endif
 
 
