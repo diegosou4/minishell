@@ -39,6 +39,7 @@ typedef struct  s_cmd
 {
 	char *path;
 	t_bool	literal;
+	t_bool	fint_variable;
 	char		**args;
 	int		fd[2];
 	t_redir *redir;
@@ -69,6 +70,9 @@ void ft_expand(t_cmd **commads, char **cpyenv);
 char **ft_arrcpy(char **str);
 t_cmd   *returnmystruct(char *newline);
 char	*ask_acess(char *comand, char *path);
+
+// Checker quotes. 
+void ft_checker_quotes(char *str, t_cmd *structure);
 
 #endif
 
