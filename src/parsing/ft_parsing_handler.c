@@ -123,6 +123,7 @@ char *ft_create_string(char *line, char **env)
     	ft_expand(&comands,env);
   		checkredir(&comands);
 	}
+    add_redir(&comands);
     return (new_line);
 }
 
