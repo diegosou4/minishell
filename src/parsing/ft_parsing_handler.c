@@ -122,7 +122,7 @@ char *ft_create_string(char *line, char **env)
     	comands = returnmystruct(new_line);
     	ft_expand(&comands,env);
 	}
-  checkredir(&comands);
+    add_redir(&comands);
     return (new_line);
 }
 
