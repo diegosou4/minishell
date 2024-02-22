@@ -1,4 +1,3 @@
-/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   mini.h                                             :+:      :+:    :+:   */
@@ -21,6 +20,8 @@
 #include <readline/history.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 typedef enum s_bool{
 	TRUE,
@@ -30,6 +31,7 @@ typedef enum s_bool{
 typedef struct  s_redir
 {
 	char *str;
+	int 	in;
 	int		out;
 	struct  s_redir *next;
 }				t_redir;
@@ -71,6 +73,10 @@ char **ft_arrcpy(char **str);
 t_cmd   *returnmystruct(char *newline);
 char	*ask_acess(char *comand, char *path);
 
+// Struct redir
+void checkredir(t_cmd **commands);
+t_redir *redirnew(char *filename,int flag,char *path);
+void changeredir(char *filename,t_redir *redir,char *path);
 // Checker quotes. 
 void ft_checker_quotes(char *str, t_cmd *structure);
 

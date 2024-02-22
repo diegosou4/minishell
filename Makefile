@@ -17,11 +17,11 @@ LIB = ft_isalpha.c ft_isdigit.c ft_isalnum.c \
       ft_lstadd_back.c \
       ft_lstadd_front.c ft_lstiter.c \
       ft_lstdelone.c ft_lstclear.c ft_strpbrk.c\
-      ft_lstmap.c ft_strstr.c
+      ft_lstmap.c ft_strstr.c ft_strcmp.c
 
 PARSE = ft_special.c ft_parse_manager.c ft_utils.c\
       ft_parsing_handler.c ft_getenv.c ft_expand.c \
-      ft_checkpath.c
+      ft_checkpath.c ft_structs.c
 
 COMANDS = ft_echo.c ft_pwd.c
 

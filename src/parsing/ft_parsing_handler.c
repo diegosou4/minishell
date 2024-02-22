@@ -115,11 +115,14 @@ char *ft_create_string(char *line, char **env)
     t_cmd *comands;
     new_line = ft_calloc(ft_strlen(line), sizeof(char*));
     new_line = ft_string_handle(line, new_line);
+    comands = returnmystruct(new_line);
+    ft_expand(&comands,env);
 	if (new_line)
 	{
     	comands = returnmystruct(new_line);
     	ft_expand(&comands,env);
 	}
+  checkredir(&comands);
     return (new_line);
 }
 
