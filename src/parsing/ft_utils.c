@@ -10,19 +10,35 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+char *ft_strcpy(char *dest, const char *src);
+
 #include "../../includes/mini.h"
 
 t_cmd *cmdnew(char *args)
 {
 	t_cmd *comands;
+    char **newarg;
+    int len;
+    int i;
 
+    i = -1;
+    len = 0;
 	comands = (t_cmd *)ft_calloc(sizeof(t_cmd), 1);
-	comands->args = ft_split(args,'2');
+    newarg = ft_split(args, '2');
+    while (newarg[len] != NULL)
+        len++;
+    char **modified_list = (char **)malloc((len * 5) * sizeof(char *));
+    while (++i < len)
+    {
+        modified_list[i] = (char *)malloc((strlen(newarg[i]) + 1) * sizeof(char));    
+        ft_strcpy(modified_list[i], newarg[i]);
+        ft_checker_quotes(modified_list[i], comands);
+    }
+    comands->args = modified_list;
 	comands->next = NULL;
 	comands->fd[0] = -1;
 	comands->fd[1] = -1;
 	comands->redir = NULL;
-	
 	return(comands);
 }
 
