@@ -16,6 +16,7 @@ void	*ft_parse_manager(char **env)
 {
 	char	*line;
 	char **cpyenv;
+	t_operations operations;
 
 	cpyenv = ft_arrcpy(env);
 	//char 	*pwd;
@@ -27,6 +28,7 @@ void	*ft_parse_manager(char **env)
 		if (!line)
 			break ;
 		add_history(line);
+		ft_check_input(line, &operations);
 		ft_create_string(line,cpyenv);
 		free(line);
 	}

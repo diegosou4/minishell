@@ -66,7 +66,7 @@ static	char *ft_string_handle(char *line, char *modified_line)
 		modified_line[j++] = *ptr;
 		if (flag == 0 && *ptr == '\'')
 			modified_line[j++] = '2';
-		else if (flag == 0 && *ptr == '\"')
+		if (flag == 0 && *ptr == '\'')
 			modified_line[j++] = '2';
 		ptr++;
 	}
@@ -110,20 +110,18 @@ t_cmd   *returnmystruct(char *newline)
    return(commands);
 }
 
-
 char *ft_create_string(char *line, char **env)
 {
     char *new_line;
     t_cmd *comands;
-    new_line = ft_calloc(ft_strlen(line), sizeof(char*));
+	new_line = ft_calloc(ft_strlen(line), sizeof(char*));
     new_line = ft_string_handle(line, new_line);
 	if (new_line)
 	{
     	comands = returnmystruct(new_line);
     	ft_expand(&comands,env);
-  		checkredir(&comands);
+  		// checkredir(&comands);
 	}
-    add_redir(&comands);
     return (new_line);
 }
 

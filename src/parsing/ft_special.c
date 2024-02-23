@@ -12,7 +12,7 @@ static int ft_check(char *line, char c)
     {
         while(*line == ' ' && (*line != '>' && *line != '<'))
             line++;
-        if(*line == '>' || *line == '<')
+        if(*line == '>')
         {
             printf("parse error found near '%c'\n", *line);
             return(-1);
@@ -27,7 +27,7 @@ static int ft_check(char *line, char c)
     if(*line == different)
     {
         printf("parse error found near '%c'\n", different);
-        return(-1);
+            return(-1);
     }
     return(0);
 }
@@ -51,10 +51,6 @@ int ft_special_case(char *modified_line, int j, char **line)
         if (ft_check(*line, c[0]) == -1)
             return(-2);
         ft_space(line);
-    }
-    else if (c[0] == '|')
-    {
-        modified_line[j++] = '3';
     }
     while(**line == '>' || **line == '<')
     {
