@@ -81,7 +81,7 @@ t_cmd   *returnmystruct(char *newline)
     arr = ft_split(newline,'3');
     int i;
     i = 1;
-    commands = cmdnew(arr[0]);
+    commands = putcmds(arr[0]);
     while(arr[i] != NULL)
     {
         cmdinback(&commands,arr[i]);
@@ -110,12 +110,17 @@ t_cmd   *returnmystruct(char *newline)
    return(commands);
 }
 
+
 char *ft_create_string(char *line, char **env)
 {
     char *new_line;
     t_cmd *comands;
 	new_line = ft_calloc(ft_strlen(line), sizeof(char*));
     new_line = ft_string_handle(line, new_line);
+    printf("%s new_line \n", new_line);
+    char *edit;
+    edit = ft_parse_redir(new_line);
+    printf("%s edit \n",edit);
 	if (new_line)
 	{
     	comands = returnmystruct(new_line);

@@ -39,11 +39,11 @@ typedef struct s_operations
 
 typedef struct  s_redir
 {
-	char *str;
+	char *pathout;
+	char *pathin;
 	int 	in;
 	int		out;
 	int  	append;
-	struct  s_redir *next;
 }				t_redir;
 
 typedef struct  s_cmd
@@ -52,7 +52,6 @@ typedef struct  s_cmd
 	t_bool	literal;
 	t_bool	fint_variable;
 	char		**args;
-	int		fd[2];
 	t_redir *redir;
 	struct  s_cmd *next;
 	
@@ -74,7 +73,7 @@ int ft_whitespace(char *line);
 // Get Path
 char	*ft_getenv(char **env, char *str);
 char    *ft_getpwd(char **env,char *str);
-t_cmd *cmdnew(char *args);
+
 void cmdinback(t_cmd **comands,char *args);
 char *ft_cd(char *newlocal, char *old);
 void ft_expand(t_cmd **commads, char **cpyenv);
@@ -83,7 +82,8 @@ t_cmd   *returnmystruct(char *newline);
 char	*ask_acess(char *comand, char *path);
 
 // Struct redir
-
+t_cmd *cmdnew(void);
+t_cmd *putcmds(char *args);
 t_redir *redirnew(void);
 //t_redir *addredirnew(int flag);
 void add_redir(t_cmd **commands);
@@ -91,6 +91,7 @@ void add_redir(t_cmd **commands);
 void ft_checker_quotes(char *str, t_cmd *structure);
 int flag_redir(char *str);
 char *findpath(char **args, int flag, int location);
+char *ft_parse_redir(char *str);
 
 // Print a double list
 void ft_print_doble_char(char **argv);
