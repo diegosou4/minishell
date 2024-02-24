@@ -28,6 +28,15 @@ typedef enum s_bool{
 	FALSE,
 } t_bool;
 
+typedef struct s_operations
+{
+	char *pipe;
+	char *redir_input;
+	char *redir_output;
+	char *here_doc;
+	char *apppend_out;
+} t_operations;
+
 typedef struct  s_redir
 {
 	char *str;
@@ -37,6 +46,13 @@ typedef struct  s_redir
 	struct  s_redir *next;
 }				t_redir;
 
+typedef struct s_operations{
+	char *apppend_out;
+    char *pipe;
+    char *redir_input;
+    char *redir_output;
+    char *here_doc;
+} t_operations;
 
 typedef struct  s_cmd
 {
@@ -84,6 +100,14 @@ void ft_checker_quotes(char *str, t_cmd *structure);
 int flag_redir(char *str);
 char *findpath(char **args, int flag, int location);
 
+// Print a double list
+void ft_print_doble_char(char **argv);
+
+// Init the operation structure.
+void ft_init_operations(t_operations *operations);
+
+// check input.
+int ft_check_input(char *line, t_operations *operations);
 #endif
 
 
