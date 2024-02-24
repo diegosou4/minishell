@@ -46,14 +46,6 @@ typedef struct  s_redir
 	struct  s_redir *next;
 }				t_redir;
 
-typedef struct s_operations{
-	char *apppend_out;
-    char *pipe;
-    char *redir_input;
-    char *redir_output;
-    char *here_doc;
-} t_operations;
-
 typedef struct  s_cmd
 {
 	char *path;
