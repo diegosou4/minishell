@@ -45,6 +45,11 @@ static int ft_check_pipes(char **line, t_operations *operations)
         }
         i++;
     }
+    if (line[i-1][ft_strlen(line[i - 1]) - 1] == '|')
+    {
+        printf("parse error near `|' (no args) 🚰🙊\n");
+        return (0);
+    }
     return 1;
 }
 /*
