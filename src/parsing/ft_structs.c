@@ -25,6 +25,7 @@ t_redir *redirnew(void)
     redir->in = -1;
     redir->out = -1;
     redir->token = 0;
+    redir->next = NULL;
     return(redir);
 }
 

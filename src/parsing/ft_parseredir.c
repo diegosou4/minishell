@@ -152,50 +152,53 @@ int checkcase(char c)
     return(0);
 }
 
-void initredir(t_redir *redir, int flag,char *file)
+void addbackredir(t_redir *redir, char *file, int flag)
 {
-    redir->token = flag;
-    checkpathredir(redir,file,flag);
-    checkinoutredir(redir,file,flag);
-    /*
-    if(flag == 3)
+    t_redir *ptr;
+    t_redir *last;
+
+    last = redirnew();
+    checkpathredir(last, file, flag);
+    ptr = redir;
+    while(ptr->next != NULL)
     {
-        redir->pathin = ft_strdup(file);
-        redir->in 
-
+        ptr = ptr->next;
     }
-    TENHO QUE ENTENDER COMO FUNCIONA O HERE DOC PARA PODER IMPLEMENTAR AQUI
-    */ 
- 
-    /* O CASO 5 tbm*/
+    ptr->next = last;
+}   
 
-    if(redir->in >= 3)
-        close(redir->in);
-    if(redir->out >= 3)
-        close(redir->out);
+void initredir(t_redir **redir, int flag, char *file)
+{
+    if(*redir == NULL)
+    {
+        *redir = redirnew();
+        checkpathredir(*redir, file, flag);
+    }
+    else
+        addbackredir(*redir, file, flag);
 }
 
 t_redir *haveredir(char *cmd)
 {
-    int i;
-    i = 0;
-    t_redir *new;
-    new = redirnew();
+    int i = 0;
+    t_redir *new = NULL;
     int flag;
     char *file;
-    file = NULL;
     while(cmd[i] != '\0')
     {
         flag = checkcase(cmd[i]);
         if(flag != 0)
         {
            file = findfile(cmd + i + 1);
-            initredir(new,flag,file);
-            free(file);
+           initredir(&new, flag, file);
+           free(file);
         }
-    i++;
+        i++;
     }
     printf("%s FILE IN \n", new->pathin);
-    printf("%s FILE OUT \n", new->pathout);
-    return(new);
+    if(new->next != NULL)
+    {
+         printf("%s FILE IN NEXT \n", new->next->pathin);
+    }
+    return new;
 }
