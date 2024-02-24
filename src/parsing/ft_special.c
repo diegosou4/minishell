@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_special.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: juan-pma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/24 08:34:08 by juan-pma          #+#    #+#             */
+/*   Updated: 2024/02/24 08:34:15 by juan-pma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../includes/mini.h"
 
@@ -27,7 +37,7 @@ static int ft_check(char *line, char c)
     if(*line == different)
     {
         printf("parse error found near '%c'\n", different);
-            return(-1);
+        return(-1);
     }
     return(0);
 }
