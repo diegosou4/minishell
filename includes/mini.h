@@ -28,6 +28,15 @@ typedef enum s_bool{
 	FALSE,
 } t_bool;
 
+typedef struct s_operations
+{
+	char *pipe;
+	char *redir_input;
+	char *redir_output;
+	char *here_doc;
+	char *apppend_out;
+} t_operations;
+
 typedef struct  s_redir
 {
 	char *pathout;
@@ -36,7 +45,6 @@ typedef struct  s_redir
 	int		out;
 	int  	append;
 }				t_redir;
-
 
 typedef struct  s_cmd
 {
@@ -85,6 +93,14 @@ int flag_redir(char *str);
 char *findpath(char **args, int flag, int location);
 char *ft_parse_redir(char *str);
 
+// Print a double list
+void ft_print_doble_char(char **argv);
+
+// Init the operation structure.
+void ft_init_operations(t_operations *operations);
+
+// check input.
+int ft_check_input(char *line, t_operations *operations);
 #endif
 
 

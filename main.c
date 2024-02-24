@@ -13,10 +13,19 @@
 #include "includes/mini.h"
 
 /*
-    1. check the access fucntion to get the path
-    of te process.
-    2. we can add the signal hanlder, in this part.
-    */
+    Arquivo principal responsável pelo fluxo de execução do programa shell.
+    O programa segue os seguintes passos:
+    1. Ler Entrada: O usuário insere a linha de entrada.
+    2. Gerenciador de Análise: A linha de entrada é passada para o gerenciador de 
+    análise para lidar com erros de análise.
+    3. Verificar Entrada: O gerenciador de análise chama a função para verificar a 
+    linha de entrada em busca de erros.
+    4. Criar String: Se a entrada for válida, a string é criada.
+    5. Manipular String: Manipulação da string para remover quaisquer erros.
+    6. Criar Tokens: Criação de tokens a partir da string.
+    7. Criar Estrutura: Criação da estrutura para armazenar tokens e outras 
+    informações relevantes.
+*/
 
 int	main(int argc, char *argv[], char **env)
 {  

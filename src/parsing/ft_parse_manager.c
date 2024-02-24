@@ -12,10 +12,25 @@
 
 #include "../../includes/mini.h"
 
+/*
+    This function manages the parsing process of the input line before tokenization.
+    It handles some cases that are easier to identify at the beginning of the parsing process.
+
+    Arguments:
+        - env: Pointer to the environment variables array.
+
+    Idea:
+    The function continuously reads input lines from the user until the user exits the shell.
+    For each input line, it checks for certain conditions before tokenization, such as double pipes,
+    redirections, and void inputs, to handle them appropriately.
+    After checking the input line, it frees the memory allocated for the input line.
+*/
+
 void	*ft_parse_manager(char **env)
 {
 	char	*line;
 	char **cpyenv;
+	t_operations operations;
 
 	cpyenv = ft_arrcpy(env);
 	//char 	*pwd;
@@ -27,7 +42,8 @@ void	*ft_parse_manager(char **env)
 		if (!line)
 			break ;
 		add_history(line);
-		ft_create_string(line,cpyenv);
+		if (ft_check_input(line, &operations))
+			ft_create_string(line,cpyenv);
 		free(line);
 	}
 	return (NULL);

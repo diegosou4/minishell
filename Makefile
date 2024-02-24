@@ -21,7 +21,9 @@ LIB = ft_isalpha.c ft_isdigit.c ft_isalnum.c \
 
 PARSE = ft_special.c ft_parse_manager.c ft_utils.c\
       ft_parsing_handler.c ft_getenv.c ft_expand.c \
-      ft_checkpath.c ft_structs.c ft_parseredir.c
+      ft_checkpath.c ft_structs.c ft_init_manager.c \
+      ft_print_struct.c ft_parseredir.c
+
 
 COMANDS = ft_echo.c ft_pwd.c
 
