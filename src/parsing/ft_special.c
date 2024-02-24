@@ -24,7 +24,7 @@ static int ft_check(char *line, char c)
             line++;
         if(*line == '>')
         {
-            printf("parse error found near '%c'\n", *line);
+            printf("parse error found near '%c'💥\n", *line);
             return(-1);
         }
     }
@@ -36,7 +36,7 @@ static int ft_check(char *line, char c)
         return (0);
     if(*line == different)
     {
-        printf("parse error found near '%c'\n", different);
+        printf("parse error found near '%c'💥\n", different);
         return(-1);
     }
     return(0);
