@@ -24,24 +24,11 @@ t_redir *redirnew(void)
     redir->pathin = NULL;
     redir->in = -1;
     redir->out = -1;
-    redir->append = 0;
+    redir->token = 0;
     return(redir);
 }
 
-int flag_redir(char *str)
-{
-    if(ft_strcmp(str,"<") == 0)
-        return(1);
-    if(ft_strcmp(str,"<<") == 0)
-        return(2);
-    if(ft_strcmp(str,">") == 0)
-        return(3);
-    if(ft_strcmp(str,">>") == 0)
-        return(4);
-    if(ft_strcmp(str,"<>") == 0)
-        return(5);
-    return(0);
-}
+
 /*
 t_redir *addredirnew(int flag)
 {
@@ -68,7 +55,7 @@ char *findpath(char **args, int flag, int location)
     return(path);
 
 }
-
+/*
 void add_redir(t_cmd **commands)
 {
     t_cmd *ptr;
@@ -91,7 +78,7 @@ void add_redir(t_cmd **commands)
         }
         ptr = ptr->next;
     }
-}
+} */
 
 
 

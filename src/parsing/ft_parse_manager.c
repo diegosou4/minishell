@@ -43,7 +43,10 @@ void	*ft_parse_manager(char **env)
 			break ;
 		add_history(line);
 		if (ft_check_input(line, &operations))
+		{
 			ft_create_string(line,cpyenv);
+		}
+			
 		free(line);
 	}
 	return (NULL);
