@@ -36,8 +36,6 @@ t_cmd *cmdnew(char *args)
     }
     comands->args = modified_list;
 	comands->next = NULL;
-	comands->fd[0] = -1;
-	comands->fd[1] = -1;
 	comands->redir = NULL;
 	return(comands);
 }
