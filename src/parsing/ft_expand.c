@@ -21,7 +21,7 @@ void ft_expand(t_cmd **commads, char **cpyenv)
     char *blackslash;
     if(!ptr)
         return;
-    path = ft_getenv(cpyenv, "PATH=/");
+    path = ft_getenv(cpyenv, "PATH=/", 4);
     while(ptr != NULL)
     {
         blackslash = ft_strjoin("/",ptr->args[0]);

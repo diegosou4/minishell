@@ -1,48 +1,57 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/21 12:46:34 by diegmore          #+#    #+#             */
-/*   Updated: 2024/02/21 12:46:35 by diegmore         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 
 #include "../../includes/mini.h"
 
-char    *ft_getpwd(char **env,char *str)
+
+
+char   *ft_getpwd(char **env,char *str)
 {
     char *pwd;
-    pwd = ft_getenv(env,str);
+    pwd = ft_getenv(env,str,4);
+    if(pwd == NULL)
+    {
+        write(2, "pwd nao encontrado\n",20);
+    }
     return(pwd);
 }
 
-
-
-char *ft_cd(char *newlocal, char *old)
+void print_pwd(char **env,char *str)
 {
+    char *pwd;
 
-    char *backsplash;
-    backsplash = ft_strjoin("/",newlocal);
-    char *newpwd;
-    newpwd = ft_strjoin(old,backsplash);
-    int result = chdir(newpwd);
-    if(result == 0)
-    {
-        free(backsplash);
-        old = ft_strdup(newpwd);
-    }else
-    {
-        perror("Error ");
-        free(backsplash);
-        free(newpwd);
-        return(NULL);
-    }
-    return(NULL);
+    pwd = ft_getpwd(env,str);
+    printf("%s\n",pwd);
 }
 
 
-   
+void execute_pwd(char **env, t_cmd *commands)
+{
+    int in;
+    int out;
+    t_redir *ptr;
+    in = dup(0);
+    out = dup(1);
+
+    ptr = commands->redir;
+    openredir(ptr);
+    if(ptr != NULL)
+    {
+    while(ptr->next != NULL)
+    {
+        if(ptr->token == 2)
+        {
+            if(in != 0)
+                close(in);
+            else
+                in = dup(ptr->fd);
+        }else if(ptr->token == 1)
+        {
+            if(out != 1)
+                close(out);
+            else    
+                out = dup(ptr->fd);
+        }
+           ptr = ptr->next;
+    }
+    }
+    print_pwd(env,"PWD");
+}
