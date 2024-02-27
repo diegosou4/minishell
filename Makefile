@@ -1,6 +1,6 @@
 NAME = minishell
 
-CFLAGS = -lreadline -Wall -Wextra -Werror -I./
+CFLAGS = -lreadline -I./
 CC = cc
 
 LIB = ft_isalpha.c ft_isdigit.c ft_isalnum.c \
@@ -25,15 +25,21 @@ PARSE = ft_special.c ft_parse_manager.c ft_utils.c\
       ft_print_struct.c ft_parseredir.c ft_check_manager.c \
       ft_caseredir.c
 
+EXEC = ft_wrong.c ft_execution.c ft_builtings.c ft_free.c
 
-COMANDS = ft_echo.c ft_pwd.c
+COMANDS = ft_echo.c ft_pwd.c ft_cd.c ft_env.c ft_export.c
 
+EXEC_SRC = $(addprefix ./src/exec/, $(EXEC))
 COMANDS_SRC = $(addprefix ./src/scomands/, $(COMANDS))
 PARSE_SRC = $(addprefix ./src/parsing/, $(PARSE))
 LIB_SRC = $(addprefix ./src/libft/, $(LIB))
 
 all:
-	${CC} ${CFLAGS} ${LIB_SRC} ${COMANDS_SRC} ${PARSE_SRC} -g main.c -o ${NAME}
+	@${CC} -g ${CFLAGS} ${LIB_SRC} ${EXEC_SRC} ${COMANDS_SRC} ${PARSE_SRC} -g main.c -o ${NAME}
 
+clean: $(NAME)
+	rm -rf minishell
+re: $(NAME)
+	clean all
 valgrind:
 		valgrind --leak-check=full ./${NAME}
