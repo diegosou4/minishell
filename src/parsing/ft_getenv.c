@@ -12,7 +12,7 @@
 
 #include "../../includes/mini.h"
 
-char	*ft_getenv(char **env, char *str)
+char	*ft_getenv(char **env, char *str, t_bool i)
 {
 	char	*p;
 
@@ -20,8 +20,16 @@ char	*ft_getenv(char **env, char *str)
 	while (*env != NULL)
 	{
 		p = ft_strnstr(*env, str, ft_strlen(str));
+		if (i == TRUE)
+		{
+		if (p != NULL)
+			return (p + 5);
+		}
+		else 
+		{
 		if (p != NULL)
 			return (p + 4);
+		}
 		env++;
 	}
 	return (NULL);
