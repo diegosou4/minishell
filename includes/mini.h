@@ -20,6 +20,7 @@
 #include <readline/history.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/wait.h>
 #include <fcntl.h>
 #include <unistd.h>
 
@@ -49,11 +50,10 @@ typedef struct s_operations
 
 typedef struct  s_redir
 {
-	char *pathout;
-	char *pathin;
+	char *path;
 	int 	token;
-	int 	in;
-	int		out;
+	int 	fd;
+	struct s_redir *next;
 }				t_redir;
 
 typedef struct  s_cmd
@@ -80,12 +80,8 @@ char *ft_create_string(char *line, char **env);
 
 void ft_echo(int fd ,char *str, int flag);
 int ft_whitespace(char *line);
-// Get Path
-char	*ft_getenv(char **env, char *str);
-char    *ft_getpwd(char **env,char *str);
 
 void cmdinback(t_cmd **comands,char *args);
-char *ft_cd(char *newlocal, char *old);
 void ft_expand(t_cmd **commads, char **cpyenv);
 char **ft_arrcpy(char **str);
 t_cmd   *returnmystruct(char *newline);
@@ -116,11 +112,48 @@ int ft_check_input(char *line, t_operations *operations);
 
 t_redir *haveredir(char *cmd);
 void checkpathredir(t_redir *redir, char *file, int flag);
-void checkinoutredir(t_redir *redir, char *file, int flag);
-void initredir(t_redir *redir, int flag,char *file);
+void initredir(t_redir **redir, int flag, char *file);
 char *ft_strrange(char *s, int start, int end);
 char *cleantoken(char *str, int c);
 char *findfile(char *cmd);
+
+
+// Functions for Exec
+int casetoken(t_redir *redir);
+int openredir(t_redir *redir);
+void execute_cmd(t_cmd *commands, char **env);
+void execution(t_cmd *commands, char **env);
+void exec(t_cmd *command,int in, int out,char **env);
+
+// Free and close
+void closeandfree(t_redir *redir);
+int closeredir(t_redir *redir);
+int len_darray(char **arr);
+
+// Case Redirects
+int case_in(t_redir *redir);
+int case_out(t_redir *redir);
+
+// Pipes 
+int sizepipe(t_cmd *commands);
+int sizeredir(t_redir *redir);
+void free_commands(t_cmd *comands);
+void free_redirects(t_redir *redir);
+// Builtings
+
+int check_builtings(t_cmd *commands, char **env);
+int 	index_env(char **env, char *str);
+char	*ft_getenv(char **env, char *str, int i);
+char    *ft_getpwd(char **env,char *str);
+int ft_cd(char **env,t_cmd *comands);
+void execute_pwd(char **env, t_cmd *commands);
+void ft_env(char **env);
+void execute_env(char **env, t_cmd *commands);
+//int check_builtings(t_cmd *commands, char **env);
+void execute_simple(t_cmd *commands, char **env);
+void print_pwd(char **env,char *str);
+char   *ft_getpwd(char **env,char *str);
+
 #endif
 
 
