@@ -75,6 +75,8 @@ void execution(t_cmd *commands, char **env)
         ft_cd(env,commands);  
     else if(check_builtings(commands,env) == 3)
         execute_env(env,commands);
+    else if(check_builtings(commands,env) == 4)
+        ft_export(env,commands);
     else if(check_builtings(commands,env) == 0)
     {
         int pid = fork();
