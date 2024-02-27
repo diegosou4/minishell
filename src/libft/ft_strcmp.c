@@ -1,40 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_getenv.c                                        :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/06 17:29:14 by diegmore          #+#    #+#             */
-/*   Updated: 2024/02/14 17:33:06 by diegmore         ###   ########.fr       */
+/*   Created: 2023/09/04 14:25:03 by diegmore          #+#    #+#             */
+/*   Updated: 2023/09/06 20:12:59 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/mini.h"
+#include "libft.h"
 
-char	*ft_getenv(char **env, char *str, t_bool i)
+int	ft_strcmp(char *s1, char *s2)
 {
-	char	*p;
+	int	i;
 
-	p = NULL;
-	while (*env != NULL)
+	i = 0;
+	while (s1[i] != '\0' && s2[i] != '\0' && s1[i] == s2[i])
 	{
-		p = ft_strnstr(*env, str, ft_strlen(str));
-		if (i == TRUE)
-		{
-		if (p != NULL)
-			return (p + 5);
-		}
-		else 
-		{
-		if (p != NULL)
-			return (p + 4);
-		}
-		env++;
+		i++;
 	}
-	return (NULL);
+	return (s1[i] - s2[i]);
 }
-
-
-
-

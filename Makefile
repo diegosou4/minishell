@@ -17,11 +17,14 @@ LIB = ft_isalpha.c ft_isdigit.c ft_isalnum.c \
       ft_lstadd_back.c \
       ft_lstadd_front.c ft_lstiter.c \
       ft_lstdelone.c ft_lstclear.c ft_strpbrk.c\
-      ft_lstmap.c ft_strstr.c
+      ft_lstmap.c ft_strstr.c ft_strcmp.c
 
 PARSE = ft_special.c ft_parse_manager.c ft_utils.c\
       ft_parsing_handler.c ft_getenv.c ft_expand.c \
-      ft_checkpath.c
+      ft_checkpath.c ft_structs.c ft_init_manager.c \
+      ft_print_struct.c ft_parseredir.c ft_check_manager.c \
+      ft_caseredir.c ft_signal_manager.c ft_free_manager.c
+
 
 COMANDS = ft_echo.c ft_pwd.c
 
@@ -32,3 +35,5 @@ LIB_SRC = $(addprefix ./src/libft/, $(LIB))
 all:
 	${CC} ${CFLAGS} ${LIB_SRC} ${COMANDS_SRC} ${PARSE_SRC} -g main.c -o ${NAME}
 
+valgrind:
+		valgrind --leak-check=full ./${NAME}

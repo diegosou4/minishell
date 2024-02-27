@@ -10,71 +10,37 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+char *ft_strcpy(char *dest, const char *src);
+
 #include "../../includes/mini.h"
 
-
 /*
- * 1. This function will create tokens, based 
- * on a string. The return value, is a pointer (char *) 
- * that represent the token that is created based 
- * on a separator.The funcion can handle multiple separators.
- * 2. This function is optimized to skip the single quotes ('') and double quotes ("")
- * and the use is to create the tokens based on a pipe. (|)
- * 3. Description. 
- * 	The first while. 
- *		// Skip over leading delimiters
- * */
-
-char	*ft_help(char *str, char *token_start)
-{
-	char *buffer;
-
-	buffer = str;
-	if (*buffer == '\"')
-		buffer = ft_strchr(token_start, '\"');
-	else if (*buffer == '\'')
-		buffer = ft_strchr(token_start, '\'');
-	if (buffer != NULL)
-		*buffer++ = '\0';
-	return(buffer);
-}
-
-char	*ft_strtok(char *str, const char *delimiters)
-{
-	static char *buffer = NULL;
-	char        *token_start;
-	if (str != NULL)
-		buffer = str;
-	else if (buffer == NULL)
-		return (NULL);
-	while (*buffer != '\0' && ft_strchr(delimiters, *buffer) != NULL)
-		buffer++;
-	token_start = buffer;
-	if (*buffer == '\"' || *buffer == '\'')
-	{
-		token_start++;
-		buffer = ft_help(buffer, token_start);
-	}
-	else
-	{
-		buffer = ft_strpbrk(token_start, delimiters);
-		if (buffer != NULL)
-			*buffer++ = '\0';
-	}
-	return (token_start);
-}
-
+    🚩 check this function as we are alocating 
+    memmory here.
+*/
 t_cmd *cmdnew(char *args)
 {
 	t_cmd *comands;
+    char **newarg;
+    int len;
+    int i;
 
+    i = -1;
+    len = 0;
 	comands = (t_cmd *)ft_calloc(sizeof(t_cmd), 1);
-	comands->args = ft_split(args,'2');
+    newarg = ft_split(args, '2');
+
+    while (newarg[len] != NULL)
+        len++;
+    char **modified_list = (char **)malloc((len * 5) * sizeof(char *));
+    while (++i < len)
+    {
+        modified_list[i] = (char *)malloc((ft_strlen(newarg[i]) + 1) * sizeof(char));    
+        ft_strcpy(modified_list[i], newarg[i]);
+    }
+    comands->args = modified_list;
 	comands->next = NULL;
-	comands->fd[0] = -1;
-	comands->fd[1] = -1;
 	comands->redir = NULL;
-	
 	return(comands);
 }
 
@@ -94,4 +60,73 @@ void cmdinback(t_cmd **comands,char *args)
 	ptr->next = last;
 
 }
+char *ft_strcpy(char *dest, const char *src) 
+{
+    if (!src)
+        return (NULL);
+    while (*src) 
+    {
+        *dest = *src;
+        dest++;
+        src++;
+    }
+    *dest = '\0';
+    return dest;
+}
 
+void ft_checker_quotes(char *str)
+{
+    int len;
+
+    len = ft_strlen(str);
+    if (str[0] == '\"' && ft_strchr((const char *) str, '$'))
+    {
+        printf("variable found we need to expand :%s: \n", str);
+    }
+    if ((str[0] == '\'' && str[len - 1] == '\'')
+        || (str[0] == '\"' && str[len - 1] == '\"'))
+    {
+        str[len - 1] = '\0';
+        ft_memmove(str, (str + 1), len - 1);
+    }
+    else if (ft_strchr((const char *) str, '$'))
+        printf("var find \n");
+}
+
+char	*ft_strtok(char *str, const char *delimiters)
+{
+	static char	*buffer = NULL;
+	char		*token_start;
+
+	if (!str && !buffer)
+		return (NULL);
+
+	if (str)
+		buffer = str;
+
+	while (*buffer && ft_strchr(delimiters, *buffer))
+		buffer++;
+
+	token_start = buffer;
+
+	buffer = ft_strpbrk(token_start, delimiters);
+	if (buffer)
+		*buffer++ = '\0';
+	return (token_start);
+}
+
+int ft_whitespace(char *line)
+{
+    int i;
+
+    i = 0;
+    
+    while ((line[i] >= '\b' && line[i] <= '\v') || line[i] == ' ')
+    {
+        i++;
+    }
+    if (i == (int) ft_strlen(line))
+        return (0);
+        
+    return (1);
+}
