@@ -13,21 +13,59 @@
 
 #include "../../includes/mini.h"
 
+// t_cmd   *returnmystruct(char *newline)
+// {
+//     t_cmd *commands;
+   
+//     char **arr;
+//     arr = ft_split(newline,'3');
+//     int i;
+//     i = 1;
+//     commands = cmdnew(arr[0]);
+//     while(arr[i] != NULL)
+//     {
+//         cmdinback(&commands,arr[i]);
+//         i++;
+//     }
+//     t_cmd *ptr;
+
+//     ptr = commands;
+
+//     while(ptr != NULL)
+//     {
+//         char **args;
+
+//         args = ptr->args;
+//         int k;
+//         k = 0;
+//         while(args[k] != NULL)
+//         {
+// 			// ft_checker_quotes(args[k], ptr);
+//             printf("comand struct :%s:\n",args[k]);
+//             k++;
+//         } 
+//         printf("next struct -->\n");
+//         ptr = ptr->next;
+//     }
+//    return(commands);
+// }
+
+
 static int ft_check_close(const char *ptr)
 {
 	if (*ptr == '\'')
 	{
 		if (!ft_strchr((const char *)(ptr + 1), '\''))
 		{
-			printf("Error Unclosing quotes \' \n");
-				return (0);
+			printf("Error Unclosing quotes \' 🔓\n");
+			return (0);
 		}
 	}
 	else if (*ptr == '\"')
 	{
 		if (!ft_strchr((const char *)(ptr + 1), '\"'))
 		{
-			printf("Error Unclosing quotes \"\n");
+			printf("Error Unclosing quotes \" 🔓\n");
 			return (0);
 		}
 	}
@@ -73,61 +111,14 @@ static	char *ft_string_handle(char *line, char *modified_line)
 	return (modified_line);
 }
 
-t_cmd   *returnmystruct(char *newline)
-{
-    t_cmd *commands;
-   
-    char **arr;
-    arr = ft_split(newline,'3');
-    int i;
-    i = 1;
-    commands = cmdnew(arr[0]);
-    while(arr[i] != NULL)
-    {
-        cmdinback(&commands,arr[i]);
-        i++;
-    }
-    t_cmd *ptr;
-
-    ptr = commands;
-
-    while(ptr != NULL)
-    {
-        char **args;
-
-        args = ptr->args;
-        int k;
-        k = 0;
-        while(args[k] != NULL)
-        {
-			// ft_checker_quotes(args[k], ptr);
-            printf("comand struct :%s:\n",args[k]);
-            k++;
-        } 
-        printf("next struct -->\n");
-        ptr = ptr->next;
-    }
-   return(commands);
-}
-
-
 char *ft_create_string(char *line, char **env)
 {
     char *new_line;
-    t_cmd *comands;
+    // t_cmd *comands;
+	if (env)
+		;
 	new_line = ft_calloc(ft_strlen(line), sizeof(char*));
     new_line = ft_string_handle(line, new_line);
-    printf("%s new_line \n", new_line);
-    char *edit;
-    edit = ft_parse_redir(new_line);
-    printf("%s edit \n",edit);
-	haveredir(edit);
-	if (new_line)
-	{
-    	comands = returnmystruct(new_line);
-    	ft_expand(&comands,env);
-  		// checkredir(&comands);
-	}
     return (new_line);
 }
 
