@@ -153,6 +153,8 @@ void execute_env(char **env, t_cmd *commands);
 void execute_simple(t_cmd *commands, char **env);
 void print_pwd(char **env,char *str);
 char   *ft_getpwd(char **env,char *str);
+void ft_export(char **env,t_cmd *commands);
+int have_inenv(char **env, char *str);
 
 #endif
 
