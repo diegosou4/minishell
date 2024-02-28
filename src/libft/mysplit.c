@@ -80,7 +80,7 @@ static int	ft_givestring(char *s, char sep, char *dest, char n)
 	return (i);
 }
 
-static void	*free_malloc(char **s, int i)
+void	*freedouble_malloc(char **s, int i)
 {
 	while (i >= 0)
 	{
@@ -111,7 +111,7 @@ char	**mysplit(char const *s, char c, char n)
 		str[i] = (char *)ft_calloc((ft_numberchar((char *)(s + p), c) + 2),
 				sizeof(char));
 		if (!str[i])
-			return (free_malloc(str, i - 1));
+			return (freedouble_malloc(str, i - 1));
 		k = ft_givestring((char *)(s + p), c, str[i], n);
 		p = p + k;
 		i++;

@@ -29,14 +29,7 @@ void free_redirects(t_redir *redir)
         ptr = next;
     }
 }
-int len_darray(char **arr)
-{
-    int i;
-    i = 0;
-    while(arr[i] != NULL)
-        i++;
-    return(i);
-}
+
 
 void free_commands(t_cmd *comands)
 {

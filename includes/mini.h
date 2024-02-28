@@ -122,13 +122,13 @@ char *findfile(char *cmd);
 int casetoken(t_redir *redir);
 int openredir(t_redir *redir);
 void execute_cmd(t_cmd *commands, char **env);
-void execution(t_cmd *commands, char **env);
+void execution(t_cmd *commands, char ***env);
 void exec(t_cmd *command,int in, int out,char **env);
 
 // Free and close
 void closeandfree(t_redir *redir);
 int closeredir(t_redir *redir);
-int len_darray(char **arr);
+
 
 // Case Redirects
 int case_in(t_redir *redir);
@@ -145,7 +145,7 @@ int check_builtings(t_cmd *commands, char **env);
 int 	index_env(char **env, char *str);
 char	*ft_getenv(char **env, char *str, int i);
 char    *ft_getpwd(char **env,char *str);
-int ft_cd(char **env,t_cmd *comands);
+int ft_cd(char ***env,t_cmd *comands);
 void execute_pwd(char **env, t_cmd *commands);
 void ft_env(char **env);
 void execute_env(char **env, t_cmd *commands);
@@ -153,9 +153,9 @@ void execute_env(char **env, t_cmd *commands);
 void execute_simple(t_cmd *commands, char **env);
 void print_pwd(char **env,char *str);
 char   *ft_getpwd(char **env,char *str);
-void ft_export(char **env,t_cmd *commands);
+void ft_export(char ***env,t_cmd *commands);
 int have_inenv(char **env, char *str);
-
+void changepwd_andold(char **env,char *str);
 #endif
 
 
