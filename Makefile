@@ -29,7 +29,8 @@ PARSE = ft_special.c ft_parse_manager.c ft_utils.c\
 
 EXEC = ft_wrong.c ft_execution.c ft_builtings.c ft_free.c
 
-COMANDS = ft_echo.c ft_pwd.c ft_cd.c ft_env.c ft_export.c
+COMANDS = ft_echo.c ft_pwd.c ft_cd.c ft_env.c \
+            ft_export.c ft_unset.c
 
 EXEC_SRC = $(addprefix ./src/exec/, $(EXEC))
 COMANDS_SRC = $(addprefix ./src/scomands/, $(COMANDS))

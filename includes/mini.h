@@ -144,18 +144,16 @@ void free_redirects(t_redir *redir);
 int check_builtings(t_cmd *commands, char **env);
 int 	index_env(char **env, char *str);
 char	*ft_getenv(char **env, char *str, int i);
-char    *ft_getpwd(char **env,char *str);
-int ft_cd(char ***env,t_cmd *comands);
-void execute_pwd(char **env, t_cmd *commands);
+int ft_cd(t_cmd *comands);
 void ft_env(char **env);
 void execute_env(char **env, t_cmd *commands);
 //int check_builtings(t_cmd *commands, char **env);
 void execute_simple(t_cmd *commands, char **env);
-void print_pwd(char **env,char *str);
-char   *ft_getpwd(char **env,char *str);
+void print_pwd(void);
 void ft_export(char ***env,t_cmd *commands);
 int have_inenv(char **env, char *str);
-void changepwd_andold(char **env,char *str);
+void ft_unset(char ***env,t_cmd *commands);
+char **ft_unsetinarr(char **env,int index);
 #endif
 
 
