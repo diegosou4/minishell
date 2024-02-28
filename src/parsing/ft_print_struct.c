@@ -52,10 +52,14 @@ void ft_print_doble_char(char **argv)
 
 void ft_print_list_struct(t_word_list *structure)
 {
+	printf (ANSI_COLOR_GREEN"____________START__STRUCT____________\n"ANSI_COLOR_RESET);
 	while (structure)
 	{
 		printf(ANSI_COLOR_YELLOW "this is the word " ANSI_COLOR_RESET ANSI_COLOR_GREEN ":%s:\n" ANSI_COLOR_RESET, structure->word->word);
 		printf(ANSI_COLOR_RED "this is the Flag " ANSI_COLOR_RESET ANSI_COLOR_GREEN ":%d:\n", structure->word->flags);
+		printf(ANSI_COLOR_RED "this is the Tag  " ANSI_COLOR_RESET ANSI_COLOR_GREEN ":%d:\n", structure->word->tags);
+
 		structure = structure->next;
 	}
+	printf (ANSI_COLOR_CYAN"____________END__STRUCT____________\n\n"ANSI_COLOR_RESET);
 }
