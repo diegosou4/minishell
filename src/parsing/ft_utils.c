@@ -79,18 +79,12 @@ void ft_checker_quotes(char *str)
     int len;
 
     len = ft_strlen(str);
-    if (str[0] == '\"' && ft_strchr((const char *) str, '$'))
-    {
-        printf("variable found we need to expand :%s: \n", str);
-    }
     if ((str[0] == '\'' && str[len - 1] == '\'')
         || (str[0] == '\"' && str[len - 1] == '\"'))
     {
         str[len - 1] = '\0';
         ft_memmove(str, (str + 1), len - 1);
     }
-    else if (ft_strchr((const char *) str, '$'))
-        printf("var find \n");
 }
 
 char	*ft_strtok(char *str, const char *delimiters)
