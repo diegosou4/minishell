@@ -22,6 +22,27 @@
 
 */
 
+t_tags ft_tags(t_word_desc *word)
+{
+	char *word_cpy;
+
+	word_cpy=word->word;
+    if (word->flags == 1 || 
+        word->flags == 2 || 
+        word->flags == 3 || 
+        word->flags == 4)
+    {
+        return (EXCECUTOR); 
+    }
+	else if (word->word[0] == '$')
+		return (VARIABLE);
+	else if (ft_strcmp(word_cpy,"$?") == 0)
+		return (SPECIAL_PAR);
+	else if (ft_strchr(word->word, '$'))
+		return (SPECIAL_VAR);
+	else
+		return (WORD);
+}
 int ft_flag(char *word)
 {
 	int flag;
@@ -35,6 +56,8 @@ int ft_flag(char *word)
 		flag = 3;
 	else if (ft_strcmp(word, ">") == 0)
 		flag = 4;
+	else if (ft_strcmp(word, "<>") == 0)
+		flag = 5;
 
 	return (flag);
 }
@@ -42,12 +65,13 @@ t_word_desc *create_word_desc(char *word, int flag)
 {
 	t_word_desc *new_word = malloc(sizeof(t_word_desc));
 	char *word_copy;
-
+	
 	word_copy = word;
 	ft_checker_quotes(word_copy);
 	new_word->word = ft_strdup(word_copy);
-	printf("------------> this is the word :%s:\n", new_word->word);
+	// printf("------------> this is the word :%s:\n", new_word->word);
 	new_word->flags = flag;
+	new_word->tags = ft_tags(new_word);
 	return (new_word);
 }
 
@@ -108,8 +132,6 @@ t_word_list **ft_tokenizer_manager(char *line, char **env)
 	int i;
 
 	i = -1;
-	if (env)
-		;
 	words_list = ft_calloc(100, sizeof(t_word_list *));
 	tokens = ft_split(ft_create_string(line, env), '3');
 	if (!tokens)
@@ -136,6 +158,7 @@ t_word_list **ft_tokenizer_manager(char *line, char **env)
 	i = -1;
 	while (words_list[++i])
 	{
+		ft_extract_var(words_list[i], env);
 		ft_print_list_struct(words_list[i]);
 	}
 
@@ -156,7 +179,6 @@ void *ft_parse_manager(char **env)
 	ft_signal_manager();
 
 	cpyenv = ft_arrcpy(env);
-	// printf("/%s \n", pwd);
 	while (1)
 	{
 		usr = ft_getenv(cpyenv, "USER", TRUE);
