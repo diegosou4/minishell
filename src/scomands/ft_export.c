@@ -32,11 +32,20 @@ int have_inenv(char **env, char *str)
 }
 
 
-void ft_export(char **env,t_cmd *commands)
+
+void ft_export(char ***env,t_cmd *commands)
 {
     int i;
     i = 0;
-    if(have_inenv(env,commands->args[1]) == 1)
-        return;
-
+    if(ft_strintchr(commands->args[1],61) != 0)
+    {
+        if(have_inenv(*env,commands->args[1]) == 1)
+            return;
+        else{
+            *env = ft_strrjoin(*env,commands->args[1]);
+            int i;
+            i = 0;
+            return;
+        }
+    }
 }

@@ -12,7 +12,29 @@
 
 #include "../../includes/mini.h"
 
-int ft_cd(char **env,t_cmd *comands)
+void changepwd_andold(char **env,char *str)
+{
+    char *old_path;
+    char *new_path;
+    char *envold;
+    envold = ft_getenv(env,"PWD",4);
+    old_path = ft_strjoin("OLDPWD=",envold);
+    have_inenv(env,old_path);
+    if(str[0] == '/')
+    { 
+        new_path = ft_strjoin("PWD=",str);
+        have_inenv(env,new_path);
+    }else
+    {
+        new_path = ft_strstrjoin("PWD=",envold,'/',str);
+        have_inenv(env,new_path);
+    }
+
+}
+
+
+
+int ft_cd(char ***env,t_cmd *comands)
 {
     char *str;
     int i;
@@ -26,7 +48,9 @@ int ft_cd(char **env,t_cmd *comands)
     result = chdir(comands->args[1]);
     if(result == 0)
     { 
+       changepwd_andold(*env,comands->args[1]);
         return(1);
+        
     }else
     {
         perror("Error ");
