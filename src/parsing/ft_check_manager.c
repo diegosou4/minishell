@@ -74,15 +74,15 @@ int ft_check_valid_redir(t_word_list *word_list)
         {
             if ((word_list->word->flags != 1 ) && (word_list->word->flags != 4 ))
             {
-            printf("🚫 parse error near `>' \n");
+            printf(" bash: syntax error near unexpected token `>' 🚫\n");
             return (0);
             }
         }
         else if (word_list->word->word[0] == '<')
         {
-            if ((word_list->word->flags != 2 ) && (word_list->word->flags != 3 ))
+            if ((word_list->word->flags != 2 ) && (word_list->word->flags != 3 && word_list->word->flags != 5))
             {
-            printf("🚫 parse error near `>' \n");
+            printf(" bash: syntax error near unexpected token `>' 🚫\n");
             return (0);
             }
         }
@@ -90,9 +90,9 @@ int ft_check_valid_redir(t_word_list *word_list)
         word_list = word_list->next;
     }
 
-    if (word_list->word->word[0] == '<')
+    if (word_list->word->word[0] == '<' || word_list->word->word[0] == '>')
     {
-        printf("🚫 parse error near `|' \n");
+        printf("🚫 bash: syntax error near unexpected token `' \n");
         return (0);
     }
     return (1);
@@ -134,12 +134,12 @@ static int ft_check_directions(char **line)
         ;
     if (ft_strcmp(line[i - 1], "<<") == 0 || ft_strcmp(line[i - 1], ">>") == 0)
     {
-        printf("error found void 🚫 args 1. \n");
+        printf("🚫 bash: syntax error near unexpected token `newline'\n");
         return (0);
     }
     else if (ft_strcmp(line[i - 1], "<") == 0 || ft_strcmp(line[i - 1], ">") == 0)
     {
-        printf("error found void 🚫 args.\n");
+        printf("🚫 bash: syntax error near unexpected token `newline'\n");
         return (0);
     }
 
