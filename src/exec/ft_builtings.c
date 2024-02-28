@@ -17,24 +17,14 @@ int check_builtings(t_cmd *commands, char **env)
     if(ft_strncmp("pwd",commands->args[0],4) == 0)
         return(1);
     else if (ft_strncmp("cd",commands->args[0],2) == 0)
-    {
         return(2);
-    }
     else if(ft_strncmp("env",commands->args[0],3) == 0)
         return(3);
     else if(ft_strncmp("export",commands->args[0],6) == 0)
         return(4);
-    /*
-    if(ft_strncmp("echo",commands->args[0],5) == 0)
-        //ft_echo()
-  
-    
-        //ft_pwd
-
     else if(ft_strncmp("unset", commands->args[0],5) == 0)
-        //ft_export()
-    else if(ft_strncmp("exit", commands->args[0],5) == 0)
-        //ft_exit
-    */
+        return(5);
+    else if(ft_strncmp("echo", commands->args[0],4) == 0)
+        return(6);
     return(0);
-    }
+}

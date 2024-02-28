@@ -65,18 +65,20 @@ void execute_simple(t_cmd *commands, char **env)
 void execution(t_cmd *commands, char ***env)
 {
     t_cmd *ptr;
-
+    int build;
     ptr = commands;
     if(sizepipe(commands) == 1)
     {
     if(check_builtings(commands,*env) == 1)
-        execute_pwd(*env,commands); 
+        print_pwd(); 
     else if(check_builtings(commands,*env) == 2)
-        ft_cd(env,commands);
+        ft_cd(commands);
     else if(check_builtings(commands,*env) == 3)
-         execute_env(*env,commands);    
+        execute_env(*env,commands);    
     else if(check_builtings(commands,*env) == 4)
         ft_export(env,commands);
+    else if(check_builtings(commands,*env) == 5)
+        ft_unset(env,commands);
     }
 
 }

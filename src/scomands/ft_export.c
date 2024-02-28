@@ -31,8 +31,6 @@ int have_inenv(char **env, char *str)
     return(0);
 }
 
-
-
 void ft_export(char ***env,t_cmd *commands)
 {
     int i;

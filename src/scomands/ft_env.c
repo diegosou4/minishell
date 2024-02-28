@@ -27,8 +27,7 @@ void ft_env(char **env)
 void execute_env(char **env, t_cmd *commands)
 {
     if(len_darray(commands->args) > 1)
-    {
         write(2,"Error two or more arguments!!\n",31);
-    }
-    ft_env(env);
+    else
+        ft_env(env);
 }
