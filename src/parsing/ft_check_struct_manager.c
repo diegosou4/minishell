@@ -61,7 +61,26 @@ static char *ft_create_token(char *token_line)
 	}
 	return (token);
 }
-int ft_extract_var(t_word_list *word_list, char **env)
+char *ft_path_handler(t_env *env, char *variable)
+{
+	int index;
+	char *holder;
+
+	printf("VARIABLE :%s:\n", variable);
+	index = ft_indexinenv(env, variable);
+	if (index == -1)
+		return NULL;
+	while (index--)
+	{
+		env = env->next;
+	}
+	printf("key    :%s:\n", env->key);
+	printf("value  :%s:\n", env->value);
+	printf(":%d:\n", index);
+	holder = env->value + 1;
+	return (holder);
+}
+int ft_extract_var(t_word_list *word_list, t_env *env)
 {
 	char *token;
 	char *appear;
@@ -73,7 +92,7 @@ int ft_extract_var(t_word_list *word_list, char **env)
 	char *new_token;
 
 	i = 0;
-	path = ft_calloc((ft_strlen(*env)), sizeof(char *));
+	path = ft_calloc(1000, sizeof(char *));
 	buffer = ft_calloc((ft_strlen(word_list->word->word)), sizeof(char *));
 	char *word_cpy;
 
@@ -97,7 +116,7 @@ int ft_extract_var(t_word_list *word_list, char **env)
 				token = ft_create_token(appear);
 				// printf("TOKEN ---------> :%s:\n", token);
 				len = ft_strlen(token);
-				path = ft_getenv(env, token, TRUE);
+				path = ft_path_handler(env, token);
 				if (path)
 					new_path = ft_strjoin(word_cpy, path);
 				else

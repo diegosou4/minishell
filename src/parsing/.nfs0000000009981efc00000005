@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <signal.h>
+#include <stdlib.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+#include "includes/mini.h"
+
+// Signal handler function
+void handle_signal(int signum) {
+    switch(signum) {
+        case SIGINT:
+            printf("\nCtrl+C received. Press Ctrl+D to exit.\n");
+            break;
+        case SIGCHLD:
+            printf("Child process terminated.\n");
+            break;
+        // Handle other signals as needed
+    }
+}
+
+void *ft_parse_manager(char **env)
+{
+    char *line;
+    char **cpyenv;
+    char *usr;
+    char *line_text;
+
+    // Initialize the signal manager
+    struct sigaction sa;
+    sa.sa_handler = &handle_signal;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = 0;
+    sigaction(SIGINT, &sa, NULL); // Register the signal handler for SIGINT (Ctrl+C)
+    sigaction(SIGCHLD, &sa, NULL); // Register the signal handler for SIGCHLD (child process termination)
+
+    // Copy the environment variables
+    cpyenv = ft_arrcpy(env);
+
+    while (1)
+    {
+        // Print the prompt and get user input
+        usr = ft_getenv(cpyenv, "USER", TRUE);
+        line_text = ft_strjoin(ANSI_COLOR_CYAN, usr);
+        line_text = ft_strjoin(line_text, " @🐧shell:$ " ANSI_COLOR_RESET);
+        line = readline(line_text);
+        free(line_text); // Free the line_text memory allocated by ft_strjoin
+
+        // If readline returns NULL, handle the EOF condition
+        if (!line)
+        {
+            printf("\nCtrl+D received. Press Ctrl+D again or type 'exit' to exit.\n");
+            continue;    // Continue the loop to prompt the user for another command
+        }
+
+        // If the user enters a non-empty line, process it
+        if (ft_whitespace(line) == 1)
+            add_history(line); // Add the command to the history
+        if (ft_check_input(line))
+            ft_tokenizer_manager(line, cpyenv);
+
+        free(line); // Free the memory allocated by readline
+    }
+
+    return NULL;
+}
