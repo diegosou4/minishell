@@ -21,7 +21,7 @@ void ft_expand(t_cmd **commads, char **cpyenv)
     char *blackslash;
     if(!ptr)
         return;
-    path = ft_getenv(cpyenv, "PATH=/", 4);
+    path = ft_getenv(cpyenv, "PATH=/", FALSE);
     while(ptr != NULL)
     {
         blackslash = ft_strjoin("/",ptr->args[0]);
@@ -38,7 +38,6 @@ void ft_expand(t_cmd **commads, char **cpyenv)
     }
 }
 
-
 static char *ft_strcpy(char *dest, const char *src) 
 {
     while (*src) 
@@ -50,7 +49,6 @@ static char *ft_strcpy(char *dest, const char *src)
     return dest;
 }
 
-
 static void	*free_malloc(char **s, int i)
 {
 	while (i >= 0)
@@ -61,7 +59,6 @@ static void	*free_malloc(char **s, int i)
 	free(s);
 	return (NULL);
 }
-
 
 char **ft_arrcpy(char **str) 
 {

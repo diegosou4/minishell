@@ -40,8 +40,16 @@ char	*ft_getenv(char **env, char *str, int i)
 	while (*env != NULL)
 	{
 		p = ft_strnstr(*env, str, ft_strlen(str));
+		if (i == TRUE)
+		{
 		if (p != NULL)
-			return (p + i);
+			return (p + 5);
+		}
+		else 
+		{
+			
+		if (p != NULL)
+			return (p + 4);
 		env++;
 	}
 	return (NULL);
