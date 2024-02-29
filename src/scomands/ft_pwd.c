@@ -13,8 +13,6 @@
 
 #include "../../includes/mini.h"
 
-
-
 void print_pwd(void)
 {
     char *pwd;

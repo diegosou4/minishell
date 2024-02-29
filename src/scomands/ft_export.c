@@ -24,7 +24,7 @@ int ft_indexinenv(t_env *env,char *this)
         return(-1);
     while(ptr != NULL)
     {
-        if(strncmp(ptr->key,this, ft_strlen(ptr->key)) == 0)
+        if(strncmp(ptr->key,this, ft_strlen(this)) == 0)
             return(index);
         ptr = ptr->next;
         index++;
