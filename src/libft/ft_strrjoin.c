@@ -1,28 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_caseredir.c                                     :+:      :+:    :+:   */
+/*   ft_strrjoin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/24 12:24:25 by diegmore          #+#    #+#             */
-/*   Updated: 2024/02/24 12:24:26 by diegmore         ###   ########.fr       */
+/*   Created: 2024/02/28 11:06:55 by diegmore          #+#    #+#             */
+/*   Updated: 2024/02/28 11:06:56 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/mini.h"
+
+#include "libft.h"
 
 
-void checkpathredir(t_redir *redir, char *file, int flag)
+char    **ft_strrjoin(char **arr, char *str)
 {
-    redir->token = flag;
-    if(flag == 1)
-    {
-        redir->path = ft_strdup(file);
-    }
-    if(flag == 2 || flag == 4)
-    {
-        redir->path = ft_strdup(file);
-    }
+    char **newstr;
+    int i;
 
+    i = len_darray(arr) + 2;
+
+    newstr = ft_calloc(sizeof(char *), i);
+
+    int j;
+    j = 0;
+    while(j != (i - 3))
+    {
+        newstr[j] = ft_strdup(arr[j]);
+        j++;
+    }
+    i = j;
+    newstr[j++] = ft_strdup(str);
+    newstr[j++] = ft_strdup(arr[i]);
+    freedouble_malloc(arr,len_darray(arr));
+    return(newstr);
 }

@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_caseredir.c                                     :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/24 12:24:25 by diegmore          #+#    #+#             */
-/*   Updated: 2024/02/24 12:24:26 by diegmore         ###   ########.fr       */
+/*   Created: 2024/02/27 16:22:20 by diegmore          #+#    #+#             */
+/*   Updated: 2024/02/27 16:22:21 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/mini.h"
 
-
-void checkpathredir(t_redir *redir, char *file, int flag)
+void ft_env(t_env *env)
 {
-    redir->token = flag;
-    if(flag == 1)
-    {
-        redir->path = ft_strdup(file);
-    }
-    if(flag == 2 || flag == 4)
-    {
-        redir->path = ft_strdup(file);
-    }
+    t_env *ptr;
 
+    ptr = env;
+    if(env ==  NULL)
+        return;
+    while(ptr != NULL)
+    {
+        printf("%s%s\n",ptr->key,ptr->value);
+        ptr = ptr->next;
+    }
+}
+
+void execute_env(t_env *env, t_cmd *commands)
+{
+    if(len_darray(commands->args) > 1)
+        write(2,"Error two or more arguments!!\n",31);
+    else
+        ft_env(env);
 }

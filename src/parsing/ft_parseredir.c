@@ -195,10 +195,10 @@ t_redir *haveredir(char *cmd)
         }
         i++;
     }
-    printf("%s FILE IN \n", new->pathin);
+    printf("%s FILE IN \n", new->path);
     if(new->next != NULL)
     {
-         printf("%s FILE IN NEXT \n", new->next->pathin);
+         printf("%s FILE IN NEXT \n", new->next->path);
     }
     return new;
 }

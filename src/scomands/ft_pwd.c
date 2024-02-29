@@ -5,44 +5,23 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/21 12:46:34 by diegmore          #+#    #+#             */
-/*   Updated: 2024/02/21 12:46:35 by diegmore         ###   ########.fr       */
+/*   Created: 2024/02/28 14:33:33 by diegmore          #+#    #+#             */
+/*   Updated: 2024/02/28 14:33:43 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../../includes/mini.h"
 
-char    *ft_getpwd(char **env,char *str)
+
+
+void print_pwd(void)
 {
     char *pwd;
-    pwd = ft_getenv(env,str);
-    return(pwd);
+    pwd = ft_calloc(sizeof(char) , FILENAME_MAX);
+    pwd = getcwd(pwd,FILENAME_MAX);
+    printf("%s\n", pwd);
 }
 
 
 
-char *ft_cd(char *newlocal, char *old)
-{
-
-    char *backsplash;
-    backsplash = ft_strjoin("/",newlocal);
-    char *newpwd;
-    newpwd = ft_strjoin(old,backsplash);
-    int result = chdir(newpwd);
-    if(result == 0)
-    {
-        free(backsplash);
-        old = ft_strdup(newpwd);
-    }else
-    {
-        perror("Error ");
-        free(backsplash);
-        free(newpwd);
-        return(NULL);
-    }
-    return(NULL);
-}
-
-
-   

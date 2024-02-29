@@ -1,43 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   ft_strstrstrjoin.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/04 11:29:14 by diegmore          #+#    #+#             */
-/*   Updated: 2023/10/04 13:58:29 by diegmore         ###   ########.fr       */
+/*   Created: 2024/02/28 13:57:33 by diegmore          #+#    #+#             */
+/*   Updated: 2024/02/28 13:57:34 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strrchr(const char *str, int c)
+char *ft_strstrjoin(char *s1, char *s2, char s3,char *s4)
 {
-	int	i;
+    char *new_str;
+    int len;
+    int j = 0;
 
-	i = 0;
-	while (str[i])
-		i++;
-	while (i >= 0)
-	{
-		if (str[i] == (char)c)
-			return ((char *)(str + i));
-		i--;
-	}
-	return (0);
-}
-int ft_strintchr(const char *str, int c)
-{
-	int i;
-	i = 0;
-	while(str[i])
-		i++;
-	while(i >= 0)
-	{
-		if(str[i] == (char)c )
-			return(i);
-	i--;
-	}
-	return(i);
+    len = ft_strlen(s1) + ft_strlen(s2);
+    len += ft_strlen(s4) + 2; 
+    new_str = ft_calloc(len, sizeof(char));
+
+    while(*s1 != '\0')
+        new_str[j++] = *s1++;
+    while(*s2 != '\0')
+        new_str[j++] = *s2++;
+    new_str[j++] = s3;
+    while(*s4 != '\0')
+        new_str[j++] = *s4++;
+    return (new_str);
 }

@@ -17,7 +17,6 @@ void ft_echo(int fd ,char *str, int flag)
     if(flag == 1)
     {
          ft_putstr_fd(str,fd);
-         ft_putstr_fd("\n",fd);
     }else
         ft_putstr_fd(str,fd);
 }

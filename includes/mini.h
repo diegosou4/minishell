@@ -20,6 +20,7 @@
 #include <readline/history.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/wait.h>
 #include <fcntl.h>
 #include <unistd.h>
 
@@ -83,15 +84,23 @@ typedef enum s_rediopr
 	inandout = 5
 } t_rediopr;
 
-typedef struct s_redir
+
+typedef struct s_env{
+
+	int index;
+	char *key;
+	char *value;
+	struct s_env *next;
+} t_env;
+
+
+typedef struct  s_redir
 {
-	char *pathout;
-	char *pathin;
-	int token;
-	int in;
-	int out;
+	char *path;
+	int 	token;
+	int 	fd;
 	struct s_redir *next;
-} t_redir;
+}				t_redir;
 
 //________________________________STRUCTURES__FOR THE COMMANDS_________________________________
 
@@ -118,6 +127,8 @@ char *ft_create_string(char *line, char **env);
 
 void ft_echo(int fd, char *str, int flag);
 int ft_whitespace(char *line);
+
+void cmdinback(t_cmd **comands,char *args);
 // Get Path
 char *ft_getenv(char **env, char *str, t_bool i);
 char *ft_getpwd(char **env, char *str);
@@ -153,10 +164,67 @@ int ft_check_redir_pipes(char **line);
 t_redir *haveredir(char *cmd);
 void checkpathredir(t_redir *redir, char *file, int flag);
 void checkinoutredir(t_redir *redir, char *file, int flag);
+
 void initredir(t_redir **redir, int flag, char *file);
 char *ft_strrange(char *s, int start, int end);
 char *cleantoken(char *str, int c);
 char *findfile(char *cmd);
+
+
+// Functions for Exec
+int casetoken(t_redir *redir);
+int openredir(t_redir *redir);
+
+void execution(t_cmd *commands, t_env **env);
+
+// Free and close
+void closeandfree(t_redir *redir);
+int closeredir(t_redir *redir);
+
+
+// Case Redirects
+int case_in(t_redir *redir);
+int case_out(t_redir *redir);
+
+// Pipes 
+int sizepipe(t_cmd *commands);
+int sizeredir(t_redir *redir);
+void free_commands(t_cmd *comands);
+void free_redirects(t_redir *redir);
+// Builtings
+int check_builtings(t_cmd *commands);
+
+void update_index(t_env **env);
+void ft_putinlast(t_env **env,char *this);
+void ft_export(t_env **env,t_cmd *commands);
+
+int 	index_env(char **env, char *str);
+
+
+char	*ft_getenv(char **env, char *str, int i);
+int ft_cd(t_cmd *comands,t_env **env);
+void execute_env(t_env *env, t_cmd *commands);
+int ft_haveinenv(t_env *env, char *str);
+int ft_indexinenv(t_env *env,char *this);
+void print_pwd(void);
+void ft_removeinenv(t_env **env, int index);
+void ft_unset(t_env **env,t_cmd *commands);
+
+
+// ENV STRUCT
+char *get_key(char *str);
+t_env *newsenv(char *str, int this);
+t_env *ft_nenv(char **env);
+void addbackenv(char *str,int this,t_env **env);
+void print_env(t_env *env);
+void ft_env(t_env *env);
+
+//void exec(t_cmd *command,int in, int out,char **env);
+//void execute_cmd(t_cmd *commands, char **env);
+//void ft_export(char ***env,t_cmd *commands);
+//int have_inenv(char **env, char *str);
+//int check_builtings(t_cmd *commands, char **env);
+
 
 // Check redir.
 int ft_check_valid_redir(t_word_list *word_list);

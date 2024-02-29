@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_caseredir.c                                     :+:      :+:    :+:   */
+/*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/24 12:24:25 by diegmore          #+#    #+#             */
-/*   Updated: 2024/02/24 12:24:26 by diegmore         ###   ########.fr       */
+/*   Created: 2024/02/28 16:43:29 by diegmore          #+#    #+#             */
+/*   Updated: 2024/02/28 16:43:30 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/mini.h"
-
-
-void checkpathredir(t_redir *redir, char *file, int flag)
+/*
+void ft_heredoc(char *delimiter)
 {
-    redir->token = flag;
-    if(flag == 1)
+    int fd;
+    char *line;
+    fd = open(".temp.txt", O_TRUNC | O_CREAT | O_RDWR, 0666);
+    if(fd == -1)
+        perror("Error ");
+    
+    while(1)
     {
-        redir->path = ft_strdup(file);
-    }
-    if(flag == 2 || flag == 4)
-    {
-        redir->path = ft_strdup(file);
+        line = readline(line);
+
+
     }
 
-}
+
+
+
+}*/
