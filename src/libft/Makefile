@@ -40,7 +40,8 @@ SRC = ft_isalpha.c \
       ft_itoa.c \
       ft_split.c \
       ft_strpbrk.c\
-      mysplit.c
+      mysplit.c \
+     
 
 BSRC = ft_lstnew.c \
       ft_lstsize.c \
