@@ -54,7 +54,7 @@ void exec_simple(t_cmd *commands,char **env)
 }   */
 
 
-void execution(t_cmd *commands, t_env *env)
+void execution(t_cmd *commands, t_env **env)
 {
     t_cmd *ptr;
     int build;
@@ -65,9 +65,9 @@ void execution(t_cmd *commands, t_env *env)
         if(build == 1)
             print_pwd(); 
         else if(build  == 2)
-            ft_cd(commands);
+            ft_cd(commands,env);
         else if(build == 3)
-            execute_env(env,commands);       
+            execute_env(*env,commands);       
     }
 }
 

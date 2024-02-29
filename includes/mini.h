@@ -131,7 +131,7 @@ char *findfile(char *cmd);
 int casetoken(t_redir *redir);
 int openredir(t_redir *redir);
 
-void execution(t_cmd *commands, t_env *env);
+void execution(t_cmd *commands, t_env **env);
 
 // Free and close
 void closeandfree(t_redir *redir);
@@ -148,13 +148,17 @@ int sizeredir(t_redir *redir);
 void free_commands(t_cmd *comands);
 void free_redirects(t_redir *redir);
 // Builtings
-void update_index(t_env **env);
-void ft_putinlast(t_env **env,t_cmd *commands);
-void ft_export(t_env **env,t_cmd *commands);
 int check_builtings(t_cmd *commands);
+
+void update_index(t_env **env);
+void ft_putinlast(t_env **env,char *this);
+void ft_export(t_env **env,t_cmd *commands);
+
 int 	index_env(char **env, char *str);
+
+
 char	*ft_getenv(char **env, char *str, int i);
-int ft_cd(t_cmd *comands);
+int ft_cd(t_cmd *comands,t_env **env);
 void execute_env(t_env *env, t_cmd *commands);
 int ft_haveinenv(t_env *env, char *str);
 int ft_indexinenv(t_env *env,char *this);

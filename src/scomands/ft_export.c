@@ -57,7 +57,7 @@ int ft_haveinenv(t_env *env, char *str)
     return(0);
 }
 
-void ft_putinlast(t_env **env,t_cmd *commands)
+void ft_putinlast(t_env **env,char *this)
 {
     int i;
     t_env *ptr;
@@ -70,13 +70,14 @@ void ft_putinlast(t_env **env,t_cmd *commands)
         ptr = ptr->next;
     }
     i = ptr->index;
-    last = newsenv(commands->args[1],i);
+    last = newsenv(this,i);
     if(pen != NULL)
     {
         pen->next = last;
         last->next = ptr;
     }
-    ptr->index += 1;      
+    ptr->index += 1;
+    update_index(env);      
 }
 
 
@@ -89,6 +90,6 @@ void ft_export(t_env **env,t_cmd *commands)
         else if(*env == NULL)
             *env = newsenv(commands->args[1],0); 
         else
-         ft_putinlast(env,commands);   
+         ft_putinlast(env,commands->args[1]);   
     }
 }

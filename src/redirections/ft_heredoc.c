@@ -10,4 +10,24 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../includes/mini.h"
+/*
+void ft_heredoc(char *delimiter)
+{
+    int fd;
+    char *line;
+    fd = open(".temp.txt", O_TRUNC | O_CREAT | O_RDWR, 0666);
+    if(fd == -1)
+        perror("Error ");
+    
+    while(1)
+    {
+        line = readline(line);
 
+
+    }
+
+
+
+
+}*/
