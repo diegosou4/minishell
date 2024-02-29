@@ -111,12 +111,10 @@ static	char *ft_string_handle(char *line, char *modified_line)
 	return (modified_line);
 }
 
-char *ft_create_string(char *line, char **env)
+char *ft_create_string(char *line)
 {
     char *new_line;
     // t_cmd *comands;
-	if (env)
-		;
 	new_line = ft_calloc(ft_strlen(line), sizeof(char*));
     new_line = ft_string_handle(line, new_line);
     return (new_line);
