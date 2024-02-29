@@ -27,6 +27,7 @@ char	*ft_getenv(char **env, char *str, t_bool i)
 		}
 		else 
 		{
+			
 		if (p != NULL)
 			return (p + 4);
 		}
