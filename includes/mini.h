@@ -10,7 +10,7 @@
 /* ************************************************************************** */
 
 #ifndef MINI_H
-# define MINI_H
+#define MINI_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -23,13 +23,59 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-typedef enum s_bool{
+/*
+	Color codes.
+*/
+
+#define ANSI_COLOR_RED "\x1b[31m"
+#define ANSI_COLOR_GREEN "\x1b[32m"
+#define ANSI_COLOR_YELLOW "\x1b[33m"
+#define ANSI_COLOR_BLUE "\x1b[34m"
+#define ANSI_COLOR_MAGENTA "\x1b[35m"
+#define ANSI_COLOR_CYAN "\x1b[36m"
+#define ANSI_COLOR_RESET "\x1b[0m"
+
+typedef enum s_bool
+{
 	TRUE,
 	FALSE,
 } t_bool;
 
+//________________________________STRUCTURES__FOR THE TOKENS_________________________________
 
-typedef enum s_rediopr {
+// Words with the flags...
+
+typedef enum s_tags
+{
+	WORD, 
+	EXCECUTOR,
+	VARIABLE,
+	SPECIAL_PAR,
+	SPECIAL_VAR,
+} t_tags;
+
+
+
+
+typedef struct s_word_desc
+{
+	char *word;
+	int flags;
+	t_tags tags;
+} t_word_desc;
+
+// List of words with the flags...
+
+typedef struct s_word_list
+{
+	struct s_word_list *next; // Pointer to the next node in the list
+	t_word_desc *word;		  // Pointer to the word descriptor
+} t_word_list;
+
+//________________________________STRUCTURES__FOR THE REDIRECTIONS_________________________________
+
+typedef enum s_rediopr
+{
 	redir_out = 1,
 	redir_in = 2,
 	here_doc = 3,
@@ -37,90 +83,99 @@ typedef enum s_rediopr {
 	inandout = 5
 } t_rediopr;
 
-
-typedef struct s_operations
-{
-	char *pipe;
-	char *redir_input;
-	char *redir_output;
-	char *here_doc;
-	char *apppend_out;
-} t_operations;
-
-typedef struct  s_redir
+typedef struct s_redir
 {
 	char *pathout;
 	char *pathin;
-	int 	token;
-	int 	in;
-	int		out;
-}				t_redir;
+	int token;
+	int in;
+	int out;
+	struct s_redir *next;
+} t_redir;
 
-typedef struct  s_cmd
+//________________________________STRUCTURES__FOR THE COMMANDS_________________________________
+
+typedef struct s_cmd
 {
 	char *path;
-	t_bool	literal;
-	t_bool	fint_variable;
-	char		**args;
+	t_bool literal;
+	t_bool fint_variable;
+	char **args;
 	t_redir *redir;
-	struct  s_cmd *next;
-	
-}				t_cmd;
-// Parsign handler. 
+	struct s_cmd *next;
+
+} t_cmd;
+// Parsign handler.
 
 void *ft_parse_manager(char **env);
 
-
-// Parsing utils. 
+// Parsing utils.
 char *ft_strtok(char *str, const char *delimiters);
-// this will make a treatment to the sting. 
+// this will make a treatment to the sting.
 int ft_special_case(char *modified_line, int j, char **line);
 int ft_parse_handler(char *str, const char *delimiters);
 char *ft_create_string(char *line, char **env);
 
-void ft_echo(int fd ,char *str, int flag);
+void ft_echo(int fd, char *str, int flag);
 int ft_whitespace(char *line);
 // Get Path
-char	*ft_getenv(char **env, char *str);
-char    *ft_getpwd(char **env,char *str);
+char *ft_getenv(char **env, char *str, t_bool i);
+char *ft_getpwd(char **env, char *str);
 
-void cmdinback(t_cmd **comands,char *args);
+void cmdinback(t_cmd **comands, char *args);
 char *ft_cd(char *newlocal, char *old);
 void ft_expand(t_cmd **commads, char **cpyenv);
 char **ft_arrcpy(char **str);
-t_cmd   *returnmystruct(char *newline);
-char	*ask_acess(char *comand, char *path);
+t_cmd *returnmystruct(char *newline);
+char *ask_acess(char *comand, char *path);
 
 // Struct redir
 t_cmd *cmdnew(char *args);
 t_cmd *putcmds(char *args);
 t_redir *redirnew(void);
-//t_redir *addredirnew(int flag);
-//void add_redir(t_cmd **commands);
-// Checker quotes. 
-void ft_checker_quotes(char *str, t_cmd *structure);
+// t_redir *addredirnew(int flag);
+// void add_redir(t_cmd **commands);
+//  Checker quotes.
+void ft_checker_quotes(char *str);
 char *findpath(char **args, int flag, int location);
 char *ft_parse_redir(char *str);
 
-// Print a double list
+// ________________________________________________________Print Utilities ________________________________
 void ft_print_doble_char(char **argv);
-
-// Init the operation structure.
-void ft_init_operations(t_operations *operations);
+void ft_print_list_struct(t_word_list *structure);
 
 // check input.
-int ft_check_input(char *line, t_operations *operations);
-
+int ft_check_input(char *line);
+int ft_check_redir_pipes(char **line);
 
 // Fuctions for redir
 
 t_redir *haveredir(char *cmd);
 void checkpathredir(t_redir *redir, char *file, int flag);
 void checkinoutredir(t_redir *redir, char *file, int flag);
-void initredir(t_redir *redir, int flag,char *file);
+void initredir(t_redir **redir, int flag, char *file);
 char *ft_strrange(char *s, int start, int end);
 char *cleantoken(char *str, int c);
 char *findfile(char *cmd);
+
+// Check redir.
+int ft_check_valid_redir(t_word_list *word_list);
+
+// Signal Handler.
+
+void ft_signal_manager();
+void handle_signal(int signal1);
+
+// __________________________________________________FREE_MANAGER ________________________________
+
+void ft_free_double_pointers(char **split_line);
+
+// __________________________________________________LIST_MANAGER ________________________________
+int ft_extract_var(t_word_list *word_list, char **env);
+t_word_list	*ft_lstlast_(t_word_list *lst);
+int ft_check_struct_redir(t_word_list *tokens);
+
+//___________________________________________________QUOTES REMOVAL _______________________________
+void ft_quotes_remove(t_word_list *word_list);
+
 #endif
-
-
