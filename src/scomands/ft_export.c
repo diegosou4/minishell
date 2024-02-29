@@ -13,37 +13,82 @@
 
 #include "../../includes/mini.h"
 
-int have_inenv(char **env, char *str)
+int ft_indexinenv(t_env *env,char *this)
+{
+    int index;
+    index = 0;
+    t_env *ptr;
+    ptr = env;
+    
+    if(env == NULL)
+        return(-1);
+    while(ptr != NULL)
+    {
+        if(strncmp(ptr->key,this, ft_strlen(ptr->key)) == 0)
+            return(index);
+        ptr = ptr->next;
+        index++;
+    }
+    return(-1);
+}
+
+int ft_haveinenv(t_env *env, char *str)
 {
     int i;
-    i = 0;
-    int index;
+    int j;
     char *newstr;
-    index = ft_strintchr(str,61);
-    newstr = ft_substr(str,0,index +1);
-    i = index_env(env,newstr);
-    if(i != -1)
+    t_env *ptr;
+    ptr = env;
+    if(env == NULL)
+        return(0);
+    i = ft_strintchr(str,61);
+    newstr = ft_substr(str,0,i);
+    j = ft_indexinenv(env,newstr);
+    if(j != -1)
     {
-        free(env[i]);
-        env[i] = str;
+        while(j != 0)
+        {
+            ptr = ptr->next;
+            j--;
+        }
+        ptr->value = ft_strchr(str,61);
         return(1);
     }
     return(0);
 }
 
-void ft_export(char ***env,t_cmd *commands)
+void ft_putinlast(t_env **env,t_cmd *commands)
 {
     int i;
-    i = 0;
-    if(ft_strintchr(commands->args[1],61) != 0)
+    t_env *ptr;
+    t_env *last;
+    t_env *pen ;
+    ptr = (*env);
+    while(ptr->next != NULL)
     {
-        if(have_inenv(*env,commands->args[1]) == 1)
+        pen = ptr;
+        ptr = ptr->next;
+    }
+    i = ptr->index;
+    last = newsenv(commands->args[1],i);
+    if(pen != NULL)
+    {
+        pen->next = last;
+        last->next = ptr;
+    }
+    ptr->index += 1;      
+}
+
+
+void ft_export(t_env **env,t_cmd *commands)
+{
+    if(ft_strintchr(commands->args[1],61) != 0)
+    {       
+        if(ft_haveinenv(*env,commands->args[1]) == 1)
             return;
-        else{
-            *env = ft_strrjoin(*env,commands->args[1]);
-            int i;
-            i = 0;
-            return;
-        }
+        else if(*env == NULL)
+            *env = newsenv(commands->args[1],0); 
+        else
+         ft_putinlast(env,commands);   
     }
 }

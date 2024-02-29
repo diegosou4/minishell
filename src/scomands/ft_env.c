@@ -12,19 +12,21 @@
 
 #include "../../includes/mini.h"
 
-void ft_env(char **env)
+void ft_env(t_env *env)
 {
-    int i;
+    t_env *ptr;
 
-    i = 0;
-    while(env[i] != NULL)
+    ptr = env;
+    if(env ==  NULL)
+        return;
+    while(ptr != NULL)
     {
-        printf("%s\n",env[i]);
-        i++;
+        printf("%s%s\n",ptr->key,ptr->value);
+        ptr = ptr->next;
     }
 }
 
-void execute_env(char **env, t_cmd *commands)
+void execute_env(t_env *env, t_cmd *commands)
 {
     if(len_darray(commands->args) > 1)
         write(2,"Error two or more arguments!!\n",31);

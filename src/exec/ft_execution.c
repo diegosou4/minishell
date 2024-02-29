@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../includes/mini.h"
-
+/*
 void execute_cmd(t_cmd *commands, char **env)
 {
     t_redir *ptr;
@@ -51,36 +51,24 @@ void exec_simple(t_cmd *commands,char **env)
     execve(commands->path,commands->args,env);
     }
     wait(NULL);
-}   
-void execute_simple(t_cmd *commands, char **env)
-{
-    if(sizeredir(commands->redir) == 0)
-    {
-      //  check_builtings(commands);
-        exec_simple(commands,env);
-        free_commands(commands);
-    }
-}
+}   */
 
-void execution(t_cmd *commands, char ***env)
+
+void execution(t_cmd *commands, t_env *env)
 {
     t_cmd *ptr;
     int build;
     ptr = commands;
     if(sizepipe(commands) == 1)
     {
-    if(check_builtings(commands,*env) == 1)
-        print_pwd(); 
-    else if(check_builtings(commands,*env) == 2)
-        ft_cd(commands);
-    else if(check_builtings(commands,*env) == 3)
-        execute_env(*env,commands);    
-    else if(check_builtings(commands,*env) == 4)
-        ft_export(env,commands);
-    else if(check_builtings(commands,*env) == 5)
-        ft_unset(env,commands);
+        build = check_builtings(commands);
+        if(build == 1)
+            print_pwd(); 
+        else if(build  == 2)
+            ft_cd(commands);
+        else if(build == 3)
+            execute_env(env,commands);       
     }
-
 }
 
 

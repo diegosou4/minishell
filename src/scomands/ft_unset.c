@@ -13,40 +13,57 @@
 
 #include "../../includes/mini.h"
 
-
-char **ft_unsetinarr(char **env,int index)
+void update_index(t_env **env)
 {
     int i;
     i = 0;
-    int j;
-    j = 0;
-    char **new_env;
-    new_env = ft_calloc(sizeof(char*),len_darray(env));
-    while(env[i] != NULL)
+    t_env *ptr;
+
+    ptr = (*env);
+    while(ptr != NULL)
     {
-        if(i == index)
-            i++;
-        if(env[i] != NULL)
-        {
-            new_env[j] = env[i];
-            i++;
-            j++;
-        }
+        ptr->index = i;
+        i++;
+        ptr = ptr->next;
     }
-    return(new_env);
 }
 
+void ft_removeinenv(t_env **env, int index)
+{
 
+    t_env *ptr;
+    t_env *prev;
+    t_env *next;
+    ptr = (*env);
+    while(index != 0)
+    {
+        prev = ptr;
+        ptr = ptr->next;
+        index--;
+    }
+    if(ptr->next != NULL)
+        next = ptr->next;
+    else
+        next = NULL;
+    if(prev != NULL)
+        prev->next = next;
+    else
+        *env = next;
+}
 
-void ft_unset(char ***env,t_cmd *commands)
+void ft_unset(t_env **env,t_cmd *commands)
 {
     int index;
-    char **new_env;
-    new_env = NULL;
-    index = index_env(*env,commands->args[1]);
-    if(index != -1)
+    char *str;
+    index = ft_strintchr(commands->args[1],61);
+    if(*env == NULL)
+        return;
+    if(index == -1)
     {
-        new_env = ft_unsetinarr(*env,index);
-        *env = new_env;
+        index = ft_indexinenv(*env,commands->args[1]);
+        if(index == -1)
+            return;
+        ft_removeinenv(env,index);
+        update_index(env);
     }
 }
