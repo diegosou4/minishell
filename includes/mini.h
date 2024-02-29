@@ -48,6 +48,15 @@ typedef struct s_operations
 	char *apppend_out;
 } t_operations;
 
+typedef struct s_env{
+
+	int index;
+	char *key;
+	char *value;
+	struct s_env *next;
+} t_env;
+
+
 typedef struct  s_redir
 {
 	char *path;
@@ -121,9 +130,8 @@ char *findfile(char *cmd);
 // Functions for Exec
 int casetoken(t_redir *redir);
 int openredir(t_redir *redir);
-void execute_cmd(t_cmd *commands, char **env);
-void execution(t_cmd *commands, char ***env);
-void exec(t_cmd *command,int in, int out,char **env);
+
+void execution(t_cmd *commands, t_env *env);
 
 // Free and close
 void closeandfree(t_redir *redir);
@@ -140,20 +148,38 @@ int sizeredir(t_redir *redir);
 void free_commands(t_cmd *comands);
 void free_redirects(t_redir *redir);
 // Builtings
-
-int check_builtings(t_cmd *commands, char **env);
+void update_index(t_env **env);
+void ft_putinlast(t_env **env,t_cmd *commands);
+void ft_export(t_env **env,t_cmd *commands);
+int check_builtings(t_cmd *commands);
 int 	index_env(char **env, char *str);
 char	*ft_getenv(char **env, char *str, int i);
 int ft_cd(t_cmd *comands);
-void ft_env(char **env);
-void execute_env(char **env, t_cmd *commands);
-//int check_builtings(t_cmd *commands, char **env);
-void execute_simple(t_cmd *commands, char **env);
+void execute_env(t_env *env, t_cmd *commands);
+int ft_haveinenv(t_env *env, char *str);
+int ft_indexinenv(t_env *env,char *this);
 void print_pwd(void);
-void ft_export(char ***env,t_cmd *commands);
-int have_inenv(char **env, char *str);
-void ft_unset(char ***env,t_cmd *commands);
-char **ft_unsetinarr(char **env,int index);
+void ft_removeinenv(t_env **env, int index);
+void ft_unset(t_env **env,t_cmd *commands);
+
+
+// ENV STRUCT
+char *get_key(char *str);
+t_env *newsenv(char *str, int this);
+t_env *ft_nenv(char **env);
+void addbackenv(char *str,int this,t_env **env);
+void print_env(t_env *env);
+void ft_env(t_env *env);
+
+
+
+
+//void exec(t_cmd *command,int in, int out,char **env);
+//void execute_cmd(t_cmd *commands, char **env);
+//void ft_export(char ***env,t_cmd *commands);
+//int have_inenv(char **env, char *str);
+//int check_builtings(t_cmd *commands, char **env);
+
 #endif
 
 

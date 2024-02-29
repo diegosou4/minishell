@@ -32,13 +32,17 @@ EXEC = ft_wrong.c ft_execution.c ft_builtings.c ft_free.c
 COMANDS = ft_echo.c ft_pwd.c ft_cd.c ft_env.c \
             ft_export.c ft_unset.c
 
+ENV = ft_create.c
+
+REDIR_SRC = $(addprefix ./src/redirections/, $(REDIR))
 EXEC_SRC = $(addprefix ./src/exec/, $(EXEC))
 COMANDS_SRC = $(addprefix ./src/scomands/, $(COMANDS))
 PARSE_SRC = $(addprefix ./src/parsing/, $(PARSE))
 LIB_SRC = $(addprefix ./src/libft/, $(LIB))
+ENV_SRC = $(addprefix ./src/env/, $(ENV))
 
 all:
-	@${CC} -g ${CFLAGS} ${LIB_SRC} ${EXEC_SRC} ${COMANDS_SRC} ${PARSE_SRC} -g main.c -o ${NAME}
+	@${CC} -g ${CFLAGS} ${LIB_SRC} ${EXEC_SRC} ${ENV_SRC} ${COMANDS_SRC} ${PARSE_SRC} ${REDIR_SRC} -g main.c -o ${NAME}
 
 clean: $(NAME)
 	rm -rf minishell
