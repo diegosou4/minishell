@@ -27,8 +27,35 @@
     informações relevantes.
 */
 
-int	main(int argc, char *argv[], char **env)
-{  
-	if (argc == 1 && argv[0])
-		ft_parse_manager(env);
-}
+int main(int ac,char **av,char **env)
+{
+    char *str;
+    str = ft_strdup("--22");
+    printf("%s \n",str);
+    int i;
+    i = ft_atoi(str);
+    printf("%i\n",i);
+    /*
+    t_env *cpyenv;
+    cpyenv = ft_nenv(env);
+        
+    ft_env(cpyenv);
+    char *args[] ={"exit","1", NULL};
+    t_cmd *test;
+    test = ft_calloc(sizeof(t_cmd),1);
+    test->path = ft_strdup("exit");
+    test->literal = FALSE;
+    test->fint_variable = FALSE;
+    test->args = args;
+    test->redir = NULL;
+
+
+
+    t_env *ptr;
+
+    ptr = cpyenv;
+    
+
+    execution(test,&cpyenv);  */
+    return(0);
+    }
