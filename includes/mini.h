@@ -123,18 +123,18 @@ char *ft_strtok(char *str, const char *delimiters);
 // this will make a treatment to the sting.
 int ft_special_case(char *modified_line, int j, char **line);
 int ft_parse_handler(char *str, const char *delimiters);
-char *ft_create_string(char *line, char **env);
+char *ft_create_string(char *line);
 
 void ft_echo(int fd, char *str, int flag);
 int ft_whitespace(char *line);
 
 void cmdinback(t_cmd **comands,char *args);
 // Get Path
-char *ft_getenv(char **env, char *str, t_bool i);
+// char *ft_getenv(char **env, char *str, t_bool i);
 char *ft_getpwd(char **env, char *str);
 
 void cmdinback(t_cmd **comands, char *args);
-char *ft_cd(char *newlocal, char *old);
+// char *ft_cd(char *newlocal, char *old);
 void ft_expand(t_cmd **commads, char **cpyenv);
 char **ft_arrcpy(char **str);
 t_cmd *returnmystruct(char *newline);
@@ -239,11 +239,14 @@ void handle_signal(int signal1);
 void ft_free_double_pointers(char **split_line);
 
 // __________________________________________________LIST_MANAGER ________________________________
-int ft_extract_var(t_word_list *word_list, char **env);
+int ft_extract_var(t_word_list *word_list, t_env *env);
 t_word_list	*ft_lstlast_(t_word_list *lst);
 int ft_check_struct_redir(t_word_list *tokens);
 
 //___________________________________________________QUOTES REMOVAL _______________________________
 void ft_quotes_remove(t_word_list *word_list);
+
+//___________________________________________________VAR EXP _______________________________
+char *ft_path_handler(t_env *env, char *variable);
 
 #endif
