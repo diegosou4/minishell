@@ -32,7 +32,7 @@ int 	index_env(char **env, char *str)
 }
 
 
-char	*ft_getenv(char **env, char *str, int i)
+char *ft_getenv(char **env, char *str, t_bool i)
 {
 	char	*p;
 
@@ -46,10 +46,10 @@ char	*ft_getenv(char **env, char *str, int i)
 			return (p + 5);
 		}
 		else 
-		{
-			
+		{		
 		if (p != NULL)
 			return (p + 4);
+		}
 		env++;
 	}
 	return (NULL);

@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   ft_append.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/05 12:53:10 by diegmore          #+#    #+#             */
-/*   Updated: 2023/10/05 12:53:13 by diegmore         ###   ########.fr       */
+/*   Created: 2024/02/29 18:23:53 by diegmore          #+#    #+#             */
+/*   Updated: 2024/02/29 18:23:55 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../includes/mini.h"
 
-int	ft_isdigit(int c)
+
+int ft_append(char *path)
 {
-	if (c >= '0' && c <= '9' || c == '+' || c == '-')
-		return (1);
-	return (0);
-}
 
-// Verifica se o char e um
-// numero
+    int fd;
+    fd = open(path, O_APPEND || O_RDWR, 0777);
+    if(fd < 0)
+        return(fd);
+
+    return(fd);
+}

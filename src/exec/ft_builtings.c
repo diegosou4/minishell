@@ -26,5 +26,7 @@ int check_builtings(t_cmd *commands)
         return(5);
     else if(ft_strncmp("echo", commands->args[0],4) == 0)
         return(6);
+    else if(ft_strncmp("exit",commands->args[0],4) == 0)
+        return(7);
     return(0);
 }
