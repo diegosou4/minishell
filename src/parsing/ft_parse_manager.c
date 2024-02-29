@@ -25,9 +25,20 @@
 t_tags ft_tags(t_word_desc *word)
 {
 	char *word_cpy;
-
+	int len;
+	
 	word_cpy=word->word;
-    if (word->flags == 1 || 
+
+	len = ft_strlen(word_cpy);
+    if ((word_cpy[0] == '\'' && word_cpy[len - 1] == '\''))
+    {
+		return (WORD);
+    }
+	else if ((word_cpy[0] == '\"' && word_cpy[len - 1] == '\"'))
+	{
+		return (SPECIAL_VAR);
+	}
+    else if (word->flags == 1 || 
         word->flags == 2 || 
         word->flags == 3 || 
         word->flags == 4)
@@ -38,8 +49,6 @@ t_tags ft_tags(t_word_desc *word)
 		return (VARIABLE);
 	else if (ft_strcmp(word_cpy,"$?") == 0)
 		return (SPECIAL_PAR);
-	else if (ft_strchr(word->word, '$'))
-		return (SPECIAL_VAR);
 	else
 		return (WORD);
 }
@@ -67,7 +76,7 @@ t_word_desc *create_word_desc(char *word, int flag)
 	char *word_copy;
 	
 	word_copy = word;
-	ft_checker_quotes(word_copy);
+	// ft_checker_quotes(word_copy);
 	new_word->word = ft_strdup(word_copy);
 	// printf("------------> this is the word :%s:\n", new_word->word);
 	new_word->flags = flag;
@@ -159,6 +168,7 @@ t_word_list **ft_tokenizer_manager(char *line, char **env)
 	while (words_list[++i])
 	{
 		ft_extract_var(words_list[i], env);
+		ft_quotes_remove(words_list[i]);
 		ft_print_list_struct(words_list[i]);
 	}
 
