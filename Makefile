@@ -19,7 +19,8 @@ LIB = ft_isalpha.c ft_isdigit.c ft_isalnum.c \
       ft_lstdelone.c ft_lstclear.c ft_strpbrk.c\
       ft_lstmap.c ft_strstr.c ft_strcmp.c \
       ft_len_darray.c ft_strrjoin.c \
-      ft_strstrjoin.c
+      ft_strstrjoin.c get_next_line_utils.c \
+      get_next_line.c 
 
 PARSE = ft_special.c ft_parse_manager.c ft_utils.c\
       ft_parsing_handler.c ft_getenv.c ft_expand.c \
@@ -31,9 +32,11 @@ PARSE = ft_special.c ft_parse_manager.c ft_utils.c\
 EXEC = ft_wrong.c ft_execution.c ft_builtings.c ft_free.c
 
 COMANDS = ft_echo.c ft_pwd.c ft_cd.c ft_env.c \
-            ft_export.c ft_unset.c
+            ft_export.c ft_unset.c ft_exit.c
 
 ENV = ft_create.c
+
+REDIR = ft_heredoc.c ft_append.c
 
 REDIR_SRC = $(addprefix ./src/redirections/, $(REDIR))
 EXEC_SRC = $(addprefix ./src/exec/, $(EXEC))

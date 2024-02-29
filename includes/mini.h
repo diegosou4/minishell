@@ -23,6 +23,7 @@
 #include <sys/wait.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include "src/libft/get_next_line.h"
 
 /*
 	Color codes.
@@ -35,6 +36,7 @@
 #define ANSI_COLOR_MAGENTA "\x1b[35m"
 #define ANSI_COLOR_CYAN "\x1b[36m"
 #define ANSI_COLOR_RESET "\x1b[0m"
+#define ANSI_COLOR_PURPLE "\e[0;35m"
 
 typedef enum s_bool
 {
@@ -134,7 +136,6 @@ char *ft_getenv(char **env, char *str, t_bool i);
 char *ft_getpwd(char **env, char *str);
 
 void cmdinback(t_cmd **comands, char *args);
-char *ft_cd(char *newlocal, char *old);
 void ft_expand(t_cmd **commads, char **cpyenv);
 char **ft_arrcpy(char **str);
 t_cmd *returnmystruct(char *newline);
@@ -193,15 +194,14 @@ void free_commands(t_cmd *comands);
 void free_redirects(t_redir *redir);
 // Builtings
 int check_builtings(t_cmd *commands);
-
+void ft_exit(t_cmd *comands);
 void update_index(t_env **env);
 void ft_putinlast(t_env **env,char *this);
 void ft_export(t_env **env,t_cmd *commands);
-
+void ft_numberforexit(char *str);
 int 	index_env(char **env, char *str);
 
 
-char	*ft_getenv(char **env, char *str, int i);
 int ft_cd(t_cmd *comands,t_env **env);
 void execute_env(t_env *env, t_cmd *commands);
 int ft_haveinenv(t_env *env, char *str);
@@ -218,6 +218,11 @@ t_env *ft_nenv(char **env);
 void addbackenv(char *str,int this,t_env **env);
 void print_env(t_env *env);
 void ft_env(t_env *env);
+
+// HERE DOC
+
+int ft_heredoc(char *delimiter);
+void ft_putforwe(char *line,int fd);
 
 //void exec(t_cmd *command,int in, int out,char **env);
 //void execute_cmd(t_cmd *commands, char **env);
