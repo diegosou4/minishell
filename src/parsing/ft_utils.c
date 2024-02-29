@@ -78,6 +78,8 @@ void ft_checker_quotes(char *str)
 {
     int len;
 
+	// printf("CHECK QUOTES ---------> :%s:\n", str);
+
     len = ft_strlen(str);
     if ((str[0] == '\'' && str[len - 1] == '\'')
         || (str[0] == '\"' && str[len - 1] == '\"'))
@@ -86,6 +88,17 @@ void ft_checker_quotes(char *str)
         ft_memmove(str, (str + 1), len - 1);
     }
 }
+void ft_quotes_remove(t_word_list *word_list)
+{
+    while (word_list)   
+    {
+        ft_checker_quotes(word_list->word->word);
+        word_list = word_list->next;
+    }
+    
+}
+
+
 
 char	*ft_strtok(char *str, const char *delimiters)
 {
