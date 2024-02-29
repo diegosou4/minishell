@@ -22,6 +22,7 @@
 
 */
 
+
 t_tags ft_tags(t_word_desc *word)
 {
 	char *word_cpy;
@@ -133,7 +134,7 @@ static t_word_list *tokenize_and_print(char *token)
 */
 
 
-t_word_list **ft_tokenizer_manager(char *line, char **env)
+t_word_list **ft_tokenizer_manager(char *line, t_env *env)
 {
 	char **tokens;
 	t_word_list **words_list;
@@ -142,7 +143,7 @@ t_word_list **ft_tokenizer_manager(char *line, char **env)
 
 	i = -1;
 	words_list = ft_calloc(100, sizeof(t_word_list *));
-	tokens = ft_split(ft_create_string(line, env), '3');
+	tokens = ft_split(ft_create_string(line), '3');
 	if (!tokens)
 		return (NULL);
 	ft_print_doble_char(tokens);
@@ -179,21 +180,24 @@ t_word_list **ft_tokenizer_manager(char *line, char **env)
 	memmory here.
 */
 
+
+
 void *ft_parse_manager(char **env)
 {
 	char *line;
-	char **cpyenv;
 	char *usr;
 	char *line_text;
+	t_env *cpyenv;
+	int index;
 
 	ft_signal_manager();
-
-	cpyenv = ft_arrcpy(env);
+	cpyenv = ft_nenv(env);
 	while (1)
 	{
-		usr = ft_getenv(cpyenv, "USER", TRUE);
-		line_text = ft_strjoin(ANSI_COLOR_CYAN, usr);						// Change color to cyan
-		line_text = ft_strjoin(line_text, " @🐧shell:$ " ANSI_COLOR_RESET); // Reset color after prompt
+		// usr = ft_getenv(cpyenv, "USER", TRUE);
+		char *value = ft_path_handler(cpyenv, "USER");
+		line_text = ft_strjoin(ANSI_COLOR_CYAN, (value));						// Change color to cyan
+		line_text = ft_strjoin(line_text, "@🐧shell:$ " ANSI_COLOR_RESET); // Reset color after prompt
 		line = readline(line_text);
 		if (!line || (ft_strcmp(line, "exit") == 0))
 			break;
