@@ -237,6 +237,7 @@ void handle_signal(int signal1);
 // __________________________________________________FREE_MANAGER ________________________________
 
 void ft_free_double_pointers(char **split_line);
+void ft_free_env_list(t_env *env);
 
 // __________________________________________________LIST_MANAGER ________________________________
 int ft_extract_var(t_word_list *word_list, t_env *env);
