@@ -50,4 +50,4 @@ clean: $(NAME)
 re: $(NAME)
 	clean all
 valgrind:
-		valgrind --leak-check=full ./${NAME}
+	valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-fds=yes ./${NAME}
