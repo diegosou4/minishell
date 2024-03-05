@@ -17,23 +17,41 @@ void ft_putforwe(char *line,int fd)
     ft_putstr_fd(line,fd);
     ft_putchar_fd('\n',fd);
     free(line);
+}
+
+int ft_handle_redir_input(char *delimiter)
+{
+    int pid;
+    int fd;
+    pid = fork();
+    if(pid == 0)
+    {
+        fd = ft_heredoc(delimiter);
+        char *str;
+        str = get_next_line(fd);
+        while(str)
+        {
+        printf("%s",str);
+        str = get_next_line(fd);    
+        }
+    close(fd);
+    }
+    wait(NULL);
+    return(0);
 
 }
 
 
 int ft_heredoc(char *delimiter)
 {
-    int fd;
+    int fd[2];
     char *line;
     char *line_text;
-
-    fd = open(".temp.txt", O_TRUNC | O_CREAT | O_RDWR, 0777);
-    if(fd < 0)
-        return(fd);
+    pipe(fd);
     while(1)
     {
         line_text = ft_strjoin(ANSI_COLOR_PURPLE,"🐧🐧>");
-        line = readline(line_text);
+        line = readline(line_text);  
         free(line_text);
         if(strncmp(delimiter,line,ft_strlen(line)) == 0)
         {
@@ -41,9 +59,8 @@ int ft_heredoc(char *delimiter)
             break;
         }
         else
-            ft_putforwe(line,fd);
+            ft_putforwe(line,fd[1]);
     }
-    close(fd);
-    fd = open(".temp.txt", O_RDONLY, 0777);
-    return(fd);
+    close(fd[1]);
+    return(fd[0]);
 }

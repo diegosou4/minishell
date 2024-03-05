@@ -29,33 +29,31 @@
 
 int main(int ac,char **av,char **env)
 {
-    char *str;
-    str = ft_strdup("--22");
-    printf("%s \n",str);
-    int i;
-    i = ft_atoi(str);
-    printf("%i\n",i);
-    /*
     t_env *cpyenv;
-    cpyenv = ft_nenv(env);
-        
-    ft_env(cpyenv);
-    char *args[] ={"exit","1", NULL};
+    cpyenv = ft_nenv(env,1);
+    t_redir *redir;  
+
+    ft_handle_redir_input("OLA");
+
+    //ft_env(cpyenv);
+
+    char *args[] ={"ls","-l", NULL};
     t_cmd *test;
     test = ft_calloc(sizeof(t_cmd),1);
-    test->path = ft_strdup("exit");
+    test->path = ft_strdup("usr/bin/ls");
     test->literal = FALSE;
     test->fint_variable = FALSE;
     test->args = args;
     test->redir = NULL;
+    redir = ft_calloc(sizeof(t_redir),1);
 
+    redir->path = "EOF";
+    redir->token = 3;
+    redir->fd = -1;
+    redir->next = NULL;
+    test->redir = redir;
 
-
-    t_env *ptr;
-
-    ptr = cpyenv;
-    
-
-    execution(test,&cpyenv);  */
-    return(0);
-    }
+    execution(test,&cpyenv);
+    ft_exp(cpyenv);*/  
+   // ft_env(cpyenv);
+}

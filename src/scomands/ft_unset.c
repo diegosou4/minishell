@@ -56,6 +56,8 @@ void ft_unset(t_env **env,t_cmd *commands)
     int index;
     char *str;
     index = ft_strintchr(commands->args[1],61);
+    if(ft_strncmp("_=",commands->args[1],2) == 0)
+        return;
     if(*env == NULL)
         return;
     if(index == -1)

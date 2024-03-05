@@ -21,6 +21,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
+#include <signal.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include "src/libft/get_next_line.h"
@@ -92,6 +93,7 @@ typedef struct s_env{
 	int index;
 	char *key;
 	char *value;
+	int token;
 	struct s_env *next;
 } t_env;
 
@@ -196,8 +198,12 @@ void free_redirects(t_redir *redir);
 int check_builtings(t_cmd *commands);
 void ft_exit(t_cmd *comands);
 void update_index(t_env **env);
-void ft_putinlast(t_env **env,char *this);
+void ft_putinlast(t_env **env,char *this,int token);
 void ft_export(t_env **env,t_cmd *commands);
+void ft_caseequal(t_env **env,char *command);
+void ft_casewithout(t_env **env,char *command);
+t_env *newexp(char *str, int this, int token);
+void ft_exp(t_env *env);
 void ft_numberforexit(char *str);
 int 	index_env(char **env, char *str);
 
@@ -213,12 +219,15 @@ void ft_unset(t_env **env,t_cmd *commands);
 
 // ENV STRUCT
 char *get_key(char *str);
-t_env *newsenv(char *str, int this);
-t_env *ft_nenv(char **env);
-void addbackenv(char *str,int this,t_env **env);
+t_env *newsenv(char *str, int this, int token);
+t_env *ft_nenv(char **env,int token);
+void addbackenv(char *str,int this,t_env **cpyenv, int token);
 void print_env(t_env *env);
 void ft_env(t_env *env);
-
+// Redirects
+int have_out(t_redir *redir);
+int redirout(char *path);
+int ft_append(char *path);
 // HERE DOC
 
 int ft_heredoc(char *delimiter);
@@ -230,7 +239,8 @@ void ft_putforwe(char *line,int fd);
 //int have_inenv(char **env, char *str);
 //int check_builtings(t_cmd *commands, char **env);
 
-
+// __________________________________________________Fuctions_Test_____________________________
+int ft_handle_redir_input(char *delimiter);
 // Check redir.
 int ft_check_valid_redir(t_word_list *word_list);
 

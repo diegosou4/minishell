@@ -68,6 +68,8 @@ void execution(t_cmd *commands, t_env **env)
             ft_cd(commands,env);
         else if(build == 3)
             execute_env(*env,commands);
+        else if(build == 4)
+            ft_export(env,commands);
         else if(build == 7)
             ft_exit(commands);       
     }
