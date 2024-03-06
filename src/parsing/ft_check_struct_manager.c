@@ -42,9 +42,11 @@ t_word_list *ft_lstlast_(t_word_list *lst)
 static int ft_check_token_size(char *token_line)
 {
 	int i;
-	
+
 	i = 0;
-	while (token_line[i] != '\0' && ((ft_isalnum(token_line[i]) || ft_isdigit(token_line[i]) || ft_isalnum(token_line[i]) || token_line[i] == '_')))
+	while (token_line[i] != '\0' && ((ft_isalnum(token_line[i]) 
+			|| ft_isdigit(token_line[i]) || ft_isalnum(token_line[i]) 
+			|| token_line[i] == '_')))
 		i++;
 	return (i);
 }
@@ -66,7 +68,9 @@ char *ft_path_handler(t_env *env, char *variable)
 	int index;
 	char *holder;
 
-	printf("VARIABLE :%s:\n", variable);
+	
+	if(env == NULL)
+		return(NULL);
 	index = ft_indexinenv(env, variable);
 	if (index == -1)
 		return NULL;
@@ -74,63 +78,79 @@ char *ft_path_handler(t_env *env, char *variable)
 	{
 		env = env->next;
 	}
-	printf("key    :%s:\n", env->key);
-	printf("value  :%s:\n", env->value);
-	printf(":%d:\n", index);
+	holder = ft_calloc(ft_strlen(env->value + 1), sizeof(char ));
 	holder = env->value + 1;
 	return (holder);
 }
+void ft_check_variable_quotes_expansion(char *dest)
+{
+	int i;
+	i = -1;
+	while(dest[++i])
+	{
+		if (dest[i] == '$' && dest[i + 1] == '\'')
+		{
+			ft_memmove(&dest[i], &dest[i + 1], ft_strlen(&dest[i + 1]) + 1);
+			// ft_checker_quotes(&line[i], 2);
+		}
+	}
+	printf("line without $ :%s:\n", dest);
+}
+void ft_check_variable_expansion(char *src, char *dest, t_env *env)
+{
+	char *token;
+	char *path;
+	int in_quotes;
+	int double_quote;
+
+	double_quote = 0;
+	in_quotes = 0;
+	while (*src)
+	{
+		if (*src == '\"' && ft_strchr(src, '$'))
+			double_quote = !double_quote;
+		if (*src == '\'' && !double_quote)
+        {
+            in_quotes = !in_quotes; // Toggle the quotes flag
+            *dest++ = *src++;
+            continue; // Skip to the next character
+        }
+		if (!in_quotes && *src == '$' && (*(src + 1) != '\'' && *(src + 1) != '\"'))
+		{
+			token = ft_create_token(src + 1);
+			printf("this is the toke :%s:\n", token);
+			path = ft_path_handler(env, token);
+			while (path != NULL && *path)
+				*dest++ = *path++;
+			src += ft_strlen(token) + 1;
+			free(token);
+		}
+		else
+			*dest++ = *src++;
+		
+	}
+	*dest = '\0';
+}
+
 int ft_extract_var(t_word_list *word_list, t_env *env)
 {
 	char *token;
-	char *appear;
+	char *src;
+	char *dest;
 	char *path;
-	int len;
-	char *buffer;
-	int i;
-	char *new_path;
-	char *new_token;
-
-	i = 0;
-	path = ft_calloc(1000, sizeof(char *));
-	buffer = ft_calloc((ft_strlen(word_list->word->word)), sizeof(char *));
 	char *word_cpy;
 
 	while (word_list)
 	{
-		if (word_list->word->tags == SPECIAL_VAR ||
-			word_list->word->tags == VARIABLE)
+		if (word_list->word->tags == VARIABLE)
 		{
-			// ft_checker_quotes(word_list->word->word);
-			while (word_list->word->word[i] != '$' && word_list->word->word[i])
-				i++;
-			word_cpy = ft_calloc(i + 1, sizeof(char));
-			ft_strlcat(word_cpy, word_list->word->word, i + 1);
-			// printf("WORD ------------> :%s:\n", word_list->word->word);
-			// printf("BUFF ------------> :%s:\n", word_cpy);
-			appear = ft_strchr((const char *)word_list->word->word, '$');
-			if (appear)
-			{
-				appear++;
-				i++;
-				token = ft_create_token(appear);
-				// printf("TOKEN ---------> :%s:\n", token);
-				len = ft_strlen(token);
-				path = ft_path_handler(env, token);
-				if (path)
-					new_path = ft_strjoin(word_cpy, path);
-				else
-				{
-					new_path = word_cpy;
-					word_list->word->word = new_path;
-					return (1);
-				}
-				// printf("BUFF ---------> :%s:\n", new_path);
-				i += len;				
-				new_token = ft_strjoin(new_path, &word_list->word->word[i]);
-				// printf("NEW TOKEN ---------> :%s:\n", new_token);
-				word_list->word->word = new_token;
-			}
+			word_cpy = ft_calloc(10000 + 1, sizeof(char));
+			src = word_list->word->word;
+			dest = word_cpy;
+			ft_check_variable_expansion(src, dest, env);
+			if (ft_strchr(word_cpy, '\''))
+				ft_check_variable_quotes_expansion(dest);
+			word_list->word->word = word_cpy;
 		}
 		word_list = word_list->next;
 	}
