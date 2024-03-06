@@ -55,9 +55,9 @@ void ft_print_list_struct(t_word_list *structure)
     printf(ANSI_COLOR_GREEN "____________START__STRUCT____________\n" ANSI_COLOR_RESET);
     while (structure)
     {
-        printf(ANSI_COLOR_YELLOW "Word: " ANSI_COLOR_RESET ANSI_COLOR_GREEN " %s\n" ANSI_COLOR_RESET, structure->word->word);
-        printf(ANSI_COLOR_RED "Flags: " ANSI_COLOR_RESET ANSI_COLOR_GREEN "%d\n" ANSI_COLOR_RESET, structure->word->flags);
-        printf(ANSI_COLOR_RED "Tags: " ANSI_COLOR_RESET ANSI_COLOR_GREEN "%d\n" ANSI_COLOR_RESET, structure->word->tags);
+        printf(ANSI_COLOR_YELLOW "Word: "ANSI_COLOR_RESET ANSI_COLOR_GREEN ":%s:\n" ANSI_COLOR_RESET, structure->word->word);
+        printf(ANSI_COLOR_RED "Flags:"ANSI_COLOR_RESET ANSI_COLOR_GREEN ":%d:\n" ANSI_COLOR_RESET, structure->word->flags);
+        printf(ANSI_COLOR_RED "Tags: "ANSI_COLOR_RESET ANSI_COLOR_GREEN ":%d:\n" ANSI_COLOR_RESET, structure->word->tags);
         printf("------------------------------------\n");
 
         structure = structure->next;
