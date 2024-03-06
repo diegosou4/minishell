@@ -42,6 +42,19 @@ typedef enum s_bool
 	FALSE,
 } t_bool;
 
+//________________________________STRUCTURES__FOR THE INPUT_________________________________
+
+typedef struct s_line
+{
+	char *line;
+	char *usr;
+	char *line_text;
+	char *color_line;
+	char *value_env;
+} t_line;
+
+t_line *ft_init_manager(t_line *line);
+
 //________________________________STRUCTURES__FOR THE TOKENS_________________________________
 
 // Words with the flags...
@@ -53,10 +66,8 @@ typedef enum s_tags
 	VARIABLE,
 	SPECIAL_PAR,
 	SPECIAL_VAR,
+	VARIABLE_CHECK,
 } t_tags;
-
-
-
 
 typedef struct s_word_desc
 {
@@ -117,9 +128,11 @@ typedef struct s_cmd
 // Parsign handler.
 
 void *ft_parse_manager(char **env);
+//________________________________PARSING UTILITIES_________________________________
 
-// Parsing utils.
 char *ft_strtok(char *str, const char *delimiters);
+void ft_line_handler(t_line *line, t_env *cpyenv);
+
 // this will make a treatment to the sting.
 int ft_special_case(char *modified_line, int j, char **line);
 int ft_parse_handler(char *str, const char *delimiters);
@@ -238,6 +251,7 @@ void handle_signal(int signal1);
 
 void ft_free_double_pointers(char **split_line);
 void ft_free_env_list(t_env *env);
+void ft_free_line_struct(t_line *line);
 
 // __________________________________________________LIST_MANAGER ________________________________
 int ft_extract_var(t_word_list *word_list, t_env *env);
