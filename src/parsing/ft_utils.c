@@ -164,8 +164,11 @@ void ft_checker_quotes(char *str)
     while (*src)
     {
         if (*src == '\'' && !flag)
+        {
             ft_checker_double_single(src, '\'');
-        else if (*src == '\"' )
+            flag = !flag;
+        }
+        else if (*src == '\"' && !flag)
         {
             ft_checker_double_single(src, '\"');
             flag = !flag;
