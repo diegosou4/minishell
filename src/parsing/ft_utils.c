@@ -72,25 +72,117 @@ char *ft_strcpy(char *dest, const char *src)
     *dest = '\0';
     return dest;
 }
+// This line is to move the string one infront and remove the $ when is followed by a '
+static void ft_preline(char *line)
+{
+    int i;
+    i = -1;
+    while (line[++i])
+    {
+        if (line[i] == '$' && line[i + 1] == '\'')
+        {
+            ft_memmove(&line[i], &line[i + 1], ft_strlen(&line[i + 1]) + 1);
+            // ft_checker_quotes(&line[i], 2);
+        }
+    }
+    // printf("line without $ :%s:\n", line);
+}
 
+// void ft_checker_quotes(char *str)
+// {
+//     int len;
+//     len = ft_strlen(str);
+
+//     while (*str)
+//     {
+//         if ((str[0] == '\'' && str[len - 1] == '\'') || (str[0] == '\"' && str[len - 1] == '\"'))
+//         {
+//             str[len - 1] = '\0';
+//             ft_memmove(str, (str + 1), len - 1);
+//             break;
+//         }
+//     }
+// }
+
+// void ft_checker_quotes_single(char *str)
+// {
+//     char *src;
+//     char *dest;
+//     int flag;
+
+//     flag = 0;
+//     src = str;
+//     dest = str;
+
+//     while (*src)
+//     {
+//         if (*src == '\'' && !flag)
+//         {
+//             src++;
+//             continue;
+//         }
+//         if (*src == '\'' && flag)
+//             flag = !flag;
+//         *dest++ = *src++;
+//     }
+//     *dest = '\0';
+//     printf("this is the dest :%s:\n", dest);
+// }
+
+void ft_checker_double_single(char *str, char quote)
+{
+    char *src;
+    char *dest;
+    int flag;
+
+    flag = 0;
+    src = str;
+    dest = str;
+
+    while (*src)
+    {
+        if (*src == quote && !flag)
+        {
+            src++;
+            continue;
+        }
+        if (*src == quote && flag)
+            flag = !flag;
+        *dest++ = *src++;
+    }
+    *dest = '\0';
+    printf("this is the dest :%s:\n", dest);
+}
 void ft_checker_quotes(char *str)
 {
-    int len;
-    len = ft_strlen(str);
-    if ((str[0] == '\'' && str[len - 1] == '\'') || (str[0] == '\"' && str[len - 1] == '\"'))
+    char *src;
+    int flag;
+
+    flag = 0;
+    src = str;
+
+    while (*src)
     {
-        str[len - 1] = '\0';
-        ft_memmove(str, (str + 1), len - 1);
+        if (*src == '\'' && !flag)
+            ft_checker_double_single(src, '\'');
+        else if (*src == '\"' )
+        {
+            ft_checker_double_single(src, '\"');
+            flag = !flag;
+        }
+        src++;
     }
-    else if (str[0] == '\"')
-        ft_memmove(str, (str + 1), len);
+    printf("this is the dest :%s:\n", src);
 }
 
 void ft_quotes_remove(t_word_list *word_list)
 {
+    char *word;
+
     while (word_list)
     {
-        ft_checker_quotes(word_list->word->word);
+        word = word_list->word->word;
+        ft_checker_quotes(word);
         word_list = word_list->next;
     }
 }
@@ -102,15 +194,12 @@ char *ft_strtok(char *str, const char *delimiters)
 
     if (!str && !buffer)
         return (NULL);
-
     if (str)
         buffer = str;
-
     while (*buffer && ft_strchr(delimiters, *buffer))
         buffer++;
 
     token_start = buffer;
-
     buffer = ft_strpbrk(token_start, delimiters);
     if (buffer)
         *buffer++ = '\0';
@@ -131,4 +220,15 @@ int ft_whitespace(char *line)
         return (0);
 
     return (1);
+}
+//-----------------------------------Line Handler...........................
+void ft_line_handler(t_line *line, t_env *cpyenv)
+{
+    if (cpyenv == NULL)
+        line->value_env = "non-env@user";
+    else 
+        line->value_env = ft_path_handler(cpyenv, "USER");
+    line->color_line = ft_strjoin(ANSI_COLOR_CYAN, (line->value_env));
+    line->line_text = ft_strjoin(line->color_line,
+                                 "@🐧shell:$ " ANSI_COLOR_RESET);
 }
