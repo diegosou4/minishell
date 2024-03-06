@@ -25,3 +25,9 @@ void ft_free_env_list(t_env *env)
         free(temp);
     }
 }
+
+void ft_free_line_struct(t_line *line)
+{
+    free(line->line_text);
+	free(line->color_line);
+}
