@@ -10,13 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../../includes/mini.h"
 
 // t_cmd   *returnmystruct(char *newline)
 // {
 //     t_cmd *commands;
-   
+
 //     char **arr;
 //     arr = ft_split(newline,'3');
 //     int i;
@@ -43,13 +42,12 @@
 // 			// ft_checker_quotes(args[k], ptr);
 //             printf("comand struct :%s:\n",args[k]);
 //             k++;
-//         } 
+//         }
 //         printf("next struct -->\n");
 //         ptr = ptr->next;
 //     }
 //    return(commands);
 // }
-
 
 static int ft_check_close(const char *ptr)
 {
@@ -71,11 +69,11 @@ static int ft_check_close(const char *ptr)
 	}
 	return (1);
 }
-static	char *ft_string_handle(char *line, char *modified_line)
+static char *ft_string_handle(char *line, char *modified_line)
 {
-	int	j;
-	char	flag;
-	char	*ptr;
+	int j;
+	char flag;
+	char *ptr;
 
 	ptr = line;
 	flag = 0;
@@ -87,25 +85,19 @@ static	char *ft_string_handle(char *line, char *modified_line)
 			if (!ft_check_close(ptr))
 				return (NULL);
 			flag = *ptr;
-			modified_line[j++] = '2';
 		}
 		else if (flag == *ptr)
-			flag = 0; 
-		if (flag == 0 && *ptr == ' ') 
-			*ptr = '2'; 
+			flag = 0;
+		if (flag == 0 && *ptr == ' ')
+			*ptr = '2';
 		else if (flag == 0)
 		{
-			j = ft_special_case(modified_line, j, &ptr);
-			if (j == -2)
-				return(NULL);
+			if ((j = ft_special_case(modified_line, j, &ptr)) == -2)
+				return (NULL);
 		}
 		if (flag == 0 && *ptr == '|')
 			*ptr = '3';
 		modified_line[j++] = *ptr;
-		if (flag == 0 && *ptr == '\'')
-			modified_line[j++] = '2';
-		if (flag == 0 && *ptr == '\'')
-			modified_line[j++] = '2';
 		ptr++;
 	}
 	return (modified_line);
@@ -113,10 +105,9 @@ static	char *ft_string_handle(char *line, char *modified_line)
 
 char *ft_create_string(char *line)
 {
-    char *new_line;
-    // t_cmd *comands;
-	new_line = ft_calloc(ft_strlen(line), sizeof(char*));
-    new_line = ft_string_handle(line, new_line);
-    return (new_line);
-}
+	char *new_line;
 
+	new_line = ft_calloc(ft_strlen(line), sizeof(char *));
+	new_line = ft_string_handle(line, new_line);	
+	return (new_line);
+}
