@@ -30,7 +30,8 @@ t_tags ft_tags(t_word_desc *word)
 
 	word_cpy = word->word;
 	len = ft_strlen(word_cpy);
-	if (word->flags == 1 || word->flags == 2 || word->flags == 3 || word->flags == 4)
+	if (word->flags == 1 || word->flags == 2 
+			|| word->flags == 3 || word->flags == 4)
 	{
 		return (EXCECUTOR);
 	}
@@ -126,6 +127,17 @@ static t_word_list *tokenize_and_print(char *token)
 	memmory here.
 	- I need to free the list in case somenthing happend.
 */
+int ft_check_words_list(t_word_list *tokens)
+{
+	while (tokens)
+	{
+		if (tokens->word->tags == EXCECUTOR)
+			return 1;
+		tokens = tokens->next;
+		// printf("teste 02\n");
+	}
+	return (0);
+}
 
 t_word_list **ft_tokenizer_manager(char *line, t_env *env)
 {
@@ -153,8 +165,12 @@ t_word_list **ft_tokenizer_manager(char *line, t_env *env)
 	while (words_list[++i])
 	{
 		ft_extract_var(words_list[i], env);
+		if (ft_check_words_list(words_list[i]) == 1)
+			words_list[i]->redirection = TRUE;
+		else 
+			words_list[i]->redirection = FALSE;
 		ft_quotes_remove(words_list[i]);
-		ft_print_list_struct(words_list[i]);
+		ft_print_list_struct(words_list[i], i);
 	}
 	ft_free_double_pointers(tokens);
 	return (words_list);
