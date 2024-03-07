@@ -94,7 +94,7 @@ void ft_check_variable_quotes_expansion(char *dest)
 			// ft_checker_quotes(&line[i], 2);
 		}
 	}
-	printf("line without $ :%s:\n", dest);
+	// printf("line without $ :%s:\n", dest);
 }
 void ft_check_variable_expansion(char *src, char *dest, t_env *env)
 {
@@ -118,7 +118,7 @@ void ft_check_variable_expansion(char *src, char *dest, t_env *env)
 		if (!in_quotes && *src == '$' && (*(src + 1) != '\'' && *(src + 1) != '\"'))
 		{
 			token = ft_create_token(src + 1);
-			printf("this is the toke :%s:\n", token);
+			// printf("this is the toke :%s:\n", token);
 			path = ft_path_handler(env, token);
 			while (path != NULL && *path)
 				*dest++ = *path++;
@@ -134,14 +134,19 @@ void ft_check_variable_expansion(char *src, char *dest, t_env *env)
 
 int ft_extract_var(t_word_list *word_list, t_env *env)
 {
+	// printf("this is the ft_extract_var START\n");
 	char *token;
 	char *src;
 	char *dest;
 	char *path;
 	char *word_cpy;
+	int flag;
 
+	flag = 0;
 	while (word_list)
 	{
+		if (ft_strcmp(word_list->word->word, "<<") == 0 && word_list->next->word->tags == VARIABLE)
+			word_list->next->word->tags = WORD;
 		if (word_list->word->tags == VARIABLE)
 		{
 			word_cpy = ft_calloc(10000 + 1, sizeof(char));
@@ -154,5 +159,6 @@ int ft_extract_var(t_word_list *word_list, t_env *env)
 		}
 		word_list = word_list->next;
 	}
+	// printf("this is the ft_extract_var END\n");
 	return (1);
 }
