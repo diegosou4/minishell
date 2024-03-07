@@ -67,20 +67,19 @@ void execution(t_cmd *commands, t_env **env)
     t_cmd *ptr;
     int build;
     ptr = commands;
-    if(sizepipe(commands) == 1)
-    {
-        build = check_builtings(commands);
-        if(build == 1)
-            print_pwd(); 
-        else if(build  == 2)
-            ft_cd(commands,env);
-        else if(build == 3)
-            execute_env(*env,commands);
-        else if(build == 4)
-            ft_export(env,commands);
-        else if(build == 7)
-            ft_exit(commands);       
-    }
+    build = check_builtings(commands);
+    if(build == 1)
+        print_pwd(); 
+    else if(build  == 2)
+        ft_cd(commands,env);
+    else if(build == 3)
+        execute_env(*env,commands);
+    else if(build == 4)
+        ft_export(env,commands);
+    else if(build == 6)
+        ft_echo(1,commands->args[3],1);
+    else if(build == 7)
+        ft_exit(commands);       
 }
 
 
