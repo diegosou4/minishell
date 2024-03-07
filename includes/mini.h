@@ -29,7 +29,6 @@
 /*
 	Color codes.
 */
-
 #define ANSI_COLOR_RED "\x1b[31m"
 #define ANSI_COLOR_GREEN "\x1b[32m"
 #define ANSI_COLOR_YELLOW "\x1b[33m"
@@ -114,6 +113,7 @@ typedef struct s_cmd
 	t_bool literal;
 	t_bool fint_variable;
 	char **args;
+	int pipesfd[2];
 	t_redir *redir;
 	struct s_cmd *next;
 
@@ -260,5 +260,25 @@ int ft_check_struct_redir(t_word_list *tokens);
 
 //___________________________________________________QUOTES REMOVAL _______________________________
 void ft_quotes_remove(t_word_list *word_list);
+
+
+//___________________________________________________Test Execution____________________________________
+
+void exec_simple(t_cmd *command,char **env, int *fd);
+void exec_pipe(t_cmd *command,char **env);
+void check_path(t_cmd **commands, char **env);
+int check_path2(t_cmd **commands, char **env);
+
+//_____________________________________________________ENV ______________________________________________________
+void ft_env_null();
+
+//_________________________________________________Teste de execucao 
+
+int ft_countpipes(t_cmd *cmd);
+void open_pipes(t_cmd **cmd);
+void executor_without(t_cmd *commands, char **env, int in,int out);
+void ft_magane_executor(t_cmd **cmd, char **env) ;
+
+
 
 #endif
