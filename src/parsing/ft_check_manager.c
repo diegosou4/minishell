@@ -77,13 +77,13 @@ static	int	ft_check_directions(char **line)
 		;
 	if (ft_strcmp(line[i - 1], "<<") == 0 || ft_strcmp(line[i - 1], ">>") == 0)
 	{
-		printf("🚫 bash: syntax error near unexpected token `newline'\n");
+		printf("-🚫 bash: syntax error near unexpected token `newline'\n");
 		return (0);
 	}
 	else if (ft_strcmp(line[i - 1], "<") == 0 
 		|| ft_strcmp(line[i - 1], ">") == 0)
 	{
-		printf("🚫 bash: syntax error near unexpected token `newline'\n");
+		printf("-🚫 bash: syntax error near unexpected token `newline'\n");
 		return (0);
 	}
 	return (1);
