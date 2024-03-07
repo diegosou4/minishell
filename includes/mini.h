@@ -80,8 +80,9 @@ typedef struct s_word_desc
 
 typedef struct s_word_list
 {
-	struct s_word_list *next; // Pointer to the next node in the list
-	t_word_desc *word;		  // Pointer to the word descriptor
+	struct s_word_list *next;
+	t_word_desc *word;
+	t_bool redirection;
 } t_word_list;
 
 //________________________________STRUCTURES__FOR THE REDIRECTIONS_________________________________
@@ -107,7 +108,7 @@ typedef struct s_env{
 
 typedef struct  s_redir
 {
-	char *path;
+	char	*path;
 	int 	token;
 	int 	fd;
 	struct s_redir *next;
@@ -117,12 +118,10 @@ typedef struct  s_redir
 
 typedef struct s_cmd
 {
-	char *path;
-	t_bool literal;
-	t_bool fint_variable;
-	char **args;
-	t_redir *redir;
-	struct s_cmd *next;
+	char			*path;
+	char			**args;
+	t_redir			*redir;
+	struct s_cmd	*next;
 
 } t_cmd;
 // Parsign handler.
@@ -153,10 +152,15 @@ char **ft_arrcpy(char **str);
 t_cmd *returnmystruct(char *newline);
 char *ask_acess(char *comand, char *path);
 
-// Struct redir
+//________________________________STRUCT COMMANDS CREATION__________________________________
+
 t_cmd *cmdnew(char *args);
 t_cmd *putcmds(char *args);
 t_redir *redirnew(void);
+void ft_structure_creation(char *line, t_env *env);
+
+//________________________________TOKEN MANAGER STRUCTURE CREATION___________________________
+t_word_list **ft_tokenizer_manager(char *line, t_env *env);
 // t_redir *addredirnew(int flag);
 // void add_redir(t_cmd **commands);
 //  Checker quotes.
@@ -166,7 +170,7 @@ char *ft_parse_redir(char *str);
 
 // ________________________________________________________Print Utilities ________________________________
 void ft_print_doble_char(char **argv);
-void ft_print_list_struct(t_word_list *structure);
+void ft_print_list_struct(t_word_list *structure, int i);
 
 // check input.
 int ft_check_input(char *line);
