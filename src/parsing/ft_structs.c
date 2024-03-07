@@ -79,7 +79,40 @@ void add_redir(t_cmd **commands)
     }
 } */
 
+// void ft_structure_redir(t_word_list *token_list, t_redir *redirections)
+// {
+//     char *token;
 
+//     while (token_list)
+//     {
+//         if (token_list->word->tags == EXCECUTOR)
+
+//         token_list = token_list->next;
+//     }
+    
+// }
+// void ft_structure_creation(char *line, t_env *env)
+// {
+//     t_cmd *commands;
+//     t_redir redirections;
+//     t_word_list **token_list;
+//     char *path;
+
+//     token_list = ft_tokenizer_manager(line,env);
+    
+//     int i = -1;
+
+//     while (token_list[++i])
+//     {
+//         if (token_list[i]->redirection == TRUE)
+//         {
+//             ft_structure_redir(token_list[i], &redirections);
+//         }
+//         printf("this is check 01\n");
+//     }
+    
+
+// }
 
 
 

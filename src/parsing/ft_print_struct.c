@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../../includes/mini.h"
 
 // void printstruct(t_cmd *commands)
@@ -42,25 +41,32 @@
 
 void ft_print_doble_char(char **argv)
 {
-	int i = -1;
-	while (argv[++i] && argv[i][0])
-	{
-		printf("Test Element [%d] = :%s:\n", i, argv[i]);
-	}
-	
+    int i = -1;
+    while (argv[++i] && argv[i][0])
+    {
+        printf("Test Element [%d] = :%s:\n", i, argv[i]);
+    }
 }
 
-void ft_print_list_struct(t_word_list *structure)
+void ft_print_list_struct(t_word_list *structure, int i)
 {
-    printf(ANSI_COLOR_GREEN "____________START__STRUCT____________\n" ANSI_COLOR_RESET);
+    // printf(ANSI_COLOR_GREEN "____________START__STRUCT____________\n" ANSI_COLOR_RESET);
+    // if (structure->redirection == FALSE)
+    //     printf(ANSI_COLOR_YELLOW "Type Structure: " ANSI_COLOR_RESET ANSI_COLOR_GREEN ":%s:\n" ANSI_COLOR_RESET, "EXCECUTOR-TOKEN");
+    // else if (structure->redirection == TRUE)
+    //     printf(ANSI_COLOR_YELLOW "Type Structure: " ANSI_COLOR_RESET ANSI_COLOR_GREEN ":%s:\n" ANSI_COLOR_RESET, "NORMAL-PARSE");
+    printf(ANSI_COLOR_YELLOW "[%d]" ANSI_COLOR_RESET, i);
+
     while (structure)
     {
-        printf(ANSI_COLOR_YELLOW "Word: "ANSI_COLOR_RESET ANSI_COLOR_GREEN ":%s:\n" ANSI_COLOR_RESET, structure->word->word);
-        printf(ANSI_COLOR_RED "Flags:"ANSI_COLOR_RESET ANSI_COLOR_GREEN ":%d:\n" ANSI_COLOR_RESET, structure->word->flags);
-        printf(ANSI_COLOR_RED "Tags: "ANSI_COLOR_RESET ANSI_COLOR_GREEN ":%d:\n" ANSI_COLOR_RESET, structure->word->tags);
-        printf("------------------------------------\n");
+        printf(ANSI_COLOR_YELLOW "|" ANSI_COLOR_RESET ANSI_COLOR_GREEN ":%s:" ANSI_COLOR_RESET, structure->word->word);
+        // printf(ANSI_COLOR_RED "Flags:" ANSI_COLOR_RESET ANSI_COLOR_GREEN ":%d:\n" ANSI_COLOR_RESET, structure->word->flags);
+        // printf(ANSI_COLOR_RED "Tags: " ANSI_COLOR_RESET ANSI_COLOR_GREEN ":%d:\n" ANSI_COLOR_RESET, structure->word->tags);
+        // printf("------------------------------------\n");
 
         structure = structure->next;
     }
-    printf(ANSI_COLOR_CYAN "____________END__STRUCT____________\n\n" ANSI_COLOR_RESET);
+    printf(ANSI_COLOR_YELLOW "|" ANSI_COLOR_RESET ANSI_COLOR_GREEN ":%s:" ANSI_COLOR_RESET, "NULL");
+    printf("\n");
+    // printf(ANSI_COLOR_CYAN "____________END__STRUCT____________\n\n" ANSI_COLOR_RESET);
 }
