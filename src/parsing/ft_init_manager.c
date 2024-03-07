@@ -9,3 +9,8 @@ t_line *ft_init_manager(t_line *line)
     
     return line;
 }
+
+// t_cmd *ft_init_manager_commands(t_cmd *line)
+// {
+    
+// }
