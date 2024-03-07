@@ -173,11 +173,6 @@ char *ft_strrange(char *s, int start, int end);
 char *cleantoken(char *str, int c);
 char *findfile(char *cmd);
 
-
-// Functions for Exec
-int casetoken(t_redir *redir);
-int openredir(t_redir *redir);
-
 void execution(t_cmd *commands, t_env **env);
 
 // Free and close
@@ -185,9 +180,7 @@ void closeandfree(t_redir *redir);
 int closeredir(t_redir *redir);
 
 
-// Case Redirects
-int case_in(t_redir *redir);
-int case_out(t_redir *redir);
+
 
 // Pipes 
 int sizepipe(t_cmd *commands);
@@ -233,7 +226,7 @@ int ft_append(char *path);
 int ft_heredoc(char *delimiter);
 void ft_putforwe(char *line,int fd);
 
-//void exec(t_cmd *command,int in, int out,char **env);
+
 //void execute_cmd(t_cmd *commands, char **env);
 //void ft_export(char ***env,t_cmd *commands);
 //int have_inenv(char **env, char *str);
@@ -276,9 +269,12 @@ void ft_env_null();
 
 int ft_countpipes(t_cmd *cmd);
 void open_pipes(t_cmd **cmd);
-void executor_without(t_cmd *commands, char **env, int in,int out);
-void ft_magane_executor(t_cmd **cmd, char **env) ;
-
-
+void executor_without(t_cmd *commands, char **env, int in,int out,t_env **cpy);
+void ft_magane_executor(t_cmd **cmd, char **env,t_env **cpy);
+int check_out(t_redir *redir);
+void start_exection(t_cmd **commands,char **env,t_env **cpy);
+void ft_close(t_cmd **commands);
+void case_redir(t_redir *redir);
+int case_redi(int token, char *path);
 
 #endif

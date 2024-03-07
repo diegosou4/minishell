@@ -29,8 +29,9 @@ PARSE = ft_special.c ft_parse_manager.c ft_utils.c\
       ft_caseredir.c ft_signal_manager.c ft_free_manager.c \
       ft_check_struct_manager.c
 
-EXEC = ft_wrong.c ft_execution.c ft_builtings.c\
-       ft_free.c ft_simple.c
+EXEC = ft_execution.c ft_builtings.c\
+       ft_free.c ft_simple.c ft_route.c\
+       ft_close.c
 
 COMANDS = ft_echo.c ft_pwd.c ft_cd.c ft_env.c \
             ft_export.c ft_unset.c ft_exit.c
