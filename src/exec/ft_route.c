@@ -73,9 +73,12 @@ void ft_magane_executor(t_cmd **cmd, char **env)
     executor_without(ptr, env, 0, ptr->pipesfd[1]);
     prev = (*cmd);
     ptr = ptr->next;
-    executor_without(ptr, env, prev->pipesfd[0], ptr->pipesfd[1]);
-    ptr = ptr->next;
-    prev = (*cmd)->next;
+    while(ptr->next != NULL)
+    {
+        executor_without(ptr, env, prev->pipesfd[0], ptr->pipesfd[1]);
+        prev = ptr;
+        ptr = ptr->next;
+    }
     executor_without(ptr, env, prev->pipesfd[0], 1);
 }
 
