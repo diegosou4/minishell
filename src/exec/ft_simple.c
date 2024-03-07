@@ -53,3 +53,38 @@ int check_out(t_redir *redir)
     }
     return(out);
 }
+// IF not have redirect
+// And One command;
+
+void exec_simple(t_cmd *command,char **env, int *fd)
+{
+    int pid;
+
+    pid = fork();
+    if(pid == 0)
+    {
+        dup2(fd[1],1);
+        execve(command->path,command->args,NULL);
+        exit(0);
+    }
+}
+
+void exec_pipe(t_cmd *command,char **env)
+{
+    int fd[2];
+    pipe(fd);
+
+    exec_simple(command,env,fd);
+    close(fd[1]);
+    wait(NULL);
+    char *str;
+    str = get_next_line(fd[0]);
+    while(str != NULL)
+    {
+        printf("%s",str);
+        free(str);
+        str = get_next_line(fd[0]);
+    }
+    free(str);
+    close(fd[0]);    
+}

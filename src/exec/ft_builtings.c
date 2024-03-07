@@ -12,6 +12,7 @@
 
 #include "../../includes/mini.h"
 
+
 int check_builtings(t_cmd *commands)
 {
     if(ft_strncmp("pwd",commands->args[0],4) == 0)

@@ -21,22 +21,18 @@ void ft_putforwe(char *line,int fd)
 
 int ft_handle_redir_input(char *delimiter)
 {
-    int pid;
+
     int fd;
-    pid = fork();
-    if(pid == 0)
+
+    fd = ft_heredoc(delimiter);
+    char *str;
+    str = get_next_line(fd);
+    while(str != NULL)
     {
-        fd = ft_heredoc(delimiter);
-        char *str;
-        str = get_next_line(fd);
-        while(str)
-        {
         printf("%s",str);
         str = get_next_line(fd);    
-        }
-    close(fd);
     }
-    wait(NULL);
+    close(fd);
     return(0);
 
 }

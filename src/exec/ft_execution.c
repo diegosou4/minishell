@@ -11,47 +11,55 @@
 /* ************************************************************************** */
 
 #include "../../includes/mini.h"
-/*
-void execute_cmd(t_cmd *commands, char **env)
+
+void ft_env_null()
 {
-    t_redir *ptr;
-    int in;
-    int out;
-    in = 0;
-    out = 1;
-    int fd[2];
-
-    pipe(fd);
-    openredir(commands->redir);
-    ptr = commands->redir;
-    if(ptr != NULL)
-    {
-    while(ptr->next)
-    {
-        if(ptr->token == 2)
-        {
-            if(in != 1)
-                close(in);
-            else
-                in = dup(ptr->fd);
-        }
-        ptr = ptr->next;
-    }
-    }
- 
-
+    ft_putstr_fd("Error env no set\n",2);
 }
 
-void exec_simple(t_cmd *commands,char **env)
+// Tenho que da free nessa bagaca, n posso esquecer
+int check_path2(t_cmd **commands, char **env)
 {
-    int pid;
-    pid = fork();
-    if(pid == 0)
+    char *str;
+    char **arr;
+    char *j;
+    str = ft_getenv(env,"PATH=",0);    
+    arr = mysplit(str,58,47);
+    int i;
+    i = 0;
+    while(arr[i] != NULL)
     {
-    execve(commands->path,commands->args,env);
+        j = ft_strjoin(arr[i],(*commands)->args[0]);
+        if(access(j, F_OK) == 0)
+        {
+            (*commands)->path = j;
+            return(1);
+        }
+        free(j);
+        i++;
     }
-    wait(NULL);
-}   */
+    return(0);
+}
+
+
+void check_path(t_cmd **commands,char **env)
+{
+    int build;
+    if(*env == NULL)
+        return(ft_env_null());
+    if(access((*commands)->args[0], F_OK) == 0)
+    {
+        (*commands)->path = ft_strdup((*commands)->args[0]);
+        (*commands)->args[0] = ft_strrchr((*commands)->path,47) + 1;
+        return;
+    }
+    if(check_path2(commands,env) == 1)
+            return;
+    else
+    {
+        printf("Error\n");
+    }
+}
 
 
 void execution(t_cmd *commands, t_env **env)
