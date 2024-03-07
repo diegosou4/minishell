@@ -57,7 +57,10 @@ void executor_without(t_cmd *commands, char **env, int in,int out,t_env **cpy)
         if(check_builtings(commands) == 0)
             execve(commands->path,commands->args,env);
         else
+        {
             execution(commands,cpy);
+            exit(EXIT_SUCCESS);
+        }
         exit(EXIT_SUCCESS);
     }
     if(out != 1)
@@ -90,40 +93,29 @@ int check_out(t_redir *redir)
 void ft_magane_executor(t_cmd **cmd, char **env,t_env **cpy)
 {
     t_cmd *ptr;
-    t_cmd *prev;
+    t_cmd *last;
     int index;
-    index = 0;
     ptr = (*cmd);
-    if(ptr->redir != NULL)
-        index = check_out(ptr->redir);
-    if(index != 0)
+
+    index = check_out(ptr->redir);
+    open_pipes(cmd);
+    if(index == 0)
+        executor_without(ptr, env, 0 , ptr->pipesfd[1],cpy);
+    last = ptr;
+    ptr = ptr->next;
+    while(ptr->next != NULL)
     {
-        t_redir *ptrredir;
-        ptrredir = (*cmd)->redir;
-        int i;
-        i = 0;
-        while(i < index - 1)
-        {
-            ptrredir = ptrredir->next;
-            i++;
-        }
-         executor_without(ptr, env, 0, ptrredir->fd,cpy); 
-    }
-    /*
-    prev = (*cmd);
-    ptr = ptr->next;ft_close
-        executor_without(ptr, env, prev->pipesfd[0], ptr->pipesfd[1],cpy);
-        prev = ptr;
+        if(check_out(last->redir) == 0 && check_out(ptr->redir) == 0)
+            executor_without(ptr,env,last->pipesfd[0],ptr->pipesfd[1],cpy);
+        last = ptr;
         ptr = ptr->next;
     }
-    executor_without(ptr, env, prev->pipesfd[0], 1,cpy);
-    */
+    if(check_out(last->redir) == 0 && check_out(ptr->redir) == 0)
+        executor_without(ptr,env,last->pipesfd[0],1,cpy);
+
 }
-/*
-void case_redir(t_redir *redir)
-{
-  
-}*/
+
+
 
 int case_redi(int token, char *path)
 {
@@ -144,6 +136,22 @@ int case_redi(int token, char *path)
     }
         
     return(fd);
+}
+
+int ft_howpipes(t_cmd *comands)
+{
+    int i;
+    i = 0;
+
+    t_cmd *ptr;
+    ptr = comands;
+    while(ptr != NULL)
+    {
+        ptr = ptr->next;
+        i++;
+    }
+    return(i);
+
 }
 
 void start_exection(t_cmd **commands,char **env,t_env **cpy)

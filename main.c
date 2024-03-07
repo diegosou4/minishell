@@ -6,7 +6,7 @@
 /*   By: juan-pma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:59:54 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/02/21 09:05:41 by juan-pma         ###   ########.fr       */
+/*   Updated: 2024/03/06 10:50:01 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,29 +31,31 @@ int main(int ac,char **av,char **env)
 {
     t_env *cpyenv;
     cpyenv = ft_nenv(env,1);
-    t_redir *redir;  
+    t_cmd *commands;
+    char *a1[] = {"pwd", NULL};
+    commands = malloc(sizeof(t_cmd));
 
-    ft_handle_redir_input("OLA");
+    commands->path = ft_strdup("pwd");
+    commands->args = a1;
+    commands->redir = NULL;
+    commands->next = NULL;
 
-    //ft_env(cpyenv);
+    t_cmd *c1;
+    c1 = malloc(sizeof(t_cmd) * 1);
 
-    char *args[] ={"ls","-l", NULL};
-    t_cmd *test;
-    test = ft_calloc(sizeof(t_cmd),1);
-    test->path = ft_strdup("usr/bin/ls");
-    test->literal = FALSE;
-    test->fint_variable = FALSE;
-    test->args = args;
-    test->redir = NULL;
-    redir = ft_calloc(sizeof(t_redir),1);
+    c1->path = ft_strdup("/bin/ls");
+    char *a2[] = {"ls", "-la", NULL};
+    c1->args = a2;
+    c1->redir = NULL;
+    c1->next = NULL;
 
-    redir->path = "EOF";
-    redir->token = 3;
-    redir->fd = -1;
-    redir->next = NULL;
-    test->redir = redir;
+    commands->next = c1;
 
-    execution(test,&cpyenv);
-    ft_exp(cpyenv);*/  
-   // ft_env(cpyenv);
+    start_exection(&commands,env,&cpyenv);
+    int pipes = ft_howpipes(commands);
+    for (int i = 0; i < pipes; i++) {
+        wait(NULL);
+    }
+
+    return(0);
 }

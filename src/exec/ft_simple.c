@@ -30,29 +30,7 @@ int have_out(t_redir *redir)
 }
 
 
-int check_out(t_redir *redir)
-{
-    int out;
-    out = -1;
-    int i;
-    i = 0;
-    t_redir *ptr;
-    ptr = redir;
-    while(ptr != NULL)
-    {
-        if(ptr->token == 1 | ptr->token == 4)
-        {
-            if(out != -1)
-                close(out);
-            if(ptr->token == 1)
-                out = redirout(redir->path);
-            if(ptr->token == 4)
-                out = ft_append(redir->path);
-        }
-        ptr = ptr->next;  
-    }
-    return(out);
-}
+
 // IF not have redirect
 // And One command;
 
