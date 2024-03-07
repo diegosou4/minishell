@@ -12,44 +12,7 @@
 
 #include "../../includes/mini.h"
 
-// t_cmd   *returnmystruct(char *newline)
-// {
-//     t_cmd *commands;
-
-//     char **arr;
-//     arr = ft_split(newline,'3');
-//     int i;
-//     i = 1;
-//     commands = cmdnew(arr[0]);
-//     while(arr[i] != NULL)
-//     {
-//         cmdinback(&commands,arr[i]);
-//         i++;
-//     }
-//     t_cmd *ptr;
-
-//     ptr = commands;
-
-//     while(ptr != NULL)
-//     {
-//         char **args;
-
-//         args = ptr->args;
-//         int k;
-//         k = 0;
-//         while(args[k] != NULL)
-//         {
-// 			// ft_checker_quotes(args[k], ptr);
-//             printf("comand struct :%s:\n",args[k]);
-//             k++;
-//         }
-//         printf("next struct -->\n");
-//         ptr = ptr->next;
-//     }
-//    return(commands);
-// }
-
-static int ft_check_close(const char *ptr)
+static int ft_check_close_q(const char *ptr)
 {
 	if (*ptr == '\'')
 	{
@@ -69,6 +32,29 @@ static int ft_check_close(const char *ptr)
 	}
 	return (1);
 }
+static int ft_check_close(const char *ptr)
+{
+	printf("this is the line quote :%s:\n", ptr);
+	char flag;
+
+	flag = 0;
+	while (*ptr)
+	{
+		if (flag == 0 && (*ptr == '\"' || *ptr == '\'') )
+		{
+			if (!ft_check_close_q(ptr))
+			{
+				return (1);
+			}
+			flag = *ptr;
+		}
+		else if (flag == *ptr)
+			flag = 0;
+		ptr++;
+	}
+	return (0);
+}
+
 static char *ft_string_handle(char *line, char *modified_line)
 {
 	int j;
@@ -82,8 +68,6 @@ static char *ft_string_handle(char *line, char *modified_line)
 	{
 		if (flag == 0 && (*ptr == '\"' || *ptr == '\''))
 		{
-			if (!ft_check_close(ptr))
-				return (NULL);
 			flag = *ptr;
 		}
 		else if (flag == *ptr)
@@ -102,12 +86,43 @@ static char *ft_string_handle(char *line, char *modified_line)
 	}
 	return (modified_line);
 }
+// static char *ft_string_handle(char *line, char *modified_line)
+// {
+// 	int j;
+// 	char flag;
+
+// 	flag = 0;
+// 	j = 0;
+// 	while (*line)
+// 	{
+// 		if (flag == 0 && (*line == '\"' || *line == '\''))
+// 			flag = *line;
+// 		else if (flag == *line)
+// 			flag = 0;
+// 		if (flag == 0 && *line == ' ')
+// 			*line = '2';
+// 		else if (flag == 0)
+// 		{
+// 			if ((j = ft_special_case(modified_line, j, &line)) == -2)
+// 				return (NULL);
+// 		}
+// 		if (flag == 0 && *line == '|')
+// 			*line = '3';
+// 		modified_line[j++] = *line;
+// 		line++;
+// 	}
+// 	return (modified_line);
+// }
 
 char *ft_create_string(char *line)
 {
 	char *new_line;
 
 	new_line = ft_calloc(ft_strlen(line), sizeof(char *));
-	new_line = ft_string_handle(line, new_line);	
+	new_line = ft_string_handle(line, new_line);
+	printf("this is the line :%s:\n", new_line);
+	if (ft_check_close(new_line) == 1)
+		new_line = NULL;
+
 	return (new_line);
 }
