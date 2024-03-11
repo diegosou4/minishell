@@ -68,37 +68,55 @@ void executor_without(t_cmd *commands, char **env, int in,int out,t_env **cpy)
     if(in != 0)
         close(in);
 }
-
-
-int check_out(t_redir *redir)
+/*
+void execute_simple(t_cmd **cmd,char **env,t_env **cpy)
 {
-    int indexout;
-    indexout = 0;
-    int fd;
-    t_redir *ptr;
-
-    ptr = redir;
-    while(ptr != NULL)
-    {
-        if(ptr->token == 1)
-            indexout++;
-        ptr = ptr->next;
-    }
-    return(indexout);
-}
+    if(env == NULL)
+        return;
 
 
 
+
+
+}*/
+
+// MEU PARCEIRO BOLADAO VOCE E O CARA
+// QUE QUE TU TEM QUE FAZER
+// ABRE OS PIPES DOS COMANDOS NA HUMILDADE
+// VERIFICA SE HA ALGUMA REDIRECAP
+// DEPOIS DE QUEBRADA VAI PEGAR O ULTIMO REDIRECT DELE
+// SENDO IN OU OUT
+// O RESTO VAI SER IGNORADO SE TA LIGADO NE!!
+// ENTAO VAMO PENSAR BEM 
+// SE TU TIVER IN E OUT METE MARCHA E SO FAZ ACONTECER
+// A GENTE VAI TER UM WHILE 
+// TEMOS QUE IDENTIFICAR SE ESTAMOS NA PRIMEIRA EXECUCAO 
+// POR QUE SE NAO TIVEMOS IN NA PRIMEIRA EXECUCAO VAMOS USAR O 0
+// E NA ULTIMA SE NAO TIVEMOS OUT VAMOS IMPRIMIR NO 1
+
+
+// COMECO
+
+
+
+// MEIO
+
+
+
+// E FIM
 
 void ft_magane_executor(t_cmd **cmd, char **env,t_env **cpy)
 {
     t_cmd *ptr;
     t_cmd *last;
-    int index;
     ptr = (*cmd);
-
-    index = check_out(ptr->redir);
+    
     open_pipes(cmd);
+    if(check_all(ptr->redir) > 0)
+    {
+        executor_redir(cmd,env,cpy);
+    }
+    /*
     if(index == 0)
         executor_without(ptr, env, 0 , ptr->pipesfd[1],cpy);
     last = ptr;
@@ -112,30 +130,28 @@ void ft_magane_executor(t_cmd **cmd, char **env,t_env **cpy)
     }
     if(check_out(last->redir) == 0 && check_out(ptr->redir) == 0)
         executor_without(ptr,env,last->pipesfd[0],1,cpy);
-
+    */
 }
 
 
 
-int case_redi(int token, char *path)
+void open_redi(int token,t_redir **redir)
 {
-    int fd;
 
     if(token == 1)
-        fd = open(path,O_WRONLY | O_CREAT | O_TRUNC, 0664);
+        (*redir)->fd = open((*redir)->path,O_WRONLY | O_CREAT | O_TRUNC, 0664);
     else if(token == 2)
     {
-        fd = open(path,O_WRONLY | O_CREAT | O_TRUNC, 0777);
-        if(access(path,R_OK) == 0)
-            return(fd);
+        (*redir)->fd = open((*redir)->path,O_RDONLY , 0777);
+        if(access((*redir)->path,R_OK) == 0)
+            return;
         else
         {
             perror("Error");
-            return(-1);
+            return;
         }
     }
         
-    return(fd);
 }
 
 int ft_howpipes(t_cmd *comands)
@@ -164,7 +180,7 @@ void start_exection(t_cmd **commands,char **env,t_env **cpy)
         redptr = ptr->redir;
         while(redptr != NULL)
         {
-            redptr->fd = case_redi(redptr->token,redptr->path);
+            open_redi(redptr->token,&redptr);
             redptr = redptr->next;
         }
         ptr = ptr->next;
