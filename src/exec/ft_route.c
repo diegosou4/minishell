@@ -112,9 +112,11 @@ void ft_magane_executor(t_cmd **cmd, char **env,t_env **cpy)
     ptr = (*cmd);
     
     open_pipes(cmd);
-    if(check_all(ptr->redir) > 0)
+    if(ft_howpipes(ptr) == 1)
+        sfirst_executor(cmd,env,cpy);
+    else
     {
-        executor_redir(cmd,env,cpy);
+        
     }
     /*
     if(index == 0)

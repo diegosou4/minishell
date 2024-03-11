@@ -278,4 +278,6 @@ void case_redir(t_redir *redir);
 void open_redi(int token,t_redir **redir);
 int ft_howpipes(t_cmd *comands);
 void executor_redir(t_cmd **cmd,char **env,t_env **cpy);
+void sfirst_executor(t_cmd **cmd,char **env,t_env **cpy);
+
 #endif

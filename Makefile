@@ -32,7 +32,7 @@ PARSE = ft_special.c ft_parse_manager.c ft_utils.c\
 EXEC = ft_execution.c ft_builtings.c\
        ft_free.c ft_simple.c ft_route.c\
        ft_close.c ft_execution_utils.c\
-       ft_check.c
+       ft_check.c ft_caseredir.c \
 
 COMANDS = ft_echo.c ft_pwd.c ft_cd.c ft_env.c \
             ft_export.c ft_unset.c ft_exit.c

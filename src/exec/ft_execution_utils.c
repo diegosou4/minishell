@@ -14,6 +14,8 @@
 
 void givefd_redir(t_redir **redir, int index)
 {
+    if(index == -1)
+        return;
     while(index > 0)
     {   
         (*redir) = (*redir)->next;
@@ -40,8 +42,7 @@ void executor_redir(t_cmd **cmd,char **env,t_env **cpy)
     indexout = check_redir(ptr,1);
     ptrout = (*cmd)->redir;
     ptrin = (*cmd)->redir;
-    givefd_redir(&ptrin,indexin);
-    givefd_redir(&ptrout,indexout);
+
 
 
     executor_without(ptrcmd,env,ptrin->fd,ptrout->fd,cpy);
@@ -49,3 +50,27 @@ void executor_redir(t_cmd **cmd,char **env,t_env **cpy)
     close(ptrout->fd);
 
 }
+
+
+
+void sfirst_executor(t_cmd **cmd,char **env,t_env **cpy)
+{
+    int index[2];
+    t_redir *ptr[2];
+
+    ptr[0] = (*cmd)->redir;
+    ptr[1] = (*cmd)->redir;
+    index[0] = check_redir(ptr[0],2); // checkin
+    index[1] = check_redir(ptr[1],1); // checkout
+    givefd_redir(&ptr[0],index[0]);
+    givefd_redir(&ptr[1],index[1]);
+    if(index[0] != -1 && index[1] != -1)     
+        executor_without((*cmd),env,ptr[0]->fd,ptr[1]->fd,cpy);
+    else if(index[0] != -1 && index[1] == -1)
+        executor_without((*cmd),env,ptr[0]->fd,1,cpy);
+    else if(index[0] == -1 && index[1] != -1)
+        executor_without((*cmd),env,0,ptr[1]->fd,cpy);
+    else if(index[0] == -1 && index[1] == -1)
+        executor_without((cmd),env,0,1,cpy);
+}
+
