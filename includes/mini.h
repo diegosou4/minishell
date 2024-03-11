@@ -257,8 +257,7 @@ void ft_quotes_remove(t_word_list *word_list);
 
 //___________________________________________________Test Execution____________________________________
 
-void exec_simple(t_cmd *command,char **env, int *fd);
-void exec_pipe(t_cmd *command,char **env);
+
 void check_path(t_cmd **commands, char **env);
 int check_path2(t_cmd **commands, char **env);
 
@@ -271,10 +270,12 @@ int ft_countpipes(t_cmd *cmd);
 void open_pipes(t_cmd **cmd);
 void executor_without(t_cmd *commands, char **env, int in,int out,t_env **cpy);
 void ft_magane_executor(t_cmd **cmd, char **env,t_env **cpy);
-int check_out(t_redir *redir);
+int check_redir(t_redir *redir, int flagtoken);
+int check_all(t_redir *redir);
 void start_exection(t_cmd **commands,char **env,t_env **cpy);
 void ft_close(t_cmd **commands);
 void case_redir(t_redir *redir);
-int case_redi(int token, char *path);
-
+void open_redi(int token,t_redir **redir);
+int ft_howpipes(t_cmd *comands);
+void executor_redir(t_cmd **cmd,char **env,t_env **cpy);
 #endif
