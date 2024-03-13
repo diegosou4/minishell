@@ -86,12 +86,16 @@ int return_heredoc(t_redir *redir)
     }
     return(0);
 }
-int return_out(t_redir *redir)
+int return_out(t_redir *redir, t_cmd *curr)
 {
     int fd;
     t_redir *ptr;
-    fd = STDOUT_FILENO;
+ 
     ptr = redir;
+    if(curr->next == NULL)
+        fd = STDOUT_FILENO;
+    else
+        fd = curr->pipesfd[1];
     while(ptr != NULL)
     {
         if(ptr->token == 1 || ptr->token == 4 || ptr->token == 5)
@@ -101,11 +105,15 @@ int return_out(t_redir *redir)
     return(fd);
 }
 
-int return_in(t_redir *redir)
+int return_in(t_redir *redir, t_cmd *curr,t_cmd *last)
 {
     int fd;
     t_redir *ptr;
-    fd = STDIN_FILENO;
+    
+    if(last == NULL)
+        fd = STDIN_FILENO;
+    else
+        fd = last->pipesfd[0];
     ptr = redir;
     while(ptr != NULL)
     {
@@ -116,46 +124,42 @@ int return_in(t_redir *redir)
     return(fd);
 }
 
+void child_executor(t_cmd *curr,char **env,t_env **cpy,t_cmd *last)
+{
 
-// Pipes abertos
-// vamos criar o filho e meter marcha
+    int fdin;
+    int fdout;
+
+    fdin = return_in(curr->redir,curr,last);
+    fdout = return_out(curr->redir,curr);
+    dup2(fdin,0);
+    dup2(fdout,1);
+    if(fdout != 1)
+        close(fdout);
+    if(fdin != 0)
+        close(fdin);  
+    execve(curr->path,curr->args,env);
+
+}
 
 void ft_magane_executor(t_cmd **cmd, char **env,t_env **cpy)
 {
     int pid;
     t_cmd *ptrcmd;
+    t_cmd *lastcmd;
     ptrcmd = (*cmd);
+    lastcmd = NULL;
     open_pipes(cmd);
-    pid = fork();
-    // Dentro do filho
-    // vamos chegar as redirecoes
-    // vamos buscar o ultimo in file e out file
-    // vamos fechar aquilo que nao precisamos para nao da leaks de fd
-    int fdin;
-    int fdout;
-    fdin = STDIN_FILENO;
-    fdout = STDOUT_FILENO;
-    if(pid == 0)
+  
+    while(ptrcmd != NULL)
     {
-        if(return_heredoc((*cmd)->redir) == 0)
+        pid = fork();
+        if(pid == 0)
         {
-            fdin = return_in((*cmd)->redir);
-            fdout = return_out((*cmd)->redir);
-            close((*cmd)->pipesfd[0]);
-            close((*cmd)->pipesfd[1]);
-        }else
-        {
-            fdin = (*cmd)->pipesfd[0];
-                if(fdout == STDOUT_FILENO)
-                    fdout = (*cmd)->pipesfd[1];
+            child_executor(ptrcmd,env,cpy,lastcmd);
         }
-        dup2(fdout,1);
-        dup2(fdin,0);
-        if(fdout != 1)
-            close(fdout);
-        if(fdin != 0)
-            close(fdin);
-        execve((*cmd)->path,(*cmd)->args,env);
+        lastcmd = ptrcmd;
+        ptrcmd = ptrcmd->next;
     }
     closeredir((*cmd)->redir);
 
@@ -218,7 +222,5 @@ void start_exection(t_cmd **commands,char **env,t_env **cpy)
 {
     open_redir(commands);
     ft_magane_executor(commands,env,cpy);
-    for (int i = 0; i < 3; i++) {
-        wait(NULL);
-    }
+    wait(NULL);
 }

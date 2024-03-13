@@ -110,10 +110,10 @@ typedef struct  s_redir
 typedef struct s_cmd
 {
 	char *path;
-	t_bool literal;
-	t_bool fint_variable;
 	char **args;
 	int pipesfd[2];
+	t_bool literal;
+	t_bool fint_variable;
 	t_redir *redir;
 	struct s_cmd *next;
 
@@ -277,7 +277,8 @@ void ft_close(t_cmd **commands);
 void case_redir(t_redir *redir);
 int open_redir(t_cmd **commands);
 int redir_error(int fd);
-int ft_howpipes(t_cmd *comands);
+int ft_howpipes(t_cmd *comands);	
 void givefd_redir(t_redir **redir, int index);
+
 
 #endif

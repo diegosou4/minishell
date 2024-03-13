@@ -32,60 +32,43 @@ int main(int ac,char **av,char **env)
     t_env *cpyenv;
     cpyenv = ft_nenv(env,1);
     t_cmd *commands;
-    t_redir *redir;
-    t_redir *last;
+    t_cmd *second;
+    t_cmd *last;
+    t_redir *redirf;
 
-    char *a1[] = {"cat", NULL};
-    commands = malloc(sizeof(t_cmd));
+    redirf = malloc(sizeof(t_redir) * 1);
 
+    redirf->path = ft_strdup("file1.txt");
+    redirf->token = 1;
+    redirf->fd = -1;
+    redirf->next = NULL;
+    // Second
+
+    second = malloc(sizeof(t_cmd) * 1);
+    second->path = ft_strdup("/bin/ls");
+    char *a2[] = {"ls", "-l", NULL};
+    second->args = a2;
+    second->redir = NULL;
+    second->next = NULL;
+
+  
+
+    // Comands  
+    commands = malloc(sizeof(t_cmd) * 1);
     commands->path = ft_strdup("/bin/cat");
+    char *a1[] = {"cat","-e", NULL};
     commands->args = a1;
     commands->redir = NULL;
     commands->next = NULL;
 
-    redir = malloc(sizeof(t_redir));
+    commands->redir = redirf;
+    second->next = commands;
 
-    redir->path = ft_strdup("file1.txt");
-    redir->fd = -1;
-    redir->token = redir_out;
-    redir->next = NULL;
 
-    last = malloc(sizeof(t_redir));
+    start_exection(&second,env,&cpyenv);
 
-    last->path = ft_strdup("file3.txt");
-    last->fd = -1;
-    last->token = redir_in;
-    last->next = NULL;
+    close(redirf->fd);
 
-   // redir->next = last;
-    commands->redir = last;
-    start_exection(&commands,env,&cpyenv);
-
-    /*
-    char *a1[] = {"pwd", NULL};
-    commands = malloc(sizeof(t_cmd));
-
-    commands->path = ft_strdup("pwd");
-    commands->args = a1;
-    commands->redir = NULL;
-    commands->next = NULL;
-
-    t_cmd *c1;
-    c1 = malloc(sizeof(t_cmd) * 1);
-
-    c1->path = ft_strdup("/bin/cat");
-    char *a2[] = {"cat", "-e", NULL};
-    c1->args = a2;
-    c1->redir = NULL;
-    c1->next = NULL;
-
-    commands->next = c1;
-
-    */
-    int pipes = ft_howpipes(commands);
-    for (int i = 0; i < pipes; i++) {
-        wait(NULL);
-    }
 
     return(0);
 }
