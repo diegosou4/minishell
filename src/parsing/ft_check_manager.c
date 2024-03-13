@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_manager.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juan-pma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 13:07:06 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/03/02 14:24:11 by juan-pma         ###   ########.fr       */
+/*   Updated: 2024/03/12 19:29:51 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static	int	ft_check_pipes(char **line)
 	{
 		if (ft_special_pipe_case(line[i]) == 0)
 			return (0);
-		if (strcmp(line[i], "|") == 0 
+		if (strcmp(line[i], "|") == 0
 			&& (line[i + 1] == NULL || strcmp(line[i + 1], "|") == 0))
 		{
 			if (line[i + 1] == NULL)
@@ -80,7 +80,7 @@ static	int	ft_check_directions(char **line)
 		printf("-🚫 bash: syntax error near unexpected token `newline'\n");
 		return (0);
 	}
-	else if (ft_strcmp(line[i - 1], "<") == 0 
+	else if (ft_strcmp(line[i - 1], "<") == 0
 		|| ft_strcmp(line[i - 1], ">") == 0)
 	{
 		printf("-🚫 bash: syntax error near unexpected token `newline'\n");
@@ -90,9 +90,9 @@ static	int	ft_check_directions(char **line)
 }
 /*
 
-    This funciton will check the input as is given by the user, 
-    without any pretreatement, in order to find error before creating any 
-    structure. 
+    This funciton will check the input as is given by the user,
+    without any pretreatement, in order to find error before creating any
+    structure.
 
 */
 
@@ -105,8 +105,8 @@ int	ft_check_input(char *line)
 	split_line = ft_split(line, ' ');
 	if (!split_line || !split_line[0])
 		return (0);
-	if (!ft_check_pipes(split_line) 
-		|| !ft_check_redir_pipes(split_line) 
+	if (!ft_check_pipes(split_line)
+		|| !ft_check_redir_pipes(split_line)
 		|| !ft_check_directions(split_line))
 	{
 		ft_free_double_pointers(split_line);
