@@ -1,15 +1,15 @@
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   mini.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 12:40:37 by diegmore          #+#    #+#             */
-/*   Updated: 2024/02/20 12:40:39 by diegmore         ###   ########.fr       */
+/*   Created: 2024/02/20 12:40:39 by diegmore          #+#    #+#             */
+/*   Updated: 2024/03/12 19:39:00 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINI_H
 #define MINI_H
 
 #include <stdio.h>
@@ -42,7 +42,7 @@ typedef enum s_bool
 	FALSE,
 } t_bool;
 
-//________________________________STRUCTURES__FOR THE INPUT_________________________________
+//________________________________STRUCTURES__FOR__THE INPUT_________________________________
 
 typedef struct s_line
 {
@@ -53,20 +53,19 @@ typedef struct s_line
 	char *value_env;
 } t_line;
 
-t_line *ft_init_manager(t_line *line);
-
 //________________________________STRUCTURES__FOR THE TOKENS_________________________________
 
 // Words with the flags...
 
 typedef enum s_tags
 {
-	WORD, 
+	WORD,
 	EXCECUTOR,
 	VARIABLE,
 	SPECIAL_PAR,
 	SPECIAL_VAR,
 	VARIABLE_CHECK,
+	PATH,
 } t_tags;
 
 typedef struct s_word_desc
@@ -85,6 +84,16 @@ typedef struct s_word_list
 	t_bool redirection;
 } t_word_list;
 
+typedef struct s_word_lists
+{
+	char		*subtoken;
+	t_word_desc	*word_desc;
+	t_word_list	*node;
+	t_word_list	*head;
+	t_word_list	*current_token;
+
+} t_word_lists;
+
 //________________________________STRUCTURES__FOR THE REDIRECTIONS_________________________________
 
 typedef enum s_rediopr
@@ -93,7 +102,7 @@ typedef enum s_rediopr
 	redir_in = 2,
 	here_doc = 3,
 	append_out = 4,
-	inandout = 5
+	inandout = 5,
 } t_rediopr;
 
 
@@ -157,7 +166,7 @@ char *ask_acess(char *comand, char *path);
 t_cmd *cmdnew(char *args);
 t_cmd *putcmds(char *args);
 t_redir *redirnew(void);
-void ft_structure_creation(char *line, t_env *env);
+void *ft_structure_creation(char *line, t_env *env);
 
 //________________________________TOKEN MANAGER STRUCTURE CREATION___________________________
 t_word_list **ft_tokenizer_manager(char *line, t_env *env);
@@ -167,11 +176,13 @@ t_word_list **ft_tokenizer_manager(char *line, t_env *env);
 void ft_checker_quotes(char *str);
 char *findpath(char **args, int flag, int location);
 char *ft_parse_redir(char *str);
-
+t_word_lists	*ft_init_word_list(t_word_lists *word_lists, char *token);
+void ft_flags_tags_assignment(t_word_list *word_list);
+t_line *ft_init_manager(t_line *line);
 // ________________________________________________________Print Utilities ________________________________
 void ft_print_doble_char(char **argv);
 void ft_print_list_struct(t_word_list *structure, int i);
-
+void ft_print_cmd_struct(t_cmd *cmd);
 // check input.
 int ft_check_input(char *line);
 int ft_check_redir_pipes(char **line);
@@ -203,7 +214,7 @@ int closeredir(t_redir *redir);
 int case_in(t_redir *redir);
 int case_out(t_redir *redir);
 
-// Pipes 
+// Pipes
 int sizepipe(t_cmd *commands);
 int sizeredir(t_redir *redir);
 void free_commands(t_cmd *comands);
@@ -260,6 +271,8 @@ void ft_free_line_struct(t_line *line);
 // __________________________________________________LIST_MANAGER ________________________________
 int ft_extract_var(t_word_list *word_list, t_env *env);
 t_word_list	*ft_lstlast_(t_word_list *lst);
+//--Create the array of structures.
+t_word_list	*tokenize_and_print(char *token);
 int ft_check_struct_redir(t_word_list *tokens);
 
 //___________________________________________________QUOTES REMOVAL _______________________________
@@ -268,4 +281,4 @@ void ft_quotes_remove(t_word_list *word_list);
 //___________________________________________________VAR EXP _______________________________
 char *ft_path_handler(t_env *env, char *variable);
 
-#endif
+// #endif
