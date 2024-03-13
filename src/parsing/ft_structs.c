@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:47:55 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/13 13:28:26 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/13 17:11:36 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,6 @@ char *findpath(char **args, int flag, int location)
 
 }
 
-int ft_check_words_list(t_word_list *tokens)
-{
-	while (tokens)
-	{
-		if (tokens->word->tags == EXCECUTOR)
-			return 1;
-		tokens = tokens->next;
-	}
-	return (0);
-}
 
 void ft_flags_tags_assignment(t_word_list *word_list)
 {
@@ -67,6 +57,15 @@ void ft_flags_tags_assignment(t_word_list *word_list)
                     word_list->next->word->tags = PATH;
             }
         word_list = word_list->next;
+    }
+}
+
+static void ft_free_redir_list(t_redir *redir) {
+    while (redir) {
+        t_redir *next = redir->next;
+        free(redir->path); // Free the path string
+        free(redir); // Free the redirection struct
+        redir = next;
     }
 }
 
@@ -89,15 +88,15 @@ static t_redir *ft_parse_redir_create(t_word_list *token_list)
             }
             else
             {
-                current_redir->next = ft_calloc(10, sizeof(t_redir));
+                current_redir->next = ft_calloc(1, sizeof(t_redir));
                 if (!current_redir->next)
                 {
-                    //TODO free the list and return null
+                    ft_free_redir_list(redir);
                     return NULL;
                 }
                 current_redir = current_redir->next;
             }
-            current_redir->path = ft_strdup(token_list->next->word->word);
+            current_redir->path = (token_list->next->word->word);
             current_redir->token = token_list->word->flags;
             current_redir->next = NULL;
         }
@@ -119,15 +118,12 @@ t_cmd *ft_parse_array(t_word_list *words_list)
 
     while (words_list)
     {
-        if (words_list->word->tags == WORD)
-            cmd->args[args_index++] = ft_strdup(words_list->word->word);
-        else if (words_list->redirection == TRUE)
+        if (words_list->word->tags != EXCECUTOR)
+            cmd->args[args_index++] = (words_list->word->word);
+        if (!redir)
         {
-            if (!redir)
-            {
-                redir = ft_parse_redir_create(words_list);
-                cmd->redir = redir;
-            }
+            redir = ft_parse_redir_create(words_list);
+            cmd->redir = redir;
         }
         words_list = words_list->next;
     }
@@ -148,10 +144,6 @@ void *ft_structure_creation(char *line, t_env *env)
     i = -1;
     while (token_list[++i])
     {
-       	if (ft_check_words_list(token_list[i]) == 1)
-			token_list[i]->redirection = TRUE;
-		else
-			token_list[i]->redirection = FALSE;
 		ft_quotes_remove(token_list[i]);
         if (i == 0)
         {
@@ -172,17 +164,6 @@ void *ft_structure_creation(char *line, t_env *env)
         root = root->next;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
 
 /*
 t_redir *redirnew(char *filename,int flag,int append,char *path)

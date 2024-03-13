@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 17:33:05 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/03/12 19:37:02 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/13 17:32:51 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static char *ft_create_token(char *token_line)
 	{
 		token[i] = token_line[i];
 	}
+	token[i] = '\0';
 	return (token);
 }
 char *ft_path_handler(t_env *env, char *variable)
@@ -117,7 +118,7 @@ void ft_check_variable_expansion(char *src, char *dest, t_env *env)
 		if (!in_quotes && *src == '$' && (*(src + 1) != '\'' && *(src + 1) != '\"'))
 		{
 			token = ft_create_token(src + 1);
-			// printf("this is the toke :%s:\n", token);
+			printf("this is the toke :%s:\n", token);
 			path = ft_path_handler(env, token);
 			while (path != NULL && *path)
 				*dest++ = *path++;
@@ -142,13 +143,19 @@ int ft_extract_var(t_word_list *word_list, t_env *env)
 	flag = 0;
 	while (word_list)
 	{
-		// if (ft_strcmp(word_list->word->word, "<<") == 0 && word_list->next->word->tags == VARIABLE)
-		// 	word_list->next->word->tags = WORD;
+		if (ft_strcmp(word_list->word->word, "<<") == 0 && word_list->next)
+		{
+			if (word_list->next->word->tags == VARIABLE)
+				word_list->next->word->tags = WORD;
+		}
 		if (word_list->word->tags == VARIABLE)
 		{
+			printf("this is the list: %s\n", word_list->word->word);
 			word_cpy = ft_calloc(10000 + 1, sizeof(char));
 			src = word_list->word->word;
+			printf("this is the src: %s\n", src);
 			dest = word_cpy;
+			printf("this is the word_cpy: %s\n", word_cpy);
 			ft_check_variable_expansion(src, dest, env);
 			if (ft_strchr(word_cpy, '\''))
 				ft_check_variable_quotes_expansion(dest);
