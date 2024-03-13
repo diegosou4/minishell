@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_structs.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:47:55 by diegmore          #+#    #+#             */
-/*   Updated: 2024/02/22 11:47:58 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/03/13 13:28:26 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,6 @@ t_redir *redirnew(void)
     return(redir);
 }
 
-
-/*
-t_redir *addredirnew(int flag)
-{
-    t_redir *redir;
-    redir = redirnew();
-    if(flag == 2 | flag == 4)
-        redir->append = 1;
-    if(flag == 3 | flag == 4)
-        redir->out = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0777);
-    if(flag == 5)
-    {
-        redir->in;
-        redir->out;
-    }
-}*/
 char *findpath(char **args, int flag, int location)
 {
     char *path;
@@ -54,65 +38,140 @@ char *findpath(char **args, int flag, int location)
     return(path);
 
 }
-/*
-void add_redir(t_cmd **commands)
+
+int ft_check_words_list(t_word_list *tokens)
 {
-    t_cmd *ptr;
-    ptr = (*commands);
-    int i;
-    int flag;
-    char *path;
-    while(ptr != NULL)
+	while (tokens)
+	{
+		if (tokens->word->tags == EXCECUTOR)
+			return 1;
+		tokens = tokens->next;
+	}
+	return (0);
+}
+
+void ft_flags_tags_assignment(t_word_list *word_list)
+{
+    while (word_list)
     {
-        i = 0;
-        while(ptr->args[i] != NULL)
+		if (ft_strcmp(word_list->word->word, "<<") == 0 && word_list->next)
         {
-            flag = flag_redir(ptr->args[i]);
-            if(flag != 0)
-            {
-               path = findpath(ptr->args,flag,i);
-               printf("Path--->%s\n",path); 
-            }
-            i++;
+            if (word_list->next->word->tags == VARIABLE)
+			    word_list->next->word->tags = WORD;
         }
-        ptr = ptr->next;
+        if (word_list->word->tags == here_doc || word_list->word->tags == redir_in
+                || word_list->word->tags == append_out || word_list->word->tags == redir_out
+                ||word_list->word->tags == inandout)
+            {
+                if (word_list->next)
+                    word_list->next->word->tags = PATH;
+            }
+        word_list = word_list->next;
     }
-} */
+}
 
-// void ft_structure_redir(t_word_list *token_list, t_redir *redirections)
-// {
-//     char *token;
+static t_redir *ft_parse_redir_create(t_word_list *token_list)
+{
+    t_redir *redir;
+    t_redir *current_redir;
 
-//     while (token_list)
-//     {
-//         if (token_list->word->tags == EXCECUTOR)
+    redir = NULL;
+    current_redir = NULL;
 
-//         token_list = token_list->next;
-//     }
-    
-// }
-// void ft_structure_creation(char *line, t_env *env)
-// {
-//     t_cmd *commands;
-//     t_redir redirections;
-//     t_word_list **token_list;
-//     char *path;
+    while (token_list)
+    {
+        if (token_list->word->tags == EXCECUTOR)
+        {
+            if (!redir)
+            {
+                redir = ft_calloc(10, sizeof(t_redir));
+                current_redir = redir;
+            }
+            else
+            {
+                current_redir->next = ft_calloc(10, sizeof(t_redir));
+                if (!current_redir->next)
+                {
+                    //TODO free the list and return null
+                    return NULL;
+                }
+                current_redir = current_redir->next;
+            }
+            current_redir->path = ft_strdup(token_list->next->word->word);
+            current_redir->token = token_list->word->flags;
+            current_redir->next = NULL;
+        }
+        token_list = token_list->next;
+    }
+    return redir;
+}
 
-//     token_list = ft_tokenizer_manager(line,env);
-    
-//     int i = -1;
+t_cmd *ft_parse_array(t_word_list *words_list)
+{
+    t_cmd *cmd;
+    t_redir *redir;
+    int args_index;
 
-//     while (token_list[++i])
-//     {
-//         if (token_list[i]->redirection == TRUE)
-//         {
-//             ft_structure_redir(token_list[i], &redirections);
-//         }
-//         printf("this is check 01\n");
-//     }
-    
+    cmd = ft_calloc(10, sizeof(t_cmd ));
+    cmd->args = (char **)ft_calloc((100), sizeof(char *));
+    redir = NULL;
+    args_index = 0;
 
-// }
+    while (words_list)
+    {
+        if (words_list->word->tags == WORD)
+            cmd->args[args_index++] = ft_strdup(words_list->word->word);
+        else if (words_list->redirection == TRUE)
+        {
+            if (!redir)
+            {
+                redir = ft_parse_redir_create(words_list);
+                cmd->redir = redir;
+            }
+        }
+        words_list = words_list->next;
+    }
+    cmd->args[args_index] = NULL;
+    return cmd;
+}
+
+void *ft_structure_creation(char *line, t_env *env)
+{
+    t_word_list **token_list;
+    t_cmd *root;
+    t_cmd *current_cmd;
+    int i;
+
+    token_list = ft_tokenizer_manager(line,env);
+    if (!token_list)
+        return NULL;
+    i = -1;
+    while (token_list[++i])
+    {
+       	if (ft_check_words_list(token_list[i]) == 1)
+			token_list[i]->redirection = TRUE;
+		else
+			token_list[i]->redirection = FALSE;
+		ft_quotes_remove(token_list[i]);
+        if (i == 0)
+        {
+            root = ft_parse_array(token_list[i]);
+            current_cmd = root;
+        }
+        else
+        {
+            current_cmd->next = ft_parse_array(token_list[i]);
+            current_cmd = current_cmd->next;
+        }
+        ft_print_list_struct(token_list[i], i);
+    }
+
+    while (root)
+    {
+    ft_print_cmd_struct(root);
+        root = root->next;
+    }
+}
 
 
 
