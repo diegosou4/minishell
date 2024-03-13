@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_directions.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juan-pma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 14:44:43 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/03/02 15:10:01 by juan-pma         ###   ########.fr       */
+/*   Updated: 2024/03/12 19:22:40 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 
 static void	ft_print_syntax_error(void)
 {
-	printf("🚫 in-bash: syntax error near unexpected token `\n");
+	printf("dir 🚫 in-bash: syntax error near unexpected token `\n");
 }
 
 static int	ft_has_valid_redir_flag(t_word_desc *word)
@@ -42,7 +42,7 @@ static int	ft_has_valid_redir_flag(t_word_desc *word)
 		return (1);
 	else if (first_char == '<' && (flag == 2 || flag == 3 || flag == 5))
 		return (1);
-	else 
+	else
 		return (0);
 }
 
@@ -62,42 +62,11 @@ int	ft_check_valid_redir(t_word_list *word_list)
 	}
 	if (word_list->word->word[0] == '<' || word_list->word->word[0] == '>')
 	{
-		printf("🚫 on-bash: syntax error near unexpected token `\n");
+		printf("direction🚫 on-bash: syntax error near unexpected token `\n");
 		return (0);
 	}
 	return (1);
 }
-
-// int	ft_check_valid_redir(t_word_list *word_list)
-// {
-// 	while (word_list->next)
-// 	{
-// 		if (word_list->word->word[0] == '>')
-// 		{
-// 			if ((word_list->word->flags != 1) && (word_list->word->flags != 4))
-// 			{
-// 				printf(" bash: syntax error near unexpected token `' 🚫\n");
-// 				return (0);
-// 			}
-// 		}
-// 		else if (word_list->word->word[0] == '<')
-// 		{
-// 			if ((word_list->word->flags != 2) 
-// 				&& (word_list->word->flags != 3 && word_list->word->flags != 5))
-// 			{
-// 				printf(" bash: syntax error near unexpected token `' 🚫\n");
-// 				return (0);
-// 			}
-// 		}
-// 		word_list = word_list->next;
-// 	}
-// 	if (word_list->word->word[0] == '<' || word_list->word->word[0] == '>')
-// 	{
-// 		printf("🚫 bash: syntax error near unexpected token `' \n");
-// 		return (0);
-// 	}
-// 	return (1);
-// }
 
 int	ft_check_redir_pipes(char **line)
 {
