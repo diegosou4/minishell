@@ -28,6 +28,10 @@ void ft_close(t_cmd **commands)
             close(redirptr->fd);
             redirptr = redirptr->next;
         }
+        close(ptr->pipesfd[0]);
+        close(ptr->pipesfd[1]);
         ptr = ptr->next;
     }
+    ptr = (*commands);
+
 }

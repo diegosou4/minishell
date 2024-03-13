@@ -275,9 +275,9 @@ int check_all(t_redir *redir);
 void start_exection(t_cmd **commands,char **env,t_env **cpy);
 void ft_close(t_cmd **commands);
 void case_redir(t_redir *redir);
-void open_redi(int token,t_redir **redir);
+int open_redir(t_cmd **commands);
+int redir_error(int fd);
 int ft_howpipes(t_cmd *comands);
-void executor_redir(t_cmd **cmd,char **env,t_env **cpy);
-void sfirst_executor(t_cmd **cmd,char **env,t_env **cpy);
+void givefd_redir(t_redir **redir, int index);
 
 #endif
