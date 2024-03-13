@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:59:54 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/03/12 20:31:18 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/13 17:09:28 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,17 @@ linha de entrada em busca de erros.
 informações relevantes.
 */
 
+int ft_check_words_list(t_word_list *tokens)
+{
+	while (tokens)
+	{
+		if (tokens->word->tags == EXCECUTOR)
+			return 1;
+		tokens = tokens->next;
+	}
+	return (0);
+}
+
 t_word_list	**ft_tokenizer_manager(char *line, t_env *env)
 {
 	char		**tokens;
@@ -38,14 +49,23 @@ t_word_list	**ft_tokenizer_manager(char *line, t_env *env)
 	words_list = ft_calloc(100, sizeof(t_word_list *));
 	tokens = ft_split(ft_create_string(line), '3');
 	if (!tokens)
+	{
+		free(words_list);
 		return (NULL);
+	}
 	while (tokens[++i] != NULL)
+	{
 		words_list[i] = tokenize_and_print(tokens[i]);
+	}
 	i = -1;
 	while (words_list[++i])
 	{
-		ft_flags_tags_assignment(words_list[i]);
 		ft_extract_var(words_list[i], env);
+		ft_flags_tags_assignment(words_list[i]);
+		if (ft_check_words_list(words_list[i]) == 1)
+			words_list[i]->redirection = TRUE;
+		else
+			words_list[i]->redirection = FALSE;
 		if (ft_check_valid_redir(words_list[i]) == 0)
 		{
 			ft_free_double_pointers(tokens);
