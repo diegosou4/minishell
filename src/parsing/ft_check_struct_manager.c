@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_struct_manager.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juan-pma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 17:33:05 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/02/28 17:33:07 by juan-pma         ###   ########.fr       */
+/*   Updated: 2024/03/12 19:37:02 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ char *ft_path_handler(t_env *env, char *variable)
 	int index;
 	char *holder;
 
-	
 	if(env == NULL)
 		return(NULL);
 	index = ft_indexinenv(env, variable);
@@ -78,8 +77,8 @@ char *ft_path_handler(t_env *env, char *variable)
 	{
 		env = env->next;
 	}
-	holder = ft_calloc(ft_strlen(env->value + 1), sizeof(char ));
-	holder = env->value + 1;
+	// holder = ft_calloc(ft_strlen(env->value + 1), sizeof(char ));
+	holder = ft_strdup(env->value + 1);
 	return (holder);
 }
 void ft_check_variable_quotes_expansion(char *dest)
@@ -127,14 +126,12 @@ void ft_check_variable_expansion(char *src, char *dest, t_env *env)
 		}
 		else
 			*dest++ = *src++;
-		
 	}
 	*dest = '\0';
 }
 
 int ft_extract_var(t_word_list *word_list, t_env *env)
 {
-	// printf("this is the ft_extract_var START\n");
 	char *token;
 	char *src;
 	char *dest;
@@ -145,8 +142,8 @@ int ft_extract_var(t_word_list *word_list, t_env *env)
 	flag = 0;
 	while (word_list)
 	{
-		if (ft_strcmp(word_list->word->word, "<<") == 0 && word_list->next->word->tags == VARIABLE)
-			word_list->next->word->tags = WORD;
+		// if (ft_strcmp(word_list->word->word, "<<") == 0 && word_list->next->word->tags == VARIABLE)
+		// 	word_list->next->word->tags = WORD;
 		if (word_list->word->tags == VARIABLE)
 		{
 			word_cpy = ft_calloc(10000 + 1, sizeof(char));
@@ -159,6 +156,5 @@ int ft_extract_var(t_word_list *word_list, t_env *env)
 		}
 		word_list = word_list->next;
 	}
-	// printf("this is the ft_extract_var END\n");
 	return (1);
 }
