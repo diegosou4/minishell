@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 16:20:27 by diegmore          #+#    #+#             */
-/*   Updated: 2024/02/27 16:20:28 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/03/08 11:01:08 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int ft_cd(t_cmd *comands,t_env **env)
     int result;
     if(len_darray(comands->args) > 2)
     {
-        write(2, "cd: too many arguments\n",43);
+        write(2, "cd: too many arguments\n",24);
         return(4);
     }
     if(comands->args[1] == NULL)
