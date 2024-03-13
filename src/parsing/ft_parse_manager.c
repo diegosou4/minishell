@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parse_manager.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juan-pma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 09:42:35 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/03/05 15:26:38 by juan-pma         ###   ########.fr       */
+/*   Updated: 2024/03/12 14:53:16 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@
 
 */
 
-t_tags ft_tags(t_word_desc *word)
+t_tags	ft_tags(t_word_desc *word)
 {
-	char *word_cpy;
-	int len;
+	char	*word_cpy;
+	int		len;
 
 	word_cpy = word->word;
 	len = ft_strlen(word_cpy);
-	if (word->flags == 1 || word->flags == 2 
-			|| word->flags == 3 || word->flags == 4)
+	if (word->flags == 1 || word->flags == 2
+		|| word->flags == 3 || word->flags == 4)
 	{
 		return (EXCECUTOR);
 	}
@@ -47,28 +47,28 @@ t_tags ft_tags(t_word_desc *word)
 		return (WORD);
 }
 
-int ft_flag(char *word)
+int	ft_flag(char *word)
 {
-	int flag;
+	int	flag;
 
 	flag = 0;
 	if (ft_strcmp(word, ">>") == 0)
-		flag = 1;
+		flag = append_out;
 	else if (ft_strcmp(word, "<<") == 0)
-		flag = 2;
+		flag = here_doc;
 	else if (ft_strcmp(word, "<") == 0)
-		flag = 3;
+		flag = redir_in;
 	else if (ft_strcmp(word, ">") == 0)
-		flag = 4;
+		flag = redir_out;
 	else if (ft_strcmp(word, "<>") == 0)
-		flag = 5;
+		flag = inandout;
 	return (flag);
 }
 
-t_word_desc *create_word_desc(char *word, int flag)
+t_word_desc	*ft_cte_wd_d(char *word, int flag)
 {
-	t_word_desc *new_word;
-	char *word_copy;
+	t_word_desc	*new_word;
+	char		*word_copy;
 
 	new_word = malloc(sizeof(t_word_desc));
 	word_copy = word;
@@ -78,9 +78,9 @@ t_word_desc *create_word_desc(char *word, int flag)
 	return (new_word);
 }
 
-t_word_list *create_word_node(t_word_desc *word)
+t_word_list	*create_word_node(t_word_desc *word)
 {
-	t_word_list *new_node;
+	t_word_list	*new_node;
 
 	new_node = malloc(sizeof(t_word_list));
 	new_node->word = word;
@@ -88,121 +88,31 @@ t_word_list *create_word_node(t_word_desc *word)
 	return (new_node);
 }
 
-static t_word_list *tokenize_and_print(char *token)
+t_word_list	*tokenize_and_print(char *token)
 {
-	char *subtoken;
-	t_word_desc *word_desc;
-	t_word_list *node;
-	t_word_list *head;
-	t_word_list *current_token;
+	t_word_lists	*wls;
 
-	current_token = NULL;
-	head = NULL;
 	if (!token || !token[0])
 		return (NULL);
-	subtoken = ft_strtok(token, "2");
-	while (subtoken != NULL)
+	wls = ft_init_word_list(wls, token);
+	while (wls->subtoken != NULL)
 	{
-		if (subtoken[0] != '\0')
+		if (wls->subtoken[0] != '\0')
 		{
-			word_desc = create_word_desc(subtoken, ft_flag(subtoken));
-			node = create_word_node(word_desc);
-			if (head == NULL)
+			wls->word_desc = ft_cte_wd_d(wls->subtoken, ft_flag(wls->subtoken));
+			wls->node = create_word_node(wls->word_desc);
+			if (wls->head == NULL)
 			{
-				head = node;
-				current_token = node;
+				wls->head = wls->node;
+				wls->current_token = wls->node;
 			}
 			else
 			{
-				current_token->next = node;
-				current_token = node;
+				wls->current_token->next = wls->node;
+				wls->current_token = wls->node;
 			}
 		}
-		subtoken = ft_strtok(NULL, "2");
+		wls->subtoken = ft_strtok(NULL, "2");
 	}
-	return (head);
-}
-/*
-	🚩 check this function as we are alocating
-	memmory here.
-	- I need to free the list in case somenthing happend.
-*/
-int ft_check_words_list(t_word_list *tokens)
-{
-	while (tokens)
-	{
-		if (tokens->word->tags == EXCECUTOR)
-			return 1;
-		tokens = tokens->next;
-		// printf("teste 02\n");
-	}
-	return (0);
-}
-
-t_word_list **ft_tokenizer_manager(char *line, t_env *env)
-{
-	char **tokens;
-	t_word_list **words_list;
-	int i;
-
-	i = -1;
-	words_list = ft_calloc(100, sizeof(t_word_list *));
-	tokens = ft_split(ft_create_string(line), '3');
-	if (!tokens)
-		return (NULL);
-	while (tokens[++i] != NULL)
-		words_list[i] = tokenize_and_print(tokens[i]);
-	i = -1;
-	while (words_list[++i])
-	{
-		if (ft_check_valid_redir(words_list[i]) == 0)
-		{
-			ft_free_double_pointers(tokens);
-			return (NULL);
-		}
-	}
-	i = -1;
-	while (words_list[++i])
-	{
-		ft_extract_var(words_list[i], env);
-		if (ft_check_words_list(words_list[i]) == 1)
-			words_list[i]->redirection = TRUE;
-		else 
-			words_list[i]->redirection = FALSE;
-		ft_quotes_remove(words_list[i]);
-		ft_print_list_struct(words_list[i], i);
-	}
-	ft_free_double_pointers(tokens);
-	return (words_list);
-}
-/*
-	🚩 check this function as we are alocating
-	memmory here.
-*/
-
-void	*ft_parse_manager(char **env)
-{
-	t_line	line;
-	t_env	*cpyenv;
-
-	ft_signal_manager();
-	cpyenv = ft_nenv(env);
-	while (1)
-	{
-		ft_line_handler(&line, cpyenv);
-		line.line = readline(line.line_text);
-		if (!line.line || (ft_strcmp(line.line, "exit") == 0))
-		{
-			ft_free_line_struct(&line);
-			ft_free_env_list(cpyenv);
-			break;
-		}
-		if (ft_whitespace(line.line) == 1)
-			add_history(line.line);
-		if (ft_check_input(line.line))
-			ft_tokenizer_manager(line.line, cpyenv);
-		ft_free_line_struct(&line);
-		free(line.line);
-	}
-	return (NULL);
+	return (wls->head);
 }
