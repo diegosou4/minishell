@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:47:55 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/13 17:11:36 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/13 18:42:18 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ void *ft_structure_creation(char *line, t_env *env)
             current_cmd->next = ft_parse_array(token_list[i]);
             current_cmd = current_cmd->next;
         }
-        ft_print_list_struct(token_list[i], i);
+        // ft_print_list_struct(token_list[i], i);
     }
 
     while (root)
