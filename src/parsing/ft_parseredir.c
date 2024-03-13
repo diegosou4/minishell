@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parseredir.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:33:37 by diegmore          #+#    #+#             */
-/*   Updated: 2024/02/22 18:33:39 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/03/13 14:01:37 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 
 int caseptr(char first, char second)
 {
- 
     if(first == '>' && second == '>')
         return(append_out);
     else if(first == '<' && second == '<')
@@ -46,7 +45,7 @@ char *ft_parse_redir(char *str)
         if(case_num == 0)
             new[i] = ptr[j];
         else if(case_num != 0)
-            new[i] = case_num; 
+            new[i] = case_num;
         if(case_num >= 3 && case_num <= 5)
         {
             j++;
@@ -165,7 +164,7 @@ void addbackredir(t_redir *redir, char *file, int flag)
         ptr = ptr->next;
     }
     ptr->next = last;
-}   
+}
 
 void initredir(t_redir **redir, int flag, char *file)
 {
