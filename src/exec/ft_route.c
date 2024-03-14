@@ -44,33 +44,19 @@ void open_pipes(t_cmd **cmd)
     }
 }
 
-void executor_without(t_cmd *commands, char **env, int in,int out,t_env **cpy)
+void close_pipes(t_cmd **cmd)
 {
-    int pid;
-    pid = fork();
-    if(pid == 0)
-    {
-        dup2(in, 0);
-        dup2(out,1);
-        if(in != 0)
-            close(in);
-        if(out != 1)
-            close(out);
-        if(check_builtings(commands) == 0)
-            execve(commands->path,commands->args,env);
-        else
-        {
-            execution(commands,cpy);
-            exit(EXIT_SUCCESS);
-        }
-        exit(EXIT_SUCCESS);
-    }
-    if(out != 1)
-        close(out);
-    if(in != 0)
-        close(in);
-}
+    t_cmd *ptr;
 
+    ptr = (*cmd);
+    if(ptr->next != NULL)
+    {
+        close(ptr->pipesfd[0]);
+        close(ptr->pipesfd[1]);
+        ptr = ptr->next;
+    }
+
+}
 
 int return_heredoc(t_redir *redir)
 {
@@ -135,12 +121,36 @@ void child_executor(t_cmd *curr,char **env,t_env **cpy,t_cmd *last)
     dup2(fdin,0);
     dup2(fdout,1);
     if(fdout != 1)
+         close(fdout);
+    if(fdin != 0)
+        close(fdin);
+    close(fdin);
+    close(fdout);
+    printf("PID %d || CMD %s \n", getpid(), curr->args[0]);  
+    execve(curr->path,curr->args,env);
+}
+void child_bexecutor(t_cmd *curr,char **env,t_env **cpy,t_cmd *last)
+{
+    int check;
+    int fdin;
+    int fdout;
+    check = check_builtings(curr);
+    fdin = return_in(curr->redir,curr,last);
+    fdout = return_out(curr->redir,curr);
+    dup2(fdin,0);
+    dup2(fdout,1);
+    if(fdout != 1)
         close(fdout);
     if(fdin != 0)
         close(fdin);  
-    execve(curr->path,curr->args,env);
-
+    execute_builtings(&curr,cpy,check);
+    printf("PID %d || CMD %s \n", getpid(), curr->args[0]);  
+    close(fdin);
+    close(fdout);
+    exit(0);
 }
+
+// Bora trabalhar filho da ***
 
 void ft_magane_executor(t_cmd **cmd, char **env,t_env **cpy)
 {
@@ -150,19 +160,23 @@ void ft_magane_executor(t_cmd **cmd, char **env,t_env **cpy)
     ptrcmd = (*cmd);
     lastcmd = NULL;
     open_pipes(cmd);
-  
+    if(ptrcmd->next == NULL)
+        child_builtings(&ptrcmd,cpy);
     while(ptrcmd != NULL)
     {
         pid = fork();
         if(pid == 0)
         {
-            child_executor(ptrcmd,env,cpy,lastcmd);
+            if(check_builtings(ptrcmd) == 0)
+                child_executor(ptrcmd,env,cpy,lastcmd);
+            else
+                child_bexecutor(ptrcmd,env,cpy,lastcmd); 
         }
         lastcmd = ptrcmd;
         ptrcmd = ptrcmd->next;
     }
-    closeredir((*cmd)->redir);
-
+    wait(NULL);
+    close_pipes(cmd);
 }
 
 
@@ -222,5 +236,5 @@ void start_exection(t_cmd **commands,char **env,t_env **cpy)
 {
     open_redir(commands);
     ft_magane_executor(commands,env,cpy);
-    wait(NULL);
+  
 }

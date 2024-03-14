@@ -12,6 +12,8 @@
 
 #include "../../includes/mini.h"
 
+
+// VERIFICAR PARA QUE EU USO ESSA FUNCAO
 char *ft_returnpath(t_env *env,char *this)
 {   
     t_env *ptr;
@@ -25,26 +27,19 @@ char *ft_returnpath(t_env *env,char *this)
     return(NULL);
 }
 
+
 int ft_cd(t_cmd *comands,t_env **env)
 {
     int result;
     if(len_darray(comands->args) > 2)
-    {
-        write(2, "cd: too many arguments\n",43);
-        return(4);
-    }
+        return(return_error("cd : too many arguments\n"));
     if(comands->args[1] == NULL)
-    {
-        write(2,"relative or absuloted path\n",28);
-        return(4);
-    }
+        return(return_error("relative or absuloted path\n"));
     result = chdir(comands->args[1]);
     if(result == 0)
-    {
-        return(1);
-    }
+        return(0);
     else
         perror("Error ");
-    return(3);
+    return(2);
 }
  

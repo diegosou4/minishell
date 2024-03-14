@@ -13,20 +13,20 @@
 
 #include "../../includes/mini.h"
 
-void ft_exp(t_env *env)
+int ft_exp(t_env *env)
 {
-
     t_env *ptr;
 
     ptr = env;
     if(env ==  NULL)
-        return;
+        return(0);
     while(ptr != NULL)
     {
         printf("declare -x ");
         printf("%s%s\n",ptr->key,ptr->value);
         ptr = ptr->next;
     }
+    return(1);
 }
 
 
@@ -52,30 +52,27 @@ int ft_indexinenv(t_env *env,char *this)
 int ft_haveinenv(t_env *env, char *str)
 {
     int i;
-    int j;
     char *newstr;
     t_env *ptr;
-    ptr = env;
     char *s;
+
+    ptr = env;
     s = ft_strchr(str,61);
     if(ft_strlen(s) == 1)
-        return(1);
+        return(2);
     if(env == NULL)
-        return(0);
+        return(2);
     i = ft_strintchr(str,61);
     newstr = ft_substr(str,0,i);
-    j = ft_indexinenv(env,newstr);
-    if(j != -1)
+    i = ft_indexinenv(env,newstr);
+    if(i != -1)
     {
-        while(j != 0)
-        {
+        while(i-- != 0)
             ptr = ptr->next;
-            j--;
-        }
         ptr->value = s;
-        return(1);
+        return(0);
     }
-    return(0);
+    return(2);
 }
 
 void ft_putinlast(t_env **env,char *this,int token)
@@ -84,6 +81,7 @@ void ft_putinlast(t_env **env,char *this,int token)
     t_env *ptr;
     t_env *last;
     t_env *pen ;
+  
     ptr = (*env);
     while(ptr->next != NULL)
     {
@@ -102,46 +100,41 @@ void ft_putinlast(t_env **env,char *this,int token)
     }
     ptr->index += 1;
     update_index(env);  
-
 }
 
-void ft_caseequal(t_env **env,char *command)
+int ft_caseequal(t_env **env,char *command)
 {
-    if(ft_haveinenv(*env,command) == 1)
-        return;
+    if(ft_haveinenv(*env,command) == 0)
+        return(0);
     else if(*env == NULL)
         *env = newsenv(command,0,1); 
     else
-        ft_putinlast(env,command,1);   
+        ft_putinlast(env,command,1);
+    return(0);   
 }
 
-void ft_casewithout(t_env **env,char *command)
+int ft_casewithout(t_env **env,char *command)
 {
-     int j;
-
-    j = ft_indexinenv(*env,command);
-    if(j != -1)
-        return;
     if(*env == NULL)
         *env = newsenv(command,0,2);
     else
         ft_putinlast(env,command,2);
+    return(0);
 }
 
 
-void ft_export(t_env **env,t_cmd *commands)
+int ft_export(t_env **env,t_cmd *commands)
 {
-    if(len_darray(commands->args) == 1)
-    {
-        ft_exp(*env);
-        return;
-    }
     int index;
+
+    if(len_darray(commands->args) == 1)
+        return(ft_exp(*env));
     index = ft_strintchr(commands->args[1],61);
     if(ft_strncmp("_=",commands->args[1],2) == 0)
-        return;
+        return(2);
     if(index > 0 && index != 1)
         return(ft_caseequal(env,commands->args[1]));
     else
         return(ft_casewithout(env,commands->args[1]));
+    return(2);
 }

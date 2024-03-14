@@ -24,6 +24,7 @@ void ft_numberforexit(char *str)
             ft_putstr_fd("exit: ", 2);
             ft_putstr_fd(str,2);
             ft_putstr_fd(" numeric argument required\n",2);
+            exit(2);
         }
     }
     unsigned char res;
@@ -35,6 +36,7 @@ void ft_exit(t_cmd *comands)
     char *str;
     int i;
     i = 0;
+    printf("exit\n");
     if(len_darray(comands->args) > 2)
         ft_putstr_fd("exit: too many arguments\n",2);
     str = ft_strdup(comands->args[1]);

@@ -73,20 +73,7 @@ void addbackenv(char *str,int this,t_env **cpyenv, int token)
     ptr->next = last;
 }
 
-void print_env(t_env *env)
-{
-    t_env *ptr;
 
-    ptr = env;
-
-    while(ptr != NULL)
-    {   
-        printf("Index: %i \n",ptr->index);
-        printf("Key: %s \n", ptr->key);
-        printf("Value: %s \n", ptr->value);
-        ptr = ptr->next;
-    }
-}
 t_env *ft_nenv(char **env, int token)
 {
     t_env *cpyenv;

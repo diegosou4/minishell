@@ -13,15 +13,14 @@
 
 #include "../../includes/mini.h"
 
-
-
-void print_pwd(void)
+int print_pwd(void)
 {
     char *pwd;
     pwd = ft_calloc(sizeof(char) , FILENAME_MAX);
     pwd = getcwd(pwd,FILENAME_MAX);
     printf("%s\n", pwd);
     free(pwd);
+    return(0);
 }
 
 

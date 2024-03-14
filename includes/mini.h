@@ -112,6 +112,7 @@ typedef struct s_cmd
 	char *path;
 	char **args;
 	int pipesfd[2];
+	int fd_final[2];
 	t_bool literal;
 	t_bool fint_variable;
 	t_redir *redir;
@@ -135,12 +136,10 @@ int ft_whitespace(char *line);
 void cmdinback(t_cmd **comands,char *args);
 // Get Path
 char *ft_getenv(char **env, char *str, t_bool i);
-char *ft_getpwd(char **env, char *str);
 
 void cmdinback(t_cmd **comands, char *args);
 void ft_expand(t_cmd **commads, char **cpyenv);
 char **ft_arrcpy(char **str);
-t_cmd *returnmystruct(char *newline);
 char *ask_acess(char *comand, char *path);
 
 // Struct redir
@@ -166,7 +165,7 @@ int ft_check_redir_pipes(char **line);
 
 t_redir *haveredir(char *cmd);
 void checkpathredir(t_redir *redir, char *file, int flag);
-void checkinoutredir(t_redir *redir, char *file, int flag);
+
 
 void initredir(t_redir **redir, int flag, char *file);
 char *ft_strrange(char *s, int start, int end);
@@ -179,35 +178,18 @@ void execution(t_cmd *commands, t_env **env);
 void closeandfree(t_redir *redir);
 int closeredir(t_redir *redir);
 
-
-
-
 // Pipes 
 int sizepipe(t_cmd *commands);
 int sizeredir(t_redir *redir);
 void free_commands(t_cmd *comands);
 void free_redirects(t_redir *redir);
 // Builtings
+
+
 int check_builtings(t_cmd *commands);
-void ft_exit(t_cmd *comands);
-void update_index(t_env **env);
-void ft_putinlast(t_env **env,char *this,int token);
-void ft_export(t_env **env,t_cmd *commands);
-void ft_caseequal(t_env **env,char *command);
-void ft_casewithout(t_env **env,char *command);
 t_env *newexp(char *str, int this, int token);
-void ft_exp(t_env *env);
+
 void ft_numberforexit(char *str);
-int 	index_env(char **env, char *str);
-
-
-int ft_cd(t_cmd *comands,t_env **env);
-void execute_env(t_env *env, t_cmd *commands);
-int ft_haveinenv(t_env *env, char *str);
-int ft_indexinenv(t_env *env,char *this);
-void print_pwd(void);
-void ft_removeinenv(t_env **env, int index);
-void ft_unset(t_env **env,t_cmd *commands);
 
 
 // ENV STRUCT
@@ -215,22 +197,13 @@ char *get_key(char *str);
 t_env *newsenv(char *str, int this, int token);
 t_env *ft_nenv(char **env,int token);
 void addbackenv(char *str,int this,t_env **cpyenv, int token);
-void print_env(t_env *env);
-void ft_env(t_env *env);
-// Redirects
-int have_out(t_redir *redir);
+
+
+// HERE DOC
 int redirout(char *path);
 int ft_append(char *path);
-// HERE DOC
-
 int ft_heredoc(char *delimiter);
 void ft_putforwe(char *line,int fd);
-
-
-//void execute_cmd(t_cmd *commands, char **env);
-//void ft_export(char ***env,t_cmd *commands);
-//int have_inenv(char **env, char *str);
-//int check_builtings(t_cmd *commands, char **env);
 
 // __________________________________________________Fuctions_Test_____________________________
 int ft_handle_redir_input(char *delimiter);
@@ -245,6 +218,7 @@ void handle_signal(int signal1);
 // __________________________________________________FREE_MANAGER ________________________________
 
 void ft_free_double_pointers(char **split_line);
+void close_pipes(t_cmd **cmd);
 
 // __________________________________________________LIST_MANAGER ________________________________
 int ft_extract_var(t_word_list *word_list, char **env);
@@ -264,21 +238,47 @@ int check_path2(t_cmd **commands, char **env);
 //_____________________________________________________ENV ______________________________________________________
 void ft_env_null();
 
-//_________________________________________________Teste de execucao 
+//_________________________________________________ EXEC
 
 int ft_countpipes(t_cmd *cmd);
 void open_pipes(t_cmd **cmd);
-void executor_without(t_cmd *commands, char **env, int in,int out,t_env **cpy);
-void ft_magane_executor(t_cmd **cmd, char **env,t_env **cpy);
-int check_redir(t_redir *redir, int flagtoken);
-int check_all(t_redir *redir);
+
 void start_exection(t_cmd **commands,char **env,t_env **cpy);
+void ft_magane_executor(t_cmd **cmd, char **env,t_env **cpy);
+void child_executor(t_cmd *curr,char **env,t_env **cpy,t_cmd *last);
 void ft_close(t_cmd **commands);
-void case_redir(t_redir *redir);
 int open_redir(t_cmd **commands);
 int redir_error(int fd);
 int ft_howpipes(t_cmd *comands);	
-void givefd_redir(t_redir **redir, int index);
+void child_builtings(t_cmd **cmd, t_env **cpy);
 
 
+//_________________________________________________ERROR______________________________________________//
+int return_error(char *str);
+//_______________________________________________FT_CD_______________________________________________//
+int ft_cd(t_cmd *comands,t_env **env);
+//________________________________________________FT_ENV_____________________________________________//
+int ft_env(t_env *env);
+int execute_env(t_env *env, t_cmd *commands);
+//________________________________________________FT_EXP_____________________________________________//
+
+int ft_exp(t_env *env);
+int ft_export(t_env **env,t_cmd *commands);
+int ft_haveinenv(t_env *env, char *str);
+int ft_indexinenv(t_env *env,char *this);
+int index_env(char **env, char *str);
+int ft_casewithout(t_env **env,char *command);
+int ft_caseequal(t_env **env,char *command);
+void ft_putinlast(t_env **env,char *this,int token);
+//________________________________________________FT_PWD________________________________________________//
+int print_pwd(void);
+//_______________________________________________FT_UNSET____________________________________________//
+int ft_unset(t_env **env,t_cmd *commands);
+void ft_removeinenv(t_env **env, int index);
+void update_index(t_env **env);
+//________________________________________________EXIT_______________________________________________//
+void ft_exit(t_cmd *comands);
+
+//____________________________________________EXECUTEBUILTINGS_______________________________________//
+int execute_builtings(t_cmd **cmd,t_env **cpy, int check);
 #endif
