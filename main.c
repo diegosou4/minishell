@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:59:54 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/03/13 17:09:28 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/18 14:27:53 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,24 @@ t_word_list	**ft_tokenizer_manager(char *line, t_env *env)
 {
 	char		**tokens;
 	t_word_list	**words_list;
+	char *new_string;
 	int			i;
 
 	i = -1;
-	words_list = ft_calloc(100, sizeof(t_word_list *));
-	tokens = ft_split(ft_create_string(line), '3');
+	new_string = ft_create_string(line);
+	words_list = (t_word_list **)ft_calloc(100, sizeof(t_word_list *));
+	tokens = ft_split(new_string, '3');
 	if (!tokens)
 	{
 		free(words_list);
+		free(new_string);
 		return (NULL);
 	}
 	while (tokens[++i] != NULL)
 	{
 		words_list[i] = tokenize_and_print(tokens[i]);
 	}
+	ft_free_double_pointers(tokens);
 	i = -1;
 	while (words_list[++i])
 	{
@@ -66,13 +70,16 @@ t_word_list	**ft_tokenizer_manager(char *line, t_env *env)
 			words_list[i]->redirection = TRUE;
 		else
 			words_list[i]->redirection = FALSE;
+		ft_quotes_remove(words_list[i]);
 		if (ft_check_valid_redir(words_list[i]) == 0)
 		{
-			ft_free_double_pointers(tokens);
+			ft_free_double_word_list(words_list);
+			free(new_string);
 			return (NULL);
 		}
+		// ft_print_list_struct(words_list[i], i);
 	}
-	ft_free_double_pointers(tokens);
+	free(new_string);
 	return (words_list);
 }
 /*
@@ -84,6 +91,7 @@ void	*ft_parse_manager(char **env)
 {
 	t_line	line;
 	t_env	*cpyenv;
+	t_cmd *cmd_structure;
 
 	ft_signal_manager();
 	cpyenv = ft_nenv(env);
@@ -100,11 +108,14 @@ void	*ft_parse_manager(char **env)
 		if (ft_whitespace(line.line) == 1)
 			add_history(line.line);
 		if (ft_check_input(line.line))
-			ft_structure_creation(line.line, cpyenv);
+		{
+			cmd_structure = ft_structure_creation(line.line, cpyenv);
+			ft_free_cmd_structure(cmd_structure);
+		}
 		ft_free_line_struct(&line);
 		free(line.line);
 	}
-	return (NULL);
+	return NULL;
 }
 
 int	main(int argc, char *argv[], char **env)
