@@ -79,10 +79,15 @@ void child_builtings(t_cmd **cmd, t_env **cpy)
         int out;
         in = simple_in((*cmd)->redir);
         out = simple_out ((*cmd)->redir);
-        dup2(in,0);
-        dup2(out,1);
+        if(in != 0)
+            dup2(in,0);
+        if(out != 1)
+            dup2(out,1);
         execute_builtings(cmd,cpy,check);
-        (*cmd) = NULL;
+        if(in != 0)
+            close(in);
+        if(out != 1)
+            close(out);
     }
 }
 int execute_builtings(t_cmd **cmd,t_env **cpy, int check)
@@ -98,7 +103,7 @@ int execute_builtings(t_cmd **cmd,t_env **cpy, int check)
     else if(check == 5)
         return(ft_unset(cpy,(*cmd)));
     else if(check == 6)
-        return(0);
+        return(ft_echo((*cmd)->args[1]));
     else if(check == 7)
     {
         ft_exit((*cmd));

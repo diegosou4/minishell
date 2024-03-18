@@ -46,27 +46,42 @@ int main(int ac,char **av,char **env)
     
     // Second
 
+
+
+
     // Comands  
     commands = malloc(sizeof(t_cmd) * 1);
-    commands->path = ft_strdup("pwd");
-    char *a1[] = {"pwd", NULL};
+    commands->path = ft_strdup("/bin/ls");
+    char *a1[] = {"ls","-l", NULL};
     commands->args = a1;
     commands->redir = NULL;
     commands->next = NULL;
 
+    // Tercero
+
+    t_cmd *third;
+    
+    third = malloc(sizeof(t_cmd) * 1);
+    third->path = ft_strdup("/bin/cat");
+    char *a4[] = {"cat","-e", NULL};
+    third->args = a4;
+    third->redir = NULL;
+    third->next = NULL;
+
     //commands->redir = redirf;
 
     second = malloc(sizeof(t_cmd) * 1);
-    second->path = ft_strdup("/bin/cat");
-    char *a2[] = {"cat","-e", NULL};
+    second->path = ft_strdup("/bin/wc");
+    char *a2[] = {"wc","-l", NULL};
     second->args = a2;
-    second->redir = NULL;
+    second->redir = redirf;
     second->next = NULL;
-
-    commands->next = second;
+  
+     commands->next = second;
+   
     start_exection(&commands,env,&cpyenv);
 
-     close(redirf->fd);
+     //close(redirf->fd);
     return(0);
    
 }

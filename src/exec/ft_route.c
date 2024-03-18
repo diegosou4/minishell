@@ -115,18 +115,16 @@ void child_executor(t_cmd *curr,char **env,t_env **cpy,t_cmd *last)
 
     int fdin;
     int fdout;
-
+ 
     fdin = return_in(curr->redir,curr,last);
     fdout = return_out(curr->redir,curr);
+   
     dup2(fdin,0);
     dup2(fdout,1);
     if(fdout != 1)
          close(fdout);
     if(fdin != 0)
         close(fdin);
-    close(fdin);
-    close(fdout);
-    printf("PID %d || CMD %s \n", getpid(), curr->args[0]);  
     execve(curr->path,curr->args,env);
 }
 void child_bexecutor(t_cmd *curr,char **env,t_env **cpy,t_cmd *last)
@@ -144,8 +142,9 @@ void child_bexecutor(t_cmd *curr,char **env,t_env **cpy,t_cmd *last)
     if(fdin != 0)
         close(fdin);  
     execute_builtings(&curr,cpy,check);
-    printf("PID %d || CMD %s \n", getpid(), curr->args[0]);  
+   
     close(fdin);
+
     close(fdout);
     exit(0);
 }
@@ -161,7 +160,10 @@ void ft_magane_executor(t_cmd **cmd, char **env,t_env **cpy)
     lastcmd = NULL;
     open_pipes(cmd);
     if(ptrcmd->next == NULL)
+    {
         child_builtings(&ptrcmd,cpy);
+        return;
+    }
     while(ptrcmd != NULL)
     {
         pid = fork();
@@ -171,11 +173,12 @@ void ft_magane_executor(t_cmd **cmd, char **env,t_env **cpy)
                 child_executor(ptrcmd,env,cpy,lastcmd);
             else
                 child_bexecutor(ptrcmd,env,cpy,lastcmd); 
+            wait(NULL);
         }
         lastcmd = ptrcmd;
         ptrcmd = ptrcmd->next;
     }
-    wait(NULL);
+
     close_pipes(cmd);
 }
 

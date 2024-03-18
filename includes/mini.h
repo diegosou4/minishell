@@ -130,7 +130,7 @@ int ft_special_case(char *modified_line, int j, char **line);
 int ft_parse_handler(char *str, const char *delimiters);
 char *ft_create_string(char *line, char **env);
 
-void ft_echo(int fd, char *str, int flag);
+
 int ft_whitespace(char *line);
 
 void cmdinback(t_cmd **comands,char *args);
@@ -172,7 +172,6 @@ char *ft_strrange(char *s, int start, int end);
 char *cleantoken(char *str, int c);
 char *findfile(char *cmd);
 
-void execution(t_cmd *commands, t_env **env);
 
 // Free and close
 void closeandfree(t_redir *redir);
@@ -251,7 +250,8 @@ int open_redir(t_cmd **commands);
 int redir_error(int fd);
 int ft_howpipes(t_cmd *comands);	
 void child_builtings(t_cmd **cmd, t_env **cpy);
-
+//_________________________________________________FT_ECHO_____________________________________________//
+int ft_echo(char *str);
 
 //_________________________________________________ERROR______________________________________________//
 int return_error(char *str);

@@ -12,11 +12,8 @@
 
 #include "../../includes/mini.h"
 
-void ft_echo(int fd ,char *str, int flag) 
+int ft_echo(char *str) 
 {
-    if(flag == 1)
-    {
-         ft_putstr_fd(str,fd);
-    }else
-        ft_putstr_fd(str,fd);
+    printf("%s\n",str);
+    return(1);
 }
