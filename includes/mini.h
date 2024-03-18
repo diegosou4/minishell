@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 12:40:39 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/12 19:39:00 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/16 20:00:44 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ char *ask_acess(char *comand, char *path);
 t_cmd *cmdnew(char *args);
 t_cmd *putcmds(char *args);
 t_redir *redirnew(void);
-void *ft_structure_creation(char *line, t_env *env);
+t_cmd *ft_structure_creation(char *line, t_env *env);
 
 //________________________________TOKEN MANAGER STRUCTURE CREATION___________________________
 t_word_list **ft_tokenizer_manager(char *line, t_env *env);
@@ -267,9 +267,12 @@ void handle_signal(int signal1);
 void ft_free_double_pointers(char **split_line);
 void ft_free_env_list(t_env *env);
 void ft_free_line_struct(t_line *line);
-
+void ft_free_double_word_list(t_word_list **word_desc);
+void ft_free_t_word_list(t_word_list *word_list);
+void ft_free_cmd_structure(t_cmd *cmd_structure);
+void ft_free_redir_list(t_redir *redir);
 // __________________________________________________LIST_MANAGER ________________________________
-int ft_extract_var(t_word_list *word_list, t_env *env);
+void ft_extract_var(t_word_list *word_list, t_env *env);
 t_word_list	*ft_lstlast_(t_word_list *lst);
 //--Create the array of structures.
 t_word_list	*tokenize_and_print(char *token);
