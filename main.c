@@ -40,7 +40,7 @@ int main(int ac,char **av,char **env)
     redirf = malloc(sizeof(t_redir) * 1);
 
     redirf->path = ft_strdup("file1.txt");
-    redirf->token = STDOUT_FILENO;
+    redirf->token = redir_in;
     redirf->fd = -1;
     redirf->next = NULL;
     
@@ -51,10 +51,10 @@ int main(int ac,char **av,char **env)
 
     // Comands  
     commands = malloc(sizeof(t_cmd) * 1);
-    commands->path = ft_strdup("/bin/ls");
-    char *a1[] = {"ls","-l", NULL};
+    commands->path = ft_strdup("/pwd");
+    char *a1[] = {"pwd", NULL};
     commands->args = a1;
-    commands->redir = NULL;
+    commands->redir = redirf;
     commands->next = NULL;
 
     // Tercero
@@ -65,7 +65,7 @@ int main(int ac,char **av,char **env)
     third->path = ft_strdup("/bin/cat");
     char *a4[] = {"cat","-e", NULL};
     third->args = a4;
-    third->redir = NULL;
+    third->redir = redirf;
     third->next = NULL;
 
     //commands->redir = redirf;
@@ -74,10 +74,12 @@ int main(int ac,char **av,char **env)
     second->path = ft_strdup("/bin/wc");
     char *a2[] = {"wc","-l", NULL};
     second->args = a2;
-    second->redir = redirf;
+    second->redir = NULL;
     second->next = NULL;
-  
-     commands->next = second;
+    
+    commands->next = third;
+    third->next = second;
+
    
     start_exection(&commands,env,&cpyenv);
 

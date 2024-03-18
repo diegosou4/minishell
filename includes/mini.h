@@ -113,6 +113,7 @@ typedef struct s_cmd
 	char **args;
 	int pipesfd[2];
 	int fd_final[2];
+	int executable;
 	t_bool literal;
 	t_bool fint_variable;
 	t_redir *redir;
@@ -251,7 +252,7 @@ int redir_error(int fd);
 int ft_howpipes(t_cmd *comands);	
 void child_builtings(t_cmd **cmd, t_env **cpy);
 //_________________________________________________FT_ECHO_____________________________________________//
-int ft_echo(char *str);
+int ft_echo(t_env *cmd);
 
 //_________________________________________________ERROR______________________________________________//
 int return_error(char *str);
