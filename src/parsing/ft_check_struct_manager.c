@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 17:33:05 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/03/13 17:32:51 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/16 18:58:17 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static char *ft_create_token(char *token_line)
 	char *token;
 
 	i = -1;
-	token = ft_calloc(ft_strlen(token_line), sizeof(char));
+	token = ft_calloc(ft_strlen(token_line) + 1, sizeof(char));
 	while (++i < ft_check_token_size(token_line))
 	{
 		token[i] = token_line[i];
@@ -79,7 +79,7 @@ char *ft_path_handler(t_env *env, char *variable)
 		env = env->next;
 	}
 	// holder = ft_calloc(ft_strlen(env->value + 1), sizeof(char ));
-	holder = ft_strdup(env->value + 1);
+	holder = (env->value + 1);
 	return (holder);
 }
 void ft_check_variable_quotes_expansion(char *dest)
@@ -131,12 +131,9 @@ void ft_check_variable_expansion(char *src, char *dest, t_env *env)
 	*dest = '\0';
 }
 
-int ft_extract_var(t_word_list *word_list, t_env *env)
+void ft_extract_var(t_word_list *word_list, t_env *env)
 {
-	char *token;
-	char *src;
 	char *dest;
-	char *path;
 	char *word_cpy;
 	int flag;
 
@@ -150,18 +147,15 @@ int ft_extract_var(t_word_list *word_list, t_env *env)
 		}
 		if (word_list->word->tags == VARIABLE)
 		{
-			printf("this is the list: %s\n", word_list->word->word);
-			word_cpy = ft_calloc(10000 + 1, sizeof(char));
-			src = word_list->word->word;
-			printf("this is the src: %s\n", src);
+			word_cpy = ft_calloc(100 + 1, sizeof(char));
 			dest = word_cpy;
-			printf("this is the word_cpy: %s\n", word_cpy);
-			ft_check_variable_expansion(src, dest, env);
+			ft_check_variable_expansion(word_list->word->word, dest, env);
 			if (ft_strchr(word_cpy, '\''))
 				ft_check_variable_quotes_expansion(dest);
-			word_list->word->word = word_cpy;
+			free(word_list->word->word);
+			word_list->word->word =ft_strdup(word_cpy);
+			free(word_cpy);
 		}
 		word_list = word_list->next;
 	}
-	return (1);
 }
