@@ -151,6 +151,11 @@ void child_bexecutor(t_cmd *curr,char **env,t_env **cpy,t_cmd *last)
 
 // Bora trabalhar filho da ***
 
+void closeoutpipe(t_cmd **ptr)
+{
+    close((*ptr)->pipesfd[1]);
+}
+
 void ft_magane_executor(t_cmd **cmd, char **env,t_env **cpy)
 {
     int pid;
@@ -176,11 +181,14 @@ void ft_magane_executor(t_cmd **cmd, char **env,t_env **cpy)
             wait(NULL);
         }
         lastcmd = ptrcmd;
+        closeoutpipe(&lastcmd);
         ptrcmd = ptrcmd->next;
     }
 
     close_pipes(cmd);
 }
+
+
 
 
 // Debito de Progamacao

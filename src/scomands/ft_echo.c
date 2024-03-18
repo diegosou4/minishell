@@ -12,8 +12,25 @@
 
 #include "../../includes/mini.h"
 
-int ft_echo(char *str) 
+int ft_echo(t_cmd *cmd) 
 {
-    printf("%s\n",str);
+    int flag;
+    flag = 0;
+    int i;
+        
+    i = 2;
+    flag = ft_strncmp(cmd->args[1],"-n",ft_strlen(cmd->args[1]));
+    if(flag != 0)
+        i = 1;
+    while(cmd->args[i] != NULL)
+    {
+        printf("%s",cmd->args[i]);
+        i++;
+    }
+    if(flag != 0)
+        printf("\n");
     return(1);
 }
+
+
+
