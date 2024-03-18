@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 09:42:35 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/03/13 17:21:36 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/16 18:20:46 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,9 @@ int	ft_flag(char *word)
 t_word_desc	*ft_cte_wd_d(char *word, int flag)
 {
 	t_word_desc	*new_word;
-	char		*word_copy;
-
-	new_word = malloc(sizeof(t_word_desc));
-	word_copy = word;
-	new_word->word = ft_strdup(word_copy);
+	// ft_init_word_desc(new_word, word);
+	new_word = ft_calloc(1, sizeof(t_word_desc));
+	new_word->word = ft_strdup(word);
 	new_word->flags = flag;
 	new_word->tags = ft_tags(new_word);
 	return (new_word);
@@ -87,14 +85,26 @@ t_word_list	*create_word_node(t_word_desc *word)
 	new_node->next = NULL;
 	return (new_node);
 }
+t_word_lists	*ft_init_word_lista(char *token)
+{
+	t_word_lists *word_lists;
 
+	word_lists = ft_calloc(1, sizeof(t_word_lists));
+	word_lists->current_token = NULL;
+	word_lists->node = NULL;
+	word_lists->head = NULL;
+	word_lists->subtoken = ft_strtok(token, "2");
+	return (word_lists);
+}
 t_word_list	*tokenize_and_print(char *token)
 {
 	t_word_lists	*wls;
+	t_word_list *head;
+
 
 	if (!token || !token[0])
 		return (NULL);
-	wls = ft_init_word_list(wls, token);
+	wls = ft_init_word_lista(token);
 	while (wls->subtoken != NULL)
 	{
 		if (wls->subtoken[0] != '\0')
@@ -114,5 +124,9 @@ t_word_list	*tokenize_and_print(char *token)
 		}
 		wls->subtoken = ft_strtok(NULL, "2");
 	}
-	return (wls->head);
+	head = wls->head;
+		free(wls->subtoken);
+	// free(wls->head);
+	free(wls);
+	return (head);
 }

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:44:08 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/03/13 14:17:04 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/14 00:14:35 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,8 @@ char *ft_create_string(char *line)
 	char *new_line;
 	char *new_line_2;
 
-	new_line = ft_calloc((ft_strlen(line) * 5), sizeof(char *));
-	new_line_2 = ft_calloc((ft_strlen(line) * 5), sizeof(char *));
+	new_line = ft_calloc((ft_strlen(line) * 3), sizeof(char ));
+	new_line_2 = ft_calloc((ft_strlen(line) * 3), sizeof(char ));
 	ft_string_handle(line, new_line);
 	ft_string_handle_2(new_line, new_line_2);
 	printf("this is the line 1 :%s:\n", new_line);
