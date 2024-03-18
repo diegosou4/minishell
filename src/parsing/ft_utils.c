@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 09:21:34 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/03/13 13:27:15 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/15 15:59:03 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,5 +149,5 @@ void ft_line_handler(t_line *line, t_env *cpyenv)
     line->color_line = ft_strjoin(ANSI_COLOR_CYAN, (line->value_env));
     line->line_text = ft_strjoin(line->color_line,
                                  "@🐧shell:$ " ANSI_COLOR_RESET);
-    free(line->value_env);
+    // free(line->value_env);
 }
