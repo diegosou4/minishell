@@ -103,7 +103,7 @@ int execute_builtings(t_cmd **cmd,t_env **cpy, int check)
     else if(check == 5)
         return(ft_unset(cpy,(*cmd)));
     else if(check == 6)
-        return(ft_echo((*cmd)->args[1]));
+        return(ft_echo((*cmd)));
     else if(check == 7)
     {
         ft_exit((*cmd));

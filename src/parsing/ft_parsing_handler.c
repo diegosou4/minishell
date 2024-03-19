@@ -127,8 +127,8 @@ char *ft_create_string(char *line)
 	new_line_2 = ft_calloc((ft_strlen(line) * 3), sizeof(char ));
 	ft_string_handle(line, new_line);
 	ft_string_handle_2(new_line, new_line_2);
-	printf("this is the line 1 :%s:\n", new_line);
-	printf("this is the line 2 :%s:\n", new_line_2);
+	//printf("this is the line 1 :%s:\n", new_line);
+	//printf("this is the line 2 :%s:\n", new_line_2);
 	if (!new_line_2)
 	{
 		free(new_line_2);

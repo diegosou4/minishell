@@ -164,6 +164,7 @@ void ft_magane_executor(t_cmd **cmd, char **env,t_env **cpy)
     ptrcmd = (*cmd);
     lastcmd = NULL;
     open_pipes(cmd);
+     
     if(ptrcmd->next == NULL)
     {
         child_builtings(&ptrcmd,cpy);
