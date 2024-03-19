@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 09:42:35 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/03/16 18:20:46 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/19 00:11:57 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	ft_flag(char *word)
 t_word_desc	*ft_cte_wd_d(char *word, int flag)
 {
 	t_word_desc	*new_word;
-	// ft_init_word_desc(new_word, word);
+
 	new_word = ft_calloc(1, sizeof(t_word_desc));
 	new_word->word = ft_strdup(word);
 	new_word->flags = flag;
@@ -125,8 +125,7 @@ t_word_list	*tokenize_and_print(char *token)
 		wls->subtoken = ft_strtok(NULL, "2");
 	}
 	head = wls->head;
-		free(wls->subtoken);
-	// free(wls->head);
+	free(wls->subtoken);
 	free(wls);
 	return (head);
 }
