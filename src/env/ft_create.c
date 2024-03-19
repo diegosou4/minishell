@@ -29,22 +29,7 @@ char *get_key(char *str)
     return(NULL);
 }
 
-t_env *newexp(char *str, int this, int token)
-{
-    t_env *cpyenv;
-    char *value;
-    cpyenv = ft_calloc(sizeof(t_env),1);
-
-    cpyenv->index = this;
-    cpyenv->key = "";
-    cpyenv->value = str;
-    cpyenv->token = token;
-    cpyenv->next = NULL;
-    return(cpyenv);
-}
-
-
-t_env *newsenv(char *str, int this, int token)
+t_env *newsenv(char *str, int this)
 {
     t_env *cpyenv;
     char *value;
@@ -53,16 +38,15 @@ t_env *newsenv(char *str, int this, int token)
     cpyenv->index = this;
     cpyenv->key = get_key(str);
     cpyenv->value = ft_strchr(str,61);
-    cpyenv->token = token;
     cpyenv->next = NULL;
     return(cpyenv);
 }
-void addbackenv(char *str,int this,t_env **cpyenv, int token)
+void addbackenv(char *str,int this,t_env **cpyenv)
 {
     t_env *ptr;
     t_env *last;
 
-    last = newsenv(str,this,token);
+    last = newsenv(str,this);
     if(last == NULL)
         return;
     ptr = (*cpyenv);
@@ -73,21 +57,34 @@ void addbackenv(char *str,int this,t_env **cpyenv, int token)
     ptr->next = last;
 }
 
+void print_env(t_env *env)
+{
+    t_env *ptr;
 
-t_env *ft_nenv(char **env, int token)
+    ptr = env;
+
+    while(ptr != NULL)
+    {
+        printf("Index: %i \n",ptr->index);
+        printf("Key: %s \n", ptr->key);
+        printf("Value: %s \n", ptr->value);
+        ptr = ptr->next;
+    }
+}
+t_env *ft_nenv(char **env)
 {
     t_env *cpyenv;
     int index;
     cpyenv = NULL;
     index = 0;
-            
+
     if(env[0] == NULL)
         return(NULL);
-    cpyenv = newsenv(env[index],index,token);
+    cpyenv = newsenv(env[index],index);
     index++;
     while(env[index] != NULL)
     {
-        addbackenv(env[index],index,&cpyenv,token);
+        addbackenv(env[index],index,&cpyenv);
         index++;
     }
     return(cpyenv);
