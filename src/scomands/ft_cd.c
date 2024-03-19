@@ -12,7 +12,6 @@
 
 #include "../../includes/mini.h"
 
-
 // VERIFICAR PARA QUE EU USO ESSA FUNCAO
 char *ft_returnpath(t_env *env,char *this)
 {   
