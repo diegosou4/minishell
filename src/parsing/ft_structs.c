@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:47:55 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/18 14:07:24 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/19 01:37:31 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ static t_redir *ft_create_node(void)
 static void ft_init_redir_node(t_redir *node, char *path, int token)
 {
     node->path = (path);
+    // free(path);
     node->token = token;
     node->next = NULL;
 }
@@ -131,25 +132,19 @@ t_cmd *ft_parse_array(t_word_list *words_list)
     return cmd;
 }
 
-t_cmd *ft_structure_creation(char *line, t_env *env)
+t_cmd *ft_structure_creation(t_word_list **token_list)
 {
-    t_word_list **token_list;
     t_cmd *new_cmd;
     t_cmd *root;
     t_cmd *current_cmd;
     int i;
 
-    token_list = ft_tokenizer_manager(line,env);
     new_cmd = NULL;
     if (!token_list)
-    {
-        free(token_list);
         return NULL;
-    }
     i = -1;
     while (token_list[++i])
     {
-		ft_quotes_remove(token_list[i]);
         new_cmd = ft_parse_array(token_list[i]);
         if (i == 0)
         {
@@ -161,8 +156,12 @@ t_cmd *ft_structure_creation(char *line, t_env *env)
             current_cmd->next = new_cmd;
             current_cmd = current_cmd->next;
         }
-        ft_print_list_struct(token_list[i], i);
     }
-    ft_free_double_word_list(token_list);
+    t_cmd *temp = root;
+    while (temp)
+    {
+        ft_print_cmd_struct(temp);
+        temp = temp->next;
+    }
     return (root);
 }
