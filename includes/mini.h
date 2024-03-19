@@ -157,7 +157,7 @@ char *ft_getenv(char **env, char *str, int i);
 void cmdinback(t_cmd **comands, char *args);
 void ft_expand(t_cmd **commads, char **cpyenv);
 char **ft_arrcpy(char **str);
-char *ask_acess(char *comand, char *path);
+char	*ask_acess(char *comand, char *path);
 
 // Struct redir
 t_cmd *cmdnew(char *args);
@@ -330,5 +330,7 @@ t_line *ft_init_manager(t_line *line);
 char *ft_create_string(char *line);
 void update_index(t_env **env);
 int ft_export(t_env **env,t_cmd *commands);
-
+//______________________________________________EXPAND_PATH_______________________________________________//
+void expand_path(t_cmd **commands,char **env);
+char *ft_getpath(char **env);
 #endif

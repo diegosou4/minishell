@@ -54,3 +54,19 @@ char *ft_getenv(char **env, char *str, int i)
 	}
 		return (NULL);
 }
+
+
+char *ft_getpath(char **env)
+{
+	char	*p;
+
+	p = NULL;
+	while (*env != NULL)
+	{
+		p = ft_strnstr(*env, "PATH=", 5);
+		if (p != NULL)
+			return (p + 5);
+		env++;
+	}
+	return (NULL);
+}

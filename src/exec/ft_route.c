@@ -258,7 +258,9 @@ int ft_howpipes(t_cmd *comands)
 
 void start_exection(t_cmd **commands,char **env,t_env **cpy)
 {
+    expand_path(commands,env);
+    printf("%s \n", (*commands)->path);
+   // exit(0);
     open_redir(commands);
     ft_magane_executor(commands,env,cpy);
-  
 }
