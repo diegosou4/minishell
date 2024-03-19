@@ -30,7 +30,7 @@ char	*ask_acess(char *comand, char *path)
 	char	**paths;
 	int		i;
 	char	*cplusp;
-
+	char 	*quotes;
 	paths = mysplit(path, ':', 0);
 	i = 0;
 	while (paths[i])
@@ -47,6 +47,8 @@ char	*ask_acess(char *comand, char *path)
 	free_paths(paths);
 	return (NULL);
 }
+
+
 
 char	*ask_command(char *comand)
 {
