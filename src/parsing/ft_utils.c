@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 09:21:34 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/03/15 15:59:03 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/19 01:05:29 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,11 +143,10 @@ int ft_whitespace(char *line)
 void ft_line_handler(t_line *line, t_env *cpyenv)
 {
     if (cpyenv == NULL)
-        line->value_env = ft_strdup("non-env@user");
+        line->value_env = ("non-env@user");
     else
         line->value_env = ft_path_handler(cpyenv, "USER");
     line->color_line = ft_strjoin(ANSI_COLOR_CYAN, (line->value_env));
     line->line_text = ft_strjoin(line->color_line,
                                  "@🐧shell:$ " ANSI_COLOR_RESET);
-    // free(line->value_env);
 }
