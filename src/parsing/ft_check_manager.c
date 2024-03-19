@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 13:07:06 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/03/12 19:29:51 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/19 00:41:09 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,10 @@ int	ft_check_input(char *line)
 		return (0);
 	split_line = ft_split(line, ' ');
 	if (!split_line || !split_line[0])
+	{
+		free(split_line);
 		return (0);
+	}
 	if (!ft_check_pipes(split_line)
 		|| !ft_check_redir_pipes(split_line)
 		|| !ft_check_directions(split_line))
