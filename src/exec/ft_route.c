@@ -163,7 +163,6 @@ void ft_magane_executor(t_cmd **cmd, char **env,t_env **cpy)
     t_cmd *lastcmd;
     ptrcmd = (*cmd);
     lastcmd = NULL;
-    open_pipes(cmd);
      
     if(ptrcmd->next == NULL)
     {
@@ -259,8 +258,7 @@ int ft_howpipes(t_cmd *comands)
 void start_exection(t_cmd **commands,char **env,t_env **cpy)
 {
     expand_path(commands,env);
-    printf("%s \n", (*commands)->path);
-   // exit(0);
     open_redir(commands);
+    open_pipes(commands);
     ft_magane_executor(commands,env,cpy);
 }
