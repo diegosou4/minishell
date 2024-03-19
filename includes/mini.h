@@ -114,8 +114,6 @@ typedef struct s_cmd
 	int pipesfd[2];
 	int fd_final[2];
 	int executable;
-	t_bool literal;
-	t_bool fint_variable;
 	t_redir *redir;
 	struct s_cmd *next;
 
@@ -129,7 +127,6 @@ char *ft_strtok(char *str, const char *delimiters);
 // this will make a treatment to the sting.
 int ft_special_case(char *modified_line, int j, char **line);
 int ft_parse_handler(char *str, const char *delimiters);
-char *ft_create_string(char *line, char **env);
 
 
 int ft_whitespace(char *line);
@@ -288,4 +285,31 @@ void ft_exit(t_cmd *comands);
 
 //____________________________________________EXECUTEBUILTINGS_______________________________________//
 int execute_builtings(t_cmd **cmd,t_env **cpy, int check);
+
+//___________________________________________________VAR EXP _______________________________
+char *ft_path_handler(t_env *env, char *variable);
+
+//--Create the array of structures.
+t_word_list	*tokenize_and_print(char *token);
+// __________________________________________________FREE_MANAGER ________________________________
+
+void ft_free_double_pointers(char **split_line);
+void ft_free_env_list(t_env *env);
+void ft_free_line_struct(t_line *line);
+void ft_free_double_word_list(t_word_list **word_desc);
+void ft_free_t_word_list(t_word_list *word_list);
+void ft_free_cmd_structure(t_cmd *cmd_structure);
+void ft_free_redir_list(t_redir *redir);
+void ft_free_tokens_new_string(char **tokens, char *new_string);
+void ft_free_line_env(t_line *line, t_env *cpyenv);
+void ft_print_list_struct(t_word_list *structure, int i);
+void ft_print_cmd_struct(t_cmd *cmd);
+t_word_lists	*ft_init_word_list(t_word_lists *word_lists, char *token);
+void ft_flags_tags_assignment(t_word_list *word_list);
+t_line *ft_init_manager(t_line *line);
+char *ft_create_string(char *line);
+void update_index(t_env **env);
+void ft_putinlast(t_env **env,char *this);
+void ft_export(t_env **env,t_cmd *commands);
+
 #endif
