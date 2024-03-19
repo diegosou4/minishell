@@ -201,7 +201,7 @@ int redir_error(int fd)
     return(0);
 }
 
-void open_fd(t_redir **redirect)
+int open_fd(t_redir **redirect)
 {
     t_redir *ptrredir;
 
@@ -212,9 +212,12 @@ void open_fd(t_redir **redirect)
             ptrredir->fd = open(ptrredir->path,O_WRONLY | O_CREAT | O_TRUNC, 0664);
         else if(ptrredir->token == 2)
             ptrredir->fd = open(ptrredir->path,O_RDONLY , 0777);
+        
+        if(ptrredir < 0)
+            return(0);
         ptrredir = ptrredir->next;
     }
-    
+    return(1);   
 }
 
 
@@ -227,10 +230,12 @@ int open_redir(t_cmd **commands)
     while(ptrcmd != NULL)
     {
         ptrredir = ptrcmd->redir;
-        open_fd(&ptrredir);
+        if(open_fd(&ptrredir) == 0)
+            ptrcmd->executable = FALSE;
+        else
+            ptrcmd->executable = TRUE;
         ptrcmd = ptrcmd->next;
     }
-
     return(1);
 }
 

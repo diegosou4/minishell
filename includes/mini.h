@@ -247,10 +247,16 @@ void start_exection(t_cmd **commands,char **env,t_env **cpy);
 void ft_magane_executor(t_cmd **cmd, char **env,t_env **cpy);
 void child_executor(t_cmd *curr,char **env,t_env **cpy,t_cmd *last);
 void ft_close(t_cmd **commands);
-int open_redir(t_cmd **commands);
+
 int redir_error(int fd);
 int ft_howpipes(t_cmd *comands);	
 void child_builtings(t_cmd **cmd, t_env **cpy);
+//______________________________________________FILES___________________________________________________//
+
+int open_redir(t_cmd **commands);
+int open_fd(t_redir **redirect);
+
+
 //_________________________________________________FT_ECHO_____________________________________________//
 int ft_echo(t_env *cmd);
 
