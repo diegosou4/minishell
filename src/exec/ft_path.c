@@ -20,7 +20,6 @@ void expand_path(t_cmd **commands,char **env)
     t_cmd *ptr;
     char *home;
     home = ft_getpath(env);
-    printf("home %s",home);
     ptr = (*commands);
     while(ptr != NULL)
     {
@@ -29,7 +28,6 @@ void expand_path(t_cmd **commands,char **env)
             ptr->path = ft_strdup(ptr->args[0]);
         else
             ptr->path = ask_acess(ptr->args[0],home); 
-        printf("%s cmd \n", ptr->path);
         ptr = ptr->next;
     }
 
