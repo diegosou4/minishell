@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expand.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:54:55 by diegmore          #+#    #+#             */
-/*   Updated: 2024/02/21 17:54:56 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/03/19 01:45:01 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ void ft_expand(t_cmd **commads, char **cpyenv)
     }
 }
 
-static char *ft_strcpy(char *dest, const char *src) 
+static char *ft_strcpy(char *dest, const char *src)
 {
-    while (*src) 
+    while (*src)
     {
         *dest = *src;
         dest++;
@@ -60,20 +60,20 @@ static void	*free_malloc(char **s, int i)
 	return (NULL);
 }
 
-char **ft_arrcpy(char **str) 
+char **ft_arrcpy(char **str)
 {
     int i = 0;
     int j = 0;
     int len;
     char **str_copy ;
     if (!str || !str[0])
-        return NULL;    
-    while (str[i]) 
-        i++;    
-    str_copy = (char **)ft_calloc((i + 1) , sizeof(char *));
-    if (!str_copy) 
         return NULL;
-    while (j < i) 
+    while (str[i])
+        i++;
+    str_copy = (char **)ft_calloc((i + 1) , sizeof(char *));
+    if (!str_copy)
+        return NULL;
+    while (j < i)
     {
         len = strlen(str[j]);
         str_copy[j] = (char *)ft_calloc((len + 1) , sizeof(char));

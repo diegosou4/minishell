@@ -1,6 +1,7 @@
 NAME = minishell
 
-CFLAGS = -lreadline -I./
+CFLAGS = -I./
+LDFLAGS = -lreadline
 CC = cc
 
 LIB = ft_isalpha.c ft_isdigit.c ft_isalnum.c \
@@ -27,7 +28,7 @@ PARSE = ft_special.c ft_parse_manager.c ft_utils.c\
       ft_checkpath.c ft_structs.c ft_init_manager.c \
       ft_print_struct.c ft_parseredir.c ft_check_manager.c \
       ft_caseredir.c ft_signal_manager.c ft_free_manager.c \
-      ft_check_struct_manager.c
+      ft_check_struct_manager.c ft_check_directions.c
 
 EXEC = ft_execution.c ft_builtings.c\
        ft_free.c ft_route.c ft_close.c
@@ -48,11 +49,10 @@ LIB_SRC = $(addprefix ./src/libft/, $(LIB))
 ENV_SRC = $(addprefix ./src/env/, $(ENV))
 
 all:
-	@${CC} -g ${CFLAGS} ${LIB_SRC} ${EXEC_SRC} ${ENV_SRC} ${COMANDS_SRC} ${PARSE_SRC} ${REDIR_SRC} -g main.c -o ${NAME}
-
+	@${CC} ${CFLAGS} ${LIB_SRC} ${ENV_SRC} ${PARSE_SRC} ${COMANDS_SRC} ${EXEC_SRC} ${REDIR_SRC} main.c -o ${NAME} ${LDFLAGS}
 clean: $(NAME)
 	rm -rf minishell
 re: $(NAME)
 	clean all
 valgrind:
-		valgrind --leak-check=full ./${NAME}
+	valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-fds=yes -s ./${NAME}

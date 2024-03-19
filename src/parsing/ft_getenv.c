@@ -54,7 +54,3 @@ char *ft_getenv(char **env, char *str, int i)
 	}
 		return (NULL);
 }
-
-
-
-

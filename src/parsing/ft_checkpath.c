@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checkpath.c                                        :+:      :+:    :+:   */
+/*   ft_checkpath.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diemorei <diemorei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 12:26:07 by diegmore          #+#    #+#             */
-/*   Updated: 2024/02/20 23:34:50 by diemorei         ###   ########.fr       */
+/*   Updated: 2024/03/19 01:46:02 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*ask_acess(char *comand, char *path)
 	}
 	free_paths(paths);
 	return (NULL);
-} 
+}
 
 char	*ask_command(char *comand)
 {

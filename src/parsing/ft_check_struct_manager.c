@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_struct_manager.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juan-pma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 17:33:05 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/02/28 17:33:07 by juan-pma         ###   ########.fr       */
+/*   Updated: 2024/03/19 01:46:48 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,11 @@ t_word_list *ft_lstlast_(t_word_list *lst)
 static int ft_check_token_size(char *token_line)
 {
 	int i;
-	
+
 	i = 0;
-	while (token_line[i] != '\0' && ((ft_isalnum(token_line[i]) || ft_isdigit(token_line[i]) || ft_isalnum(token_line[i]) || token_line[i] == '_')))
+	while (token_line[i] != '\0' && ((ft_isalnum(token_line[i])
+			|| ft_isdigit(token_line[i]) || ft_isalnum(token_line[i])
+			|| token_line[i] == '_')))
 		i++;
 	return (i);
 }
@@ -54,66 +56,102 @@ static char *ft_create_token(char *token_line)
 	char *token;
 
 	i = -1;
-	token = ft_calloc(ft_strlen(token_line), sizeof(char));
+	token = ft_calloc(ft_strlen(token_line) + 1, sizeof(char));
 	while (++i < ft_check_token_size(token_line))
 	{
 		token[i] = token_line[i];
 	}
+	token[i] = '\0';
 	return (token);
 }
-int ft_extract_var(t_word_list *word_list, char **env)
+char *ft_path_handler(t_env *env, char *variable)
+{
+	int index;
+	char *holder;
+
+	if(env == NULL)
+		return(NULL);
+	index = ft_indexinenv(env, variable);
+	if (index == -1)
+		return NULL;
+	while (index--)
+	{
+		env = env->next;
+	}
+	holder = (env->value + 1);
+	return (holder);
+}
+void ft_check_variable_quotes_expansion(char *dest)
+{
+	int i;
+	i = -1;
+	while(dest[++i])
+	{
+		if (dest[i] == '$' && dest[i + 1] == '\'')
+		{
+			ft_memmove(&dest[i], &dest[i + 1], ft_strlen(&dest[i + 1]) + 1);
+		}
+	}
+}
+void ft_check_variable_expansion(char *src, char *dest, t_env *env)
 {
 	char *token;
-	char *appear;
 	char *path;
-	int len;
-	char *buffer;
-	int i;
-	char *new_path;
-	char *new_token;
+	int in_quotes;
+	int double_quote;
 
-	i = 0;
-	path = ft_calloc((ft_strlen(*env)), sizeof(char *));
-	buffer = ft_calloc((ft_strlen(word_list->word->word)), sizeof(char *));
+	double_quote = 0;
+	in_quotes = 0;
+	while (*src)
+	{
+		if (*src == '\"' && ft_strchr(src, '$'))
+			double_quote = !double_quote;
+		if (*src == '\'' && !double_quote)
+        {
+            in_quotes = !in_quotes; // Toggle the quotes flag
+            *dest++ = *src++;
+            continue; // Skip to the next character
+        }
+		if (!in_quotes && *src == '$' && (*(src + 1) != '\'' && *(src + 1) != '\"'))
+		{
+			token = ft_create_token(src + 1);
+			path = ft_path_handler(env, token);
+			while (path != NULL && *path)
+				*dest++ = *path++;
+			src += ft_strlen(token) + 1;
+			free(token);
+		}
+		else
+			*dest++ = *src++;
+	}
+	*dest = '\0';
+}
+
+void ft_extract_var(t_word_list *word_list, t_env *env)
+{
+	char *dest;
 	char *word_cpy;
+	int flag;
 
+	flag = 0;
 	while (word_list)
 	{
-		if (word_list->word->tags == SPECIAL_VAR ||
-			word_list->word->tags == VARIABLE)
+		if (ft_strcmp(word_list->word->word, "<<") == 0 && word_list->next)
 		{
-			// ft_checker_quotes(word_list->word->word);
-			while (word_list->word->word[i] != '$' && word_list->word->word[i])
-				i++;
-			word_cpy = ft_calloc(i + 1, sizeof(char));
-			ft_strlcat(word_cpy, word_list->word->word, i + 1);
-			// printf("WORD ------------> :%s:\n", word_list->word->word);
-			// printf("BUFF ------------> :%s:\n", word_cpy);
-			appear = ft_strchr((const char *)word_list->word->word, '$');
-			if (appear)
-			{
-				appear++;
-				i++;
-				token = ft_create_token(appear);
-				// printf("TOKEN ---------> :%s:\n", token);
-				len = ft_strlen(token);
-				path = ft_getenv(env, token, TRUE);
-				if (path)
-					new_path = ft_strjoin(word_cpy, path);
-				else
-				{
-					new_path = word_cpy;
-					word_list->word->word = new_path;
-					return (1);
-				}
-				// printf("BUFF ---------> :%s:\n", new_path);
-				i += len;				
-				new_token = ft_strjoin(new_path, &word_list->word->word[i]);
-				// printf("NEW TOKEN ---------> :%s:\n", new_token);
-				word_list->word->word = new_token;
-			}
+			if (word_list->next->word->tags == VARIABLE)
+				word_list->next->word->tags = WORD;
+		}
+		if (word_list->word->tags == VARIABLE)
+		{
+			word_cpy = ft_calloc(100 + 1, sizeof(char));
+			dest = word_cpy;
+			ft_check_variable_expansion(word_list->word->word, dest, env);
+			if (ft_strchr(word_cpy, '\''))
+				ft_check_variable_quotes_expansion(dest);
+			free(word_list->word->word);
+			word_list->word->word =ft_strdup(word_cpy);
+			free(word_cpy);
 		}
 		word_list = word_list->next;
 	}
-	return (1);
 }
