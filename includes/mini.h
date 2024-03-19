@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 12:40:39 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/16 20:00:44 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/19 01:20:44 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ char *ask_acess(char *comand, char *path);
 t_cmd *cmdnew(char *args);
 t_cmd *putcmds(char *args);
 t_redir *redirnew(void);
-t_cmd *ft_structure_creation(char *line, t_env *env);
+t_cmd *ft_structure_creation(t_word_list **token_list);
 
 //________________________________TOKEN MANAGER STRUCTURE CREATION___________________________
 t_word_list **ft_tokenizer_manager(char *line, t_env *env);
@@ -271,6 +271,8 @@ void ft_free_double_word_list(t_word_list **word_desc);
 void ft_free_t_word_list(t_word_list *word_list);
 void ft_free_cmd_structure(t_cmd *cmd_structure);
 void ft_free_redir_list(t_redir *redir);
+void ft_free_tokens_new_string(char **tokens, char *new_string);
+void ft_free_line_env(t_line *line, t_env *cpyenv);
 // __________________________________________________LIST_MANAGER ________________________________
 void ft_extract_var(t_word_list *word_list, t_env *env);
 t_word_list	*ft_lstlast_(t_word_list *lst);
