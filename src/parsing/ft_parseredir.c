@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:33:37 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/13 14:01:37 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/19 01:41:10 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,18 +55,6 @@ char *ft_parse_redir(char *str)
     }
     return(new);
 }
-/*
-int caseop(char *cmd, t_redir *redir, char c, int i)
-{
-    t_redir *new;
-    new = (t_redir*) malloc(sizeof(t_redir) * 1);
-    if(!new)
-        return(NULL);
-    if(c == 1)
-    {
-        new->redir_out = open("", O_WRONLY | O_CREAT );
-    }
-}*/
 
 char *cleantoken(char *str, int c)
 {
@@ -95,7 +83,6 @@ char *cleantoken(char *str, int c)
         i++;
     }
     return(newstr);
-
 }
 
 char *ft_strrange(char *s, int start, int end)
@@ -112,7 +99,6 @@ char *ft_strrange(char *s, int start, int end)
         i++;
     }
     return(str);
-
 }
 
 char *findfile(char *cmd)
@@ -135,7 +121,6 @@ char *findfile(char *cmd)
     newfile = cleantoken(file,50);
     free(file);
     return(newfile);
-
 }
 
 int checkcase(char c)
