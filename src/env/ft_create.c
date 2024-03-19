@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_create.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 18:28:38 by diegmore          #+#    #+#             */
-/*   Updated: 2024/02/28 18:28:39 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/03/19 01:36:23 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void print_env(t_env *env)
     ptr = env;
 
     while(ptr != NULL)
-    {   
+    {
         printf("Index: %i \n",ptr->index);
         printf("Key: %s \n", ptr->key);
         printf("Value: %s \n", ptr->value);
@@ -77,7 +77,7 @@ t_env *ft_nenv(char **env)
     int index;
     cpyenv = NULL;
     index = 0;
-            
+
     if(env[0] == NULL)
         return(NULL);
     cpyenv = newsenv(env[index],index);
