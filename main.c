@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:59:54 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/03/18 14:27:53 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/19 01:36:03 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,33 @@ int ft_check_words_list(t_word_list *tokens)
 	}
 	return (0);
 }
+int ft_lexer_analysis(t_word_list *words_list, t_env *env, char *new_string)
+{
+	ft_extract_var(words_list, env);
+	ft_flags_tags_assignment(words_list);
+	if (ft_check_words_list(words_list) == 1)
+		words_list->redirection = TRUE;
+	else
+		words_list->redirection = FALSE;
+	ft_quotes_remove(words_list);
+	if (ft_check_valid_redir(words_list) == 0)
+	{
+		free(new_string);
+		return (0);
+	}
+	return (1);
+}
 
+void ft_free_wd_list_char(t_word_list **word_list, char *new_string)
+{
+		free(word_list);
+		free(new_string);
+}
 t_word_list	**ft_tokenizer_manager(char *line, t_env *env)
 {
-	char		**tokens;
 	t_word_list	**words_list;
-	char *new_string;
+	char		**tokens;
+	char 		*new_string;
 	int			i;
 
 	i = -1;
@@ -52,34 +73,19 @@ t_word_list	**ft_tokenizer_manager(char *line, t_env *env)
 	tokens = ft_split(new_string, '3');
 	if (!tokens)
 	{
-		free(words_list);
-		free(new_string);
+		ft_free_wd_list_char(words_list, new_string);
 		return (NULL);
 	}
 	while (tokens[++i] != NULL)
-	{
 		words_list[i] = tokenize_and_print(tokens[i]);
-	}
-	ft_free_double_pointers(tokens);
 	i = -1;
 	while (words_list[++i])
-	{
-		ft_extract_var(words_list[i], env);
-		ft_flags_tags_assignment(words_list[i]);
-		if (ft_check_words_list(words_list[i]) == 1)
-			words_list[i]->redirection = TRUE;
-		else
-			words_list[i]->redirection = FALSE;
-		ft_quotes_remove(words_list[i]);
-		if (ft_check_valid_redir(words_list[i]) == 0)
+		if (!ft_lexer_analysis(words_list[i], env, new_string))
 		{
 			ft_free_double_word_list(words_list);
-			free(new_string);
 			return (NULL);
 		}
-		// ft_print_list_struct(words_list[i], i);
-	}
-	free(new_string);
+	ft_free_tokens_new_string(tokens, new_string);
 	return (words_list);
 }
 /*
@@ -87,6 +93,16 @@ t_word_list	**ft_tokenizer_manager(char *line, t_env *env)
 	memmory here.
 */
 
+static t_cmd *ft_structure_manager(t_line *line, t_env *cpyenv)
+{
+	t_word_list **list;
+	t_cmd *cmd_structure;
+
+	list = ft_tokenizer_manager(line->line, cpyenv);
+	cmd_structure = ft_structure_creation(list);
+	ft_free_double_word_list(list);
+	return (cmd_structure);
+}
 void	*ft_parse_manager(char **env)
 {
 	t_line	line;
@@ -101,25 +117,24 @@ void	*ft_parse_manager(char **env)
 		line.line = readline(line.line_text);
 		if (!line.line || (ft_strcmp(line.line, "exit") == 0))
 		{
-			ft_free_line_struct(&line);
-			ft_free_env_list(cpyenv);
+			ft_free_line_env(&line, cpyenv);
 			break ;
 		}
 		if (ft_whitespace(line.line) == 1)
 			add_history(line.line);
 		if (ft_check_input(line.line))
 		{
-			cmd_structure = ft_structure_creation(line.line, cpyenv);
+			cmd_structure = ft_structure_manager(&line, cpyenv);
 			ft_free_cmd_structure(cmd_structure);
 		}
 		ft_free_line_struct(&line);
-		free(line.line);
 	}
 	return NULL;
 }
 
 int	main(int argc, char *argv[], char **env)
 {
+	// env[0] = NULL;
 	if (argc == 1 && argv[0])
 		ft_parse_manager(env);
 }
