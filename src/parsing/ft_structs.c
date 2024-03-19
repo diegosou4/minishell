@@ -160,7 +160,7 @@ t_cmd *ft_structure_creation(t_word_list **token_list)
     t_cmd *temp = root;
     while (temp)
     {
-        ft_print_cmd_struct(temp);
+   //     ft_print_cmd_struct(temp);
         temp = temp->next;
     }
     return (root);

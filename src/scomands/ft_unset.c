@@ -51,19 +51,22 @@ void ft_removeinenv(t_env **env, int index)
         *env = next;
 }
 
-void ft_unset(t_env **env,t_cmd *commands)
+int ft_unset(t_env **env,t_cmd *commands)
 {
     int index;
     char *str;
     index = ft_strintchr(commands->args[1],61);
+    if(ft_strncmp("_=",commands->args[1],2) == 0)
+        return(2);
     if(*env == NULL)
-        return;
+        return(2);
     if(index == -1)
     {
         index = ft_indexinenv(*env,commands->args[1]);
         if(index == -1)
-            return;
+            return(2);
         ft_removeinenv(env,index);
         update_index(env);
     }
+    return(0);
 }

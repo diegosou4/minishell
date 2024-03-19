@@ -26,6 +26,7 @@ char *ft_returnpath(t_env *env,char *this)
     return(NULL);
 }
 
+
 int ft_cd(t_cmd *comands,t_env **env)
 {
     int result;

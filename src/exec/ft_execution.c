@@ -11,66 +11,55 @@
 /* ************************************************************************** */
 
 #include "../../includes/mini.h"
-/*
-void execute_cmd(t_cmd *commands, char **env)
-{
-    t_redir *ptr;
-    int in;
-    int out;
-    in = 0;
-    out = 1;
-    int fd[2];
 
-    pipe(fd);
-    openredir(commands->redir);
-    ptr = commands->redir;
-    if(ptr != NULL)
+void ft_env_null()
+{
+    ft_putstr_fd("Error env no set\n",2);
+}
+
+// Tenho que da free nessa bagaca, n posso esquecer
+int check_path2(t_cmd **commands, char **env)
+{
+    char *str;
+    char **arr;
+    char *j;
+    str = ft_getenv(env,"PATH=",0);    
+    arr = mysplit(str,58,47);
+    int i;
+    i = 0;
+    while(arr[i] != NULL)
     {
-    while(ptr->next)
-    {
-        if(ptr->token == 2)
+        j = ft_strjoin(arr[i],(*commands)->args[0]);
+        if(access(j, F_OK) == 0)
         {
-            if(in != 1)
-                close(in);
-            else
-                in = dup(ptr->fd);
+            (*commands)->path = j;
+            return(1);
         }
-        ptr = ptr->next;
+        free(j);
+        i++;
     }
-    }
- 
-
+    return(0);
 }
 
-void exec_simple(t_cmd *commands,char **env)
-{
-    int pid;
-    pid = fork();
-    if(pid == 0)
-    {
-    execve(commands->path,commands->args,env);
-    }
-    wait(NULL);
-}   */
 
-
-void execution(t_cmd *commands, t_env **env)
+void check_path(t_cmd **commands,char **env)
 {
-    t_cmd *ptr;
     int build;
-    ptr = commands;
-    if(sizepipe(commands) == 1)
+    if(*env == NULL)
+        return(ft_env_null());
+    if(access((*commands)->args[0], F_OK) == 0)
     {
-        build = check_builtings(commands);
-        if(build == 1)
-            print_pwd(); 
-        else if(build  == 2)
-            ft_cd(commands,env);
-        else if(build == 3)
-            execute_env(*env,commands);       
+        (*commands)->path = ft_strdup((*commands)->args[0]);
+        (*commands)->args[0] = ft_strrchr((*commands)->path,47) + 1;
+        return;
+    }
+    if(check_path2(commands,env) == 1)
+            return;
+    else
+    {
+        printf("Error\n");
     }
 }
-
 
 
 int sizeredir(t_redir *redir)

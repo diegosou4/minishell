@@ -14,7 +14,7 @@
 
 static int ft_space (char **line)
 {
-    if (**line = '2')
+    if (**line == '2')
     {
         while(**line == '2')
             (*line)++;

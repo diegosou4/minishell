@@ -44,21 +44,31 @@ typedef enum s_bool
 	FALSE,
 } t_bool;
 
+//________________________________STRUCTURES__FOR__THE INPUT_________________________________
+
+typedef struct s_line
+{
+	char *line;
+	char *usr;
+	char *line_text;
+	char *color_line;
+	char *value_env;
+} t_line;
+
 //________________________________STRUCTURES__FOR THE TOKENS_________________________________
 
 // Words with the flags...
 
 typedef enum s_tags
 {
-	WORD, 
+	WORD,
 	EXCECUTOR,
 	VARIABLE,
 	SPECIAL_PAR,
 	SPECIAL_VAR,
+	VARIABLE_CHECK,
+	PATH,
 } t_tags;
-
-
-
 
 typedef struct s_word_desc
 {
@@ -71,10 +81,20 @@ typedef struct s_word_desc
 
 typedef struct s_word_list
 {
-	struct s_word_list *next; // Pointer to the next node in the list
-	t_word_desc *word;		  // Pointer to the word descriptor
+	struct s_word_list *next;
+	t_word_desc *word;
+	t_bool redirection;
 } t_word_list;
 
+typedef struct s_word_lists
+{
+	char		*subtoken;
+	t_word_desc	*word_desc;
+	t_word_list	*node;
+	t_word_list	*head;
+	t_word_list	*current_token;
+
+} t_word_lists;
 //________________________________STRUCTURES__FOR THE REDIRECTIONS_________________________________
 
 typedef enum s_rediopr
@@ -112,7 +132,6 @@ typedef struct s_cmd
 	char *path;
 	char **args;
 	int pipesfd[2];
-	int fd_final[2];
 	int executable;
 	t_redir *redir;
 	struct s_cmd *next;
@@ -133,7 +152,7 @@ int ft_whitespace(char *line);
 
 void cmdinback(t_cmd **comands,char *args);
 // Get Path
-char *ft_getenv(char **env, char *str, t_bool i);
+char *ft_getenv(char **env, char *str, int i);
 
 void cmdinback(t_cmd **comands, char *args);
 void ft_expand(t_cmd **commads, char **cpyenv);
@@ -153,7 +172,6 @@ char *ft_parse_redir(char *str);
 
 // ________________________________________________________Print Utilities ________________________________
 void ft_print_doble_char(char **argv);
-void ft_print_list_struct(t_word_list *structure);
 
 // check input.
 int ft_check_input(char *line);
@@ -202,6 +220,9 @@ int ft_append(char *path);
 int ft_heredoc(char *delimiter);
 void ft_putforwe(char *line,int fd);
 
+t_cmd *ft_structure_creation(t_word_list **token_list);
+void ft_line_handler(t_line *line, t_env *cpyenv);
+
 // __________________________________________________Fuctions_Test_____________________________
 int ft_handle_redir_input(char *delimiter);
 // Check redir.
@@ -218,7 +239,7 @@ void ft_free_double_pointers(char **split_line);
 void close_pipes(t_cmd **cmd);
 
 // __________________________________________________LIST_MANAGER ________________________________
-int ft_extract_var(t_word_list *word_list, char **env);
+void ft_extract_var(t_word_list *word_list, t_env *env);
 t_word_list	*ft_lstlast_(t_word_list *lst);
 int ft_check_struct_redir(t_word_list *tokens);
 
@@ -255,7 +276,7 @@ int open_fd(t_redir **redirect);
 
 
 //_________________________________________________FT_ECHO_____________________________________________//
-int ft_echo(t_env *cmd);
+int ft_echo(t_cmd *cmd);
 
 //_________________________________________________ERROR______________________________________________//
 int return_error(char *str);
@@ -267,7 +288,6 @@ int execute_env(t_env *env, t_cmd *commands);
 //________________________________________________FT_EXP_____________________________________________//
 
 int ft_exp(t_env *env);
-int ft_export(t_env **env,t_cmd *commands);
 int ft_haveinenv(t_env *env, char *str);
 int ft_indexinenv(t_env *env,char *this);
 int index_env(char **env, char *str);
@@ -304,12 +324,11 @@ void ft_free_tokens_new_string(char **tokens, char *new_string);
 void ft_free_line_env(t_line *line, t_env *cpyenv);
 void ft_print_list_struct(t_word_list *structure, int i);
 void ft_print_cmd_struct(t_cmd *cmd);
-t_word_lists	*ft_init_word_list(t_word_lists *word_lists, char *token);
+t_word_list	*ft_init_word_list(t_word_list *word_lists, char *token);
 void ft_flags_tags_assignment(t_word_list *word_list);
 t_line *ft_init_manager(t_line *line);
 char *ft_create_string(char *line);
 void update_index(t_env **env);
-void ft_putinlast(t_env **env,char *this);
-void ft_export(t_env **env,t_cmd *commands);
+int ft_export(t_env **env,t_cmd *commands);
 
 #endif

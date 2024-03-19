@@ -1,36 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_append.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 12:25:54 by diegmore          #+#    #+#             */
-/*   Updated: 2024/02/20 12:25:56 by diegmore         ###   ########.fr       */
+/*   Created: 2024/02/29 18:23:53 by diegmore          #+#    #+#             */
+/*   Updated: 2024/02/29 18:23:55 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/mini.h"
 
-int ft_echo(t_cmd *cmd) 
+
+int redirout(char *path)
 {
-    int flag;
-    flag = 0;
-    int i;
-        
-    i = 2;
-    flag = ft_strncmp(cmd->args[1],"-n",ft_strlen(cmd->args[1]));
-    if(flag != 0)
-        i = 1;
-    while(cmd->args[i] != NULL)
+    int fd;
+    char *str;
+    fd = open(path, O_EXCL | O_WRONLY | O_CREAT, 0644);
+    if(fd < 0)
     {
-        printf("%s",cmd->args[i]);
-        i++;
+        str = strerror(fd);
+        printf("%s \n",str);
+        return(fd);
     }
-    if(flag != 0)
-        printf("\n");
-    return(1);
+    return(fd);
 }
 
+int ft_append(char *path)
+{
 
-
+    int fd;
+    fd = open(path, O_APPEND | O_RDWR, 0777);
+    if(fd < 0)
+        return(fd);
+    return(fd);
+}
