@@ -10,7 +10,7 @@ void ft_free_double_pointers(char **split_line)
     while (split_line[++i])
     {
         free(split_line[i]);
-        // split_line[i] = NULL;
+        split_line[i] = NULL;
     }
     free(split_line);
 }
@@ -33,6 +33,7 @@ void ft_free_line_struct(t_line *line)
 {
     free(line->line_text);
 	free(line->color_line);
+    free(line->line);
 }
 
 void ft_free_t_word_list(t_word_list *word_list)
@@ -69,7 +70,6 @@ void ft_free_redir_list(t_redir *redir)
     {
         temp = redir;
         redir = redir->next;
-        // free(temp->path); // Free the path member
         free(temp);
     }
 }
@@ -80,11 +80,22 @@ void ft_free_cmd_structure(t_cmd *cmd_structure)
     while (cmd_structure)
     {
         temp = cmd_structure->next;
-        // ft_free_double_pointers(cmd_structure->args);
-        ft_free_redir_list(cmd_structure->redir);
         free(cmd_structure->path);
+        free(cmd_structure->args);
+        ft_free_redir_list(cmd_structure->redir);
         free(cmd_structure);
         cmd_structure = temp;
     }
+}
+
+void ft_free_tokens_new_string(char **tokens, char *new_string)
+{
+    ft_free_double_pointers(tokens);
+	free(new_string);
+}
+void ft_free_line_env(t_line *line, t_env *cpyenv)
+{
+    ft_free_line_struct(line);
+	ft_free_env_list(cpyenv);
 }
 
