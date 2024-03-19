@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 17:33:05 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/03/16 18:58:17 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/19 01:46:48 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ static int ft_check_token_size(char *token_line)
 	int i;
 
 	i = 0;
-	while (token_line[i] != '\0' && ((ft_isalnum(token_line[i]) 
-			|| ft_isdigit(token_line[i]) || ft_isalnum(token_line[i]) 
+	while (token_line[i] != '\0' && ((ft_isalnum(token_line[i])
+			|| ft_isdigit(token_line[i]) || ft_isalnum(token_line[i])
 			|| token_line[i] == '_')))
 		i++;
 	return (i);
@@ -78,7 +78,6 @@ char *ft_path_handler(t_env *env, char *variable)
 	{
 		env = env->next;
 	}
-	// holder = ft_calloc(ft_strlen(env->value + 1), sizeof(char ));
 	holder = (env->value + 1);
 	return (holder);
 }
@@ -91,10 +90,8 @@ void ft_check_variable_quotes_expansion(char *dest)
 		if (dest[i] == '$' && dest[i + 1] == '\'')
 		{
 			ft_memmove(&dest[i], &dest[i + 1], ft_strlen(&dest[i + 1]) + 1);
-			// ft_checker_quotes(&line[i], 2);
 		}
 	}
-	// printf("line without $ :%s:\n", dest);
 }
 void ft_check_variable_expansion(char *src, char *dest, t_env *env)
 {
@@ -118,7 +115,6 @@ void ft_check_variable_expansion(char *src, char *dest, t_env *env)
 		if (!in_quotes && *src == '$' && (*(src + 1) != '\'' && *(src + 1) != '\"'))
 		{
 			token = ft_create_token(src + 1);
-			printf("this is the toke :%s:\n", token);
 			path = ft_path_handler(env, token);
 			while (path != NULL && *path)
 				*dest++ = *path++;
