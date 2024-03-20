@@ -21,7 +21,7 @@ void execute_one(t_cmd *command,char **env,t_env **cpy,t_cmd *last)
     check = check_builtings(command);
     if(check > 0)
     {
-        child_bexecutor(command,env,cpy,last); 
+        //child_bexecutor(command,env,cpy,last); 
         return;
     }
     if(env == NULL)
@@ -32,7 +32,7 @@ void execute_one(t_cmd *command,char **env,t_env **cpy,t_cmd *last)
     pid = fork();
     if(pid == 0)
     {
-        child_executor(command,env,cpy,last);
+      //  child_executor(command,env,cpy,last);
         wait(NULL);
     }
 }

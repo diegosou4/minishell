@@ -25,6 +25,7 @@ void expand_path(t_cmd **commands,char **env)
     int build;
     t_cmd *ptr;
     char *home;
+
     home = ft_getpath(env);
     ptr = (*commands);
     while(ptr != NULL)

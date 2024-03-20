@@ -142,6 +142,7 @@ typedef struct s_cmd
 typedef struct s_bash
 {
 	t_cmd *commands;
+	t_cmd *last;
 	int in;
 	int out;
 	int exit_status;
@@ -270,11 +271,12 @@ void ft_env_null();
 
 int ft_countpipes(t_cmd *cmd);
 void open_pipes(t_cmd **cmd);
-
-void start_exection(t_cmd **commands,char **env,t_env **cpy);
-void ft_magane_executor(t_cmd **cmd, char **env,t_env **cpy);
+int return_in(t_redir *redir, t_cmd *curr,t_cmd *last);
+void start_execution(t_bash bash_boss);
+void ft_magane_executor(t_bash bash_boss);
 void help_magane(t_cmd *command,char **env,t_env **cpy);
-void child_executor(t_cmd *curr,char **env,t_env **cpy,t_cmd *last);
+void child_executor(t_bash *executor);
+void child_bexecutor(t_bash *executor);
 void ft_close(t_cmd **commands);
 
 int redir_error(int fd);
@@ -346,7 +348,7 @@ void expand_path(t_cmd **commands,char **env);
 char *ft_getpath(char **env);
 
 void execute_one(t_cmd *command,char **env,t_env **cpy,t_cmd *last);
-void child_bexecutor(t_cmd *curr,char **env,t_env **cpy,t_cmd *last);
+
 
 
 

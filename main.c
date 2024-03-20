@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:53:34 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/20 13:08:34 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/19 11:53:35 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ t_cmd *ft_structure_manager(t_line *line, t_bash *bash)
 		return NULL;
 	bash->exit_status = 0;
 	cmd_structure = ft_structure_creation(list);
-	// ft_free_double_word_list(list);
+//	ft_free_double_word_list(list);
 	return(cmd_structure);
 }
 void	*ft_parse_manager(char **env)
@@ -117,6 +117,7 @@ void	*ft_parse_manager(char **env)
 
 	status = 0;
 	ft_signal_manager();
+	bash_boss.env = ft_arrcpy(env);
 	bash_boss.cpyenv = ft_nenv(env,1);
 	while (1)
 	{
@@ -132,11 +133,11 @@ void	*ft_parse_manager(char **env)
 		if (ft_check_input(line.line, &bash_boss))
 		{
 			bash_boss.exit_status = status;
-			bash_boss.commands = ft_structure_manager(&line, &bash_boss);
+			bash_boss.commands = ft_structure_manager(&line, bash_boss.cpyenv);
 			if (bash_boss.commands)
 				ft_print_cmd_struct(bash_boss.commands);
 			if (bash_boss.commands)
-				start_exection(&bash_boss.commands,env,&bash_boss.cpyenv);
+				start_execution(bash_boss);
 		}
 		status = bash_boss.exit_status;
 		ft_free_line_struct(&line);
