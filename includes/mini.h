@@ -144,8 +144,8 @@ typedef struct s_bash
 	t_cmd *commands;
 	t_cmd *last;
 	int in;
-	int *pid;
 	int out;
+	int *pid;
 	int exit_status;
 	char **env;
 	t_env *cpyenv;
@@ -277,7 +277,7 @@ void start_execution(t_bash bash_boss);
 void ft_magane_executor(t_bash bash_boss);
 void help_magane(t_cmd *command,char **env,t_env **cpy);
 int child_executor(t_bash *executor,t_cmd *ptrcmd,t_bash *bash_boss);
-void child_bexecutor(t_bash *executor);
+void child_bexecutor(t_bash *executor,t_cmd *ptrcmd,t_bash *bash_boss);
 void ft_close(t_cmd **commands);
 void simple_execution(t_bash *bash_boss,t_cmd *ptrcmd,t_bash *executor);
 void many_execution(t_bash *bash_boss, t_cmd *ptrcmd,t_bash *executor);
@@ -288,6 +288,7 @@ void closeoutpipe(t_cmd **ptr);
 void init_mybash(t_bash *bash_boss,t_cmd *curr,t_bash *executor);
 int open_redir_fd(t_bash *executor);
 int return_error_exec(t_bash *executor);
+void alloc_mypids(t_bash *bash_boss);
 //______________________________________________FILES___________________________________________________//
 
 int open_redir(t_cmd **commands);

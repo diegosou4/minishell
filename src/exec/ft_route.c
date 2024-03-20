@@ -129,7 +129,7 @@ int child_executor(t_bash *executor,t_cmd *ptrcmd,t_bash *bash_boss)
     execve(executor->commands->path,executor->commands->args,executor->env);
     return(1);
 }
-void child_bexecutor(t_bash *executor)
+void child_bexecutor(t_bash *executor,t_cmd *ptrcmd,t_bash *bash_boss)
 {
     int check;
     int fdin;
@@ -179,7 +179,7 @@ void ft_magane_executor(t_bash bash_boss)
     if(ft_howpipes(bash_boss.commands) == 1)
         simple_execution(&bash_boss,ptrcmd,&executor);
     else 
-        many_execution()
+        many_execution(&bash_boss,ptrcmd,&executor);
     //free_commands(bash_boss.commands);
     //close_pipes(&bash_boss.commands);
 }
@@ -252,8 +252,6 @@ int ft_howpipes(t_cmd *comands)
 
 void start_execution(t_bash bash_boss)
 {
-
-
     expand_path(&bash_boss.commands,bash_boss.env);
     open_pipes(&bash_boss.commands);
     ft_magane_executor(bash_boss);

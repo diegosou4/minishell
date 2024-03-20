@@ -16,52 +16,45 @@
 
 void simple_execution(t_bash *bash_boss,t_cmd *ptrcmd,t_bash *executor)
 {
-    int pid;
+    alloc_mypids(bash_boss);
     init_mybash(bash_boss,ptrcmd,executor);
     if(check_builtings(ptrcmd) > 0)
     {
         child_builtings(&ptrcmd,&bash_boss->cpyenv);
         return;
     }
-    pid = fork();
-    if(pid == 0)
+    bash_boss->pid[0] = fork();
+    if(bash_boss->pid[0] == 0)
     {
         child_executor(executor,ptrcmd,bash_boss);
     }
     int i =0;
-    waitpid(pid,&i,0);
-    //printf("status: %d\n", WEXITSTATUS(i));
-
-
-
+    waitpid(bash_boss->pid[0],&i,0);
+    
 }
-
-
-
 
 void many_execution(t_bash *bash_boss, t_cmd *ptrcmd,t_bash *executor)
 {
     int i;
     i = 0;
-    
+    alloc_mypids(bash_boss);
     while(ptrcmd != NULL)
     {
         init_mybash(bash_boss,ptrcmd,executor);
-        pid = fork();
-        if(pid == 0)
+        bash_boss->pid[i] = fork();
+        if(bash_boss->pid[i] == 0)
         {
             if(check_builtings(ptrcmd) == 0)
-              //  child_executor(executor);
+               child_executor(executor,ptrcmd,bash_boss);
             else
-                child_bexecutor(executor);  
-                close(executor->in);
-                close(executor->out);        
+                child_bexecutor(executor,ptrcmd,bash_boss);
         }
         executor->last = ptrcmd;
         closeoutpipe(&executor->last);
         ptrcmd = ptrcmd->next;
-      
-    }  */
+        waitpid(bash_boss->pid[i],&i,0);
+        i++;
+    }  
 }
 
 
