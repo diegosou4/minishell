@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:53:34 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/19 18:07:33 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/20 11:55:04 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void	*ft_parse_manager(char **env)
 		if (ft_check_input(line.line))
 		{
 			bash_boss.commands = ft_structure_manager(&line, bash_boss.cpyenv);
-			start_exection(&bash_boss.commands,env,&cpyenv);
+			start_exection(&bash_boss.commands,env,&bash_boss.cpyenv);
 		}
 		ft_free_line_struct(&line);
 	}
