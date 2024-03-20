@@ -110,14 +110,13 @@ int return_in(t_redir *redir, t_cmd *curr,t_cmd *last)
     return(fd);
 }
 
-void child_executor(t_cmd *curr,char **env,t_env **cpy,t_cmd *last)
+void child_executor(t_bash *executor)
 {
 
     int fdin;
     int fdout;
- 
-    fdin = return_in(curr->redir,curr,last);
-    fdout = return_out(curr->redir,curr);
+    fdin = executor->in;
+    fdout = executor->out; 
    
     dup2(fdin,0);
     dup2(fdout,1);
@@ -125,68 +124,76 @@ void child_executor(t_cmd *curr,char **env,t_env **cpy,t_cmd *last)
          close(fdout);
     if(fdin != 0)
         close(fdin);
-    execve(curr->path,curr->args,env);
+    execve(executor->commands->path,executor->commands->args,executor->env);
+    
 }
-void child_bexecutor(t_cmd *curr,char **env,t_env **cpy,t_cmd *last)
+void child_bexecutor(t_bash *executor)
 {
     int check;
     int fdin;
     int fdout;
-    check = check_builtings(curr);
-    fdin = return_in(curr->redir,curr,last);
-    fdout = return_out(curr->redir,curr);
+    check = check_builtings(executor->commands);
+
+    fdin = executor->in;
+    fdout = executor->out; 
     dup2(fdin,0);
     dup2(fdout,1);
     if(fdout != 1)
         close(fdout);
     if(fdin != 0)
         close(fdin);  
-    execute_builtings(&curr,cpy,check);
+    execute_builtings(&executor->commands,&executor->cpyenv,check);
    
     close(fdin);
-
     close(fdout);
     exit(0);
 }
 
-// Bora trabalhar filho da ***
+
 
 void closeoutpipe(t_cmd **ptr)
 {
     close((*ptr)->pipesfd[1]);
 }
 
-void ft_magane_executor(t_cmd **cmd, char **env,t_env **cpy)
+void init_mybash(t_bash *bash_boss,t_cmd *curr,t_bash *executor)
+{
+    
+    executor->in = return_in(curr->redir,curr,executor->last);
+    executor->out = return_out(curr->redir,curr);
+    executor->commands = curr;
+    executor->env = bash_boss->env;
+    executor->cpyenv = bash_boss->cpyenv;
+
+ }
+
+void ft_magane_executor(t_bash bash_boss)
 {
     int pid;
     t_cmd *ptrcmd;
-    t_cmd *lastcmd;
+    t_bash executor;
+    executor.last = NULL;
+    ptrcmd = bash_boss.commands;
 
-    lastcmd = NULL;
-    ptrcmd = (*cmd);
-    if(ptrcmd->next == NULL)
-    {
-        execute_one(ptrcmd,env,cpy,lastcmd);
-       
-        return;
-    }
     while(ptrcmd != NULL)
     {
+        init_mybash(&bash_boss,ptrcmd,&executor);
         pid = fork();
         if(pid == 0)
         {
             if(check_builtings(ptrcmd) == 0)
-                child_executor(ptrcmd,env,cpy,lastcmd);
+                child_executor(&executor);
             else
-                child_bexecutor(ptrcmd,env,cpy,lastcmd); 
-            //wait(NULL);
+                child_bexecutor(&executor);  
+                close(bash_boss.in);
+                close(bash_boss.out);        
         }
-        lastcmd = ptrcmd;
-        closeoutpipe(&lastcmd);
+        executor.last = ptrcmd;
+        closeoutpipe(&executor.last);
         ptrcmd = ptrcmd->next;
     }
-    printf("\n");
-    close_pipes(cmd);
+    wait(NULL);
+    close_pipes(&bash_boss.commands);
 }
 
 
@@ -256,13 +263,12 @@ int ft_howpipes(t_cmd *comands)
 
 }
 
-void start_exection(t_cmd **commands,char **env,t_env **cpy)
+void start_execution(t_bash bash_boss)
 {
 
-    open_redir(commands);
-    expand_path(commands,env);
-    open_pipes(commands);
-    ft_magane_executor(commands,env,cpy);
-
-    ft_free_cmd_structure((*commands));
+     open_redir(&bash_boss.commands);
+    expand_path(&bash_boss.commands,bash_boss.env);
+    open_pipes(&bash_boss.commands);
+    ft_magane_executor(bash_boss);
+   // ft_free_cmd_structure(bash_boss.commands);
 }
