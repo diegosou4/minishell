@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parseredir.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:33:37 by diegmore          #+#    #+#             */
-/*   Updated: 2024/02/22 18:33:39 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/03/19 01:41:10 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 
 int caseptr(char first, char second)
 {
- 
     if(first == '>' && second == '>')
         return(append_out);
     else if(first == '<' && second == '<')
@@ -46,7 +45,7 @@ char *ft_parse_redir(char *str)
         if(case_num == 0)
             new[i] = ptr[j];
         else if(case_num != 0)
-            new[i] = case_num; 
+            new[i] = case_num;
         if(case_num >= 3 && case_num <= 5)
         {
             j++;
@@ -56,18 +55,6 @@ char *ft_parse_redir(char *str)
     }
     return(new);
 }
-/*
-int caseop(char *cmd, t_redir *redir, char c, int i)
-{
-    t_redir *new;
-    new = (t_redir*) malloc(sizeof(t_redir) * 1);
-    if(!new)
-        return(NULL);
-    if(c == 1)
-    {
-        new->redir_out = open("", O_WRONLY | O_CREAT );
-    }
-}*/
 
 char *cleantoken(char *str, int c)
 {
@@ -96,7 +83,6 @@ char *cleantoken(char *str, int c)
         i++;
     }
     return(newstr);
-
 }
 
 char *ft_strrange(char *s, int start, int end)
@@ -113,7 +99,6 @@ char *ft_strrange(char *s, int start, int end)
         i++;
     }
     return(str);
-
 }
 
 char *findfile(char *cmd)
@@ -136,7 +121,6 @@ char *findfile(char *cmd)
     newfile = cleantoken(file,50);
     free(file);
     return(newfile);
-
 }
 
 int checkcase(char c)
@@ -165,7 +149,7 @@ void addbackredir(t_redir *redir, char *file, int flag)
         ptr = ptr->next;
     }
     ptr->next = last;
-}   
+}
 
 void initredir(t_redir **redir, int flag, char *file)
 {
@@ -195,10 +179,10 @@ t_redir *haveredir(char *cmd)
         }
         i++;
     }
-    printf("%s FILE IN \n", new->pathin);
+    printf("%s FILE IN \n", new->path);
     if(new->next != NULL)
     {
-         printf("%s FILE IN NEXT \n", new->next->pathin);
+         printf("%s FILE IN NEXT \n", new->next->path);
     }
     return new;
 }

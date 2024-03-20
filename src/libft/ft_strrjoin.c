@@ -1,36 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_strrjoin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 12:25:54 by diegmore          #+#    #+#             */
-/*   Updated: 2024/02/20 12:25:56 by diegmore         ###   ########.fr       */
+/*   Created: 2024/02/28 11:06:55 by diegmore          #+#    #+#             */
+/*   Updated: 2024/02/28 11:06:56 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/mini.h"
 
-int ft_echo(t_cmd *cmd) 
+#include "libft.h"
+
+
+char    **ft_strrjoin(char **arr, char *str)
 {
-    int flag;
-    flag = 0;
+    char **newstr;
     int i;
-        
-    i = 2;
-    flag = ft_strncmp(cmd->args[1],"-n",ft_strlen(cmd->args[1]));
-    if(flag != 0)
-        i = 1;
-    while(cmd->args[i] != NULL)
+
+    i = len_darray(arr) + 2;
+
+    newstr = ft_calloc(sizeof(char *), i);
+
+    int j;
+    j = 0;
+    while(j != (i - 3))
     {
-        printf("%s",cmd->args[i]);
-        i++;
+        newstr[j] = ft_strdup(arr[j]);
+        j++;
     }
-    if(flag != 0)
-        printf("\n");
-    return(1);
+    i = j;
+    newstr[j++] = ft_strdup(str);
+    newstr[j++] = ft_strdup(arr[i]);
+    freedouble_malloc(arr,len_darray(arr));
+    return(newstr);
 }
-
-
-

@@ -1,36 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_erros.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 12:25:54 by diegmore          #+#    #+#             */
-/*   Updated: 2024/02/20 12:25:56 by diegmore         ###   ########.fr       */
+/*   Created: 2024/03/20 15:25:50 by diegmore          #+#    #+#             */
+/*   Updated: 2024/03/20 15:25:53 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/mini.h"
 
-int ft_echo(t_cmd *cmd) 
+
+int return_error_exec(t_bash *executor)
 {
-    int flag;
-    flag = 0;
-    int i;
-        
-    i = 2;
-    flag = ft_strncmp(cmd->args[1],"-n",ft_strlen(cmd->args[1]));
-    if(flag != 0)
-        i = 1;
-    while(cmd->args[i] != NULL)
+    if(executor->exit_status == EXIT_FAILURE)
     {
-        printf("%s",cmd->args[i]);
-        i++;
+        ft_putstr_fd("Error: File error\n",2);
+        return(EXIT_FAILURE);
     }
-    if(flag != 0)
-        printf("\n");
-    return(1);
+    if(executor->env == NULL)
+    {
+        ft_putstr_fd("Error: Env not found\n",2);
+        return(EXIT_FAILURE);
+    }
+    return(0);
 }
-
-
-

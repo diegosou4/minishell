@@ -17,10 +17,8 @@ void handle_signal(int signal1)
 		rl_replace_line("",0);
 		rl_redisplay();
 	}
-	else if (signal1 == SIGQUIT)
-		ft_putstr("");
-	else if (signal1 == SIGCHLD)
-		ft_putstr("Child process terminated\n");
+	// else if (signal1 == SIGQUIT)
+	// 	ft_putstr("Ctrl+D pressed (EOF)\n");
 }
 
 void ft_signal_manager()
@@ -31,6 +29,6 @@ void ft_signal_manager()
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
 	sigaction(SIGINT, &sa, NULL); // Handle Ctrl+C
-	signal(SIGQUIT, SIG_IGN);
-	sigaction(SIGCHLD, &sa, NULL); // Handle child process termination
+	// sigaction(SIGQUIT, &sa, NULL); // Handle Ctrl+D
+	// sigaction(SIGCHLD, &sa, NULL); // Handle child process termination
 }

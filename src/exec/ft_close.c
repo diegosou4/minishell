@@ -1,36 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_close.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 12:25:54 by diegmore          #+#    #+#             */
-/*   Updated: 2024/02/20 12:25:56 by diegmore         ###   ########.fr       */
+/*   Created: 2024/03/07 16:50:56 by diegmore          #+#    #+#             */
+/*   Updated: 2024/03/07 16:50:58 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/mini.h"
 
-int ft_echo(t_cmd *cmd) 
+void ft_close(t_cmd **commands)
 {
-    int flag;
-    flag = 0;
-    int i;
-        
-    i = 2;
-    flag = ft_strncmp(cmd->args[1],"-n",ft_strlen(cmd->args[1]));
-    if(flag != 0)
-        i = 1;
-    while(cmd->args[i] != NULL)
+    t_cmd *ptr;
+
+    t_redir *redirptr;
+
+    ptr = (*commands);
+
+    while(ptr != NULL)
     {
-        printf("%s",cmd->args[i]);
-        i++;
+        redirptr = ptr->redir;
+        while(redirptr != NULL)
+        {
+            close(redirptr->fd);
+            redirptr = redirptr->next;
+        }
+        close(ptr->pipesfd[0]);
+        close(ptr->pipesfd[1]);
+        ptr = ptr->next;
     }
-    if(flag != 0)
-        printf("\n");
-    return(1);
+    ptr = (*commands);
+
 }
-
-
-

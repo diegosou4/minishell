@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juan-pma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 09:21:34 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/02/21 10:49:44 by juan-pma         ###   ########.fr       */
+/*   Updated: 2024/03/19 01:05:29 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,56 +15,15 @@ char *ft_strcpy(char *dest, const char *src);
 #include "../../includes/mini.h"
 
 /*
-    🚩 check this function as we are alocating 
+    🚩 check this function as we are alocating
     memmory here.
 */
-t_cmd *cmdnew(char *args)
-{
-	t_cmd *comands;
-    char **newarg;
-    int len;
-    int i;
 
-    i = -1;
-    len = 0;
-	comands = (t_cmd *)ft_calloc(sizeof(t_cmd), 1);
-    newarg = ft_split(args, '2');
-
-    while (newarg[len] != NULL)
-        len++;
-    char **modified_list = (char **)malloc((len * 5) * sizeof(char *));
-    while (++i < len)
-    {
-        modified_list[i] = (char *)malloc((ft_strlen(newarg[i]) + 1) * sizeof(char));    
-        ft_strcpy(modified_list[i], newarg[i]);
-    }
-    comands->args = modified_list;
-	comands->next = NULL;
-	comands->redir = NULL;
-	return(comands);
-}
-
-void cmdinback(t_cmd **comands,char *args)
-{
-	t_cmd *ptr;
-	t_cmd *last;
-
-	last = cmdnew(args);
-	if(last == NULL)
-		return;
-	ptr = *(comands);
-	while(ptr->next != NULL)
-	{
-		ptr = ptr->next;
-	}
-	ptr->next = last;
-
-}
-char *ft_strcpy(char *dest, const char *src) 
+char *ft_strcpy(char *dest, const char *src)
 {
     if (!src)
         return (NULL);
-    while (*src) 
+    while (*src)
     {
         *dest = *src;
         dest++;
@@ -73,46 +32,96 @@ char *ft_strcpy(char *dest, const char *src)
     *dest = '\0';
     return dest;
 }
-
-void ft_checker_quotes(char *str)
+// This line is to move the string one infront and remove the $ when is followed by a '
+static void ft_preline(char *line)
 {
-    int len;
-
-    len = ft_strlen(str);
-    if (str[0] == '\"' && ft_strchr((const char *) str, '$'))
+    int i;
+    i = -1;
+    while (line[++i])
     {
-        printf("variable found we need to expand :%s: \n", str);
+        if (line[i] == '$' && line[i + 1] == '\'')
+        {
+            ft_memmove(&line[i], &line[i + 1], ft_strlen(&line[i + 1]) + 1);
+        }
     }
-    if ((str[0] == '\'' && str[len - 1] == '\'')
-        || (str[0] == '\"' && str[len - 1] == '\"'))
-    {
-        str[len - 1] = '\0';
-        ft_memmove(str, (str + 1), len - 1);
-    }
-    else if (ft_strchr((const char *) str, '$'))
-        printf("var find \n");
 }
 
-char	*ft_strtok(char *str, const char *delimiters)
+void ft_checker_double_single(char *str, char quote)
 {
-	static char	*buffer = NULL;
-	char		*token_start;
+    char *src;
+    char *dest;
+    int flag;
 
-	if (!str && !buffer)
-		return (NULL);
+    flag = 0;
+    src = str;
+    dest = str;
 
-	if (str)
-		buffer = str;
+    while (*src)
+    {
+        if (*src == quote && !flag)
+        {
+            src++;
+            continue;
+        }
+        if (*src == quote && flag)
+            flag = !flag;
+        *dest++ = *src++;
+    }
+    *dest = '\0';
+}
+void ft_checker_quotes(char *str)
+{
+    char *src;
+    int flag;
 
-	while (*buffer && ft_strchr(delimiters, *buffer))
-		buffer++;
+    flag = 0;
+    src = str;
 
-	token_start = buffer;
+    while (*src)
+    {
+        if (*src == '\'' && !flag)
+        {
+            ft_checker_double_single(src, '\'');
+            flag = !flag;
+        }
+        else if (*src == '\"' && !flag)
+        {
+            ft_checker_double_single(src, '\"');
+            flag = !flag;
+        }
+        src++;
+    }
+}
 
-	buffer = ft_strpbrk(token_start, delimiters);
-	if (buffer)
-		*buffer++ = '\0';
-	return (token_start);
+void ft_quotes_remove(t_word_list *word_list)
+{
+    char *word;
+
+    while (word_list)
+    {
+        word = word_list->word->word;
+        ft_checker_quotes(word);
+        word_list = word_list->next;
+    }
+}
+
+char *ft_strtok(char *str, const char *delimiters)
+{
+    static char *buffer = NULL;
+    char *token_start;
+
+    if (!str && !buffer)
+        return (NULL);
+    if (str)
+        buffer = str;
+    while (*buffer && ft_strchr(delimiters, *buffer))
+        buffer++;
+
+    token_start = buffer;
+    buffer = ft_strpbrk(token_start, delimiters);
+    if (buffer)
+        *buffer++ = '\0';
+    return (token_start);
 }
 
 int ft_whitespace(char *line)
@@ -120,13 +129,24 @@ int ft_whitespace(char *line)
     int i;
 
     i = 0;
-    
+
     while ((line[i] >= '\b' && line[i] <= '\v') || line[i] == ' ')
     {
         i++;
     }
-    if (i == (int) ft_strlen(line))
+    if (i == (int)ft_strlen(line))
         return (0);
-        
+
     return (1);
+}
+//-----------------------------------Line Handler...........................
+void ft_line_handler(t_line *line, t_env *cpyenv)
+{
+    if (cpyenv == NULL)
+        line->value_env = ("non-env@user");
+    else
+        line->value_env = ft_path_handler(cpyenv, "USER");
+    line->color_line = ft_strjoin(ANSI_COLOR_CYAN, (line->value_env));
+    line->line_text = ft_strjoin(line->color_line,
+                                 "@🐧shell:$ " ANSI_COLOR_RESET);
 }

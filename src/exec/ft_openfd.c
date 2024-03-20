@@ -1,36 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_openfd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 12:25:54 by diegmore          #+#    #+#             */
-/*   Updated: 2024/02/20 12:25:56 by diegmore         ###   ########.fr       */
+/*   Created: 2024/03/19 11:17:43 by diegmore          #+#    #+#             */
+/*   Updated: 2024/03/19 11:17:45 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "../../includes/mini.h"
 
-int ft_echo(t_cmd *cmd) 
+
+int open_redir_fd(t_bash *executor)
 {
+    t_cmd *ptr;
     int flag;
-    flag = 0;
-    int i;
-        
-    i = 2;
-    flag = ft_strncmp(cmd->args[1],"-n",ft_strlen(cmd->args[1]));
-    if(flag != 0)
-        i = 1;
-    while(cmd->args[i] != NULL)
+    ptr = executor->commands;
+    if(ptr == NULL)
+        return(EXIT_SUCCESS);
+    flag = open_fd(&ptr->redir);
+    if(flag == 0)
     {
-        printf("%s",cmd->args[i]);
-        i++;
+        ft_putstr_fd("Error for open file",2);
+        return(EXIT_FAILURE);
     }
-    if(flag != 0)
-        printf("\n");
-    return(1);
+    return(EXIT_SUCCESS);
 }
-
-
-

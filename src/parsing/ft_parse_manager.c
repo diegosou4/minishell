@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parse_manager.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juan-pma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 09:42:35 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/02/21 09:44:44 by juan-pma         ###   ########.fr       */
+/*   Updated: 2024/03/20 12:18:13 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/mini.h"
+
 // Define a global flag to indicate if the prompt has been printed
 /*
 	This function will create an array
@@ -22,154 +23,109 @@
 
 */
 
-int ft_flag(char *word)
+t_tags	ft_tags(t_word_desc *word)
 {
-	int flag;
+	char	*word_cpy;
+	int		len;
+
+	word_cpy = word->word;
+	len = ft_strlen(word_cpy);
+	if (word->flags == 1 || word->flags == 2
+		|| word->flags == 3 || word->flags == 4)
+	{
+		return (EXCECUTOR);
+	}
+	else if ((word_cpy[0] == '\'' && word_cpy[len - 1] == '\''))
+		return (WORD);
+	else if (ft_strcmp(word->word, "$") == 0)
+		return (WORD);
+	else if (ft_strcmp(word_cpy, "$?") == 0)
+		return (SPECIAL_VAR);
+	else if (ft_strchr(word->word, '$'))
+		return (VARIABLE);
+	else
+		return (WORD);
+}
+
+int	ft_flag(char *word)
+{
+	int	flag;
 
 	flag = 0;
 	if (ft_strcmp(word, ">>") == 0)
-		flag = 1;
+		flag = append_out;
 	else if (ft_strcmp(word, "<<") == 0)
-		flag = 2;
+		flag = here_doc;
 	else if (ft_strcmp(word, "<") == 0)
-		flag = 3;
+		flag = redir_in;
 	else if (ft_strcmp(word, ">") == 0)
-		flag = 4;
-
+		flag = redir_out;
+	else if (ft_strcmp(word, "<>") == 0)
+		flag = inandout;
 	return (flag);
 }
-t_word_desc *create_word_desc(char *word, int flag)
-{
-	t_word_desc *new_word = malloc(sizeof(t_word_desc));
-	char *word_copy;
 
-	word_copy = word;
-	ft_checker_quotes(word_copy);
-	new_word->word = ft_strdup(word_copy);
-	printf("------------> this is the word :%s:\n", new_word->word);
+t_word_desc	*ft_cte_wd_d(char *word, int flag)
+{
+	t_word_desc	*new_word;
+
+	new_word = ft_calloc(1, sizeof(t_word_desc));
+	new_word->word = ft_strdup(word);
 	new_word->flags = flag;
+	new_word->tags = ft_tags(new_word);
 	return (new_word);
 }
 
-t_word_list *create_word_node(t_word_desc *word)
+t_word_list	*create_word_node(t_word_desc *word)
 {
-	t_word_list *new_node = malloc(sizeof(t_word_list));
+	t_word_list	*new_node;
+
+	new_node = malloc(sizeof(t_word_list));
 	new_node->word = word;
 	new_node->next = NULL;
-	return new_node;
+	return (new_node);
 }
-
-static t_word_list *tokenize_and_print(char *token)
+t_word_lists	*ft_init_word_lista(char *token)
 {
-	char *subtoken;
-	t_word_desc *word_desc;
-	t_word_list *node;
-	t_word_list *head = NULL;
-	t_word_list *current_token = NULL;
+	t_word_lists *word_lists;
+
+	word_lists = ft_calloc(1, sizeof(t_word_lists));
+	word_lists->current_token = NULL;
+	word_lists->node = NULL;
+	word_lists->head = NULL;
+	word_lists->subtoken = ft_strtok(token, "2");
+	return (word_lists);
+}
+t_word_list	*tokenize_and_print(char *token)
+{
+	t_word_lists	*wls;
+	t_word_list *head;
+
 
 	if (!token || !token[0])
-		return NULL;
-
-	subtoken = ft_strtok(token, "2"); // Tokenize the token with space
-	while (subtoken != NULL)
+		return (NULL);
+	wls = ft_init_word_lista(token);
+	while (wls->subtoken != NULL)
 	{
-		if (subtoken[0] != '\0')
+		if (wls->subtoken[0] != '\0')
 		{
-			word_desc = create_word_desc(subtoken, ft_flag(subtoken));
-			node = create_word_node(word_desc);
-			// printf("this is the token: %s\n", subtoken);
-			if (head == NULL)
+			wls->word_desc = ft_cte_wd_d(wls->subtoken, ft_flag(wls->subtoken));
+			wls->node = create_word_node(wls->word_desc);
+			if (wls->head == NULL)
 			{
-				head = node;
-				current_token = node;
+				wls->head = wls->node;
+				wls->current_token = wls->node;
 			}
 			else
 			{
-				current_token->next = node;
-				current_token = node;
+				wls->current_token->next = wls->node;
+				wls->current_token = wls->node;
 			}
 		}
-		subtoken = ft_strtok(NULL, "2"); // Continue tokenizing with space
+		wls->subtoken = ft_strtok(NULL, "2");
 	}
+	head = wls->head;
+	free(wls->subtoken);
+	free(wls);
 	return (head);
-}
-/*
-	🚩 check this function as we are alocating
-	memmory here.
-	- I need to free the list in case somenthing happend.
-*/
-
-
-t_word_list **ft_tokenizer_manager(char *line, char **env)
-{
-	char **tokens;
-	t_word_list **words_list;
-	char **current_token;
-	int i;
-
-	i = -1;
-	if (env)
-		;
-	words_list = ft_calloc(100, sizeof(t_word_list *));
-	tokens = ft_split(ft_create_string(line, env), '3');
-	if (!tokens)
-		return (NULL);
-	ft_print_doble_char(tokens);
-	if (tokens == NULL)
-	{
-		printf("No tokens found\n");
-		return NULL;
-	}
-	current_token = tokens;
-	while (*current_token != NULL)
-	{
-		words_list[++i] = tokenize_and_print(*current_token);
-		current_token++;
-	}
-
-	i = -1;
-	while (words_list[++i])
-	{
-		if (ft_check_valid_redir(words_list[i]) == 0)
-			return (NULL);
-	}
-	i = -1;
-	while (words_list[++i])
-	{
-		ft_print_list_struct(words_list[i]);
-	}
-
-	return (words_list);
-}
-/*
-	🚩 check this function as we are alocating
-	memmory here.
-*/
-
-void *ft_parse_manager(char **env)
-{
-	char *line;
-	char **cpyenv;
-	char *usr;
-	char *line_text;
-
-	ft_signal_manager();
-
-	cpyenv = ft_arrcpy(env);
-	// printf("/%s \n", pwd);
-	while (1)
-	{
-		usr = ft_getenv(cpyenv, "USER", TRUE);
-		line_text = ft_strjoin(ANSI_COLOR_CYAN, usr);						// Change color to cyan
-		line_text = ft_strjoin(line_text, " @🐧shell:$ " ANSI_COLOR_RESET); // Reset color after prompt
-		line = readline(line_text);
-		if (!line || (ft_strcmp(line, "exit") == 0))
-			break;
-		if (ft_whitespace(line) == 1)
-			add_history(line);
-		if (ft_check_input(line))
-			ft_tokenizer_manager(line, cpyenv);
-		free(line);
-	}
-	return (NULL);
 }

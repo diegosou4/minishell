@@ -3,55 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parsing_handler.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juan-pma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:44:08 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/02/21 19:55:24 by juan-pma         ###   ########.fr       */
+/*   Updated: 2024/03/20 13:50:31 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../../includes/mini.h"
 
-// t_cmd   *returnmystruct(char *newline)
-// {
-//     t_cmd *commands;
-   
-//     char **arr;
-//     arr = ft_split(newline,'3');
-//     int i;
-//     i = 1;
-//     commands = cmdnew(arr[0]);
-//     while(arr[i] != NULL)
-//     {
-//         cmdinback(&commands,arr[i]);
-//         i++;
-//     }
-//     t_cmd *ptr;
-
-//     ptr = commands;
-
-//     while(ptr != NULL)
-//     {
-//         char **args;
-
-//         args = ptr->args;
-//         int k;
-//         k = 0;
-//         while(args[k] != NULL)
-//         {
-// 			// ft_checker_quotes(args[k], ptr);
-//             printf("comand struct :%s:\n",args[k]);
-//             k++;
-//         } 
-//         printf("next struct -->\n");
-//         ptr = ptr->next;
-//     }
-//    return(commands);
-// }
-
-
-static int ft_check_close(const char *ptr)
+static int ft_check_close_q(const char *ptr)
 {
 	if (*ptr == '\'')
 	{
@@ -71,54 +32,113 @@ static int ft_check_close(const char *ptr)
 	}
 	return (1);
 }
-static	char *ft_string_handle(char *line, char *modified_line)
+static int ft_check_close(const char *ptr)
 {
-	int	j;
-	char	flag;
-	char	*ptr;
+	char flag;
 
-	ptr = line;
 	flag = 0;
-	j = 0;
 	while (*ptr)
 	{
-		if (flag == 0 && (*ptr == '\"' || *ptr == '\''))
+		if (flag == 0 && (*ptr == '\"' || *ptr == '\'') )
 		{
-			if (!ft_check_close(ptr))
-				return (NULL);
+			if (!ft_check_close_q(ptr))
+			{
+				return (1);
+			}
 			flag = *ptr;
-			modified_line[j++] = '2';
 		}
 		else if (flag == *ptr)
-			flag = 0; 
-		if (flag == 0 && *ptr == ' ') 
-			*ptr = '2'; 
-		else if (flag == 0)
-		{
-			j = ft_special_case(modified_line, j, &ptr);
-			if (j == -2)
-				return(NULL);
-		}
-		if (flag == 0 && *ptr == '|')
-			*ptr = '3';
-		modified_line[j++] = *ptr;
-		if (flag == 0 && *ptr == '\'')
-			modified_line[j++] = '2';
-		if (flag == 0 && *ptr == '\'')
-			modified_line[j++] = '2';
+			flag = 0;
 		ptr++;
 	}
+	return (0);
+}
+static int ft_space (char **line)
+{
+    while(**line == '2')
+        (*line)++;
+    return (1);
+}
+
+static char *ft_string_handle_2(char *line, char *modified_line)
+{
+	int j;
+	char flag_quotes;
+
+	flag_quotes = 0;
+	j = 0;
+	while (*line)
+	{
+		if (flag_quotes == 0 && (*line == '\"' || *line == '\''))
+			flag_quotes = *line;
+		else if (flag_quotes == *line)
+			flag_quotes = 0;
+		if (flag_quotes == 0 && (*line == '<' || *line == '>'))
+		{
+			modified_line[j++] = '2';
+			while (*line == '<' || *line == '>')
+			{
+				modified_line[j++] = *line;
+				line++;
+			}
+			ft_space(&line);
+			if (*line == '<' ||  *line == '>')
+				return NULL;
+			modified_line[j++] = '2';
+			flag_quotes = *line;
+		}
+		modified_line[j++] = *line;
+		line++;
+	}
+	modified_line[j] = '\0';
 	return (modified_line);
 }
 
-char *ft_create_string(char *line, char **env)
+static char *ft_string_handle(char *line, char *modified_line)
 {
-    char *new_line;
-    // t_cmd *comands;
-	if (env)
-		;
-	new_line = ft_calloc(ft_strlen(line), sizeof(char*));
-    new_line = ft_string_handle(line, new_line);
-    return (new_line);
+	int j;
+	char flag;
+
+	flag = 0;
+	j = 0;
+	while (*line)
+	{
+		if (flag == 0 && (*line == '\"' || *line == '\''))
+			flag = *line;
+		else if (flag == *line)
+			flag = 0;
+		if (flag == 0 && *line == ' ')
+			*line = '2';
+		if (flag == 0 && *line == '|')
+			*line = '3';
+		modified_line[j++] = *line;
+		line++;
+	}
+	modified_line[j] = '\0';
+	return (modified_line);
 }
 
+char *ft_create_string(char *line, t_bash *bash)
+{
+	char *new_line;
+	char *new_line_2;
+
+	new_line = ft_calloc((ft_strlen(line) * 3), sizeof(char ));
+	new_line_2 = ft_calloc((ft_strlen(line) * 3), sizeof(char ));
+	ft_string_handle(line, new_line);
+	ft_string_handle_2(new_line, new_line_2);
+	if (!new_line_2)
+	{
+		bash->exit_status = 2;
+		free(new_line_2);
+		printf("🚫 in-bash: syntax error near unexpected token `\n");
+	}
+	else if (ft_check_close(new_line_2) == 1)
+	{
+		free(new_line_2);
+		bash->exit_status = 2;
+		new_line_2 = (NULL);
+	}
+	free(new_line);
+	return (new_line_2);
+}
