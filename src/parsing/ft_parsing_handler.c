@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:44:08 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/03/14 00:14:35 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/20 13:50:31 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,8 +127,6 @@ char *ft_create_string(char *line, t_bash *bash)
 	new_line_2 = ft_calloc((ft_strlen(line) * 3), sizeof(char ));
 	ft_string_handle(line, new_line);
 	ft_string_handle_2(new_line, new_line_2);
-	//printf("this is the line 1 :%s:\n", new_line);
-	//printf("this is the line 2 :%s:\n", new_line_2);
 	if (!new_line_2)
 	{
 		bash->exit_status = 2;
@@ -137,7 +135,6 @@ char *ft_create_string(char *line, t_bash *bash)
 	}
 	else if (ft_check_close(new_line_2) == 1)
 	{
-		free(new_line);
 		free(new_line_2);
 		bash->exit_status = 2;
 		new_line_2 = (NULL);

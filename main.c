@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:53:34 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/19 11:53:35 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/03/20 13:47:17 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,9 +133,7 @@ void	*ft_parse_manager(char **env)
 		if (ft_check_input(line.line, &bash_boss))
 		{
 			bash_boss.exit_status = status;
-			bash_boss.commands = ft_structure_manager(&line, bash_boss.cpyenv);
-			if (bash_boss.commands)
-				ft_print_cmd_struct(bash_boss.commands);
+			bash_boss.commands = ft_structure_manager(&line, &bash_boss);
 			if (bash_boss.commands)
 				start_execution(bash_boss);
 		}
