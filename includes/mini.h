@@ -6,11 +6,12 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 12:40:39 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/19 01:20:44 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/20 13:07:45 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #ifndef MINI_H
-#define MINI_H
+# define MINI_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -64,7 +65,6 @@ typedef enum s_tags
 	WORD,
 	EXCECUTOR,
 	VARIABLE,
-	SPECIAL_PAR,
 	SPECIAL_VAR,
 	VARIABLE_CHECK,
 	PATH,
@@ -185,7 +185,7 @@ char *ft_parse_redir(char *str);
 void ft_print_doble_char(char **argv);
 
 // check input.
-int ft_check_input(char *line);
+int ft_check_input(char *line, t_bash *bash);
 int ft_check_redir_pipes(char **line);
 
 // Fuctions for redir
@@ -250,7 +250,7 @@ void ft_free_double_pointers(char **split_line);
 void close_pipes(t_cmd **cmd);
 
 // __________________________________________________LIST_MANAGER ________________________________
-void ft_extract_var(t_word_list *word_list, t_env *env);
+void ft_extract_var(t_word_list *word_list, t_bash *bash);
 t_word_list	*ft_lstlast_(t_word_list *lst);
 int ft_check_struct_redir(t_word_list *tokens);
 
@@ -280,7 +280,7 @@ void child_bexecutor(t_bash *executor);
 void ft_close(t_cmd **commands);
 
 int redir_error(int fd);
-int ft_howpipes(t_cmd *comands);	
+int ft_howpipes(t_cmd *comands);
 void child_builtings(t_cmd **cmd, t_env **cpy);
 //______________________________________________FILES___________________________________________________//
 
@@ -340,7 +340,7 @@ void ft_print_cmd_struct(t_cmd *cmd);
 t_word_list	*ft_init_word_list(t_word_list *word_lists, char *token);
 void ft_flags_tags_assignment(t_word_list *word_list);
 t_line *ft_init_manager(t_line *line);
-char *ft_create_string(char *line);
+char *ft_create_string(char *line, t_bash *bash);
 void update_index(t_env **env);
 int ft_export(t_env **env,t_cmd *commands);
 //______________________________________________EXPAND_PATH_______________________________________________//

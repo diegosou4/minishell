@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 17:33:05 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/03/19 01:46:48 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/20 12:39:51 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void ft_check_variable_expansion(char *src, char *dest, t_env *env)
 	*dest = '\0';
 }
 
-void ft_extract_var(t_word_list *word_list, t_env *env)
+void ft_extract_var(t_word_list *word_list, t_bash *bash)
 {
 	char *dest;
 	char *word_cpy;
@@ -141,11 +141,16 @@ void ft_extract_var(t_word_list *word_list, t_env *env)
 			if (word_list->next->word->tags == VARIABLE)
 				word_list->next->word->tags = WORD;
 		}
-		if (word_list->word->tags == VARIABLE)
+		if (word_list->word->tags == SPECIAL_VAR)
+		{
+			word_list->word->word = ft_itoa(bash->exit_status);
+			printf("this is the special variable : %s\n", word_list->word->word);
+		}
+		else if (word_list->word->tags == VARIABLE)
 		{
 			word_cpy = ft_calloc(100 + 1, sizeof(char));
 			dest = word_cpy;
-			ft_check_variable_expansion(word_list->word->word, dest, env);
+			ft_check_variable_expansion(word_list->word->word, dest, bash->cpyenv);
 			if (ft_strchr(word_cpy, '\''))
 				ft_check_variable_quotes_expansion(dest);
 			free(word_list->word->word);

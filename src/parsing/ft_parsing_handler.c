@@ -118,7 +118,7 @@ static char *ft_string_handle(char *line, char *modified_line)
 	return (modified_line);
 }
 
-char *ft_create_string(char *line)
+char *ft_create_string(char *line, t_bash *bash)
 {
 	char *new_line;
 	char *new_line_2;
@@ -131,6 +131,7 @@ char *ft_create_string(char *line)
 	//printf("this is the line 2 :%s:\n", new_line_2);
 	if (!new_line_2)
 	{
+		bash->exit_status = 2;
 		free(new_line_2);
 		printf("🚫 in-bash: syntax error near unexpected token `\n");
 	}
@@ -138,7 +139,8 @@ char *ft_create_string(char *line)
 	{
 		free(new_line);
 		free(new_line_2);
-		return (NULL);
+		bash->exit_status = 2;
+		new_line_2 = (NULL);
 	}
 	free(new_line);
 	return (new_line_2);
