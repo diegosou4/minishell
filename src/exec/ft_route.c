@@ -110,14 +110,16 @@ int return_in(t_redir *redir, t_cmd *curr,t_cmd *last)
     return(fd);
 }
 
-void child_executor(t_bash *executor)
+int child_executor(t_bash *executor,t_cmd *ptrcmd,t_bash *bash_boss)
 {
-
     int fdin;
     int fdout;
+    executor->exit_status = open_redir_fd(executor);
+    if(return_error_exec(executor) == 1)
+        return(EXIT_FAILURE);
+    init_mybash(bash_boss,ptrcmd,executor);
     fdin = executor->in;
     fdout = executor->out; 
-   
     dup2(fdin,0);
     dup2(fdout,1);
     if(fdout != 1)
@@ -125,7 +127,7 @@ void child_executor(t_bash *executor)
     if(fdin != 0)
         close(fdin);
     execve(executor->commands->path,executor->commands->args,executor->env);
-    
+    return(1);
 }
 void child_bexecutor(t_bash *executor)
 {
@@ -174,26 +176,12 @@ void ft_magane_executor(t_bash bash_boss)
     t_bash executor;
     executor.last = NULL;
     ptrcmd = bash_boss.commands;
-
-    while(ptrcmd != NULL)
-    {
-        init_mybash(&bash_boss,ptrcmd,&executor);
-        pid = fork();
-        if(pid == 0)
-        {
-            if(check_builtings(ptrcmd) == 0)
-                child_executor(&executor);
-            else
-                child_bexecutor(&executor);  
-                close(bash_boss.in);
-                close(bash_boss.out);        
-        }
-        executor.last = ptrcmd;
-        closeoutpipe(&executor.last);
-        ptrcmd = ptrcmd->next;
-    }
-    wait(NULL);
-    close_pipes(&bash_boss.commands);
+    if(ft_howpipes(bash_boss.commands) == 1)
+        simple_execution(&bash_boss,ptrcmd,&executor);
+    else 
+        many_execution()
+    //free_commands(bash_boss.commands);
+    //close_pipes(&bash_boss.commands);
 }
 
 
@@ -220,8 +208,7 @@ int open_fd(t_redir **redirect)
             ptrredir->fd = open(ptrredir->path,O_WRONLY | O_CREAT | O_TRUNC, 0664);
         else if(ptrredir->token == 2)
             ptrredir->fd = open(ptrredir->path,O_RDONLY , 0777);
-        
-        if(ptrredir < 0)
+        if(ptrredir->fd < 0)
             return(0);
         ptrredir = ptrredir->next;
     }
@@ -266,7 +253,7 @@ int ft_howpipes(t_cmd *comands)
 void start_execution(t_bash bash_boss)
 {
 
-     open_redir(&bash_boss.commands);
+
     expand_path(&bash_boss.commands,bash_boss.env);
     open_pipes(&bash_boss.commands);
     ft_magane_executor(bash_boss);

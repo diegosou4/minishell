@@ -119,9 +119,9 @@ void	*ft_parse_manager(char **env)
 	ft_signal_manager();
 	bash_boss.env = ft_arrcpy(env);
 	bash_boss.cpyenv = ft_nenv(env,1);
+	ft_line_handler(&line, bash_boss.cpyenv);
 	while (1)
 	{
-		ft_line_handler(&line, bash_boss.cpyenv);
 		line.line = readline(line.line_text);
 		if (!line.line || (ft_strcmp(line.line, "exit") == 0))
 		{
@@ -133,14 +133,13 @@ void	*ft_parse_manager(char **env)
 		if (ft_check_input(line.line, &bash_boss))
 		{
 			bash_boss.exit_status = status;
-			bash_boss.commands = ft_structure_manager(&line, bash_boss.cpyenv);
-			if (bash_boss.commands)
-				ft_print_cmd_struct(bash_boss.commands);
+			bash_boss.commands = ft_structure_manager(&line, &bash_boss);
 			if (bash_boss.commands)
 				start_execution(bash_boss);
 		}
 		status = bash_boss.exit_status;
-		ft_free_line_struct(&line);
+		//ft_free_line_struct(&line);
+		// break;
 	}
 	return NULL;
 }
