@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:53:34 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/19 11:53:35 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/03/19 18:07:33 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ t_word_list	**ft_tokenizer_manager(char *line, t_env *env)
 
 	i = -1;
 	new_string = ft_create_string(line);
+	if (!new_string)
+		return NULL;
 	words_list = (t_word_list **)ft_calloc(100, sizeof(t_word_list *));
 	tokens = ft_split(new_string, '3');
 	if (!tokens)
@@ -99,7 +101,7 @@ t_cmd *ft_structure_manager(t_line *line, t_env *cpyenv)
 	t_cmd *cmd_structure;
 	list = ft_tokenizer_manager(line->line, cpyenv);
 	cmd_structure = ft_structure_creation(list);
-//	ft_free_double_word_list(list);
+	// ft_free_double_word_list(list);
 	return(cmd_structure);
 }
 void	*ft_parse_manager(char **env)
