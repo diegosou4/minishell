@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 12:27:13 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/20 15:16:20 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/20 19:27:50 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,17 +172,17 @@ void init_mybash(t_bash *bash_boss,t_cmd *curr,t_bash *executor)
 
  }
 
-void ft_magane_executor(t_bash bash_boss)
+void ft_magane_executor(t_bash *bash_boss)
 {
     int pid;
     t_cmd *ptrcmd;
     t_bash executor;
     executor.last = NULL;
-    ptrcmd = bash_boss.commands;
-    if(ft_howpipes(bash_boss.commands) == 1)
-        simple_execution(&bash_boss,ptrcmd,&executor);
+    ptrcmd = bash_boss->commands;
+    if(ft_howpipes(bash_boss->commands) == 1)
+        simple_execution(bash_boss,ptrcmd,&executor);
     else 
-        many_execution(&bash_boss,ptrcmd,&executor);
+        many_execution(bash_boss,ptrcmd,&executor);
     //free_commands(bash_boss.commands);
     //close_pipes(&bash_boss.commands);
 }
@@ -255,9 +255,10 @@ int ft_howpipes(t_cmd *comands)
 
 }
 
-void start_execution(t_bash bash_boss)
+void start_execution(t_bash *bash_boss)
 {
-    open_pipes(&bash_boss.commands);
+    open_pipes(&bash_boss->commands);
     ft_magane_executor(bash_boss);
+    // free(bash_boss);
    // ft_free_cmd_structure(bash_boss.commands);
 }
