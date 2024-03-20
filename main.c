@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:53:34 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/20 15:29:02 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/20 16:44:52 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,8 +139,7 @@ void	*ft_parse_manager(char **env)
 				start_execution(bash_boss);
 		}
 		status = bash_boss.exit_status;
-		//ft_free_line_struct(&line);
-		// break;
+		free(line.line);
 	}
 	return NULL;
 }
