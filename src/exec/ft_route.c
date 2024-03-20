@@ -211,8 +211,8 @@ int open_fd(t_redir **redirect)
             ptrredir->fd = open(ptrredir->path,O_WRONLY | O_CREAT | O_TRUNC, 0664);
         else if(ptrredir->token == redir_in)
             ptrredir->fd = open(ptrredir->path,O_RDONLY , 0777);
-        // else if(ptrredir->token == append_out)
-        //     ptrredir->fd = open(ptrredir->redir,O_WRONLY | O_CREAT,)
+        else if(ptrredir->token == append_out)
+            ptrredir->fd = open(ptrredir->path,O_WRONLY | O_CREAT, 0664);
         if(ptrredir->fd < 0)
             return(0);
         ptrredir = ptrredir->next;
