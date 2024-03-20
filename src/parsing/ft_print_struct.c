@@ -6,38 +6,11 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:44:02 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/11 23:35:19 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/20 12:26:10 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/mini.h"
-
-// void printstruct(t_cmd *commands)
-// {
-//     t_cmd *ptr;
-
-//     ptr = commands;
-
-//     while(ptr != NULL)
-//     {
-//         printf("Path: %s\n", ptr->path);
-//         printf("Args: ");
-//         printdp(ptr->args);
-//         printf("FILE 1 %i \nFILE 2 %i \n", ptr->fd[0], ptr->fd[1]);
-//         if(ptr->redir != NULL)
-//         {
-//             t_redir *pr;
-//             pr = ptr->redir;
-//             while(pr != NULL)
-//             {
-//                 printf("Redir string %s", pr->str);
-//                 printf("File %i", pr->fd);
-//                 pr = pr->next;
-//             }
-//         }
-//         ptr = ptr->next;
-//     }
-// }
 
 const char *tag_names[] = {
     "WORD",
@@ -100,9 +73,6 @@ void ft_print_list_struct(t_word_list *structure, int i)
             break;
         case VARIABLE:
             printf(ANSI_COLOR_YELLOW "--tags:" ANSI_COLOR_RESET ANSI_COLOR_GREEN ":%s:" ANSI_COLOR_RESET, tag_names[VARIABLE]);
-            break;
-        case SPECIAL_PAR:
-            printf(ANSI_COLOR_YELLOW "--tags:" ANSI_COLOR_RESET ANSI_COLOR_GREEN ":%s:" ANSI_COLOR_RESET, tag_names[SPECIAL_PAR]);
             break;
         case SPECIAL_VAR:
             printf(ANSI_COLOR_YELLOW "--tags:" ANSI_COLOR_RESET ANSI_COLOR_GREEN ":%s:" ANSI_COLOR_RESET, tag_names[SPECIAL_VAR]);

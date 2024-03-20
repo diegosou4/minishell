@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 09:42:35 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/03/19 00:11:57 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/20 12:18:13 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_tags	ft_tags(t_word_desc *word)
 	else if (ft_strcmp(word->word, "$") == 0)
 		return (WORD);
 	else if (ft_strcmp(word_cpy, "$?") == 0)
-		return (SPECIAL_PAR);
+		return (SPECIAL_VAR);
 	else if (ft_strchr(word->word, '$'))
 		return (VARIABLE);
 	else
