@@ -13,3 +13,29 @@
 #include "../../includes/mini.h"
 
 
+
+void execute_one(t_cmd *command,char **env,t_env **cpy,t_cmd *last)
+{
+    int check;
+    int pid;
+    check = check_builtings(command);
+    if(check > 0)
+    {
+        child_bexecutor(command,env,cpy,last); 
+        return;
+    }
+    if(env == NULL)
+    {
+        ft_putstr_fd("TOME SAL PAPAI\n",2);
+        return;
+    }
+    pid = fork();
+    if(pid == 0)
+    {
+        child_executor(command,env,cpy,last);
+        wait(NULL);
+    }
+}
+
+
+

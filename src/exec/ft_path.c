@@ -13,6 +13,12 @@
 
 #include "../../includes/mini.h"
 
+void error_path(char *str)
+{
+    ft_putstr_fd(str,2);
+    ft_putstr_fd(": command not found\n",2);
+}
+
 
 void expand_path(t_cmd **commands,char **env)
 {
@@ -28,6 +34,11 @@ void expand_path(t_cmd **commands,char **env)
             ptr->path = ft_strdup(ptr->args[0]);
         else
             ptr->path = ask_acess(ptr->args[0],home); 
+        if(ptr->path == NULL)
+        {
+            error_path(ptr->args[0]);
+            ptr->executable = -1;
+        }
         ptr = ptr->next;
     }
 

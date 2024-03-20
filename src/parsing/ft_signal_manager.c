@@ -19,8 +19,6 @@ void handle_signal(int signal1)
 	}
 	else if (signal1 == SIGQUIT)
 		ft_putstr("");
-	else if (signal1 == SIGCHLD)
-		ft_putstr("Child process terminated\n");
 }
 
 void ft_signal_manager()
