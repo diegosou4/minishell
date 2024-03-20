@@ -115,6 +115,8 @@ int child_executor(t_bash *executor,t_cmd *ptrcmd,t_bash *bash_boss)
     int fdin;
     int fdout;
     executor->exit_status = open_redir_fd(executor);
+    if(expand_path(&executor->commands,bash_boss->env) == EXIT_FAILURE)
+        exit(EXIT_FAILURE);
     if(return_error_exec(executor) == 1)
         return(EXIT_FAILURE);
     init_mybash(bash_boss,ptrcmd,executor);
@@ -135,7 +137,8 @@ void child_bexecutor(t_bash *executor,t_cmd *ptrcmd,t_bash *bash_boss)
     int fdin;
     int fdout;
     check = check_builtings(executor->commands);
-
+    if(expand_path(&executor->commands,bash_boss->env) == EXIT_FAILURE)
+        exit(EXIT_FAILURE);
     fdin = executor->in;
     fdout = executor->out; 
     dup2(fdin,0);
@@ -204,10 +207,12 @@ int open_fd(t_redir **redirect)
     ptrredir = (*redirect);
     while(ptrredir != NULL)
     {
-        if(ptrredir->token == 1)
+        if(ptrredir->token == redir_out)
             ptrredir->fd = open(ptrredir->path,O_WRONLY | O_CREAT | O_TRUNC, 0664);
-        else if(ptrredir->token == 2)
+        else if(ptrredir->token == redir_in)
             ptrredir->fd = open(ptrredir->path,O_RDONLY , 0777);
+        // else if(ptrredir->token == append_out)
+        //     ptrredir->fd = open(ptrredir->redir,O_WRONLY | O_CREAT,)
         if(ptrredir->fd < 0)
             return(0);
         ptrredir = ptrredir->next;
@@ -252,7 +257,6 @@ int ft_howpipes(t_cmd *comands)
 
 void start_execution(t_bash bash_boss)
 {
-    expand_path(&bash_boss.commands,bash_boss.env);
     open_pipes(&bash_boss.commands);
     ft_magane_executor(bash_boss);
    // ft_free_cmd_structure(bash_boss.commands);

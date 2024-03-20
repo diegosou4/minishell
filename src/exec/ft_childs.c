@@ -12,10 +12,10 @@
 
 #include "../../includes/mini.h"
 
-
-
 void simple_execution(t_bash *bash_boss,t_cmd *ptrcmd,t_bash *executor)
 {
+    int i;
+    i = 0;
     alloc_mypids(bash_boss);
     init_mybash(bash_boss,ptrcmd,executor);
     if(check_builtings(ptrcmd) > 0)
@@ -25,12 +25,8 @@ void simple_execution(t_bash *bash_boss,t_cmd *ptrcmd,t_bash *executor)
     }
     bash_boss->pid[0] = fork();
     if(bash_boss->pid[0] == 0)
-    {
         child_executor(executor,ptrcmd,bash_boss);
-    }
-    int i =0;
     waitpid(bash_boss->pid[0],&i,0);
-    
 }
 
 void many_execution(t_bash *bash_boss, t_cmd *ptrcmd,t_bash *executor)
