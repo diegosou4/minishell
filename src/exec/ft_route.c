@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 12:27:13 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/20 13:07:38 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/20 15:16:20 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,9 +184,9 @@ void ft_magane_executor(t_bash bash_boss)
             if(check_builtings(ptrcmd) == 0)
                 child_executor(&executor);
             else
-                child_bexecutor(&executor);  
+                child_bexecutor(&executor);
                 close(bash_boss.in);
-                close(bash_boss.out);        
+                close(bash_boss.out);
         }
         executor.last = ptrcmd;
         closeoutpipe(&executor.last);

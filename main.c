@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:53:34 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/20 13:47:17 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/20 15:29:02 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ void	*ft_parse_manager(char **env)
 		if (!line.line || (ft_strcmp(line.line, "exit") == 0))
 		{
 			ft_free_line_env(&line, bash_boss.cpyenv);
+			write(1, "(exit)\n", 7);
 			break ;
 		}
 		if (ft_whitespace(line.line) == 1)
