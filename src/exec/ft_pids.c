@@ -13,3 +13,10 @@
 
 #include "../../includes/mini.h"
 
+void alloc_mypids(t_bash *bash_boss)
+{
+    int pipes;
+    pipes = ft_howpipes(bash_boss->commands);
+    bash_boss->pid = ft_calloc(sizeof(int) , pipes);
+
+}
