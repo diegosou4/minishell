@@ -351,7 +351,7 @@ char *ft_create_string(char *line, t_bash *bash);
 void update_index(t_env **env);
 int ft_export(t_env **env,t_cmd *commands);
 //______________________________________________EXPAND_PATH_______________________________________________//
-void expand_path(t_cmd **commands,char **env);
+int expand_path(t_cmd **commands,char **env);
 char *ft_getpath(char **env);
 
 void execute_one(t_cmd *command,char **env,t_env **cpy,t_cmd *last);

@@ -24,7 +24,6 @@ int ft_env(t_env *env)
         if(ptr->token == 1)
         {
             printf("%s%s\n",ptr->key,ptr->value);
-            return(0);
         }
         ptr = ptr->next;
     }
