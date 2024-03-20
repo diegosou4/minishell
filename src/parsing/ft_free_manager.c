@@ -31,9 +31,9 @@ void ft_free_env_list(t_env *env)
 
 void ft_free_line_struct(t_line *line)
 {
-    // free(line->line_text);
-	// free(line->color_line);
-    // free(line->line);
+    free(line->line_text);
+	free(line->color_line);
+    free(line->line);
 }
 
 void ft_free_t_word_list(t_word_list *word_list)
