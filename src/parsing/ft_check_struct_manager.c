@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 17:33:05 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/03/20 12:39:51 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/20 13:47:47 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,6 @@ void ft_extract_var(t_word_list *word_list, t_bash *bash)
 		if (word_list->word->tags == SPECIAL_VAR)
 		{
 			word_list->word->word = ft_itoa(bash->exit_status);
-			printf("this is the special variable : %s\n", word_list->word->word);
 		}
 		else if (word_list->word->tags == VARIABLE)
 		{
