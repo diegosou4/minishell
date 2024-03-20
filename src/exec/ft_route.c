@@ -84,7 +84,7 @@ int return_out(t_redir *redir, t_cmd *curr)
         fd = curr->pipesfd[1];
     while(ptr != NULL)
     {
-        if(ptr->token == 1 || ptr->token == 4 || ptr->token == 5)
+        if(ptr->token == redir_out || ptr->token == append_out || ptr->token == inandout)
             fd = ptr->fd;
         ptr = ptr->next;
     }
@@ -161,12 +161,13 @@ void ft_magane_executor(t_cmd **cmd, char **env,t_env **cpy)
     int pid;
     t_cmd *ptrcmd;
     t_cmd *lastcmd;
-    ptrcmd = (*cmd);
+
     lastcmd = NULL;
-     
+    ptrcmd = (*cmd);
     if(ptrcmd->next == NULL)
     {
-        child_builtings(&ptrcmd,cpy);
+        execute_one(ptrcmd,env,cpy,lastcmd);
+       
         return;
     }
     while(ptrcmd != NULL)
@@ -178,13 +179,13 @@ void ft_magane_executor(t_cmd **cmd, char **env,t_env **cpy)
                 child_executor(ptrcmd,env,cpy,lastcmd);
             else
                 child_bexecutor(ptrcmd,env,cpy,lastcmd); 
-            wait(NULL);
+            //wait(NULL);
         }
         lastcmd = ptrcmd;
         closeoutpipe(&lastcmd);
         ptrcmd = ptrcmd->next;
     }
-
+    printf("\n");
     close_pipes(cmd);
 }
 
@@ -257,8 +258,11 @@ int ft_howpipes(t_cmd *comands)
 
 void start_exection(t_cmd **commands,char **env,t_env **cpy)
 {
-    expand_path(commands,env);
+
     open_redir(commands);
+    expand_path(commands,env);
     open_pipes(commands);
     ft_magane_executor(commands,env,cpy);
+
+    ft_free_cmd_structure((*commands));
 }

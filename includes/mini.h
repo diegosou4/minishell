@@ -139,6 +139,16 @@ typedef struct s_cmd
 } t_cmd;
 // Parsign handler.
 
+typedef struct s_bash
+{
+	t_cmd *commands;
+	int in;
+	int out;
+	int exit_status;
+	char **env;
+	t_env *cpyenv;
+} t_bash
+
 void *ft_parse_manager(char **env);
 
 // Parsing utils.
@@ -263,6 +273,7 @@ void open_pipes(t_cmd **cmd);
 
 void start_exection(t_cmd **commands,char **env,t_env **cpy);
 void ft_magane_executor(t_cmd **cmd, char **env,t_env **cpy);
+void help_magane(t_cmd *command,char **env,t_env **cpy);
 void child_executor(t_cmd *curr,char **env,t_env **cpy,t_cmd *last);
 void ft_close(t_cmd **commands);
 
@@ -333,4 +344,57 @@ int ft_export(t_env **env,t_cmd *commands);
 //______________________________________________EXPAND_PATH_______________________________________________//
 void expand_path(t_cmd **commands,char **env);
 char *ft_getpath(char **env);
+
+void execute_one(t_cmd *command,char **env,t_env **cpy,t_cmd *last);
+void child_bexecutor(t_cmd *curr,char **env,t_env **cpy,t_cmd *last);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #endif

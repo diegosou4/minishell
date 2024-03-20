@@ -107,30 +107,25 @@ t_cmd *ft_structure_manager(t_line *line, t_env *cpyenv)
 void	*ft_parse_manager(char **env)
 {
 	t_line	line;
-	t_env	*cpyenv;
-	t_cmd *cmd_structure;
+	t_bash bash_boss;
 
 	ft_signal_manager();
-	cpyenv = ft_nenv(env,1);
+	bash_boss.cpyenv = ft_nenv(env,1);
 	while (1)
 	{
-		ft_line_handler(&line, cpyenv);
+		ft_line_handler(&line, bash_boss.cpyenv);
 		line.line = readline(line.line_text);
 		if (!line.line || (ft_strcmp(line.line, "exit") == 0))
 		{
-			ft_free_line_env(&line, cpyenv);
+			ft_free_line_env(&line, bash_boss.cpyenv);
 			break ;
 		}
 		if (ft_whitespace(line.line) == 1)
 			add_history(line.line);
 		if (ft_check_input(line.line))
 		{
-			cmd_structure = ft_structure_manager(&line, cpyenv);
-			if (cmd_structure)
-			{
-				start_exection(&cmd_structure,env,&cpyenv);
-			}
-			ft_free_cmd_structure(cmd_structure);
+			bash_boss.commands = ft_structure_manager(&line, bash_boss.cpyenv);
+			start_exection(&bash_boss.commands,env,&cpyenv);
 		}
 		ft_free_line_struct(&line);
 	}
