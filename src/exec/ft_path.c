@@ -20,27 +20,25 @@ void error_path(char *str)
 }
 
 
-void expand_path(t_cmd **commands,char **env)
+int expand_path(t_cmd **commands,char **env)
 {
     int build;
     t_cmd *ptr;
     char *home;
 
+    if(env == NULL)
+        return(EXIT_FAILURE);
     home = ft_getpath(env);
     ptr = (*commands);
-    while(ptr != NULL)
+    build = check_builtings(ptr);
+    if(build != 0)
+        ptr->path = ft_strdup(ptr->args[0]);
+    else
+        ptr->path = ask_acess(ptr->args[0],home); 
+    if(ptr->path == NULL)
     {
-        build = check_builtings(ptr);
-        if(build != 0)
-            ptr->path = ft_strdup(ptr->args[0]);
-        else
-            ptr->path = ask_acess(ptr->args[0],home); 
-        if(ptr->path == NULL)
-        {
             error_path(ptr->args[0]);
-            ptr->executable = -1;
-        }
-        ptr = ptr->next;
+            return(EXIT_FAILURE);
     }
-
+    return(EXIT_SUCCESS);
 }
