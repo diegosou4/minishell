@@ -119,9 +119,9 @@ void	*ft_parse_manager(char **env)
 	ft_signal_manager();
 	bash_boss.env = ft_arrcpy(env);
 	bash_boss.cpyenv = ft_nenv(env,1);
+	ft_line_handler(&line, bash_boss.cpyenv);
 	while (1)
 	{
-		ft_line_handler(&line, bash_boss.cpyenv);
 		line.line = readline(line.line_text);
 		if (!line.line || (ft_strcmp(line.line, "exit") == 0))
 		{
@@ -139,7 +139,8 @@ void	*ft_parse_manager(char **env)
 				start_execution(bash_boss);
 		}
 		status = bash_boss.exit_status;
-		ft_free_line_struct(&line);
+		//ft_free_line_struct(&line);
+		// break;
 	}
 	return NULL;
 }

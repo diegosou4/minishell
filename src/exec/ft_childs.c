@@ -14,27 +14,54 @@
 
 
 
-void execute_one(t_cmd *command,char **env,t_env **cpy,t_cmd *last)
+void simple_execution(t_bash *bash_boss,t_cmd *ptrcmd,t_bash *executor)
 {
-    int check;
     int pid;
-    check = check_builtings(command);
-    if(check > 0)
+    init_mybash(bash_boss,ptrcmd,executor);
+    if(check_builtings(ptrcmd) > 0)
     {
-        //child_bexecutor(command,env,cpy,last); 
-        return;
-    }
-    if(env == NULL)
-    {
-        ft_putstr_fd("TOME SAL PAPAI\n",2);
+        child_builtings(&ptrcmd,&bash_boss->cpyenv);
         return;
     }
     pid = fork();
     if(pid == 0)
     {
-      //  child_executor(command,env,cpy,last);
-        wait(NULL);
+        child_executor(executor,ptrcmd,bash_boss);
     }
+    int i =0;
+    waitpid(pid,&i,0);
+    //printf("status: %d\n", WEXITSTATUS(i));
+
+
+
+}
+
+
+
+
+void many_execution(t_bash *bash_boss, t_cmd *ptrcmd,t_bash *executor)
+{
+    int i;
+    i = 0;
+    
+    while(ptrcmd != NULL)
+    {
+        init_mybash(bash_boss,ptrcmd,executor);
+        pid = fork();
+        if(pid == 0)
+        {
+            if(check_builtings(ptrcmd) == 0)
+              //  child_executor(executor);
+            else
+                child_bexecutor(executor);  
+                close(executor->in);
+                close(executor->out);        
+        }
+        executor->last = ptrcmd;
+        closeoutpipe(&executor->last);
+        ptrcmd = ptrcmd->next;
+      
+    }  */
 }
 
 

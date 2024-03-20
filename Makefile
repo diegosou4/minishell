@@ -32,7 +32,8 @@ PARSE = ft_special.c ft_parse_manager.c ft_utils.c\
 
 EXEC = ft_execution.c ft_builtings.c\
        ft_free.c ft_route.c ft_close.c\
-       ft_path.c ft_childs.c
+       ft_path.c ft_childs.c ft_openfd.c\
+       ft_erros.c ft_pids.c
        
 COMANDS = ft_echo.c ft_pwd.c ft_cd.c ft_env.c \
             ft_export.c ft_unset.c ft_exit.c \
