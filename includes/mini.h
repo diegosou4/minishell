@@ -6,11 +6,12 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 12:40:39 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/19 01:20:44 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/20 11:54:30 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #ifndef MINI_H
-#define MINI_H
+# define MINI_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -147,7 +148,7 @@ typedef struct s_bash
 	int exit_status;
 	char **env;
 	t_env *cpyenv;
-} t_bash
+} t_bash;
 
 void *ft_parse_manager(char **env);
 
