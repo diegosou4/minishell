@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:53:34 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/20 16:44:52 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/20 20:27:27 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ t_word_list	**ft_tokenizer_manager(char *line, t_env *env, t_bash *bash)
 	if (!tokens)
 	{
 		ft_free_wd_list_char(words_list, new_string);
+		ft_free_double_pointers(tokens);
 		return (NULL);
 	}
 	while (tokens[++i] != NULL)
@@ -85,6 +86,7 @@ t_word_list	**ft_tokenizer_manager(char *line, t_env *env, t_bash *bash)
 		if (!ft_lexer_analysis(words_list[i], bash, new_string))
 		{
 			ft_free_double_word_list(words_list);
+			ft_free_double_pointers(tokens);
 			bash->exit_status = 2;
 			return (NULL);
 		}
@@ -96,18 +98,22 @@ t_word_list	**ft_tokenizer_manager(char *line, t_env *env, t_bash *bash)
 	memmory here.
 */
 
-t_cmd *ft_structure_manager(t_line *line, t_bash *bash)
+void ft_structure_manager(t_line *line, t_bash *bash)
 {
 	t_word_list **list;
 	t_cmd *cmd_structure;
 
 	list = ft_tokenizer_manager(line->line, bash->cpyenv, bash);
 	if (!list)
-		return NULL;
+		return ;
 	bash->exit_status = 0;
 	cmd_structure = ft_structure_creation(list);
-//	ft_free_double_word_list(list);
-	return(cmd_structure);
+	bash->commands = cmd_structure;
+	if (bash->commands)
+				start_execution(bash);
+	free(bash->pid);
+	ft_free_double_word_list(list);
+	ft_free_cmd_structure(cmd_structure);
 }
 void	*ft_parse_manager(char **env)
 {
@@ -117,16 +123,18 @@ void	*ft_parse_manager(char **env)
 
 	status = 0;
 	ft_signal_manager();
+	bash_boss.pid = NULL;
 	bash_boss.env = ft_arrcpy(env);
 	bash_boss.cpyenv = ft_nenv(env,1);
-	ft_line_handler(&line, bash_boss.cpyenv);
 	while (1)
 	{
+		ft_line_handler(&line, bash_boss.cpyenv);
 		line.line = readline(line.line_text);
 		if (!line.line || (ft_strcmp(line.line, "exit") == 0))
 		{
 			ft_free_line_env(&line, bash_boss.cpyenv);
 			write(1, "(exit)\n", 7);
+			ft_free_double_pointers(bash_boss.env);
 			break ;
 		}
 		if (ft_whitespace(line.line) == 1)
@@ -134,12 +142,10 @@ void	*ft_parse_manager(char **env)
 		if (ft_check_input(line.line, &bash_boss))
 		{
 			bash_boss.exit_status = status;
-			bash_boss.commands = ft_structure_manager(&line, &bash_boss);
-			if (bash_boss.commands)
-				start_execution(bash_boss);
+			ft_structure_manager(&line, &bash_boss);
 		}
 		status = bash_boss.exit_status;
-		free(line.line);
+		ft_free_line_struct(&line);
 	}
 	return NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:47:55 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/20 17:25:52 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/20 18:16:12 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,12 +156,6 @@ t_cmd *ft_structure_creation(t_word_list **token_list)
             current_cmd->next = new_cmd;
             current_cmd = current_cmd->next;
         }
-    }
-    t_cmd *temp = root;
-    while (temp)
-    {
-   //     ft_print_cmd_struct(temp);
-        temp = temp->next;
     }
     return (root);
 }

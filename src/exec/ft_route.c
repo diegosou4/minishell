@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 12:27:13 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/20 15:16:20 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/20 19:27:50 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,8 +229,8 @@ void while_commands(t_bash *executor,t_bash *bash_boss,t_cmd *ptrcmd)
 void ft_magane_executor(t_bash bash_boss)
 {
     t_cmd *ptrcmd;
-    t_bash executor;
-    executor.last = NULL;
+    t_cmd *last;
+    last  = NULL;
     ptrcmd = bash_boss.commands;
     open_pipes(&ptrcmd);
     if(ptrcmd->next == NULL && (check_builtings(ptrcmd) > 0))
@@ -313,8 +313,7 @@ int ft_howpipes(t_cmd *comands)
 
 }
 
-void start_execution(t_bash bash_boss)
+void start_execution(t_bash *bash_boss)
 {
-    ft_magane_executor(bash_boss);
-   // ft_free_cmd_structure(bash_boss.commands);
+    ft_magane_executor(&bash_boss);
 }

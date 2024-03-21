@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 12:40:39 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/20 13:07:45 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/20 19:26:03 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,8 +273,8 @@ void ft_env_null();
 int ft_countpipes(t_cmd *cmd);
 void open_pipes(t_cmd **cmd);
 int return_in(t_redir *redir, t_cmd *curr,t_cmd *last);
-void start_execution(t_bash bash_boss);
-void ft_magane_executor(t_bash bash_boss);
+void start_execution(t_bash *bash_boss);
+void ft_magane_executor(t_bash *bash_boss);
 void help_magane(t_cmd *command,char **env,t_env **cpy);
 int child_executor(t_bash *executor,t_cmd *ptrcmd,t_bash *bash_boss);
 void child_bexecutor(t_bash *executor,t_cmd *ptrcmd,t_bash *bash_boss);
