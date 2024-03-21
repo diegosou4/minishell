@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 13:07:06 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/03/20 12:07:54 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/21 14:56:43 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,34 @@
         - 1 if no double pipes are found, indicating success.
         - 0 if double pipes are found or a pipe is followed by a void character.
 */
+
+int	ft_lexer_analysis(t_word_list *words_list, t_bash *bash, char *new_string)
+{
+	ft_extract_var(words_list, bash);
+	ft_flags_tags_assignment(words_list);
+	if (ft_check_words_list(words_list) == 1)
+		words_list->redirection = TRUE;
+	else
+		words_list->redirection = FALSE;
+	ft_quotes_remove(words_list);
+	if (ft_check_valid_redir(words_list) == 0)
+	{
+		free(new_string);
+		return (0);
+	}
+	return (1);
+}
+
+int	ft_check_words_list(t_word_list *tokens)
+{
+	while (tokens)
+	{
+		if (tokens->word->tags == EXCECUTOR)
+			return (1);
+		tokens = tokens->next;
+	}
+	return (0);
+}
 
 static	int	ft_special_pipe_case(char *line)
 {

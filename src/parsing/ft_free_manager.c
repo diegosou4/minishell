@@ -1,4 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_free_manager.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/21 14:14:31 by juan-pma          #+#    #+#             */
+/*   Updated: 2024/03/21 14:53:00 by marvin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/mini.h"
+
+void	ft_free_wd_list_char(t_word_list **word_list, char *new_string)
+{
+	free(word_list);
+	free(new_string);
+}
+
+void ft_free_list_tokens(t_word_list **word_list, char **tokens, char *new_string, t_bash *bash)
+{
+	if (bash)
+		bash->exit_status = 2;
+	if (new_string)
+		ft_free_wd_list_char(word_list, new_string);
+	else
+		ft_free_double_word_list(word_list);
+	ft_free_double_pointers(tokens);
+}
 
 void ft_free_double_pointers(char **split_line)
 {
@@ -97,5 +126,12 @@ void ft_free_line_env(t_line *line, t_env *cpyenv)
 {
     ft_free_line_struct(line);
 	ft_free_env_list(cpyenv);
+}
+
+void ft_free_exit_status(t_line *line, t_env *cpyenv, char **env)
+{
+		ft_free_line_env(line, cpyenv);
+		write(1, "(exit)\n", 7);
+		ft_free_double_pointers(env);
 }
 
