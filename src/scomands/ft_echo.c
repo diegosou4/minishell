@@ -12,7 +12,7 @@
 
 #include "../../includes/mini.h"
 
-int ft_echo(t_cmd *cmd) 
+int ft_echo(t_cmd *cmd)
 {
     int flag;
     flag = 0;
