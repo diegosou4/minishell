@@ -126,7 +126,7 @@ void pipes_executor(t_cmd *ptrcmd,t_bash *bash_boss)
     dup_fd(bash_boss);
     while(ptrcmd != NULL)
     {
-        
+      
         bash_boss->pid[i] = fork();
         if(bash_boss->pid[i] == 0)
         {      
@@ -136,12 +136,13 @@ void pipes_executor(t_cmd *ptrcmd,t_bash *bash_boss)
             child_build(ptrcmd,bash_boss,last);
         close_dup(bash_boss);
         }
+    
         last = ptrcmd;
         ptrcmd = ptrcmd->next;
         close(last->pipesfd[1]);
         waitpid(bash_boss->pid[i],&bash_boss->exit_status,0);
         i++;
     }
-     close_dup(bash_boss);
+        close_dup(bash_boss);
 }
 
