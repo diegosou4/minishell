@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 14:44:43 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/03/12 19:22:40 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/21 21:08:55 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	ft_check_redir_pipes(char **line)
 			printf("parse error near `|' 🚫. \n");
 			return (0);
 		}
-		else if ((ft_strcmp(line[i], ">") == 0 || ft_strcmp(line[i], "<") == 0) 
+		else if ((ft_strcmp(line[i], ">") == 0 || ft_strcmp(line[i], "<") == 0)
 			&& ft_strcmp(line[i + 1], "|") == 0)
 		{
 			printf("parse error near `|' 🚫.\n");

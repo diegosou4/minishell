@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 17:33:05 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/03/21 12:55:57 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/21 21:07:59 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,9 @@ void ft_check_variable_expansion(char *src, char *dest, t_env *env)
 			double_quote = !double_quote;
 		if (*src == '\'' && !double_quote)
         {
-            in_quotes = !in_quotes; // Toggle the quotes flag
+            in_quotes = !in_quotes;
             *dest++ = *src++;
-            continue; // Skip to the next character
+            continue;
         }
 		if (!in_quotes && *src == '$' && (*(src + 1) != '\'' && *(src + 1) != '\"'))
 		{
