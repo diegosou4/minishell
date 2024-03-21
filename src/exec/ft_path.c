@@ -34,7 +34,7 @@ int expand_path(t_cmd **commands,char **env)
     if(build != 0)
         ptr->path = ft_strdup(ptr->args[0]);
     else
-        ptr->path = ask_acess(ptr->args[0],home); 
+        ptr->path = ask_acess(ptr->args[0],home);         
     if(ptr->path == NULL)
     {
             error_path(ptr->args[0]);

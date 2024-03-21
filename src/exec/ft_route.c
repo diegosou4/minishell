@@ -82,7 +82,7 @@ void ft_magane_executor(t_bash *bash_boss)
         pipes_executor(ptrcmd,bash_boss);
 
     //free_commands(bash_boss.commands);
-    close_pipes(&bash_boss->commands);
+    close_pipes(&ptrcmd);
 }
 
 
@@ -155,6 +155,5 @@ int ft_howpipes(t_cmd *comands)
 
 void start_execution(t_bash *bash_boss)
 {
-    dup_fd(bash_boss);
     ft_magane_executor(bash_boss);
 }
