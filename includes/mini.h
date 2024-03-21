@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 12:40:39 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/21 14:57:11 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/21 16:18:47 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,6 +234,10 @@ int ft_heredoc(char *delimiter);
 void ft_putforwe(char *line,int fd);
 
 t_cmd *ft_structure_creation(t_word_list **token_list);
+t_redir *ft_parse_redir_create(t_word_list *token_list);
+t_cmd *ft_parse_array(t_word_list *words_list);
+t_redir *ft_create_node(void); // node redir creation
+void ft_init_redir_node(t_redir *node, char *path, int token);
 void ft_line_handler(t_line *line, t_env *cpyenv);
 
 // __________________________________________________Fuctions_Test_____________________________
@@ -402,6 +406,8 @@ void execute_one(t_cmd *command,char **env,t_env **cpy,t_cmd *last);
 
 int	ft_check_words_list(t_word_list *tokens);
 int	ft_lexer_analysis(t_word_list *words_list, t_bash *bash, char *new_string);
+
+
 
 
 

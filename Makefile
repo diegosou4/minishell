@@ -28,7 +28,8 @@ PARSE = ft_special.c ft_parse_manager.c ft_utils.c\
       ft_checkpath.c ft_structs.c ft_init_manager.c \
       ft_print_struct.c ft_parseredir.c ft_check_manager.c \
       ft_caseredir.c ft_signal_manager.c ft_free_manager.c \
-      ft_check_struct_manager.c ft_check_directions.c ft_utils_structure.c
+      ft_check_struct_manager.c ft_check_directions.c ft_utils_structure.c \
+      ft_structs_creation.c
 
 EXEC = ft_execution.c ft_builtings.c\
        ft_free.c ft_route.c ft_close.c\
