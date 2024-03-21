@@ -15,6 +15,7 @@
 
 int print_pwd(void)
 {
+
     char *pwd;
     pwd = ft_calloc(sizeof(char) , FILENAME_MAX);
     pwd = getcwd(pwd,FILENAME_MAX);

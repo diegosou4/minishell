@@ -32,81 +32,23 @@ int check_builtings(t_cmd *commands)
     return(0);
 }
 
-// Reutilizar isso na ft_route
-
-int simple_out(t_redir *redir)
-{
-    int fd;
-    t_redir *ptr;
-
-    fd = STDOUT_FILENO;
-    ptr = redir;
-    while(ptr != NULL)
-    {
-        if(ptr->token == 1 || ptr->token == 4 || ptr->token == 5)
-            fd = ptr->fd;
-        ptr = ptr->next;
-    }
-    return(fd);
-}
-
-
-int simple_in(t_redir *redir)
-{
-    int fd;
-    t_redir *ptr;
-    
-    fd = STDIN_FILENO;
-    ptr = redir;
-    while(ptr != NULL)
-    {
-        if(ptr->token == 2 || ptr->token == 5)
-            fd = ptr->fd;
-        ptr = ptr->next;
-    }
-    return(fd);
-}
-
-
-void child_builtings(t_cmd **cmd, t_env **cpy)
-{
-    int check;
-    t_redir *redir;
-    check = check_builtings((*cmd));
-    if(check > 0)
-    {
-        int in;
-        int out;
-        in = simple_in((*cmd)->redir);
-        out = simple_out ((*cmd)->redir);
-        if(in != 0)
-            dup2(in,0);
-        if(out != 1)
-            dup2(out,1);
-        execute_builtings(cmd,cpy,check);
-        if(in != 0)
-            close(in);
-        if(out != 1)
-            close(out);
-    }
-}
-int execute_builtings(t_cmd **cmd,t_env **cpy, int check)
+int execute_builtings(t_bash *executor,int check)
 {
     if(check == 1)
         return(print_pwd());
     else if(check == 2)
-        return(ft_cd((*cmd),cpy));
+        return(ft_cd(executor->commands,&executor->cpyenv));
     else if(check == 3)
-        return(ft_env((*cpy)));
+        return(ft_env(executor->cpyenv));
     else if(check == 4)
-        return(ft_export(cpy,(*cmd)));
+        return(ft_export(&executor->cpyenv,executor->commands));
     else if(check == 5)
-        return(ft_unset(cpy,(*cmd)));
+        return(ft_unset(&executor->cpyenv,executor->commands));
     else if(check == 6)
-        return(ft_echo((*cmd)));
+        return(ft_echo(executor->commands));
     else if(check == 7)
     {
-        ft_exit((*cmd));
+        ft_exit(executor->commands);
         return(0);
     }
     return(0);
