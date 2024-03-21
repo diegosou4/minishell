@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:53:34 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/21 15:00:37 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/21 20:31:13 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ void	ft_structure_manager(t_line *line, t_bash *bash, int status)
 	list = ft_tokenizer_manager(line->line, bash->cpyenv, bash);
 	if (!list)
 		return ;
-	bash->exit_status = 0;
 	cmd_structure = ft_structure_creation(list);
 	bash->commands = cmd_structure;
 	if (bash->commands)
