@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 12:40:39 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/20 19:26:03 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/21 14:57:11 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -341,6 +341,9 @@ void ft_free_cmd_structure(t_cmd *cmd_structure);
 void ft_free_redir_list(t_redir *redir);
 void ft_free_tokens_new_string(char **tokens, char *new_string);
 void ft_free_line_env(t_line *line, t_env *cpyenv);
+void ft_free_exit_status(t_line *line, t_env *cpyenv, char **env);
+void ft_free_list_tokens(t_word_list **word_list, char **tokens, char *new_string, t_bash *bash);
+void	ft_free_wd_list_char(t_word_list **word_list, char *new_string);
 void ft_print_list_struct(t_word_list *structure, int i);
 void ft_print_cmd_struct(t_cmd *cmd);
 t_word_list	*ft_init_word_list(t_word_list *word_lists, char *token);
@@ -363,6 +366,39 @@ void execute_one(t_cmd *command,char **env,t_env **cpy,t_cmd *last);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+int	ft_check_words_list(t_word_list *tokens);
+int	ft_lexer_analysis(t_word_list *words_list, t_bash *bash, char *new_string);
 
 
 
