@@ -142,10 +142,9 @@ typedef struct s_cmd
 typedef struct s_bash
 {
 	t_cmd *commands;
-	t_cmd *last;
+	int *pid;
 	int in;
 	int out;
-	int *pid;
 	int exit_status;
 	char **env;
 	t_env *cpyenv;
@@ -286,7 +285,7 @@ int ft_howpipes(t_cmd *comands);
 void child_builtings(t_cmd **cmd, t_env **cpy);
 void closeoutpipe(t_cmd **ptr);
 void init_mybash(t_bash *bash_boss,t_cmd *curr,t_bash *executor);
-int open_redir_fd(t_bash *executor);
+int open_redir_fd(t_redir *redir);
 int return_error_exec(t_bash *executor);
 void alloc_mypids(t_bash *bash_boss);
 //______________________________________________FILES___________________________________________________//
