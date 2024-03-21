@@ -55,6 +55,7 @@ int return_in(t_redir *redir, t_cmd *curr,t_cmd *last)
 int simple_bexecutor(t_cmd *ptrcmd,t_bash *bash_boss)
 {
     int check;
+    dup_fd(bash_boss);
     bash_boss->exit_status = open_redir_fd(ptrcmd->redir);
     check = check_builtings(ptrcmd);
     if(bash_boss->exit_status == EXIT_FAILURE)
@@ -68,6 +69,8 @@ int simple_bexecutor(t_cmd *ptrcmd,t_bash *bash_boss)
     execute_builtings(&ptrcmd,&bash_boss->cpyenv,check);
     close_fds(bash_boss);
     reset_fd(bash_boss); 
+    close_fderror(ptrcmd->redir);
+    close_dup(bash_boss);
     return(EXIT_SUCCESS);
 }
 
@@ -79,7 +82,7 @@ void child_build(t_cmd *ptrcmd,t_bash *bash_boss, t_cmd *last)
     check = check_builtings(ptrcmd);
     if(bash_boss->exit_status == EXIT_FAILURE)
     {
-        // arrumar
+        close_fderror(ptrcmd->redir);
         exit(EXIT_FAILURE);
     }
     bash_boss->fdin = return_in(ptrcmd->redir,ptrcmd,last);
@@ -87,19 +90,24 @@ void child_build(t_cmd *ptrcmd,t_bash *bash_boss, t_cmd *last)
     init_dup(bash_boss->fdin,bash_boss->fdout);
     execute_builtings(&ptrcmd,&bash_boss->cpyenv,check);
     close_fds(bash_boss);
+    close_fderror(ptrcmd->redir);
+    while(ptrcmd != NULL)
+    {
+        close(ptrcmd->pipesfd[0]);
+        close(ptrcmd->pipesfd[1]);
+        ptrcmd = ptrcmd->next;    
+    }
+  
     exit(EXIT_SUCCESS);
 }
 
 void child_exec(t_cmd *ptrcmd,t_bash *bash_boss,t_cmd *last)
 {
     bash_boss->exit_status = open_redir_fd(ptrcmd->redir);
-    expand_path(&ptrcmd,bash_boss->env);     
-    if(bash_boss->exit_status == EXIT_FAILURE)
-    {
-        // arrumar
+    if(expand_path(&ptrcmd,bash_boss->env) == 1)
         exit(EXIT_FAILURE);
-    }
-  
+    if(bash_boss->exit_status == EXIT_FAILURE)
+        exit(EXIT_FAILURE);
     bash_boss->fdin = return_in(ptrcmd->redir,ptrcmd,last);
     bash_boss->fdout = return_out(ptrcmd->redir,ptrcmd);
     init_dup(bash_boss->fdin,bash_boss->fdout);
@@ -115,8 +123,10 @@ void pipes_executor(t_cmd *ptrcmd,t_bash *bash_boss)
     int i;
     i = 0;
     alloc_mypids(bash_boss);
+    dup_fd(bash_boss);
     while(ptrcmd != NULL)
     {
+      
         bash_boss->pid[i] = fork();
         if(bash_boss->pid[i] == 0)
         {      
@@ -124,54 +134,15 @@ void pipes_executor(t_cmd *ptrcmd,t_bash *bash_boss)
             child_exec(ptrcmd,bash_boss,last);       
         else
             child_build(ptrcmd,bash_boss,last);
+        close_dup(bash_boss);
         }
+    
         last = ptrcmd;
         ptrcmd = ptrcmd->next;
         close(last->pipesfd[1]);
         waitpid(bash_boss->pid[i],&bash_boss->exit_status,0);
         i++;
     }
+        close_dup(bash_boss);
 }
 
-/*
-int child_executor(t_bash *executor,t_cmd *ptrcmd,t_bash *bash_boss)
-{
-    int fdin;
-    int fdout;
-  //  executor->exit_status = open_redir_fd(executor);
-    if(expand_path(&executor->commands,bash_boss->env) == EXIT_FAILURE)
-        exit(EXIT_FAILURE);
-    if(return_error_exec(executor) == 1)
-        exit(EXIT_FAILURE);
-    fdin = return_in(executor->commands->redir,ptrcmd,executor->last);;
-    fdout = return_out(executor->commands->redir,ptrcmd); 
-    dup2(fdin,0);
-    dup2(fdout,1);
-    if(fdout != 1)
-         close(fdout);
-    if(fdin != 0)
-        close(fdin);
-    execve(executor->commands->path,executor->commands->args,executor->env);
-    return(1);
-}
-void child_bexecutor(t_bash *executor,t_cmd *ptrcmd,t_bash *bash_boss)
-{
-    int check;
-    int fdin;
-    int fdout;
-    executor->exit_status = open_redir_fd(executor);
-    check = check_builtings(ptrcmd);
- 
-    fdin = return_in(executor->commands->redir,ptrcmd,executor->last);;
-    fdout = return_out(executor->commands->redir,ptrcmd);
-    dup2(fdin,0);
-    dup2(fdout,1);
-    if(fdout != 1)
-        close(fdout);
-    if(fdin != 0)
-        close(fdin);  
-    //execute_builtings(executor,check);
-    exit(EXIT_SUCCESS);
-}
-
-*/

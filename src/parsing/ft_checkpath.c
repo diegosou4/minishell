@@ -25,6 +25,18 @@ static void	free_paths(char **paths)
 	free(paths);
 }
 
+char	*ask_command(char *comand)
+{
+	char	*str;
+
+	if (access(comand, F_OK) == 0)
+	{
+		str = ft_strdup(comand);
+		return (str);
+	}
+	return (NULL);
+}
+
 char	*ask_acess(char *comand, char *path)
 {
 	char	**paths;
@@ -44,22 +56,9 @@ char	*ask_acess(char *comand, char *path)
 		i++;
 	}
 	free_paths(paths);
-	return (NULL);
+	return (ask_command(comand));
 }
 
-
-
-char	*ask_command(char *comand)
-{
-	char	*str;
-
-	if (access(comand, F_OK) == 0)
-	{
-		str = ft_strdup(comand);
-		return (str);
-	}
-	return (NULL);
-}
 
 char	*checkpath(char **path, char *command)
 {

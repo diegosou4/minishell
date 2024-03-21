@@ -144,9 +144,9 @@ typedef struct s_bash
 	t_cmd *commands;
 	int *pid;
 	int in;
+	int out;
 	int fdin;
 	int fdout;
-	int out;
 	int exit_status;
 	char **env;
 	t_env *cpyenv;
@@ -205,6 +205,7 @@ char *findfile(char *cmd);
 // Free and close
 void closeandfree(t_redir *redir);
 int closeredir(t_redir *redir);
+void close_fderror(t_redir *redir);
 
 // Pipes 
 int sizepipe(t_cmd *commands);
@@ -300,6 +301,7 @@ int open_fd(t_redir **redirect);
 void init_dup(int fdin,int fdout);
 void reset_fd(t_bash *bash_boss);
 void dup_fd(t_bash *bash_boss);
+void close_dup(t_bash *bash_boss);
 void close_fds(t_bash *bash_boss);
 //_________________________________________________FT_ECHO_____________________________________________//
 int ft_echo(t_cmd *cmd);

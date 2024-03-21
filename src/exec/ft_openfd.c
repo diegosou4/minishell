@@ -24,7 +24,7 @@ int open_redir_fd(t_redir *redir)
     flag = open_fd(&ptr);
     if(flag == 0)
     {
-        ft_putstr_fd("Error for open file",2);
+        ft_putstr_fd("Error for open file \n",2);
         return(EXIT_FAILURE);
     }
     return(EXIT_SUCCESS);

@@ -37,3 +37,9 @@ void close_fds(t_bash *bash_boss)
     bash_boss->fdin = -1;
     bash_boss->fdout = -1;
 }
+
+void close_dup(t_bash *bash_boss)
+{
+    close(bash_boss->in);
+    close(bash_boss->out);
+}

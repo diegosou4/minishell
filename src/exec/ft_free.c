@@ -67,3 +67,16 @@ int closeredir(t_redir *redir)
     }
     return (0);
 }
+
+void close_fderror(t_redir *redir)
+{
+    t_redir *ptr;
+
+    ptr = redir;
+    while(ptr != NULL && ptr->fd > 2)
+    {
+        close(ptr->fd);
+        ptr = ptr->next;
+    }
+
+}
