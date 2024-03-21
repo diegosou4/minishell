@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 12:40:39 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/21 16:18:47 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/21 18:59:50 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,12 @@
 #define ANSI_COLOR_CYAN "\x1b[36m"
 #define ANSI_COLOR_RESET "\x1b[0m"
 #define ANSI_COLOR_PURPLE "\e[0;35m"
+
+typedef struct s_number
+{
+	int j;
+	char flag_quotes;
+} t_number;
 
 typedef enum s_bool
 {
@@ -366,6 +372,7 @@ int expand_path(t_cmd **commands,char **env);
 char *ft_getpath(char **env);
 
 void execute_one(t_cmd *command,char **env,t_env **cpy,t_cmd *last);
+char	*ft_string_handle_2(char *line, char *modified_line);
 
 
 
