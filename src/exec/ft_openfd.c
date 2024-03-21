@@ -14,14 +14,14 @@
 #include "../../includes/mini.h"
 
 
-int open_redir_fd(t_bash *executor)
+int open_redir_fd(t_redir *redir)
 {
-    t_cmd *ptr;
+    t_redir *ptr;
     int flag;
-    ptr = executor->commands;
+    ptr = redir;
     if(ptr == NULL)
         return(EXIT_SUCCESS);
-    flag = open_fd(&ptr->redir);
+    flag = open_fd(&ptr);
     if(flag == 0)
     {
         ft_putstr_fd("Error for open file",2);

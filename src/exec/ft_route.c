@@ -46,7 +46,7 @@ void close_pipes(t_cmd **cmd)
     t_cmd *ptr;
 
     ptr = (*cmd);
-    if(ptr->next != NULL)
+    while(ptr != NULL)
     {
         close(ptr->pipesfd[0]);
         close(ptr->pipesfd[1]);
@@ -108,12 +108,12 @@ int return_in(t_redir *redir, t_cmd *curr,t_cmd *last)
     }
     return(fd);
 }
-
+/*
 int child_executor(t_bash *executor,t_cmd *ptrcmd,t_bash *bash_boss)
 {
     int fdin;
     int fdout;
-    executor->exit_status = open_redir_fd(executor);
+  //  executor->exit_status = open_redir_fd(executor);
     if(expand_path(&executor->commands,bash_boss->env) == EXIT_FAILURE)
         exit(EXIT_FAILURE);
     if(return_error_exec(executor) == 1)
@@ -145,11 +145,11 @@ void child_bexecutor(t_bash *executor,t_cmd *ptrcmd,t_bash *bash_boss)
         close(fdout);
     if(fdin != 0)
         close(fdin);  
-    execute_builtings(executor,check);
+    //execute_builtings(executor,check);
     exit(EXIT_SUCCESS);
 }
 
-
+*/
 
 void closeoutpipe(t_cmd **ptr)
 {
@@ -177,28 +177,28 @@ void init_mybash(t_bash *bash_boss,t_cmd *curr,t_bash *executor)
  }
 
 
-int simple_bexecutor(t_bash *executor,t_cmd *ptrcmd)
+int simple_bexecutor(t_cmd *ptrcmd,t_bash *bash_boss)
 {
     int check;
     int fdin;
     int fdout;
-    executor->exit_status = open_redir_fd(executor);
+    bash_boss->exit_status = open_redir_fd(ptrcmd->redir);
     check = check_builtings(ptrcmd);
-    if(return_error_exec(executor) == 1)
-        return(EXIT_FAILURE);
-    fdin = return_in(executor->commands->redir,ptrcmd,executor->last);;
-    fdout = return_out(executor->commands->redir,ptrcmd);
+    if(bash_boss->exit_status == EXIT_FAILURE)
+        return(0);
+    fdin = return_in(ptrcmd->redir,ptrcmd,(t_cmd*)0);
+    fdout = return_out(ptrcmd->redir,ptrcmd);
     dup2(fdin,0);
     dup2(fdout,1);
-    if(fdout != 1)
-        close(fdout);
-    if(fdin != 0)
-        close(fdin);  
-    execute_builtings(executor,check);
+    execute_builtings(&ptrcmd,&bash_boss->cpyenv,check);
+    close(fdout);
+    close(fdin);
+    dup2(bash_boss->in, 0); 
+    dup2(bash_boss->out, 1); 
     return(EXIT_SUCCESS);
 }
 
-
+/*
 void while_commands(t_bash *executor,t_bash *bash_boss,t_cmd *ptrcmd)
 {
     int i;
@@ -222,27 +222,34 @@ void while_commands(t_bash *executor,t_bash *bash_boss,t_cmd *ptrcmd)
         if(ptrcmd != NULL)
             closeoutpipe(&executor->last);
     }  
+}*/
+void close_ptr(t_redir **redir)
+{
+    t_redir *ptr;
+
+    ptr = (*redir);
+    printf("Chega aqui e fecha");
+    while(ptr != NULL)
+    {
+        close(ptr->fd);
+        ptr = ptr->next;
+    }
 }
 
 
-
-void ft_magane_executor(t_bash bash_boss)
+void ft_magane_executor(t_bash *bash_boss)
 {
     t_cmd *ptrcmd;
     t_cmd *last;
     last  = NULL;
-    ptrcmd = bash_boss.commands;
+    ptrcmd = bash_boss->commands;
     open_pipes(&ptrcmd);
     if(ptrcmd->next == NULL && (check_builtings(ptrcmd) > 0))
     {
-        init_mybash(&bash_boss,ptrcmd,&executor);
-        simple_bexecutor(&executor,ptrcmd);
+        simple_bexecutor(ptrcmd,bash_boss);
     }
-    else
-        while_commands(&executor,&bash_boss,ptrcmd);
-    
     //free_commands(bash_boss.commands);
-    //close_pipes(&bash_boss.commands);
+    close_pipes(&bash_boss->commands);
 }
 
 
@@ -315,5 +322,7 @@ int ft_howpipes(t_cmd *comands)
 
 void start_execution(t_bash *bash_boss)
 {
-    ft_magane_executor(&bash_boss);
+    bash_boss->in = dup(0);
+    bash_boss->out = dup(1);
+    ft_magane_executor(bash_boss);
 }

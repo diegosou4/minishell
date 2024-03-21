@@ -32,23 +32,23 @@ int check_builtings(t_cmd *commands)
     return(0);
 }
 
-int execute_builtings(t_bash *executor,int check)
+int execute_builtings(t_cmd **cmd,t_env **cpy, int check)
 {
     if(check == 1)
         return(print_pwd());
     else if(check == 2)
-        return(ft_cd(executor->commands,&executor->cpyenv));
+        return(ft_cd((*cmd),cpy));
     else if(check == 3)
-        return(ft_env(executor->cpyenv));
+        return(ft_env((*cpy)));
     else if(check == 4)
-        return(ft_export(&executor->cpyenv,executor->commands));
+        return(ft_export(cpy,(*cmd)));
     else if(check == 5)
-        return(ft_unset(&executor->cpyenv,executor->commands));
+        return(ft_unset(cpy,(*cmd)));
     else if(check == 6)
-        return(ft_echo(executor->commands));
+        return(ft_echo((*cmd)));
     else if(check == 7)
     {
-        ft_exit(executor->commands);
+        ft_exit((*cmd));
         return(0);
     }
     return(0);
