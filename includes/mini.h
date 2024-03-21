@@ -144,6 +144,8 @@ typedef struct s_bash
 	t_cmd *commands;
 	int *pid;
 	int in;
+	int fdin;
+	int fdout;
 	int out;
 	int exit_status;
 	char **env;
@@ -272,19 +274,17 @@ void ft_env_null();
 int ft_countpipes(t_cmd *cmd);
 void open_pipes(t_cmd **cmd);
 int return_in(t_redir *redir, t_cmd *curr,t_cmd *last);
+int return_out(t_redir *redir, t_cmd *curr);
 void start_execution(t_bash *bash_boss);
 void ft_magane_executor(t_bash *bash_boss);
-void help_magane(t_cmd *command,char **env,t_env **cpy);
-int child_executor(t_bash *executor,t_cmd *ptrcmd,t_bash *bash_boss);
-void child_bexecutor(t_bash *executor,t_cmd *ptrcmd,t_bash *bash_boss);
-void ft_close(t_cmd **commands);
-void simple_execution(t_bash *bash_boss,t_cmd *ptrcmd,t_bash *executor);
-void many_execution(t_bash *bash_boss, t_cmd *ptrcmd,t_bash *executor);
-int redir_error(int fd);
+void child_build(t_cmd *ptrcmd,t_bash *bash_boss, t_cmd *last);
+int simple_bexecutor(t_cmd *ptrcmd,t_bash *bash_boss);
+void pipes_executor(t_cmd *ptrcmd,t_bash *bash_boss);
+
+
 int ft_howpipes(t_cmd *comands);
-void child_builtings(t_cmd **cmd, t_env **cpy);
 void closeoutpipe(t_cmd **ptr);
-void init_mybash(t_bash *bash_boss,t_cmd *curr,t_bash *executor);
+
 int open_redir_fd(t_redir *redir);
 int return_error_exec(t_bash *executor);
 void alloc_mypids(t_bash *bash_boss);
@@ -293,7 +293,10 @@ void alloc_mypids(t_bash *bash_boss);
 int open_redir(t_cmd **commands);
 int open_fd(t_redir **redirect);
 
-
+void init_dup(int fdin,int fdout);
+void reset_fd(t_bash *bash_boss);
+void dup_fd(t_bash *bash_boss);
+void close_fds(t_bash *bash_boss);
 //_________________________________________________FT_ECHO_____________________________________________//
 int ft_echo(t_cmd *cmd);
 
