@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:53:34 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/21 20:31:13 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/21 20:45:32 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ void	ft_structure_manager(t_line *line, t_bash *bash, int status)
 	bash->commands = cmd_structure;
 	if (bash->commands)
 		start_execution(bash);
-	ft_print_cmd_struct(bash->commands);
 	free(bash->pid);
 	ft_free_double_word_list(list);
 	ft_free_cmd_structure(cmd_structure);
