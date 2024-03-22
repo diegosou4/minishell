@@ -14,46 +14,7 @@
 #include "../../includes/mini.h"
 
 
-int ft_countpipes(t_cmd *cmd)
-{
-    int i;
-    i = 0;
-    t_cmd *ptr;
 
-    ptr = cmd;
-    while(ptr != NULL)
-    {
-        i++;
-        ptr = ptr->next;
-    }
-    return(i);
-}
-
-
-void open_pipes(t_cmd **cmd)
-{
-    t_cmd *ptr;
-    ptr = (*cmd);
-    while(ptr != NULL)
-    {
-        pipe(ptr->pipesfd);
-        ptr = ptr->next;
-    }
-}
-
-void close_pipes(t_cmd **cmd)
-{
-    t_cmd *ptr;
-
-    ptr = (*cmd);
-    while(ptr != NULL)
-    {
-        close(ptr->pipesfd[0]);
-        close(ptr->pipesfd[1]);
-        ptr = ptr->next;
-    }
-
-}
 
 int return_heredoc(t_redir *redir)
 {
@@ -86,37 +47,6 @@ void ft_magane_executor(t_bash *bash_boss)
 }
 
 
-
-
-// Debito de Progamacao
-// Voltar e tratar erros de abertura de arquivos
-
-int redir_error(int fd)
-{
-    if(fd < 0)
-        perror("Error ");
-    return(0);
-}
-
-int open_fd(t_redir **redirect)
-{
-    t_redir *ptrredir;
-
-    ptrredir = (*redirect);
-    while(ptrredir != NULL)
-    {
-        if(ptrredir->token == redir_out)
-            ptrredir->fd = open(ptrredir->path,O_WRONLY | O_CREAT | O_TRUNC, 0664);
-        else if(ptrredir->token == redir_in)
-            ptrredir->fd = open(ptrredir->path,O_RDONLY , 0777);
-        else if(ptrredir->token == append_out)
-            ptrredir->fd = open(ptrredir->path,O_WRONLY | O_CREAT | O_APPEND, 0664);
-        if(ptrredir->fd < 0)
-            return(0);
-        ptrredir = ptrredir->next;
-    }
-    return(1);   
-}
 
 
 int open_redir(t_cmd **commands)

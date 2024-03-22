@@ -46,7 +46,7 @@ int ft_heredoc(char *delimiter)
     pipe(fd);
     while(1)
     {
-        line_text = ft_strjoin(ANSI_COLOR_PURPLE,"🐧🐧>");
+        line_text = ft_strjoin(ANSI_COLOR_PURPLE,"🐧🐧heredoco>");
         line = readline(line_text);  
         free(line_text);
         if(strncmp(delimiter,line,ft_strlen(line)) == 0)

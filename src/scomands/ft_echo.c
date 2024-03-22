@@ -24,6 +24,8 @@ int ft_echo(t_cmd *cmd)
         i = 1;
     while(cmd->args[i] != NULL)
     {
+        if(i > 2)
+            printf(" ");
         printf("%s",cmd->args[i]);
         i++;
     }

@@ -80,18 +80,3 @@ int sizeredir(t_redir *redir)
 }
 
 
-int sizepipe(t_cmd *commands)
-{
-    int i;
-    i = 0;
-
-    t_cmd *ptr;
-
-    ptr = commands;
-    while(ptr != NULL)
-    {
-        i++;
-        ptr = ptr->next;
-    }
-    return(i);
-}

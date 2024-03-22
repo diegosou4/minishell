@@ -97,7 +97,7 @@ void child_build(t_cmd *ptrcmd,t_bash *bash_boss, t_cmd *last)
         close(ptrcmd->pipesfd[1]);
         ptrcmd = ptrcmd->next;    
     }
-  
+    close_dup(bash_boss);
     exit(EXIT_SUCCESS);
 }
 
@@ -123,26 +123,26 @@ void pipes_executor(t_cmd *ptrcmd,t_bash *bash_boss)
     int i;
     i = 0;
     alloc_mypids(bash_boss);
-    dup_fd(bash_boss);
+    dup_fd(bash_boss); 
     while(ptrcmd != NULL)
-    {
-      
+    { 
         bash_boss->pid[i] = fork();
         if(bash_boss->pid[i] == 0)
-        {      
+        { 
+            
         if(check_builtings(ptrcmd) == 0)
             child_exec(ptrcmd,bash_boss,last);       
         else
             child_build(ptrcmd,bash_boss,last);
-        close_dup(bash_boss);
+       
         }
-    
+   
         last = ptrcmd;
         ptrcmd = ptrcmd->next;
         close(last->pipesfd[1]);
         waitpid(bash_boss->pid[i],&bash_boss->exit_status,0);
         i++;
     }
-        close_dup(bash_boss);
+      close_dup(bash_boss);
 }
 
