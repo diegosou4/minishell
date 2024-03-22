@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_getenv.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:29:14 by diegmore          #+#    #+#             */
-/*   Updated: 2024/02/14 17:33:06 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/03/21 19:54:12 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/mini.h"
 
-int index_env(char **env, char *str)
+int	index_env(char **env, char *str)
 {
-	int i;
-	int j;
-	char *p;
+	char	*p;
+	int		i;
+	int		j;
 
 	p = NULL;
 	i = 0;
@@ -31,9 +31,9 @@ int index_env(char **env, char *str)
 	return (-1);
 }
 
-char *ft_getenv(char **env, char *str, int i)
+char	*ft_getenv(char **env, char *str, int i)
 {
-	char *p;
+	char	*p;
 
 	p = NULL;
 	while (*env != NULL)
@@ -46,17 +46,15 @@ char *ft_getenv(char **env, char *str, int i)
 		}
 		else
 		{
-
 			if (p != NULL)
 				return (p + 4);
 			env++;
 		}
 	}
-		return (NULL);
+	return (NULL);
 }
 
-
-char *ft_getpath(char **env)
+char	*ft_getpath(char **env)
 {
 	char	*p;
 
