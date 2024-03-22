@@ -12,7 +12,6 @@
 
 #include "../../includes/mini.h"
 
-#include "../../includes/mini.h"
 
 char *get_key(char *str)
 {
@@ -38,8 +37,8 @@ t_env *newexp(char *str, int this, int token)
     cpyenv = ft_calloc(sizeof(t_env),1);
 
     cpyenv->index = this;
-    cpyenv->key = "";
-    cpyenv->value = str;
+    cpyenv->key = ft_strjoin(str,"=");
+    cpyenv->value = "''";
     cpyenv->token = token;
     cpyenv->next = NULL;
     return(cpyenv);
