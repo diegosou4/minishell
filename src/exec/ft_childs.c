@@ -24,7 +24,7 @@ int return_out(t_redir *redir, t_cmd *curr)
         fd = curr->pipesfd[1];
     while(ptr != NULL)
     {
-        if(ptr->token == redir_out || ptr->token == append_out || ptr->token == inandout)
+        if(ptr->token == redir_out || ptr->token == append_out)
             fd = ptr->fd;
         ptr = ptr->next;
     }
@@ -45,8 +45,10 @@ int return_in(t_redir *redir, t_cmd *curr,t_cmd *last)
     ptr = redir;
     while(ptr != NULL)
     {
-        if(ptr->token == 2 || ptr->token == 5)
+        if(ptr->token == redir_in)
             fd = ptr->fd;
+        if(ptr->token == here_doc)
+            fd = ft_heredoc(ptr->path);
         ptr = ptr->next;        
     }
     return(fd);
@@ -65,6 +67,7 @@ int simple_bexecutor(t_cmd *ptrcmd,t_bash *bash_boss)
     }
     bash_boss->fdin = return_in(ptrcmd->redir,ptrcmd,(t_cmd*)0);
     bash_boss->fdout = return_out(ptrcmd->redir,ptrcmd);
+
     init_dup(bash_boss->fdin,bash_boss->fdout);
     execute_builtings(&ptrcmd,&bash_boss->cpyenv,check);
     close_fds(bash_boss);
@@ -110,6 +113,10 @@ void child_exec(t_cmd *ptrcmd,t_bash *bash_boss,t_cmd *last)
         exit(EXIT_FAILURE);
     bash_boss->fdin = return_in(ptrcmd->redir,ptrcmd,last);
     bash_boss->fdout = return_out(ptrcmd->redir,ptrcmd);
+    if(ptrcmd->args[0] == NULL)
+    {
+        exit(EXIT_SUCCESS);
+    }
     init_dup(bash_boss->fdin,bash_boss->fdout);
     execve(ptrcmd->path,ptrcmd->args,bash_boss->env);
 }
@@ -122,6 +129,7 @@ void pipes_executor(t_cmd *ptrcmd,t_bash *bash_boss)
     last = NULL;
     int i;
     i = 0;
+        
     alloc_mypids(bash_boss);
     dup_fd(bash_boss); 
     while(ptrcmd != NULL)

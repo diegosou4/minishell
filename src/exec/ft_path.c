@@ -31,6 +31,8 @@ int expand_path(t_cmd **commands,char **env)
     home = ft_getpath(env);
     ptr = (*commands);
     build = check_builtings(ptr);
+    if(build == 0 && ptr->args[0] == NULL)
+        return(EXIT_SUCCESS);
     if(build != 0)
         ptr->path = ft_strdup(ptr->args[0]);
     else

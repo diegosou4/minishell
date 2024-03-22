@@ -37,6 +37,7 @@ void ft_magane_executor(t_bash *bash_boss)
 
     ptrcmd = bash_boss->commands;
     open_pipes(&ptrcmd);
+   
     if(ptrcmd->next == NULL && (check_builtings(ptrcmd) > 0))
         simple_bexecutor(ptrcmd,bash_boss);
     else

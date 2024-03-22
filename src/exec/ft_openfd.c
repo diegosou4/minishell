@@ -66,9 +66,7 @@ int open_fd(t_redir **redirect)
             ptrredir->fd = open_in(ptrredir->path);
         else if(ptrredir->token == append_out)
             ptrredir->fd = open_append(ptrredir->path);
-        else if(ptrredir->token == here_doc)
-            ptrredir->fd = ft_heredoc(ptrredir->path);
-        if(ptrredir->fd < 0)
+        if(ptrredir->fd < 0 && ptrredir->token != here_doc)
             return(0);
         ptrredir = ptrredir->next;
     }
