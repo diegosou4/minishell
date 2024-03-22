@@ -23,6 +23,8 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 #include <signal.h>
+#include <string.h>
+#include <errno.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include "src/libft/get_next_line.h"
@@ -294,16 +296,19 @@ void pipes_executor(t_cmd *ptrcmd,t_bash *bash_boss);
 
 
 int ft_howpipes(t_cmd *comands);
-void closeoutpipe(t_cmd **ptr);
 
-int open_redir_fd(t_redir *redir);
 int return_error_exec(t_bash *executor);
+//_____________________________________________PIDS_____________________________________________________//
 void alloc_mypids(t_bash *bash_boss);
 //______________________________________________FILES___________________________________________________//
 
 int open_redir(t_cmd **commands);
+int open_out(char *path);
+int open_in(char *path);
+int open_append(char *path);
 int open_fd(t_redir **redirect);
-
+int open_redir_fd(t_redir *redir);
+void printf_error_fd(char *strerror,char *file);
 void init_dup(int fdin,int fdout);
 void reset_fd(t_bash *bash_boss);
 void dup_fd(t_bash *bash_boss);
@@ -329,7 +334,7 @@ int ft_casewithout(t_env **env,char *command);
 int ft_caseequal(t_env **env,char *command);
 void ft_putinlast(t_env **env,char *this,int token);
 //________________________________________________FT_PWD________________________________________________//
-int print_pwd(void);
+int print_pwd(t_cmd *comands);
 //_______________________________________________FT_UNSET____________________________________________//
 int ft_unset(t_env **env,t_cmd *commands);
 void ft_removeinenv(t_env **env, int index);
