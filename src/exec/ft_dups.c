@@ -26,14 +26,18 @@ void dup_fd(t_bash *bash_boss)
 
 void init_dup(int fdin,int fdout)
 {
-    dup2(fdin,0);
-    dup2(fdout,1);
+    if(fdin != 0)
+        dup2(fdin,0);
+    if(fdout != 1)
+        dup2(fdout,1);
 }
 
 void close_fds(t_bash *bash_boss)
 {
-    close(bash_boss->fdin);
-    close(bash_boss->fdout);
+    if(bash_boss->fdin != 0)
+        close(bash_boss->fdin);
+    if(bash_boss->fdout != 1)
+        close(bash_boss->fdout);
     bash_boss->fdin = -1;
     bash_boss->fdout = -1;
 }

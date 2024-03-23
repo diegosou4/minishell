@@ -60,3 +60,18 @@ int ft_heredoc(char *delimiter)
     close(fd[1]);
     return(fd[0]);
 }
+
+
+void case_heredoc(t_cmd *ptrcmd,t_bash *bash_boss)
+{
+    if(ptrcmd->args[0] == NULL && ptrcmd->redir != NULL)
+    {   
+    //Da free nas coisas
+    //
+        exit(EXIT_SUCCESS);
+    }
+
+
+
+
+}
