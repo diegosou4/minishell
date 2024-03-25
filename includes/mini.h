@@ -304,7 +304,7 @@ void ft_magane_executor(t_bash *bash_boss);
 void child_build(t_cmd *cmd, t_bash *bash_boss);
 int simple_bexecutor(t_cmd *ptrcmd,t_bash *bash_boss);
 void pipes_executor(t_cmd *ptrcmd,t_bash *bash_boss);
-
+void fail_expander(t_bash *bash_boss,t_cmd *cmd);
 
 int ft_howpipes(t_cmd *comands);
 

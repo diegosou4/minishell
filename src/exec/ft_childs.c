@@ -22,11 +22,14 @@ int return_in(t_cmd *cmd)
         return(-1);
     while(ptr != NULL)
     {
-        if(ptr->token == redir_in)
+        if(ptr->token == redir_in || ptr->token == here_doc)
         {
             if(fd != -1)
                 close(fd);
-            fd = open_in(ptr->path);
+            if(ptr->token == here_doc)
+                fd = ft_heredoc(ptr->path);
+            else    
+                fd = open_in(ptr->path);
             if(fd < 0)
             {
                 // execucao nao deve funcionar;
@@ -51,11 +54,13 @@ int return_out(t_cmd *cmd)
         {
             if(fd != -1)
                 close(fd);
-            fd = open_out(ptr->path);
+            if(ptr->token == redir_out)
+                fd = open_out(ptr->path);
+            else
+                fd = open_append(ptr->path);
             if(fd < 0)
             {
-            // voltar fechando tudo
-            // execucao nao vai rolar
+             // execucao nao deve funcionar;
             }
         }
     
@@ -67,11 +72,10 @@ int return_out(t_cmd *cmd)
 
 void child_exec(t_cmd *cmd, t_bash *bash_boss)
 {
-  
     bash_boss->fdout = return_out(cmd);
     bash_boss->fdin = return_in(cmd);
     if(expand_path(&cmd,bash_boss->env) == 1)
-        exit(EXIT_FAILURE);
+        fail_expander(bash_boss,cmd);
     if(sizepipe(bash_boss->commands) != 1)
         care_inchild(cmd,bash_boss);
     redir_inchild(cmd,bash_boss);

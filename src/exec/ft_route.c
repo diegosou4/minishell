@@ -56,9 +56,11 @@ int return_heredoc(t_redir *redir)
 void ft_magane_executor(t_bash *bash_boss)
 {
     t_cmd *ptrcmd;
-
+    int check;
+    
     ptrcmd = bash_boss->commands;
-    if(ptrcmd->next == NULL && (check_builtings(ptrcmd) > 0))
+    check = check_builtings(ptrcmd);
+    if(ptrcmd->next == NULL && check > 0 && check <= 7)
         simple_bexecutor(ptrcmd,bash_boss); 
     else
         pipes_executor(ptrcmd,bash_boss);
