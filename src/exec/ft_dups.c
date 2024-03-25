@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../includes/mini.h"
-/*
+
 void reset_fd(t_bash *bash_boss)
 {
     dup2(bash_boss->in, 0);
@@ -23,7 +23,7 @@ void dup_fd(t_bash *bash_boss)
     bash_boss->in = dup(0);
     bash_boss->out = dup(1);
 }
-*/
+
 void init_dup(int fdin,int fdout)
 {
     if(fdin != 0)
@@ -41,9 +41,9 @@ void close_fds(t_bash *bash_boss)
     bash_boss->fdin = -1;
     bash_boss->fdout = -1;
 }
-/*
+
 void close_dup(t_bash *bash_boss)
 {
     close(bash_boss->in);
     close(bash_boss->out);
-}*/
+}

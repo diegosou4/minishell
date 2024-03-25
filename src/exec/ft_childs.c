@@ -12,34 +12,6 @@
 
 #include "../../includes/mini.h"
 
-/*
-void return_in(t_cmd *cmd,t_bash *bash_boss)
-{
-    t_redir *ptr;
-    
-    ptr = cmd->redir;
-    if(ptr == NULL)
-        return;
-    while(ptr != NULL)
-    {
-        if(ptr->token == redir_in)
-        {
-            printf(" Antes  %i\n",bash_boss->fdin);
-         
-            close(bash_boss->fdin);
-            printf("ptr path %s\n", ptr->path);
-            bash_boss->fdin = open_in(ptr->path);
-            printf(" Depois  %i\n",bash_boss->fdin);
-        }
-        if(bash_boss->fdin < 0)
-        {
-            // voltar fechando tudo
-            // execucao nao vai rolar
-
-        }
-        ptr = ptr->next;
-    }
-}*/
 int return_in(t_cmd *cmd)
 {
     t_redir *ptr;

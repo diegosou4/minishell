@@ -155,6 +155,8 @@ typedef struct s_bash
 {
 	t_cmd *commands;
 	int *pid;
+	int in;
+	int out;
 	int fdin;
 	int fdout;
 	int pipein;
@@ -295,6 +297,7 @@ void case_heredoc(t_cmd *ptrcmd,t_bash *bash_boss);
 int ft_countpipes(t_cmd *cmd);
 void open_pipes(t_cmd **cmd);
 int return_in(t_cmd *cmd);
+int return_out(t_cmd *cmd);
 void redir_inchild(t_cmd *cmd,t_bash *bash_boss);
 void start_execution(t_bash *bash_boss);
 void ft_magane_executor(t_bash *bash_boss);
