@@ -55,15 +55,28 @@ void care_inchild(t_cmd *current, t_bash *bash_boss)
     if(!current->prev)
     {
         close(current->pipes[0]);
-        bash_boss->fdin = -1;
-        bash_boss->fdout = current->pipes[1];
+        bash_boss->pipein = -1;
+        bash_boss->pipeout = current->pipes[1];
         return;
     }
     close(current->prev->pipes[1]);
     if (current->next)
     {
         close(current->pipes[0]);
-        bash_boss->fdout = current->pipes[1];
+        bash_boss->pipeout = current->pipes[1];
     }
-    bash_boss->fdin = current->prev->pipes[0];
+    bash_boss->pipein = current->prev->pipes[0];
+}
+
+void redir_inchild(t_cmd *cmd,t_bash *bash_boss)
+{
+    if(bash_boss->fdout == -1)
+        bash_boss->fdout = bash_boss->pipeout;
+    else
+        close(bash_boss->pipeout);
+    if(bash_boss->fdin == -1)
+        bash_boss->fdin = bash_boss->pipein;
+    else
+        close(bash_boss->pipeout);
+
 }

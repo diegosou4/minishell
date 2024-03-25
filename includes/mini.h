@@ -294,11 +294,11 @@ void case_heredoc(t_cmd *ptrcmd,t_bash *bash_boss);
 
 int ft_countpipes(t_cmd *cmd);
 void open_pipes(t_cmd **cmd);
-int return_in(t_redir *redir, t_cmd *curr,t_cmd *last);
-int return_out(t_redir *redir, t_cmd *curr);
+int return_in(t_cmd *cmd);
+void redir_inchild(t_cmd *cmd,t_bash *bash_boss);
 void start_execution(t_bash *bash_boss);
 void ft_magane_executor(t_bash *bash_boss);
-void child_build(t_cmd *ptrcmd,t_bash *bash_boss, t_cmd *last);
+void child_build(t_cmd *cmd, t_bash *bash_boss);
 int simple_bexecutor(t_cmd *ptrcmd,t_bash *bash_boss);
 void pipes_executor(t_cmd *ptrcmd,t_bash *bash_boss);
 

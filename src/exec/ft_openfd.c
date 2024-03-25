@@ -31,9 +31,10 @@ int open_in(char *path)
 {
     int fd;
 
-    fd = open(path,O_RDONLY,0777);
+    fd = open(path,O_RDONLY);
     if(fd < 0)
     {
+        printf(" da erro aqui");
         printf_error_fd(strerror(errno),path);
         return(fd);
     }
