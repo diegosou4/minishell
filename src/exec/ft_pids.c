@@ -19,3 +19,14 @@ void alloc_mypids(t_bash *bash_boss)
     pipes = ft_howpipes(bash_boss->commands);
     bash_boss->pid = ft_calloc(sizeof(int) , pipes);
 }
+
+void wait_mypids(t_bash *bash_boss)
+{   
+    int j;
+    j = 0;
+    while(j != sizepipe(bash_boss->commands))
+    {
+        waitpid(bash_boss->pid[j],&bash_boss->exit_status,0);
+        j++;
+    }
+}

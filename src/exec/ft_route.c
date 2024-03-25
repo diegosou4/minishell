@@ -36,15 +36,11 @@ void ft_magane_executor(t_bash *bash_boss)
     t_cmd *ptrcmd;
 
     ptrcmd = bash_boss->commands;
-    open_pipes(&ptrcmd);
-   
-    if(ptrcmd->next == NULL && (check_builtings(ptrcmd) > 0))
-        simple_bexecutor(ptrcmd,bash_boss);
-    else
-        pipes_executor(ptrcmd,bash_boss);
-
+    /*if(ptrcmd->next == NULL && (check_builtings(ptrcmd) > 0))
+        simple_bexecutor(ptrcmd,bash_boss); */
+    pipes_executor(ptrcmd,bash_boss);
     //free_commands(bash_boss.commands);
-    close_pipes(&ptrcmd);
+
 }
 
 
@@ -84,7 +80,10 @@ int ft_howpipes(t_cmd *comands)
 
 }
 
+
 void start_execution(t_bash *bash_boss)
 {
+    bash_boss->pipein = -1;
+    bash_boss->pipeout= -1;
     ft_magane_executor(bash_boss);
 }

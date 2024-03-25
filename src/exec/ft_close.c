@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../includes/mini.h"
-
+/*
 void ft_close(t_cmd **commands)
 {
     t_cmd *ptr;
@@ -57,3 +57,4 @@ void close_child(t_cmd **ptrcmd,t_bash *bash_boss,t_cmd **last)
             close((*last)->pipesfd[1]);
     }
 }
+*/

@@ -35,30 +35,7 @@ int ft_countpipes(t_cmd *cmd)
 }
 
 
-void open_pipes(t_cmd **cmd)
-{
-    t_cmd *ptr;
-    ptr = (*cmd);
-    while(ptr != NULL)
-    {
-        pipe(ptr->pipesfd);
-        ptr = ptr->next;
-    }
-}
 
-void close_pipes(t_cmd **cmd)
-{
-    t_cmd *ptr;
-
-    ptr = (*cmd);
-    while(ptr != NULL)
-    {
-        close(ptr->pipesfd[0]);
-        close(ptr->pipesfd[1]);
-        ptr = ptr->next;
-    }
-
-}
 
 int have_in(t_cmd *ptrcmd)
 {

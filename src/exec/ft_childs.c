@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../includes/mini.h"
-
+/*
 int return_out(t_redir *redir, t_cmd *curr)
 {
     int fd;
@@ -100,55 +100,121 @@ void child_build(t_cmd *ptrcmd,t_bash *bash_boss, t_cmd *last)
    
     exit(EXIT_SUCCESS);
 }
-
-void child_exec(t_cmd *ptrcmd,t_cmd *last, char **env)
+*/
+void child_exec(t_cmd *cmd, t_bash *bash_boss, int i)
 {
     int in;
     int out;
-    if(expand_path(&ptrcmd,env) == 1)
+    in = -1;
+    out = -1;
+    if(expand_path(&cmd,bash_boss->env) == 1)
         exit(EXIT_FAILURE);
-    if(open_redir_fd(ptrcmd->redir) == EXIT_FAILURE)
-        exit(EXIT_FAILURE);
-
-    in = return_in(ptrcmd->redir,ptrcmd,last);
-    out = return_out(ptrcmd->redir,ptrcmd);
-    if(in != STDIN_FILENO)
-        dup2(in,0);
-    if(out != STDOUT_FILENO)
-        dup2(out,1);
-    execve(ptrcmd->path,ptrcmd->args,env);
+    
+    if(!cmd->prev)
+    {
+        close(cmd->pipes[0]);
+        in = -1;
+        out = cmd->pipes[1];
+    }
+    else
+    {
+        close(cmd->prev->pipes[1]);
+        if (cmd->next)
+        {
+            close(cmd->pipes[0]);
+            out = cmd->pipes[1];
+        }
+        // else
+        // {
+        //     close(cmd->prev->prev->pipes[0]);
+        // }
+        in = cmd->prev->pipes[0];
+    }
+    if(in != -1) 
+    {
+        dup2(in, STDIN_FILENO);
+        close(in);
+    }
+    if(out != -1)
+    {
+         dup2(out, STDOUT_FILENO);
+        close(out);
+    } //ls | cta | wc
+    // if (!ptrcmd->pipes)
+    // {
+    //     if(in != STDIN_FILENO)
+    //     {
+    //         dup2(in, STDIN_FILENO);
+    //     //  close(in);
+    //     }   
+    //     if(out != STDOUT_FILENO)
+    //     {
+    //         dup2(out, STDOUT_FILENO);
+    //         //close(out);
+    //     }    
+    // }
+    execve(cmd->path,cmd->args,bash_boss->env);
 
 }
 
 
 void pipes_executor(t_cmd *ptrcmd,t_bash *bash_boss)
 {
-    t_cmd *last;
-    last = NULL;
+
     int i;
     i = 0;
     t_cmd *ptr;
     ptr = ptrcmd;
+    t_cmd *last;
+    last = NULL;
     alloc_mypids(bash_boss);
+    bash_boss->pipein = -1;
+    bash_boss->pipeout = -1;
+   ptrcmd->prev = NULL;
+   ptrcmd->next->prev = ptrcmd;
+   ptrcmd->next->next->prev = ptrcmd->next;
+   ptrcmd->next->next->next->prev = ptrcmd->next->next;
     while(ptrcmd != NULL)
     { 
-        pipe(ptrcmd->pipesfd);
+   
+        
+        if(ptrcmd->next != NULL)
+        {
+            pipe(ptrcmd->pipes);
+            // bash_boss->pipeout = ptrcmd->pipes[1];
+            // bash_boss->pipein = ptrcmd->pipes[0];
+        }
+        // else if(i >= 1)
+        // {
+        //     bash_boss->pipein = last->pipes[0];
+        // }
         bash_boss->pid[i] = fork();
+        //printf(" in  %i------\n",ptrcmd->pipes[0]);
+      //  printf(" out  %i------\n",ptrcmd->pipes[1]);
         if(bash_boss->pid[i] == 0)
         { 
-            child_exec(ptrcmd,last,bash_boss->env);       
+           printf("%i  filho------------ \n", getpid());
+            //  if(i == 2 ) 
+            //  {
+            //     sleep(1200);
+            // }
+           child_exec(ptrcmd,bash_boss, i); 
         }
-        last = ptrcmd;
-        close(last->pipesfd[1]);
+        // if(ptrcmd->next != NULL)
+        // {
+        //     last = ptrcmd;
+        //     close(last->pipes[1]);
+        // }
+        if (ptrcmd->prev)
+        {
+            close(ptrcmd->prev->pipes[0]);
+            close(ptrcmd->prev->pipes[1]);
+        }
         ptrcmd = ptrcmd->next;
-        waitpid(bash_boss->pid[i],&bash_boss->exit_status,0);
         i++;
     }
-    while(ptr != NULL)
-    {
-        close(ptr->pipesfd[0]);
-        close(ptr->pipesfd[1]);
-        ptr = ptr->next;
-     }
+    // close(last->pipes[0]);
+     wait_mypids(bash_boss); 
+           
 }
 
