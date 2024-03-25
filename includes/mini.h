@@ -139,22 +139,26 @@ typedef struct s_cmd
 {
 	char *path;
 	char **args;
-	int pipesfd[2];
 	int executable;
+	int pipes[2];
 	t_redir *redir;
 	struct s_cmd *next;
+	struct s_cmd *prev;
 
 } t_cmd;
 // Parsign handler.
+
+
+
 
 typedef struct s_bash
 {
 	t_cmd *commands;
 	int *pid;
-	int in;
-	int out;
 	int fdin;
 	int fdout;
+	int pipein;
+	int pipeout;
 	int exit_status;
 	char **env;
 	t_env *cpyenv;
@@ -220,6 +224,9 @@ int sizepipe(t_cmd *commands);
 int sizeredir(t_redir *redir);
 void free_commands(t_cmd *comands);
 void free_redirects(t_redir *redir);
+void set_pipes(t_cmd *ptrcmd);
+void care_myprev(t_cmd *ptrcmd);
+void care_inchild(t_cmd *current, t_bash *bash_boss);
 // Builtings
 
 
@@ -236,11 +243,7 @@ t_env *ft_nenv(char **env,int token);
 void addbackenv(char *str,int this,t_env **cpyenv, int token);
 
 
-// HERE DOC
-int redirout(char *path);
-int ft_append(char *path);
-int ft_heredoc(char *delimiter);
-void ft_putforwe(char *line,int fd);
+
 
 t_cmd *ft_structure_creation(t_word_list **token_list);
 t_redir *ft_parse_redir_create(t_word_list *token_list);
@@ -281,7 +284,12 @@ int check_path2(t_cmd **commands, char **env);
 
 //_____________________________________________________ENV ______________________________________________________
 void ft_env_null();
-
+//_____________________________________________________HERE_DOC___________________________________________________//
+int redirout(char *path);
+int ft_append(char *path);
+int ft_heredoc(char *delimiter);
+void ft_putforwe(char *line,int fd);
+void case_heredoc(t_cmd *ptrcmd,t_bash *bash_boss);
 //_________________________________________________ EXEC
 
 int ft_countpipes(t_cmd *cmd);
@@ -300,6 +308,7 @@ int ft_howpipes(t_cmd *comands);
 int return_error_exec(t_bash *executor);
 //_____________________________________________PIDS_____________________________________________________//
 void alloc_mypids(t_bash *bash_boss);
+void wait_mypids(t_bash *bash_boss);
 //______________________________________________FILES___________________________________________________//
 
 int open_redir(t_cmd **commands);
@@ -314,6 +323,8 @@ void reset_fd(t_bash *bash_boss);
 void dup_fd(t_bash *bash_boss);
 void close_dup(t_bash *bash_boss);
 void close_fds(t_bash *bash_boss);
+//________________________________________________FORKS_FD___________________________________________//
+void close_child(t_cmd **ptrcmd,t_bash *bash_boss,t_cmd **last);
 //_________________________________________________FT_ECHO_____________________________________________//
 int ft_echo(t_cmd *cmd);
 

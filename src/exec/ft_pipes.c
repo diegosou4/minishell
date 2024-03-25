@@ -34,43 +34,36 @@ int ft_countpipes(t_cmd *cmd)
     return(i);
 }
 
-
-
-
-int have_in(t_cmd *ptrcmd)
+void set_pipes(t_cmd *ptrcmd)
 {
-    t_redir *ptr;
-    ptr = ptrcmd->redir;
-
-    while(ptr != NULL)
-    {
-        if(ptr->token == redir_in)
-            return(1);
-        ptr = ptr->next;
-    }
-    return(0);
-
-
+    if(ptrcmd->next != NULL)
+        pipe(ptrcmd->pipes);
 }
 
-int have_out(t_cmd *ptrcmd)
-{
-    t_redir *ptr;
-    ptr = ptrcmd->redir;
 
-    while(ptr != NULL)
-    {
-        if(ptr->token == redir_out || ptr->token == append_out)
-            return(1);
-        ptr = ptr->next;
-    }
-    return(0);
-}
-void check_pipe(t_cmd *ptrcmd,t_cmd *lastcmd)
+void care_myprev(t_cmd *ptrcmd)
 {
-    int in;
-    int out;
-    out = have_out(ptrcmd);
-    in = have_in(ptrcmd);
-    
+    if (ptrcmd->prev)
+    {
+        close(ptrcmd->prev->pipes[0]);
+        close(ptrcmd->prev->pipes[1]);
+    }
+}
+
+void care_inchild(t_cmd *current, t_bash *bash_boss)
+{
+    if(!current->prev)
+    {
+        close(current->pipes[0]);
+        bash_boss->fdin = -1;
+        bash_boss->fdout = current->pipes[1];
+        return;
+    }
+    close(current->prev->pipes[1]);
+    if (current->next)
+    {
+        close(current->pipes[0]);
+        bash_boss->fdout = current->pipes[1];
+    }
+    bash_boss->fdin = current->prev->pipes[0];
 }
