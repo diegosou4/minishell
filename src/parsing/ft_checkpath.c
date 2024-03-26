@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 12:26:07 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/19 01:46:02 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/21 22:27:31 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ char	*ask_acess(char *comand, char *path)
 	char	**paths;
 	int		i;
 	char	*cplusp;
+
 	paths = mysplit(path, ':', 47);
 	i = 0;
 	while (paths[i])
@@ -58,7 +59,6 @@ char	*ask_acess(char *comand, char *path)
 	free_paths(paths);
 	return (ask_command(comand));
 }
-
 
 char	*checkpath(char **path, char *command)
 {
@@ -84,7 +84,3 @@ char	*checkpath(char **path, char *command)
 	}
 	return (NULL);
 }
-
-
-
-

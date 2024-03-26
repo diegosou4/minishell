@@ -263,7 +263,8 @@ int ft_check_valid_redir(t_word_list *word_list);
 
 void ft_signal_manager();
 void handle_signal(int signal1);
-
+void	ft_signal_manager_heredoc(void);
+void	handle_signal_hereclean(int signal1);
 // __________________________________________________FREE_MANAGER ________________________________
 
 void ft_free_double_pointers(char **split_line);

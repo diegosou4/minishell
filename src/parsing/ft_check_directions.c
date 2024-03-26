@@ -6,16 +6,16 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 14:44:43 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/03/21 21:08:55 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/21 22:26:39 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/mini.h"
 
 // This function checks for syntax errors related to redirection symbols
-// (>, <) and specific combinations of redirection symbols 
+// (>, <) and specific combinations of redirection symbols
 // and subsequent arguments.
-// It counts the number of redirection symbols encountered 
+// It counts the number of redirection symbols encountered
 //in the parsed input line,
 // ensuring that no more than two redirection symbols are present.
 // Arguments:
@@ -77,7 +77,8 @@ int	ft_check_redir_pipes(char **line)
 		return (0);
 	while (line[++i] && line[i + 1])
 	{
-		if ((ft_strcmp(line[i], "<<") == 0 || ft_strcmp(line[i], ">>") == 0) 
+		if ((ft_strcmp(line[i], "<<") == 0
+			|| ft_strcmp(line[i], ">>") == 0)
 			&& ft_strcmp(line[i + 1], "|") == 0)
 		{
 			printf("parse error near `|' 🚫. \n");

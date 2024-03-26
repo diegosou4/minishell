@@ -155,7 +155,7 @@ int ft_casewithout(t_env **env,char *command)
     else
         ft_putinlast(env,command,2);
     return(0);
-}*/
+}
 
 
 int ft_export(t_env **env,t_cmd *commands)

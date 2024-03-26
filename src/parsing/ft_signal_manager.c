@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 14:13:14 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/03/21 18:02:43 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/26 16:16:58 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,25 @@ void	ft_signal_manager(void)
 	sigaction(SIGINT, &sa, NULL);
 	sa.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &sa, NULL);
+}
+
+void	handle_signal_here_doc(int signal1)
+{
+	if (signal1 == SIGINT)
+	{
+		write(0, "\n", 2);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
+}
+
+void	ft_signal_manager_heredoc(void)
+{
+	struct sigaction	sa;
+
+	sa.sa_handler = &handle_signal_here_doc;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sigaction(SIGINT, &sa, NULL);
 }
