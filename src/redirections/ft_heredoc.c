@@ -46,7 +46,7 @@ int ft_heredoc(char *delimiter)
     pipe(fd);
     while(1)
     {
-        line_text = ft_strjoin(ANSI_COLOR_PURPLE,"🐧🐧>");
+        line_text = ft_strjoin(ANSI_COLOR_PURPLE,"🐧🐧heredoco>");
         line = readline(line_text);  
         free(line_text);
         if(strncmp(delimiter,line,ft_strlen(line)) == 0)
@@ -59,4 +59,19 @@ int ft_heredoc(char *delimiter)
     }
     close(fd[1]);
     return(fd[0]);
+}
+
+
+void case_heredoc(t_cmd *ptrcmd,t_bash *bash_boss)
+{
+    if(ptrcmd->args[0] == NULL && ptrcmd->redir != NULL)
+    {   
+    //Da free nas coisas
+    //
+        exit(EXIT_SUCCESS);
+    }
+
+
+
+
 }

@@ -89,7 +89,8 @@ void	ft_structure_manager(t_line *line, t_bash *bash, int status)
 	bash->commands = cmd_structure;
 	if (bash->commands)
 		start_execution(bash);
-	free(bash->pid);
+	//if(bash->pid != NULL)
+		//free(bash->pid);
 	ft_free_double_word_list(list);
 	ft_free_cmd_structure(cmd_structure);
 }

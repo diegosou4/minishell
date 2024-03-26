@@ -14,6 +14,6 @@
 
 int return_error(char *str)
 {
-    write(2,&str,ft_strlen(str));
-    return(2);
+    ft_putstr_fd(str,STDERR_FILENO);
+    return(EXIT_FAILURE);
 }

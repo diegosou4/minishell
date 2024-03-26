@@ -70,10 +70,13 @@ void	ft_free_cmd_structure(t_cmd *cmd_structure)
 	while (cmd_structure)
 	{
 		temp = cmd_structure->next;
-		free(cmd_structure->path);
+		if(cmd_structure != NULL)
+			free(cmd_structure->path);
 		free(cmd_structure->args);
-		ft_free_redir_list(cmd_structure->redir);
-		free(cmd_structure);
+		if(cmd_structure->redir != NULL)
+			ft_free_redir_list(cmd_structure->redir);
+		if(cmd_structure != NULL)
+			free(cmd_structure);
 		cmd_structure = temp;
 	}
 }

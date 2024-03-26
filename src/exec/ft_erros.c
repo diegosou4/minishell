@@ -27,3 +27,11 @@ int return_error_exec(t_bash *executor)
     }
     return(0);
 }
+
+void printf_error_fd(char *strerror,char *file)
+{
+    ft_putstr_fd(file,STDERR_FILENO);
+    ft_putstr_fd(": ",STDERR_FILENO);
+    ft_putstr_fd(strerror,STDERR_FILENO);
+    ft_putstr_fd("\n",STDERR_FILENO);
+}

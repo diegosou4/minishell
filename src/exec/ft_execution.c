@@ -80,18 +80,24 @@ int sizeredir(t_redir *redir)
 }
 
 
-int sizepipe(t_cmd *commands)
+
+
+void heredoc_simple(t_cmd *cmd)
 {
-    int i;
-    i = 0;
+    int in;
+    int out;
+    int pid;
+    in = -1;
+    out = -1;
 
-    t_cmd *ptr;
-
-    ptr = commands;
-    while(ptr != NULL)
+    pid = fork();
+    if(pid == 0)
     {
-        i++;
-        ptr = ptr->next;
+        in = return_in(cmd);
+        out = return_out(cmd);
+        if(in != -1)
+            close(in);
+        if(out != -1)
+            close(out);
     }
-    return(i);
 }

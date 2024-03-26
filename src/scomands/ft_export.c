@@ -12,12 +12,47 @@
 
 
 #include "../../includes/mini.h"
+/*
+t_env *find_min_key(t_env *env, char *key)
+{
+    t_env *min;
+    t_env current;
+    min = NULL;
+    current = env;
+
+    while(current != NULL)
+    {
+        if(ft_strncmp(current->key,key))
+
+    }
+
+
+}
+
+
+void print_sorted(t_env *env)
+{
+    int index;
+    index = len_env(env);
+    int i;
+    i = 0;
+    while(i != index)
+    {
+
+
+
+    }
+
+
+}*/
 
 int ft_exp(t_env *env)
 {
     t_env *ptr;
 
     ptr = env;
+
+    
     if(env ==  NULL)
         return(0);
     while(ptr != NULL)
@@ -120,7 +155,7 @@ int ft_casewithout(t_env **env,char *command)
     else
         ft_putinlast(env,command,2);
     return(0);
-}
+}*/
 
 
 int ft_export(t_env **env,t_cmd *commands)
@@ -128,13 +163,7 @@ int ft_export(t_env **env,t_cmd *commands)
     int index;
 
     if(len_darray(commands->args) == 1)
-        return(ft_exp(*env));
-    index = ft_strintchr(commands->args[1],61);
-    if(ft_strncmp("_=",commands->args[1],2) == 0)
-        return(2);
-    if(index > 0 && index != 1)
-        return(ft_caseequal(env,commands->args[1]));
-    else
-        return(ft_casewithout(env,commands->args[1]));
-    return(2);
+    {
+
+    }
 }

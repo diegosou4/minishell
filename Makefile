@@ -34,11 +34,12 @@ PARSE = ft_special.c ft_parse_manager.c ft_utils.c\
 EXEC = ft_execution.c ft_builtings.c\
        ft_free.c ft_route.c ft_close.c\
        ft_path.c ft_childs.c ft_openfd.c\
-       ft_erros.c ft_pids.c ft_dups.c
+       ft_erros.c ft_pids.c ft_dups.c\
+       ft_pipes.c ft_fail.c
 
 COMANDS = ft_echo.c ft_pwd.c ft_cd.c ft_env.c \
             ft_export.c ft_unset.c ft_exit.c \
-            ft_error.c
+            ft_error.c 
 
 ENV = ft_create.c
 
@@ -58,4 +59,7 @@ clean: $(NAME)
 re: $(NAME)
 	clean all
 valgrind:
-	valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-fds=yes -s ./${NAME}
+	valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-fds=yes -s  --trace-children=yes ./${NAME}
+fd:
+	@valgrind -q --tool=none --track-fds=yes --trace-children=yes ./${NAME}
+      

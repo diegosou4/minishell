@@ -92,11 +92,13 @@ t_cmd	*ft_structure_creation(t_word_list **token_list)
 		if (i == 0)
 		{
 			root = new_cmd;
+			root->prev = NULL;
 			current_cmd = root;
 		}
 		else
 		{
 			current_cmd->next = new_cmd;
+			new_cmd->prev = current_cmd;
 			current_cmd = current_cmd->next;
 		}
 	}

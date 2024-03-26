@@ -23,6 +23,8 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 #include <signal.h>
+#include <string.h>
+#include <errno.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include "src/libft/get_next_line.h"
@@ -137,13 +139,17 @@ typedef struct s_cmd
 {
 	char *path;
 	char **args;
-	int pipesfd[2];
 	int executable;
+	int pipes[2];
 	t_redir *redir;
 	struct s_cmd *next;
+	struct s_cmd *prev;
 
 } t_cmd;
 // Parsign handler.
+
+
+
 
 typedef struct s_bash
 {
@@ -153,6 +159,8 @@ typedef struct s_bash
 	int out;
 	int fdin;
 	int fdout;
+	int pipein;
+	int pipeout;
 	int exit_status;
 	char **env;
 	t_env *cpyenv;
@@ -218,6 +226,9 @@ int sizepipe(t_cmd *commands);
 int sizeredir(t_redir *redir);
 void free_commands(t_cmd *comands);
 void free_redirects(t_redir *redir);
+void set_pipes(t_cmd *ptrcmd);
+void care_myprev(t_cmd *ptrcmd);
+void care_inchild(t_cmd *current, t_bash *bash_boss);
 // Builtings
 
 
@@ -232,13 +243,9 @@ char *get_key(char *str);
 t_env *newsenv(char *str, int this, int token);
 t_env *ft_nenv(char **env,int token);
 void addbackenv(char *str,int this,t_env **cpyenv, int token);
+int len_env(t_env *env);
 
 
-// HERE DOC
-int redirout(char *path);
-int ft_append(char *path);
-int ft_heredoc(char *delimiter);
-void ft_putforwe(char *line,int fd);
 
 t_cmd *ft_structure_creation(t_word_list **token_list);
 t_redir *ft_parse_redir_create(t_word_list *token_list);
@@ -279,36 +286,49 @@ int check_path2(t_cmd **commands, char **env);
 
 //_____________________________________________________ENV ______________________________________________________
 void ft_env_null();
-
+//_____________________________________________________HERE_DOC___________________________________________________//
+int redirout(char *path);
+int ft_append(char *path);
+int ft_heredoc(char *delimiter);
+void ft_putforwe(char *line,int fd);
+void heredoc_simple(t_cmd *cmd);
+void case_heredoc(t_cmd *ptrcmd,t_bash *bash_boss);
 //_________________________________________________ EXEC
 
 int ft_countpipes(t_cmd *cmd);
 void open_pipes(t_cmd **cmd);
-int return_in(t_redir *redir, t_cmd *curr,t_cmd *last);
-int return_out(t_redir *redir, t_cmd *curr);
+int return_in(t_cmd *cmd);
+int return_out(t_cmd *cmd);
+void redir_inchild(t_cmd *cmd,t_bash *bash_boss);
 void start_execution(t_bash *bash_boss);
 void ft_magane_executor(t_bash *bash_boss);
-void child_build(t_cmd *ptrcmd,t_bash *bash_boss, t_cmd *last);
+void child_build(t_cmd *cmd, t_bash *bash_boss);
 int simple_bexecutor(t_cmd *ptrcmd,t_bash *bash_boss);
 void pipes_executor(t_cmd *ptrcmd,t_bash *bash_boss);
-
+void fail_expander(t_bash *bash_boss,t_cmd *cmd);
 
 int ft_howpipes(t_cmd *comands);
-void closeoutpipe(t_cmd **ptr);
 
-int open_redir_fd(t_redir *redir);
 int return_error_exec(t_bash *executor);
+//_____________________________________________PIDS_____________________________________________________//
 void alloc_mypids(t_bash *bash_boss);
+void wait_mypids(t_bash *bash_boss);
 //______________________________________________FILES___________________________________________________//
 
 int open_redir(t_cmd **commands);
+int open_out(char *path);
+int open_in(char *path);
+int open_append(char *path);
 int open_fd(t_redir **redirect);
-
+int open_redir_fd(t_redir *redir);
+void printf_error_fd(char *strerror,char *file);
 void init_dup(int fdin,int fdout);
 void reset_fd(t_bash *bash_boss);
 void dup_fd(t_bash *bash_boss);
 void close_dup(t_bash *bash_boss);
 void close_fds(t_bash *bash_boss);
+//________________________________________________FORKS_FD___________________________________________//
+void close_child(t_cmd **ptrcmd,t_bash *bash_boss,t_cmd **last);
 //_________________________________________________FT_ECHO_____________________________________________//
 int ft_echo(t_cmd *cmd);
 
@@ -329,7 +349,7 @@ int ft_casewithout(t_env **env,char *command);
 int ft_caseequal(t_env **env,char *command);
 void ft_putinlast(t_env **env,char *this,int token);
 //________________________________________________FT_PWD________________________________________________//
-int print_pwd(void);
+int print_pwd(t_cmd *comands);
 //_______________________________________________FT_UNSET____________________________________________//
 int ft_unset(t_env **env,t_cmd *commands);
 void ft_removeinenv(t_env **env, int index);
