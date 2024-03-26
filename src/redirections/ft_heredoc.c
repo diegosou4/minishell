@@ -79,8 +79,4 @@ void case_heredoc(t_cmd *ptrcmd)
     //
         exit(EXIT_SUCCESS);
     }
-
-
-
-
 }

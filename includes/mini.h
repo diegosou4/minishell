@@ -1,3 +1,4 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -435,31 +436,6 @@ char	*ft_string_handle_2(char *line, char *modified_line);
 
 int	ft_check_words_list(t_word_list *tokens);
 int	ft_lexer_analysis(t_word_list *words_list, t_bash *bash, char *new_string);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

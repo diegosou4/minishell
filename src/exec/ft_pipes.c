@@ -1,6 +1,7 @@
 
 
 
+
 #include "../../includes/mini.h"
 
 int sizepipe(t_cmd *commands)
@@ -78,5 +79,4 @@ void redir_inchild(t_bash *bash_boss)
         bash_boss->fdin = bash_boss->pipein;
     else
         close(bash_boss->pipein);
-
 }
