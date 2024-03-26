@@ -31,6 +31,7 @@ int return_in(t_cmd *cmd, t_bash *bash_boss)
             {
                 pipe(pipesfd);
                 ft_heredoc(ptr->path,pipesfd[0],pipesfd[1],bash_boss);
+                fd = pipesfd[0];
             }
             else    
                 fd = open_in(ptr->path);

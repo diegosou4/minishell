@@ -38,8 +38,8 @@ EXEC = ft_execution.c ft_builtings.c\
        ft_pipes.c ft_fail.c
 
 COMANDS = ft_echo.c ft_pwd.c ft_cd.c ft_env.c \
-            ft_export.c ft_unset.c ft_exit.c \
-            ft_error.c 
+            ft_export.c ft_export2.c ft_unset.c\
+            ft_exit.c ft_error.c  
 
 ENV = ft_create.c
 

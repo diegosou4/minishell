@@ -289,17 +289,17 @@ void ft_env_null();
 //_____________________________________________________HERE_DOC___________________________________________________//
 int redirout(char *path);
 int ft_append(char *path);
-int ft_heredoc(char *delimiter);
+void ft_heredoc(char *delimiter, int in, int out, t_bash *bash_boss);
 void ft_putforwe(char *line,int fd);
-void heredoc_simple(t_cmd *cmd);
-void case_heredoc(t_cmd *ptrcmd,t_bash *bash_boss);
+void heredoc_simple(t_cmd *cmd,t_bash *bash_boss);
+void case_heredoc(t_cmd *ptrcmd);
 //_________________________________________________ EXEC
 
 int ft_countpipes(t_cmd *cmd);
 void open_pipes(t_cmd **cmd);
-int return_in(t_cmd *cmd);
+int return_in(t_cmd *cmd, t_bash *bash_boss);
 int return_out(t_cmd *cmd);
-void redir_inchild(t_cmd *cmd,t_bash *bash_boss);
+void redir_inchild(t_bash *bash_boss);
 void start_execution(t_bash *bash_boss);
 void ft_magane_executor(t_bash *bash_boss);
 void child_build(t_cmd *cmd, t_bash *bash_boss);
@@ -340,7 +340,7 @@ int ft_cd(t_cmd *comands,t_env **env);
 int ft_env(t_env *env);
 int execute_env(t_env *env, t_cmd *commands);
 //________________________________________________FT_EXP_____________________________________________//
-
+int export_env(t_env **env,char *str);
 int ft_exp(t_env *env);
 int ft_haveinenv(t_env *env, char *str);
 int ft_indexinenv(t_env *env,char *this);
