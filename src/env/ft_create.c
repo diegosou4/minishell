@@ -33,7 +33,6 @@ char *get_key(char *str)
 t_env *newexp(char *str, int this, int token)
 {
     t_env *cpyenv;
-    char *value;
     cpyenv = ft_calloc(sizeof(t_env),1);
 
     cpyenv->index = this;
@@ -48,7 +47,6 @@ t_env *newexp(char *str, int this, int token)
 t_env *newsenv(char *str, int this, int token)
 {
     t_env *cpyenv;
-    char *value;
     cpyenv = ft_calloc(sizeof(t_env),1);
 
     cpyenv->index = this;

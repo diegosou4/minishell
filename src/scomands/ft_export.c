@@ -12,58 +12,65 @@
 
 
 #include "../../includes/mini.h"
-/*
-t_env *find_min_key(t_env *env, char *key)
+
+
+t_env *insertion_sort(t_env *env) 
 {
-    t_env *min;
-    t_env current;
-    min = NULL;
-    current = env;
+    t_env *temp;
+    t_env *sorted;
+    t_env *current;
 
-    while(current != NULL)
+    if (env == NULL || env->next == NULL)
+        return (env); 
+    sorted = NULL; 
+    while (env != NULL) 
     {
-        if(ft_strncmp(current->key,key))
-
+        current = env;
+        env = env->next; 
+        if (sorted == NULL || ft_strncmp(current->key, sorted->key,ft_strlen(current->key)) <= 0) 
+        {
+            current->next = sorted;
+            sorted = current;
+        }else 
+        {
+            temp = sorted;
+            while (temp->next != NULL && ft_strncmp(current->key, temp->next->key,ft_strlen(current->key)) > 0) 
+                temp = temp->next;
+            current->next = temp->next;
+            temp->next = current;
+        }
     }
-
-
+    return(sorted);
 }
-
-
-void print_sorted(t_env *env)
-{
-    int index;
-    index = len_env(env);
-    int i;
-    i = 0;
-    while(i != index)
-    {
-
-
-
-    }
-
-
-}*/
 
 int ft_exp(t_env *env)
 {
     t_env *ptr;
 
-    ptr = env;
-
-    
+    ptr = insertion_sort(env);
     if(env ==  NULL)
         return(0);
     while(ptr != NULL)
     {
-        printf("declare -x ");
-        printf("%s%s\n",ptr->key,ptr->value);
-        ptr = ptr->next;
+        if(ptr->token == 1)
+        {
+            printf("declare -x ");
+            printf("%s%s\n",ptr->key,ptr->value);
+        }
+          ptr = ptr->next;
+    }
+    ptr = env;
+    while(ptr != NULL)
+    {
+        if(ptr->token == 2)
+        {
+            printf("declare -x ");
+            printf("%s%s\n",ptr->key,ptr->value);
+        }
+         ptr = ptr->next;
     }
     return(1);
 }
-
 
 int ft_indexinenv(t_env *env,char *this)
 {
@@ -84,86 +91,47 @@ int ft_indexinenv(t_env *env,char *this)
     return(-1);
 }
 
-int ft_haveinenv(t_env *env, char *str)
+int check_var(char *arr)
 {
+    int backslash;
     int i;
-    char *newstr;
-    t_env *ptr;
-    char *s;
 
-    ptr = env;
-    s = ft_strchr(str,61);
-    if(ft_strlen(s) == 1)
-        return(2);
-    if(env == NULL)
-        return(2);
-    i = ft_strintchr(str,61);
-    newstr = ft_substr(str,0,i);
-    i = ft_indexinenv(env,newstr);
-    if(i != -1)
+    i = 0;
+    backslash = 0;
+    while(arr[i] != '\0')
     {
-        while(i-- != 0)
-            ptr = ptr->next;
-        ptr->value = s;
+        if(arr[i] == 47)
+            backslash = 1;
+        i++;
+    }
+    i = 0;
+    if(arr[0] == 95 && backslash == 1)
+    {
+        ft_putstr_fd("export: ",STDERR_FILENO);
+        ft_putstr_fd(arr,STDERR_FILENO);
+        ft_putstr_fd(" : not a valid identifier",STDERR_FILENO);
+        ft_putstr_fd("\n",STDERR_FILENO);
         return(0);
     }
-    return(2);
+    return(1);
 }
-
-void ft_putinlast(t_env **env,char *this,int token)
-{
-    int i;
-    t_env *ptr;
-    t_env *last;
-    t_env *pen ;
-  
-    ptr = (*env);
-    while(ptr->next != NULL)
-    {
-        pen = ptr;
-        ptr = ptr->next;
-    }
-    i = ptr->index;
-    if(token == 1)
-        last = newsenv(this,i,token);
-    else
-        last = newexp(this,i,token);
-    if(pen != NULL)
-    {
-        pen->next = last;
-        last->next = ptr;
-    }
-    ptr->index += 1;
-    update_index(env);  
-}
-
-int ft_caseequal(t_env **env,char *command)
-{
-    if(ft_haveinenv(*env,command) == 0)
-        return(0);
-    else if(*env == NULL)
-        *env = newsenv(command,0,1); 
-    else
-        ft_putinlast(env,command,1);
-    return(0);   
-}
-
-int ft_casewithout(t_env **env,char *command)
-{
-    if(*env == NULL)
-        *env = newsenv(command,0,2);
-    else
-        ft_putinlast(env,command,2);
-    return(0);
-}*/
-
 
 int ft_export(t_env **env,t_cmd *commands)
 {
-    int index;
-
+    int i;
+    i = 0;
     if(len_darray(commands->args) == 1)
+        ft_exp((*env));
+    while(commands->args[i] != NULL)
     {
-
+        if(check_var(commands->args[i]) == 0)
+            return(EXIT_FAILURE);
+        else if(ft_strncmp("_=",commands->args[i],2) == 0)
+            return(EXIT_SUCCESS);
+        else
+            export_env(env,commands->args[i]);
+        i++;
     }
+   
+    return(1);
 }

@@ -18,7 +18,7 @@ void ft_putforwe(char *line,int fd)
     ft_putchar_fd('\n',fd);
     free(line);
 }
-
+/*
 int ft_handle_redir_input(char *delimiter)
 {
 
@@ -35,34 +35,43 @@ int ft_handle_redir_input(char *delimiter)
     close(fd);
     return(0);
 
-}
+}*/
 
 
-int ft_heredoc(char *delimiter)
+void ft_heredoc(char *delimiter, int in, int out, t_bash *bash_boss)
 {
-    int fd[2];
     char *line;
     char *line_text;
-    pipe(fd);
-    while(1)
+    int pid;
+    pid = fork();
+    if(pid == 0)
     {
-        line_text = ft_strjoin(ANSI_COLOR_PURPLE,"🐧🐧heredoco>");
-        line = readline(line_text);  
-        free(line_text);
-        if(strncmp(delimiter,line,ft_strlen(line)) == 0)
+        if(bash_boss->pipein != - 1)
+            close(bash_boss->pipein);
+        if(bash_boss->pipeout != -1)
+            close(bash_boss->pipeout);
+        while(1)
         {
-            free(line);
-            break;
-        }
-        else
-            ft_putforwe(line,fd[1]);
+            line_text = ft_strjoin(ANSI_COLOR_PURPLE,"🐧🐧heredoco>");
+            line = readline(line_text);  
+            free(line_text);
+            if(strncmp(delimiter,line,ft_strlen(line)) == 0)
+            {
+                free(line);
+                close(out);
+                close(in);
+                exit(EXIT_SUCCESS);
+            }
+            else
+                ft_putforwe(line,out);
+            }
     }
-    close(fd[1]);
-    return(fd[0]);
+    waitpid(pid,&pid,0);
+    close(out);
 }
 
 
-void case_heredoc(t_cmd *ptrcmd,t_bash *bash_boss)
+void case_heredoc(t_cmd *ptrcmd)
 {
     if(ptrcmd->args[0] == NULL && ptrcmd->redir != NULL)
     {   

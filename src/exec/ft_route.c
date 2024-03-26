@@ -19,7 +19,7 @@ int simple_bexecutor(t_cmd *ptrcmd,t_bash *bash_boss)
     int check;
     dup_fd(bash_boss);
     check = check_builtings(ptrcmd);
-    bash_boss->fdin = return_in(ptrcmd);
+    bash_boss->fdin = return_in(ptrcmd,bash_boss);
     bash_boss->fdout = return_out(ptrcmd);
     init_dup(bash_boss->fdin,bash_boss->fdout);
     execute_builtings(&ptrcmd,&bash_boss->cpyenv,check);
@@ -58,7 +58,7 @@ void ft_magane_executor(t_bash *bash_boss)
     if(ptrcmd->next == NULL && check > 0 && check <= 7)
         simple_bexecutor(ptrcmd,bash_boss); 
     else if(ptrcmd->args[0] == NULL && ptrcmd->redir != NULL)
-        heredoc_simple(ptrcmd);
+        heredoc_simple(ptrcmd,bash_boss);
     else
        pipes_executor(ptrcmd,bash_boss);
     //free_commands(bash_boss.commands);

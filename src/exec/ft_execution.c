@@ -44,7 +44,6 @@ int check_path2(t_cmd **commands, char **env)
 
 void check_path(t_cmd **commands,char **env)
 {
-    int build;
     if(*env == NULL)
         return(ft_env_null());
     if(access((*commands)->args[0], F_OK) == 0)
@@ -82,7 +81,7 @@ int sizeredir(t_redir *redir)
 
 
 
-void heredoc_simple(t_cmd *cmd)
+void heredoc_simple(t_cmd *cmd,t_bash *bash_boss)
 {
     int in;
     int out;
@@ -93,11 +92,14 @@ void heredoc_simple(t_cmd *cmd)
     pid = fork();
     if(pid == 0)
     {
-        in = return_in(cmd);
+        
+        in = return_in(cmd,bash_boss);
         out = return_out(cmd);
         if(in != -1)
             close(in);
         if(out != -1)
             close(out);
+        exit(EXIT_SUCCESS);
     }
+    waitpid(pid,&pid,0);
 }

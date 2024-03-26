@@ -30,6 +30,10 @@ char *ft_returnpath(t_env *env,char *this)
 int ft_cd(t_cmd *comands,t_env **env)
 {
     int result;
+    if(env != NULL)
+    {
+        printf("O");
+    }
     if(len_darray(comands->args) > 2)
         return(return_error("cd : too many arguments\n"));
     if(comands->args[1] == NULL)
