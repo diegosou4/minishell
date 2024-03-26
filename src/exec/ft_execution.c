@@ -80,3 +80,24 @@ int sizeredir(t_redir *redir)
 }
 
 
+
+
+void heredoc_simple(t_cmd *cmd)
+{
+    int in;
+    int out;
+    int pid;
+    in = -1;
+    out = -1;
+
+    pid = fork();
+    if(pid == 0)
+    {
+        in = return_in(cmd);
+        out = return_out(cmd);
+        if(in != -1)
+            close(in);
+        if(out != -1)
+            close(out);
+    }
+}

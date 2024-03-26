@@ -243,7 +243,7 @@ char *get_key(char *str);
 t_env *newsenv(char *str, int this, int token);
 t_env *ft_nenv(char **env,int token);
 void addbackenv(char *str,int this,t_env **cpyenv, int token);
-
+int len_env(t_env *env);
 
 
 
@@ -291,6 +291,7 @@ int redirout(char *path);
 int ft_append(char *path);
 int ft_heredoc(char *delimiter);
 void ft_putforwe(char *line,int fd);
+void heredoc_simple(t_cmd *cmd);
 void case_heredoc(t_cmd *ptrcmd,t_bash *bash_boss);
 //_________________________________________________ EXEC
 

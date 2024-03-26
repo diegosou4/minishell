@@ -14,6 +14,7 @@
 
 void fail_expander(t_bash *bash_boss,t_cmd *cmd)
 {
+  
     if(bash_boss->fdin != -1)
         close(bash_boss->fdin);
     if(bash_boss->fdout != -1)

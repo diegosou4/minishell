@@ -18,6 +18,7 @@ int return_in(t_cmd *cmd)
     int fd;
     fd = -1;
     ptr = cmd->redir;
+    int here;
     if(ptr == NULL)
         return(-1);
     while(ptr != NULL)
@@ -27,7 +28,9 @@ int return_in(t_cmd *cmd)
             if(fd != -1)
                 close(fd);
             if(ptr->token == here_doc)
+            {
                 fd = ft_heredoc(ptr->path);
+            }
             else    
                 fd = open_in(ptr->path);
             if(fd < 0)
@@ -133,7 +136,7 @@ void pipes_executor(t_cmd *ptrcmd,t_bash *bash_boss)
         if(bash_boss->pid[i] == 0)
         {  
             if(check_builtings(ptrcmd) == 0)
-                child_exec(ptrcmd,bash_boss);
+                 child_exec(ptrcmd,bash_boss);
             child_build(ptrcmd,bash_boss);
         }
         care_myprev(ptrcmd);

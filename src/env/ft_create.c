@@ -93,3 +93,19 @@ t_env *ft_nenv(char **env, int token)
     }
     return(cpyenv);
 }
+
+int len_env(t_env *env)
+{
+    int i;
+    t_env *ptr;
+
+    i = 0;
+    ptr = env;
+
+    while(ptr != NULL)
+    {
+        ptr = ptr->next;
+        i++;
+    }
+    return(i);
+}

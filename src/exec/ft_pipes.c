@@ -77,6 +77,6 @@ void redir_inchild(t_cmd *cmd,t_bash *bash_boss)
     if(bash_boss->fdin == -1)
         bash_boss->fdin = bash_boss->pipein;
     else
-        close(bash_boss->pipeout);
+        close(bash_boss->pipein);
 
 }

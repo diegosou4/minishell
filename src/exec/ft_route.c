@@ -18,13 +18,7 @@ int simple_bexecutor(t_cmd *ptrcmd,t_bash *bash_boss)
 {
     int check;
     dup_fd(bash_boss);
-    bash_boss->exit_status = open_redir_fd(ptrcmd->redir);
     check = check_builtings(ptrcmd);
-    if(bash_boss->exit_status == EXIT_FAILURE)
-    {
-        // fechar o que eu abri
-        return(0);
-    }
     bash_boss->fdin = return_in(ptrcmd);
     bash_boss->fdout = return_out(ptrcmd);
     init_dup(bash_boss->fdin,bash_boss->fdout);
@@ -33,6 +27,7 @@ int simple_bexecutor(t_cmd *ptrcmd,t_bash *bash_boss)
     reset_fd(bash_boss); 
     close_fderror(ptrcmd->redir);
     close_dup(bash_boss);
+    
     return(EXIT_SUCCESS);
 }
 
@@ -62,8 +57,10 @@ void ft_magane_executor(t_bash *bash_boss)
     check = check_builtings(ptrcmd);
     if(ptrcmd->next == NULL && check > 0 && check <= 7)
         simple_bexecutor(ptrcmd,bash_boss); 
+    else if(ptrcmd->args[0] == NULL && ptrcmd->redir != NULL)
+        heredoc_simple(ptrcmd);
     else
-        pipes_executor(ptrcmd,bash_boss);
+       pipes_executor(ptrcmd,bash_boss);
     //free_commands(bash_boss.commands);
 
 }
