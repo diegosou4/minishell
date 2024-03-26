@@ -1,6 +1,7 @@
 
 
 
+
 #include "../../includes/mini.h"
 
 int sizepipe(t_cmd *commands)
@@ -68,7 +69,7 @@ void care_inchild(t_cmd *current, t_bash *bash_boss)
     bash_boss->pipein = current->prev->pipes[0];
 }
 
-void redir_inchild(t_cmd *cmd,t_bash *bash_boss)
+void redir_inchild(t_bash *bash_boss)
 {
     if(bash_boss->fdout == -1)
         bash_boss->fdout = bash_boss->pipeout;
@@ -78,5 +79,4 @@ void redir_inchild(t_cmd *cmd,t_bash *bash_boss)
         bash_boss->fdin = bash_boss->pipein;
     else
         close(bash_boss->pipein);
-
 }

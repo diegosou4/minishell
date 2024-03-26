@@ -1,23 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   ft_export2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/05 12:53:10 by diegmore          #+#    #+#             */
-/*   Updated: 2023/10/05 12:53:13 by diegmore         ###   ########.fr       */
+/*   Created: 2024/03/26 16:01:17 by diegmore          #+#    #+#             */
+/*   Updated: 2024/03/26 16:01:19 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 
-int	ft_isdigit(int c)
+#include "../../includes/mini.h"
+
+
+
+
+int export_env(t_env **env,char *str)
 {
-	if ((c >= '0' && c <= '9') ||( c == '+' )||( c == '-'))
-		return (1);
-	return (0);
-}
+    t_env *ptr;
+    char *value;
+    char *key;
+    key = NULL;
+    int len;
 
-// Verifica se o char e um
-// numero
+    value = ft_strchr(str, '=');
+    
+    if(value != NULL)
+    {
+        len = ft_strlen(str) - ft_strlen(value);
+        printf("len %i \n",len);
+    }
+    printf("key %s value %s \n",key,value);
+    
+    return(EXIT_SUCCESS);
+}

@@ -1,3 +1,4 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -12,13 +13,13 @@
 
 #include "../../includes/mini.h"
 
-int return_in(t_cmd *cmd)
+int return_in(t_cmd *cmd, t_bash *bash_boss)
 {
     t_redir *ptr;
     int fd;
     fd = -1;
     ptr = cmd->redir;
-    int here;
+    int pipesfd[2];
     if(ptr == NULL)
         return(-1);
     while(ptr != NULL)
@@ -29,7 +30,9 @@ int return_in(t_cmd *cmd)
                 close(fd);
             if(ptr->token == here_doc)
             {
-                fd = ft_heredoc(ptr->path);
+                pipe(pipesfd);
+                ft_heredoc(ptr->path,pipesfd[0],pipesfd[1],bash_boss);
+                fd = pipesfd[0];
             }
             else    
                 fd = open_in(ptr->path);
@@ -76,12 +79,12 @@ int return_out(t_cmd *cmd)
 void child_exec(t_cmd *cmd, t_bash *bash_boss)
 {
     bash_boss->fdout = return_out(cmd);
-    bash_boss->fdin = return_in(cmd);
+    bash_boss->fdin = return_in(cmd,bash_boss);
     if(expand_path(&cmd,bash_boss->env) == 1)
         fail_expander(bash_boss,cmd);
     if(sizepipe(bash_boss->commands) != 1)
         care_inchild(cmd,bash_boss);
-    redir_inchild(cmd,bash_boss);
+    redir_inchild(bash_boss);
     if(bash_boss->fdin != -1)
     {
         dup2(bash_boss->fdin, STDIN_FILENO);
@@ -101,12 +104,12 @@ void child_build(t_cmd *cmd, t_bash *bash_boss)
     int check;
     check = check_builtings(cmd);
     bash_boss->fdout = return_out(cmd);
-    bash_boss->fdin = return_in(cmd);
+    bash_boss->fdin = return_in(cmd,bash_boss);
     if(expand_path(&cmd,bash_boss->env) == 1)
         exit(EXIT_FAILURE);
     if(sizepipe(bash_boss->commands) != 1)
         care_inchild(cmd,bash_boss);
-    redir_inchild(cmd,bash_boss);
+    redir_inchild(bash_boss);
     if(bash_boss->fdin != -1)
     {
         dup2(bash_boss->fdin, STDIN_FILENO);

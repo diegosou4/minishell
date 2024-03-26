@@ -12,14 +12,14 @@
 
 #include "../../includes/mini.h"
 
-static void	ft_putstr(char *line)
-{
-	while (*line)
-	{
-		write(1, line, 1);
-		line++;
-	}
-}
+// static void	ft_putstr(char *line)
+// {
+// 	while (*line)
+// 	{
+// 		write(1, line, 1);
+// 		line++;
+// 	}
+// }
 
 void	handle_signal(int signal1)
 {
