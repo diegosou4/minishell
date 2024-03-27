@@ -13,20 +13,6 @@
 
 #include "../../includes/mini.h"
 
-void update_index(t_env **env)
-{
-    int i;
-    i = 0;
-    t_env *ptr;
-
-    ptr = (*env);
-    while(ptr != NULL)
-    {
-        ptr->index = i;
-        i++;
-        ptr = ptr->next;
-    }
-}
 
 void ft_removeinenv(t_env **env, int index)
 {
@@ -59,13 +45,6 @@ int ft_unset(t_env **env,t_cmd *commands)
         return(2);
     if(*env == NULL)
         return(2);
-    if(index == -1)
-    {
-        index = ft_indexinenv(*env,commands->args[1]);
-        if(index == -1)
-            return(2);
-        ft_removeinenv(env,index);
-        update_index(env);
-    }
+
     return(0);
 }

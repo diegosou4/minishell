@@ -21,7 +21,7 @@ int ft_env(t_env *env)
         return(1);
     while(ptr != NULL)
     {
-        if(ptr->token == 1)
+        if(ptr->token == 1 || ptr->token == 2)
         {
             printf("%s%s\n",ptr->key,ptr->value);
         }

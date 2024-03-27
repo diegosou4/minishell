@@ -42,6 +42,7 @@ char *ft_strstrjoin(char *s1, char *s2, char s3,char *s4);
 void	*freedouble_malloc(char **s, int i);
 int len_darray(char **arr);
 char    **ft_strrjoin(char **arr, char *str);
+int ft_boolstrchr(const char *str, int c);
 char				**mysplit(char const *s, char c, char n);
 size_t				ft_strlcpy(char *dest, const char *src, size_t dstsize);
 size_t				ft_strlcat(char *dst, const char *src, size_t size);

@@ -31,38 +31,34 @@ char *get_key(char *str)
     return(NULL);
 }
 
-t_env *newexp(char *str, int this, int token)
+t_env *newsenv(char *str, int token)
 {
     t_env *cpyenv;
+    char *v;
+    char *k;
+    
+    v = ft_strchr(str,61);
     cpyenv = ft_calloc(sizeof(t_env),1);
-
-    cpyenv->index = this;
-    cpyenv->key = ft_strjoin(str,"=");
-    cpyenv->value = "''";
+    if(ft_boolstrchr(str,61) == 0)
+    {
+        cpyenv->key = ft_strdup(str);
+        cpyenv->value = NULL;   
+    }else
+    {
+        k = get_key(str);
+        cpyenv->key = ft_strdup(k);
+        cpyenv->value = ft_strdup(v);
+    } 
     cpyenv->token = token;
     cpyenv->next = NULL;
     return(cpyenv);
 }
-
-
-t_env *newsenv(char *str, int this, int token)
-{
-    t_env *cpyenv;
-    cpyenv = ft_calloc(sizeof(t_env),1);
-
-    cpyenv->index = this;
-    cpyenv->key = get_key(str);
-    cpyenv->value = ft_strchr(str,61);
-    cpyenv->token = token;
-    cpyenv->next = NULL;
-    return(cpyenv);
-}
-void addbackenv(char *str,int this,t_env **cpyenv, int token)
+void addbackenv(char *str,t_env **cpyenv, int token)
 {
     t_env *ptr;
     t_env *last;
 
-    last = newsenv(str,this,token);
+    last = newsenv(str,token);
     if(last == NULL)
         return;
     ptr = (*cpyenv);
@@ -83,11 +79,11 @@ t_env *ft_nenv(char **env, int token)
             
     if(env[0] == NULL)
         return(NULL);
-    cpyenv = newsenv(env[index],index,token);
+    cpyenv = newsenv(env[index],token);
     index++;
     while(env[index] != NULL)
     {
-        addbackenv(env[index],index,&cpyenv,token);
+        addbackenv(env[index],&cpyenv,token);
         index++;
     }
     return(cpyenv);

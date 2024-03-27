@@ -13,61 +13,36 @@
 
 #include "../../includes/mini.h"
 
-
-t_env *insertion_sort(t_env *env) 
+void print_exp(char *key,char *value)
 {
-    t_env *temp;
-    t_env *sorted;
-    t_env *current;
+    printf("declare -x ");
+    printf("%s",key);
+    if(value != NULL)
+        printf("%s",value);
+    printf("\n");
 
-    if (env == NULL || env->next == NULL)
-        return (env); 
-    sorted = NULL; 
-    while (env != NULL) 
-    {
-        current = env;
-        env = env->next; 
-        if (sorted == NULL || ft_strncmp(current->key, sorted->key,ft_strlen(current->key)) <= 0) 
-        {
-            current->next = sorted;
-            sorted = current;
-        }else 
-        {
-            temp = sorted;
-            while (temp->next != NULL && ft_strncmp(current->key, temp->next->key,ft_strlen(current->key)) > 0) 
-                temp = temp->next;
-            current->next = temp->next;
-            temp->next = current;
-        }
-    }
-    return(sorted);
 }
+
 
 int ft_exp(t_env *env)
 {
     t_env *ptr;
-
-    ptr = insertion_sort(env);
     if(env ==  NULL)
         return(0);
+
+    ptr = env;
     while(ptr != NULL)
     {
         if(ptr->token == 1)
-        {
-            printf("declare -x ");
-            printf("%s%s\n",ptr->key,ptr->value);
-        }
-          ptr = ptr->next;
+            print_exp(ptr->key,ptr->value);
+        ptr = ptr->next;
     }
     ptr = env;
     while(ptr != NULL)
     {
-        if(ptr->token == 2)
-        {
-            printf("declare -x ");
-            printf("%s%s\n",ptr->key,ptr->value);
-        }
-         ptr = ptr->next;
+        if(ptr->token == 2 | ptr->token == 3) 
+            print_exp(ptr->key,ptr->value);
+          ptr = ptr->next;
     }
     return(1);
 }
@@ -105,7 +80,7 @@ int check_var(char *arr)
         i++;
     }
     i = 0;
-    if(arr[0] == 95 && backslash == 1)
+    if((arr[0] == 95 && backslash == 1) || (ft_isalpha(arr[0]) == 0))
     {
         ft_putstr_fd("export: ",STDERR_FILENO);
         ft_putstr_fd(arr,STDERR_FILENO);
@@ -119,7 +94,7 @@ int check_var(char *arr)
 int ft_export(t_env **env,t_cmd *commands)
 {
     int i;
-    i = 0;
+    i = 1;
     if(len_darray(commands->args) == 1)
         ft_exp((*env));
     while(commands->args[i] != NULL)

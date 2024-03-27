@@ -126,7 +126,6 @@ typedef enum s_rediopr
 
 typedef struct s_env{
 
-	int index;
 	char *key;
 	char *value;
 	int token;
@@ -239,16 +238,15 @@ void care_inchild(t_cmd *current, t_bash *bash_boss);
 
 
 int check_builtings(t_cmd *commands);
-t_env *newexp(char *str, int this, int token);
 
 void ft_numberforexit(char *str);
 
 
 // ENV STRUCT
 char *get_key(char *str);
-t_env *newsenv(char *str, int this, int token);
+t_env *newsenv(char *str, int token);
 t_env *ft_nenv(char **env,int token);
-void addbackenv(char *str,int this,t_env **cpyenv, int token);
+void addbackenv(char *str,t_env **cpyenv, int token);
 int len_env(t_env *env);
 
 
@@ -360,7 +358,6 @@ int print_pwd(t_cmd *comands);
 //_______________________________________________FT_UNSET____________________________________________//
 int ft_unset(t_env **env,t_cmd *commands);
 void ft_removeinenv(t_env **env, int index);
-void update_index(t_env **env);
 //________________________________________________EXIT_______________________________________________//
 void ft_exit(t_cmd *comands);
 
