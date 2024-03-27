@@ -37,6 +37,11 @@ int ft_handle_redir_input(char *delimiter)
 
 }*/
 
+t_file_struct *get_file_num()
+{
+	static t_file_struct instance;
+	return(&instance);
+}
 
 void ft_heredoc(char *delimiter, int in, int out, t_bash *bash_boss)
 {
@@ -44,6 +49,9 @@ void ft_heredoc(char *delimiter, int in, int out, t_bash *bash_boss)
     char *line_text;
     int pid;
     pid = fork();
+    get_file_num()->in = in;
+    get_file_num()->out = out;
+    signal(SIGINT, handle_signal_here_doc);
     if(pid == 0)
     {
         if(bash_boss->pipein != - 1)
@@ -53,7 +61,7 @@ void ft_heredoc(char *delimiter, int in, int out, t_bash *bash_boss)
         while(1)
         {
             line_text = ft_strjoin(ANSI_COLOR_PURPLE,"🐧🐧heredoco>");
-            line = readline(line_text);  
+            line = readline(line_text);
             free(line_text);
             if(strncmp(delimiter,line,ft_strlen(line)) == 0)
             {
@@ -66,15 +74,16 @@ void ft_heredoc(char *delimiter, int in, int out, t_bash *bash_boss)
                 ft_putforwe(line,out);
             }
     }
-    waitpid(pid,&pid,0);
+    waitpid(pid,NULL,0);
     close(out);
+    exit(EXIT_SUCCESS);
 }
 
 
 void case_heredoc(t_cmd *ptrcmd)
 {
     if(ptrcmd->args[0] == NULL && ptrcmd->redir != NULL)
-    {   
+    {
     //Da free nas coisas
     //
         exit(EXIT_SUCCESS);
