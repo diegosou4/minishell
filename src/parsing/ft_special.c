@@ -14,7 +14,7 @@
 
 static int	ft_space(char **line)
 {
-	while (**line == '2')
+	while (**line == '\2')
 		(*line)++;
 	return (1);
 }
@@ -43,7 +43,7 @@ char	*ft_string_handle_2(char *line, char *modified_line)
 		ft_flag_update(&num.flag_quotes, *line);
 		if (num.flag_quotes == 0 && (*line == '<' || *line == '>'))
 		{
-			modified_line[num.j++] = '2';
+			modified_line[num.j++] = '\2';
 			while (*line == '<' || *line == '>')
 			{
 				modified_line[num.j++] = *line;
@@ -52,7 +52,7 @@ char	*ft_string_handle_2(char *line, char *modified_line)
 			ft_space(&line);
 			if (*line == '<' || *line == '>')
 				return (NULL);
-			modified_line[num.j++] = '2';
+			modified_line[num.j++] = '\2';
 			num.flag_quotes = *line;
 		}
 		modified_line[num.j++] = *line;
