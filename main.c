@@ -28,6 +28,8 @@ linha de entrada em busca de erros.
 informações relevantes.
 */
 
+int g_exit_status;
+
 int	ft_list_creation(t_word_list **words_list, t_bash *bash,
 	char **tokens, char *new_string)
 {
@@ -76,12 +78,12 @@ t_word_list	**ft_tokenizer_manager(char *line, t_env *env, t_bash *bash)
 	memmory here.
 */
 
-void	ft_structure_manager(t_line *line, t_bash *bash, int status)
+void	ft_structure_manager(t_line *line, t_bash *bash)
 {
 	t_word_list	**list;
 	t_cmd		*cmd_structure;
 
-	bash->exit_status = status;
+	bash->exit_status = g_exit_status;
 	list = ft_tokenizer_manager(line->line, bash->cpyenv, bash);
 	if (!list)
 		return ;
@@ -99,9 +101,8 @@ void	*ft_parse_manager(char **env)
 {
 	t_line	line;
 	t_bash	bash_boss;
-	int		status;
 
-	status = 0;
+	g_exit_status = 0;
 	ft_signal_manager();
 	bash_boss.pid = NULL;
 	bash_boss.env = ft_arrcpy(env);
@@ -117,10 +118,11 @@ void	*ft_parse_manager(char **env)
 		if (ft_whitespace(line.line) == 1)
 			add_history(line.line);
 		if (ft_check_input(line.line, &bash_boss))
-			ft_structure_manager(&line, &bash_boss, status);
-		status = bash_boss.exit_status;
+			ft_structure_manager(&line, &bash_boss);
+		g_exit_status = bash_boss.exit_status;
 		ft_free_line_struct(&line);
 	}
+	rl_clear_history();
 	return (NULL);
 }
 
