@@ -23,7 +23,7 @@ char *get_key(char *str)
     {   
         if(str[i] == 61)
         {
-            key = ft_substr(str,0,i);
+            key = ft_substr(str,0,(i + 1));
             return(key);
         }
         i++;
@@ -35,20 +35,17 @@ t_env *newsenv(char *str, int token)
 {
     t_env *cpyenv;
     char *v;
-    char *k;
-    
-    v = ft_strchr(str,61);
+    char *key;
+    char *value;
+
+    key = get_key(str);
     cpyenv = ft_calloc(sizeof(t_env),1);
-    if(ft_boolstrchr(str,61) == 0)
-    {
-        cpyenv->key = ft_strdup(str);
-        cpyenv->value = NULL;   
-    }else
-    {
-        k = get_key(str);
-        cpyenv->key = ft_strdup(k);
-        cpyenv->value = ft_strdup(v);
-    } 
+    cpyenv->value = NULL;
+    if (key == NULL)
+        key = ft_strjoin(str,"=");
+    else
+        cpyenv->value = ft_substr(str,ft_strlen(key),ft_strlen(str));   
+    cpyenv->key = key;
     cpyenv->token = token;
     cpyenv->next = NULL;
     return(cpyenv);
@@ -86,6 +83,7 @@ t_env *ft_nenv(char **env, int token)
         addbackenv(env[index],&cpyenv,token);
         index++;
     }
+  
     return(cpyenv);
 }
 

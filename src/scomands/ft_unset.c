@@ -13,38 +13,55 @@
 
 #include "../../includes/mini.h"
 
-
-void ft_removeinenv(t_env **env, int index)
+int unset_env(t_env **env,char *str)
 {
-
+    int i;
+    char *key;
+    char *value;
     t_env *ptr;
-    t_env *prev;
-    t_env *next;
+    t_env *last;
     ptr = (*env);
-    while(index != 0)
+    i = ft_boolstrchr(str,61);
+    if(i == 1)
+        key = get_key(str);
+    printf(" DENTRO DA HILUXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
+    while(ptr != NULL)
     {
-        prev = ptr;
+        last = ptr;
+        if(ft_strncmp(ptr->key,key,ft_strlen(ptr->key)) == 0)
+        {
+            last->next = ptr->next;
+            if(ptr->key != NULL)
+                free(ptr->key);
+            if(ptr->value != NULL)
+                free(ptr->value);
+            free(ptr);
+            return(EXIT_SUCCESS);
+        }
         ptr = ptr->next;
-        index--;
     }
-    if(ptr->next != NULL)
-        next = ptr->next;
-    else
-        next = NULL;
-    if(prev != NULL)
-        prev->next = next;
-    else
-        *env = next;
+    return(1);
 }
 
 int ft_unset(t_env **env,t_cmd *commands)
 {
-    int index;
-    index = ft_strintchr(commands->args[1],61);
-    if(ft_strncmp("_=",commands->args[1],2) == 0)
-        return(2);
+    int exit;
+    int i;
+    i = 1;
     if(*env == NULL)
-        return(2);
+        return(EXIT_FAILURE);
+    if(len_darray(commands->args) == 1)
+        return(EXIT_SUCCESS);
+    while(commands->args[i] != NULL)
+    {
+        if(ft_strncmp("_=",commands->args[i],2) == 0)
+            exit = (EXIT_SUCCESS);
+        else 
+            exit = unset_env(env,commands->args[i]);
+        i++;
+    }
 
-    return(0);
+  
+
+    return(exit);
 }

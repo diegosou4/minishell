@@ -78,7 +78,7 @@ char *ft_path_handler(t_env *env, char *variable)
 	{
 		env = env->next;
 	}
-	holder = (env->value + 1);
+	holder = (env->value);
 	return (holder);
 }
 void ft_check_variable_quotes_expansion(char *dest)

@@ -13,13 +13,27 @@
 
 #include "../../includes/mini.h"
 
-void print_exp(char *key,char *value)
+void print_exp(char *key,char *value, int token)
 {
+    char *str;
+   
+    if(token == 3)
+    {
+        printf("declare -x ");
+        str = ft_substr(key,0,(ft_strlen(key) - 1));
+        printf("%s",str);
+        printf("\n");
+        free(str);
+        return;
+    }
     printf("declare -x ");
     printf("%s",key);
+    printf("\"");
     if(value != NULL)
         printf("%s",value);
+    printf("\"");
     printf("\n");
+    
 
 }
 
@@ -28,23 +42,21 @@ int ft_exp(t_env *env)
 {
     t_env *ptr;
     if(env ==  NULL)
-        return(0);
-
+        return(EXIT_FAILURE);
     ptr = env;
     while(ptr != NULL)
     {
         if(ptr->token == 1)
-            print_exp(ptr->key,ptr->value);
+            print_exp(ptr->key,ptr->value,ptr->token);
         ptr = ptr->next;
     }
     ptr = env;
     while(ptr != NULL)
     {
-        if(ptr->token == 2 | ptr->token == 3) 
-            print_exp(ptr->key,ptr->value);
-          ptr = ptr->next;
+        print_exp(ptr->key,ptr->value,ptr->token);       
+        ptr = ptr->next;
     }
-    return(1);
+    return(EXIT_SUCCESS);
 }
 
 int ft_indexinenv(t_env *env,char *this)
@@ -58,7 +70,7 @@ int ft_indexinenv(t_env *env,char *this)
         return(-1);
     while(ptr != NULL)
     {
-        if(strncmp(ptr->key,this, ft_strlen(this)) == 0)
+        if(ft_strncmp(ptr->key,this, ft_strlen(this)) == 0)
             return(index);
         ptr = ptr->next;
         index++;
@@ -95,18 +107,18 @@ int ft_export(t_env **env,t_cmd *commands)
 {
     int i;
     i = 1;
+    int exit;
     if(len_darray(commands->args) == 1)
-        ft_exp((*env));
+        return(ft_exp((*env)));
     while(commands->args[i] != NULL)
     {
         if(check_var(commands->args[i]) == 0)
-            return(EXIT_FAILURE);
+            exit = EXIT_FAILURE;
         else if(ft_strncmp("_=",commands->args[i],2) == 0)
-            return(EXIT_SUCCESS);
+            exit = EXIT_SUCCESS;
         else
-            export_env(env,commands->args[i]);
+            exit = export_env(env,commands->args[i]);
         i++;
     }
-   
-    return(1);
+    return(exit);
 }
