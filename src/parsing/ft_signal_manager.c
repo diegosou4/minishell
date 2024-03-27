@@ -12,20 +12,12 @@
 
 #include "../../includes/mini.h"
 
-// static void	ft_putstr(char *line)
-// {
-// 	while (*line)
-// 	{
-// 		write(1, line, 1);
-// 		line++;
-// 	}
-// }
-
 void	handle_signal(int signal1)
 {
 	if (signal1 == SIGINT)
 	{
 		write(0, "\n", 1);
+		g_exit_status = 130;
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
@@ -46,21 +38,16 @@ void	ft_signal_manager(void)
 
 void	handle_signal_here_doc(int signal1)
 {
+    int in;
+    int out;
+
+    in = get_file_num()->in;
+    out = get_file_num()->out;
 	if (signal1 == SIGINT)
 	{
-		write(0, "\n", 2);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
+		g_exit_status = 130;
+        close(in);
+        close(out);
+		exit(127);
 	}
-}
-
-void	ft_signal_manager_heredoc(void)
-{
-	struct sigaction	sa;
-
-	sa.sa_handler = &handle_signal_here_doc;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-	sigaction(SIGINT, &sa, NULL);
 }
