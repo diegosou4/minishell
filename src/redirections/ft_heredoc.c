@@ -74,9 +74,8 @@ void ft_heredoc(char *delimiter, int in, int out, t_bash *bash_boss)
                 ft_putforwe(line,out);
             }
     }
-    waitpid(pid,NULL,0);
+    waitpid(pid,&pid,0);
     close(out);
-    exit(EXIT_SUCCESS);
 }
 
 
