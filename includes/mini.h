@@ -42,6 +42,14 @@
 #define ANSI_COLOR_RESET "\x1b[0m"
 #define ANSI_COLOR_PURPLE "\e[0;35m"
 
+//_______________________Exit status _________________
+extern int g_exit_status;
+
+typedef struct {
+	int in;
+	int out;
+} t_file_struct;
+
 typedef struct s_number
 {
 	int j;
@@ -148,9 +156,6 @@ typedef struct s_cmd
 
 } t_cmd;
 // Parsign handler.
-
-
-
 
 typedef struct s_bash
 {
@@ -264,7 +269,8 @@ int ft_check_valid_redir(t_word_list *word_list);
 
 void ft_signal_manager();
 void handle_signal(int signal1);
-
+void	handle_signal_here_doc(int signal1);
+t_file_struct *get_file_num();
 // __________________________________________________FREE_MANAGER ________________________________
 
 void ft_free_double_pointers(char **split_line);
