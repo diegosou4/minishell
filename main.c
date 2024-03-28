@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:53:34 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/21 20:45:32 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/28 07:26:03 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ linha de entrada em busca de erros.
 informações relevantes.
 */
 
-int g_exit_status;
+int			g_exit_status;
 
-int	ft_list_creation(t_word_list **words_list, t_bash *bash,
-	char **tokens, char *new_string)
+int	ft_list_creation(t_word_list **words_list, t_bash *bash, char **tokens,
+		char *new_string)
 {
 	int	i;
 
@@ -91,8 +91,8 @@ void	ft_structure_manager(t_line *line, t_bash *bash)
 	bash->commands = cmd_structure;
 	if (bash->commands)
 		start_execution(bash);
-	//if(bash->pid != NULL)
-		//free(bash->pid);
+	if (bash->pid != NULL)
+		free(bash->pid);
 	ft_free_double_word_list(list);
 	ft_free_cmd_structure(cmd_structure);
 }
@@ -104,9 +104,7 @@ void	*ft_parse_manager(char **env)
 
 	g_exit_status = 0;
 	ft_signal_manager();
-	bash_boss.pid = NULL;
-	bash_boss.env = ft_arrcpy(env);
-	bash_boss.cpyenv = ft_nenv(env, 1);
+	ft_bash_boss_init(&bash_boss, env);
 	while (1)
 	{
 		ft_line_handler(&line, bash_boss.cpyenv);
