@@ -12,17 +12,15 @@
 
 #include "../../includes/mini.h"
 
-
-void checkpathredir(t_redir *redir, char *file, int flag)
+void	checkpathredir(t_redir *redir, char *file, int flag)
 {
-    redir->token = flag;
-    if(flag == 1)
-    {
-        redir->path = ft_strdup(file);
-    }
-    if(flag == 2 || flag == 4)
-    {
-        redir->path = ft_strdup(file);
-    }
-
+	redir->token = flag;
+	if (flag == 1)
+	{
+		redir->path = ft_strdup(file);
+	}
+	if (flag == 2 || flag == 4)
+	{
+		redir->path = ft_strdup(file);
+	}
 }
