@@ -26,10 +26,14 @@ char *get_valuepwd(t_env **env, char *value)
     {
         if(ft_strncmp(ptr->key,key,ft_strlen(key)) == 0)
         {   
+            if(key != NULL)
+                free(key);
             val = ft_strdup(ptr->value);
             return(val);
         }
         ptr = ptr->next;
     }
+    if(key != NULL)
+        free(key);
     return(NULL);
 }

@@ -60,7 +60,7 @@ static void invert_pwd(t_env **env,char *str)
 }
 
 
-static void erro_cd(char *str, char **erro)
+static void erro_cd(char *str, char *erro)
 {
     ft_putstr_fd("Error: ", 2);
     ft_putstr_fd(str, 2);
