@@ -341,6 +341,7 @@ int ft_echo(t_cmd *cmd);
 int return_error(char *str);
 //_______________________________________________FT_CD_______________________________________________//
 int ft_cd(t_cmd *comands,t_env **env);
+char *get_valuepwd(t_env **env, char *value);
 //________________________________________________FT_ENV_____________________________________________//
 int ft_env(t_env *env);
 int execute_env(t_env *env, t_cmd *commands);

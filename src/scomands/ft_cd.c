@@ -12,32 +12,6 @@
 
 #include "../../includes/mini.h"
 
-
-
-
-
-static char *get_valuepwd(t_env **env, char *value)
-{
-    t_env *ptr;
-    char *key;
-    char *val;
-    if(env == NULL)
-        return(NULL);
-    ptr = (*env);
-    key  = ft_strdup(value);
-    while(ptr != NULL)
-    {
-        if(ft_strncmp(ptr->key,key,ft_strlen(key)) == 0)
-        {   
-            val = ft_strdup(ptr->value);
-            return(val);
-        }
-        ptr = ptr->next;
-    }
-    return(NULL);
-}
-
-
 static void change_pwd(t_env **env, char *str, char *pwd)
 {
     char *newpwd;
@@ -72,7 +46,6 @@ static void invert_pwd(t_env **env,char *str)
     char *keypwd;
     char *keyold;
     
-    printf("Entra aqui\n");
     pwd = get_valuepwd(env,"PWD=");
     oldpwd = get_valuepwd(env,"OLDPWD=");
     keypwd = ft_strjoin("PWD=",oldpwd);
@@ -84,16 +57,22 @@ static void invert_pwd(t_env **env,char *str)
     free(oldpwd);
     free(keyold);
     free(keypwd);
+}
 
+
+static void erro_cd(char *str, char **erro)
+{
+    ft_putstr_fd("Error: ", 2);
+    ft_putstr_fd(str, 2);
+    ft_putstr_fd(": ", 2);
+    ft_putstr_fd(erro, 2);
+    ft_putstr_fd("\n", 2);
 }
 
 int ft_cd(t_cmd *comands,t_env **env)
 {
     int result;
-    if(env == NULL)
-    {
-        printf("O");
-    }
+    char *erro ;
     if(len_darray(comands->args) > 2)
         return(return_error("cd : too many arguments\n"));
     if(comands->args[1] == NULL)
@@ -107,9 +86,8 @@ int ft_cd(t_cmd *comands,t_env **env)
             invert_pwd(env,comands->args[1]);
         return(EXIT_SUCCESS);
     }
-        
-    else
-        perror("Error ");
-    return(2);
+    erro = strerror(errno);
+    erro_cd(comands->args[1],erro);
+    return(EXIT_FAILURE);
 }
  
