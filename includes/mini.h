@@ -390,7 +390,11 @@ void ft_print_list_struct(t_word_list *structure, int i);
 void ft_print_cmd_struct(t_cmd *cmd);
 t_word_list	*ft_init_word_list(t_word_list *word_lists, char *token);
 void ft_flags_tags_assignment(t_word_list *word_list);
+
+//_____________________________________________INIT_MANAGER____________________________________
 t_line *ft_init_manager(t_line *line);
+void ft_bash_boss_init(t_bash *bash, char **env);
+
 char *ft_create_string(char *line, t_bash *bash);
 void update_index(t_env **env);
 int ft_export(t_env **env,t_cmd *commands);
@@ -404,11 +408,11 @@ char	*ft_string_handle_2(char *line, char *modified_line);
 
 
 
+//__________________________________________ft_struct_manager_utils____________________________________
 
-
-
-
-
+int	ft_lstsize_(t_word_list *lst);
+t_word_list	*ft_lstlast_(t_word_list *lst);
+int	ft_check_token_size(char *token_line);
 
 
 

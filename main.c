@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:53:34 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/28 07:26:03 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/28 08:18:07 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,9 @@ t_word_list	**ft_tokenizer_manager(char *line, t_env *env, t_bash *bash)
 		return (NULL);
 	}
 	while (tokens[++i] != NULL)
+	{
 		words_list[i] = tokenize_and_print(tokens[i]);
+	}
 	i = -1;
 	if (!ft_list_creation(words_list, bash, tokens, new_string))
 		return (NULL);
