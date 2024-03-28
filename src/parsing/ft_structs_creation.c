@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 16:10:04 by marvin            #+#    #+#             */
-/*   Updated: 2024/03/21 16:10:04 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/28 08:15:37 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,12 @@ t_cmd	*ft_parse_array(t_word_list *words_list)
 	cmd->args[args_index] = NULL;
 	return (cmd);
 }
-
+void ft_struct_utility(t_cmd **root, t_cmd **current_cmd, t_cmd **new_cmd)
+{
+		*root = *new_cmd;
+		(*root)->prev = NULL;
+		*current_cmd = *root;
+}
 t_cmd	*ft_structure_creation(t_word_list **token_list)
 {
 	t_cmd	*new_cmd;
@@ -90,11 +95,7 @@ t_cmd	*ft_structure_creation(t_word_list **token_list)
 	{
 		new_cmd = ft_parse_array(token_list[i]);
 		if (i == 0)
-		{
-			root = new_cmd;
-			root->prev = NULL;
-			current_cmd = root;
-		}
+			ft_struct_utility(&root, &current_cmd, &new_cmd);
 		else
 		{
 			current_cmd->next = new_cmd;
