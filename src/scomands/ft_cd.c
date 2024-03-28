@@ -12,25 +12,85 @@
 
 #include "../../includes/mini.h"
 
-// VERIFICAR PARA QUE EU USO ESSA FUNCAO
-char *ft_returnpath(t_env *env,char *this)
-{   
+
+
+
+
+static char *get_valuepwd(t_env **env, char *value)
+{
     t_env *ptr;
-    ptr = env;
+    char *key;
+    char *val;
+    if(env == NULL)
+        return(NULL);
+    ptr = (*env);
+    key  = ft_strdup(value);
     while(ptr != NULL)
     {
-        if(ptr->key == this)
-            return(ft_strdup(ptr->value));
+        if(ft_strncmp(ptr->key,key,ft_strlen(key)) == 0)
+        {   
+            val = ft_strdup(ptr->value);
+            return(val);
+        }
         ptr = ptr->next;
     }
     return(NULL);
 }
 
 
+static void change_pwd(t_env **env, char *str, char *pwd)
+{
+    char *newpwd;
+    char *slash;
+    char *change;
+    
+    slash = ft_strjoin(pwd,"/");
+    newpwd = ft_strjoin(slash,str);
+    change = ft_strjoin("PWD=",newpwd);
+    export_env(env,change);
+    free(change);
+    free(slash);
+    free(newpwd);
+}
+static void change_old(t_env **env,char *str)
+{
+    char *pwd;
+    char *oldpwd;
+
+    pwd = get_valuepwd(env,"PWD=");
+    oldpwd = ft_strjoin("OLDPWD=",pwd);
+    export_env(env,oldpwd);
+    free(oldpwd);
+    change_pwd(env,str,pwd);
+    free(pwd);
+}
+
+static void invert_pwd(t_env **env,char *str)
+{
+    char *pwd;
+    char *oldpwd;
+    char *keypwd;
+    char *keyold;
+    
+    printf("Entra aqui\n");
+    pwd = get_valuepwd(env,"PWD=");
+    oldpwd = get_valuepwd(env,"OLDPWD=");
+    keypwd = ft_strjoin("PWD=",oldpwd);
+    keyold = ft_strjoin("OLDPWD=", pwd);
+
+    export_env(env,keypwd);
+    export_env(env,keyold);
+    free(pwd);
+    free(oldpwd);
+    free(keyold);
+    free(keypwd);
+
+}
+
 int ft_cd(t_cmd *comands,t_env **env)
 {
     int result;
-    if(env != NULL)
+    if(env == NULL)
     {
         printf("O");
     }
@@ -40,7 +100,14 @@ int ft_cd(t_cmd *comands,t_env **env)
         return(return_error("relative or absuloted path\n"));
     result = chdir(comands->args[1]);
     if(result == 0)
-        return(0);
+    {
+        if(ft_strncmp("..",comands->args[1],2) != 0)
+            change_old(env,comands->args[1]);
+        else
+            invert_pwd(env,comands->args[1]);
+        return(EXIT_SUCCESS);
+    }
+        
     else
         perror("Error ");
     return(2);

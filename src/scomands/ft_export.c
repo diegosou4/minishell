@@ -53,7 +53,8 @@ int ft_exp(t_env *env)
     ptr = env;
     while(ptr != NULL)
     {
-        print_exp(ptr->key,ptr->value,ptr->token);       
+        if(ptr->token == 3 || ptr->token == 2)
+            print_exp(ptr->key,ptr->value,ptr->token);       
         ptr = ptr->next;
     }
     return(EXIT_SUCCESS);
