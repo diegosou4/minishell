@@ -57,9 +57,6 @@ int	ft_check_words_list(t_word_list *tokens)
 
 static	int	ft_special_pipe_case(char *line)
 {
-	int	i;
-
-	i = -1;
 	if (line[0] == '|' && line[1] == '|')
 	{
 		printf("syntax error near `||' More than one pipe found! 🚰🐟\n");

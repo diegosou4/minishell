@@ -31,7 +31,7 @@ char	*findpath(char **args, int flag, int location)
 	char	*path;
 
 	path = NULL;
-	if (flag == 1 | flag == 3)
+	if (flag == 1 || flag == 3)
 	{
 		path = ft_strdup(args[location + 1]);
 	}

@@ -99,6 +99,8 @@ void ft_print_list_struct(t_word_list *structure, int i)
 
 void ft_print_cmd_struct(t_cmd *cmd)
 {
+    while(cmd)
+    {
     printf(ANSI_COLOR_CYAN "---------- Command Structure ----------\n" ANSI_COLOR_RESET);
     printf(ANSI_COLOR_YELLOW "Path: " ANSI_COLOR_RESET ANSI_COLOR_GREEN "%s\n" ANSI_COLOR_RESET, cmd->path);
 
@@ -118,4 +120,6 @@ void ft_print_cmd_struct(t_cmd *cmd)
     }
 
     printf(ANSI_COLOR_CYAN "---------------------------------------\n" ANSI_COLOR_RESET);
+    cmd = cmd->next;
+    }
 }

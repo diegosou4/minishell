@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 17:33:05 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/03/28 08:59:13 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/28 10:29:32 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,7 @@ void	ft_extract_var(t_word_list *word_list, t_bash *bash)
 {
 	char	*dest;
 	char	*word_cpy;
-	int		flag;
 
-	flag = 0;
 	while (word_list)
 	{
 		if (ft_strcmp(word_list->word->word, "<<") == 0 && word_list->next)
