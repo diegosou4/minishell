@@ -6,54 +6,16 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 17:33:05 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/03/21 21:07:59 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/28 08:59:13 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/mini.h"
 
-int ft_lstsize_(t_word_list *lst)
+static char	*ft_create_token(char *token_line)
 {
-	int i;
-
-	i = 0;
-	while (lst != NULL)
-	{
-		i++;
-		lst = lst->next;
-	}
-	return (i);
-}
-
-t_word_list *ft_lstlast_(t_word_list *lst)
-{
-	int tamlist;
-	int i;
-
-	i = 0;
-	tamlist = ft_lstsize_(lst);
-	while (i < tamlist - 1)
-	{
-		i++;
-		lst = lst->next;
-	}
-	return (lst);
-}
-static int ft_check_token_size(char *token_line)
-{
-	int i;
-
-	i = 0;
-	while (token_line[i] != '\0' && ((ft_isalnum(token_line[i])
-			|| ft_isdigit(token_line[i]) || ft_isalnum(token_line[i])
-			|| token_line[i] == '_')))
-		i++;
-	return (i);
-}
-static char *ft_create_token(char *token_line)
-{
-	int i;
-	char *token;
+	int		i;
+	char	*token;
 
 	i = -1;
 	token = ft_calloc(ft_strlen(token_line) + 1, sizeof(char));
@@ -64,16 +26,17 @@ static char *ft_create_token(char *token_line)
 	token[i] = '\0';
 	return (token);
 }
-char *ft_path_handler(t_env *env, char *variable)
-{
-	int index;
-	char *holder;
 
-	if(env == NULL)
-		return(NULL);
+char	*ft_path_handler(t_env *env, char *variable)
+{
+	int		index;
+	char	*holder;
+
+	if (env == NULL)
+		return (NULL);
 	index = ft_indexinenv(env, variable);
 	if (index == -1)
-		return NULL;
+		return (NULL);
 	while (index--)
 	{
 		env = env->next;
@@ -81,11 +44,13 @@ char *ft_path_handler(t_env *env, char *variable)
 	holder = (env->value + 1);
 	return (holder);
 }
-void ft_check_variable_quotes_expansion(char *dest)
+
+void	ft_check_variable_quotes_expansion(char *dest)
 {
-	int i;
+	int	i;
+
 	i = -1;
-	while(dest[++i])
+	while (dest[++i])
 	{
 		if (dest[i] == '$' && dest[i + 1] == '\'')
 		{
@@ -93,12 +58,13 @@ void ft_check_variable_quotes_expansion(char *dest)
 		}
 	}
 }
-void ft_check_variable_expansion(char *src, char *dest, t_env *env)
+
+void	ft_check_variable_expansion(char *src, char *dest, t_env *env)
 {
-	char *token;
-	char *path;
-	int in_quotes;
-	int double_quote;
+	char	*token;
+	char	*path;
+	int		in_quotes;
+	int		double_quote;
 
 	double_quote = 0;
 	in_quotes = 0;
@@ -107,12 +73,13 @@ void ft_check_variable_expansion(char *src, char *dest, t_env *env)
 		if (*src == '\"' && ft_strchr(src, '$'))
 			double_quote = !double_quote;
 		if (*src == '\'' && !double_quote)
-        {
-            in_quotes = !in_quotes;
-            *dest++ = *src++;
-            continue;
-        }
-		if (!in_quotes && *src == '$' && (*(src + 1) != '\'' && *(src + 1) != '\"'))
+		{
+			in_quotes = !in_quotes;
+			*dest++ = *src++;
+			continue ;
+		}
+		if (!in_quotes && *src == '$' && (*(src + 1) != '\''
+				&& *(src + 1) != '\"'))
 		{
 			token = ft_create_token(src + 1);
 			path = ft_path_handler(env, token);
@@ -127,11 +94,11 @@ void ft_check_variable_expansion(char *src, char *dest, t_env *env)
 	*dest = '\0';
 }
 
-void ft_extract_var(t_word_list *word_list, t_bash *bash)
+void	ft_extract_var(t_word_list *word_list, t_bash *bash)
 {
-	char *dest;
-	char *word_cpy;
-	int flag;
+	char	*dest;
+	char	*word_cpy;
+	int		flag;
 
 	flag = 0;
 	while (word_list)
@@ -150,11 +117,12 @@ void ft_extract_var(t_word_list *word_list, t_bash *bash)
 		{
 			word_cpy = ft_calloc(100 + 1, sizeof(char));
 			dest = word_cpy;
-			ft_check_variable_expansion(word_list->word->word, dest, bash->cpyenv);
+			ft_check_variable_expansion(word_list->word->word, dest,
+				bash->cpyenv);
 			if (ft_strchr(word_cpy, '\''))
 				ft_check_variable_quotes_expansion(dest);
 			free(word_list->word->word);
-			word_list->word->word =ft_strdup(word_cpy);
+			word_list->word->word = ft_strdup(word_cpy);
 			free(word_cpy);
 		}
 		word_list = word_list->next;
