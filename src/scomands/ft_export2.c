@@ -13,41 +13,53 @@
 
 #include "../../includes/mini.h"
 
+static void change_value(char **key,char **value,char *str)
+{
+    *key = get_key(str);
+    if (*key == NULL)
+        *key = ft_strdup(str);
+    else
+        *value = ft_substr(str, ft_strlen(*key), ft_strlen(str));
+}
+
+static int change_key(t_env **ptr,char *value, int token)
+{
+     if ((*ptr)->value != NULL)
+            free((*ptr)->value);
+        (*ptr)->value = value;
+        (*ptr)->token = token;
+        return(EXIT_SUCCESS);
+}
+
+static int free_value(char *value,int exit)
+{
+    if (value != NULL)
+        free(value);
+    return(exit); 
+}
 
 int key_exist(t_env **env, char *str, int token)
 {
     char *key;
-    char *value = NULL;
+    char *value;
     t_env *ptr;
 
+    value = NULL;
     ptr = *env;
-    key = get_key(str);
-    if (key == NULL)
-        key = ft_strdup(str);
-    else
-        value = ft_substr(str, ft_strlen(key), ft_strlen(str));
+    change_value(&key,&value,str);
     while (ptr != NULL)
     {
         if (ft_strncmp(ptr->key, key, ft_strlen(key)) == 0)
         {
             free(key);
             if (ft_boolstrchr(str, 61) == 0 || value == NULL || ft_strlen(value) == 0)
-            {
-                if (value != NULL)
-                    free(value); 
-                return (EXIT_SUCCESS);
-            }
-            if (ptr->value != NULL)
-                free(ptr->value);
-            ptr->value = value;
-            ptr->token = token;
-            return (EXIT_SUCCESS);
+               return(free_value(value,EXIT_SUCCESS));
+            return (change_key(&ptr,value,token));
         }
         ptr = ptr->next;
     }
-    if (value != NULL)
-        free(value); 
-    return (EXIT_FAILURE);
+    free(key);
+    return (free_value(value,EXIT_FAILURE));
 }
 
 

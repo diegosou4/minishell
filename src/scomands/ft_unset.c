@@ -13,34 +13,60 @@
 
 #include "../../includes/mini.h"
 
-int unset_env(t_env **env,char *str)
+static int free_keyandvalue(t_env **ptr, char *key)
 {
-    int i;
+    free(key);
+    if((*ptr)->key != NULL)
+        free((*ptr)->key);
+    if((*ptr)->value != NULL)
+        free((*ptr)->value);
+    free((*ptr));
+    return(EXIT_SUCCESS);
+}
+static void change_value(char **key,char **value,char *str)
+{
+    *key = get_key(str);
+    if (*key == NULL)
+        *key = ft_strdup(str);
+    else
+        *value = ft_substr(str, ft_strlen(*key), ft_strlen(str));
+}
+
+static int free_keyvalue(char *value,char *key,int exit)
+{
+    if(key != NULL)
+        free(key);
+    if (value != NULL)
+        free(value);
+    return(exit); 
+}
+int unset_env(t_env **env, char *str)
+{
     char *key;
     char *value;
     t_env *ptr;
     t_env *last;
-    ptr = (*env);
-    i = ft_boolstrchr(str,61);
-    if(i == 1)
-        key = get_key(str);
-    printf(" DENTRO DA HILUXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
-    while(ptr != NULL)
+    
+    last = NULL;
+    ptr = *env;
+    change_value(&key,&value,str);
+    if(value != NULL)
+        return(free_keyvalue(value,key,EXIT_SUCCESS));
+    while (ptr != NULL)
     {
-        last = ptr;
-        if(ft_strncmp(ptr->key,key,ft_strlen(ptr->key)) == 0)
+        if (ft_strncmp(ptr->key, key, ft_strlen(key)) == 0)
         {
-            last->next = ptr->next;
-            if(ptr->key != NULL)
-                free(ptr->key);
-            if(ptr->value != NULL)
-                free(ptr->value);
-            free(ptr);
-            return(EXIT_SUCCESS);
+            if(last == NULL)
+                *env = (*env)->next;
+            else
+                last->next = ptr->next;
+            return(free_keyandvalue(&ptr,key));
         }
+        last = ptr;
         ptr = ptr->next;
     }
-    return(1);
+    free(key);
+    return (EXIT_FAILURE);
 }
 
 int ft_unset(t_env **env,t_cmd *commands)
