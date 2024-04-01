@@ -26,7 +26,7 @@ static void change_key(t_env **ptr,char *value, int token)
 {
      if ((*ptr)->value != NULL)
             free((*ptr)->value);
-        (*ptr)->value = value;
+        (*ptr)->value = ft_strdup(value);
         (*ptr)->token = token;
 }
 

@@ -47,10 +47,11 @@ static void invert_pwd(t_env **env,char *str)
     char *keyold;
     
     pwd = get_valuepwd(env,"PWD=");
+
     oldpwd = get_valuepwd(env,"OLDPWD=");
     keypwd = ft_strjoin("PWD=",oldpwd);
     keyold = ft_strjoin("OLDPWD=", pwd);
-
+    
     export_env(env,keypwd);
     export_env(env,keyold);
     free(pwd);
