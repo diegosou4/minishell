@@ -12,61 +12,6 @@
 
 #include "../../includes/mini.h"
 
-static void change_pwd(t_env **env, char *str, char *pwd)
-{
-    char *newpwd;
-    char *slash;
-    char *change;
-    
-    if(pwd != NULL)
-    {
-        slash = ft_strjoin(pwd,"/");
-        newpwd = ft_strjoin(slash,str);
-        change = ft_strjoin("PWD=",newpwd);
-        export_env(env,change);
-        free(change);
-        free(slash);
-        free(newpwd);
-    }
-    
-}
-static void change_old(t_env **env,char *str)
-{
-    char *pwd;
-    char *oldpwd;
-
-   pwd = get_valuepwd(env,"PWD=");
-   if(pwd != NULL)
-   {
-    oldpwd = ft_strjoin("OLDPWD=",pwd);
-    export_env(env,oldpwd);
-    free(oldpwd);
-   }
-   change_pwd(env,str,pwd);
-    if(pwd != NULL)
-        free(pwd);
-}
-
-static void invert_pwd(t_env **env,char *str)
-{
-    char *pwd;
-    char *oldpwd;
-    char *keypwd;
-    char *keyold;
-    
-    pwd = get_valuepwd(env,"PWD=");
-
-    oldpwd = get_valuepwd(env,"OLDPWD=");
-    keypwd = ft_strjoin("PWD=",oldpwd);
-    keyold = ft_strjoin("OLDPWD=", pwd);
-    
-    export_env(env,keypwd);
-    export_env(env,keyold);
-    free(pwd);
-    free(oldpwd);
-    free(keyold);
-    free(keypwd);
-}
 
 
 static void erro_cd(char *str, char *erro)
@@ -77,26 +22,48 @@ static void erro_cd(char *str, char *erro)
     ft_putstr_fd(erro, 2);
     ft_putstr_fd("\n", 2);
 }
+int case_cd(char *diretory,t_env **env,int flag)
+{
+    char *str;
+    str = NULL;
+//     printf("%s diretorio", diretory);
+    
+    if(ft_strncmp("..",diretory,2) == 0)
+            invert_pwd(env,diretory);
+    else
+    {
+        change_old(env,diretory,(flag - 1));
+    }
+        
+            
+    return(EXIT_SUCCESS);
+
+
+}
 
 int ft_cd(t_cmd *comands,t_env **env)
 {
     int result;
     char *erro ;
-    if(len_darray(comands->args) > 2)
+    int len;
+    char *str;
+    str = NULL;
+    len = len_darray(comands->args);
+    if(len > 2)
         return(return_error("cd : too many arguments\n"));
-    if(comands->args[1] == NULL)
-        return(return_error("relative or absuloted path\n"));
-    result = chdir(comands->args[1]);
+    else if(len == 2)
+        str = ft_strdup(comands->args[1]);
+    else
+        str = get_valuepwd(env,"HOME=");
+    result = chdir(str);
     if(result == 0)
     {
-        if(ft_strncmp("..",comands->args[1],2) != 0)
-            change_old(env,comands->args[1]);
-        else
-            invert_pwd(env,comands->args[1]);
-        return(EXIT_SUCCESS);
+
+     case_cd(str,env,len);
     }
+    /*
     erro = strerror(errno);
-    erro_cd(comands->args[1],erro);
+    erro_cd(comands->args[1],erro);*/
     return(EXIT_FAILURE);
 }
  
