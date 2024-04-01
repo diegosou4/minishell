@@ -18,7 +18,7 @@ static void erro_cd(char *str, char *erro)
 {
     ft_putstr_fd("Error: ", 2);
     ft_putstr_fd(str, 2);
-    ft_putstr_fd(": ", 2);
+    ft_putstr_fd(" ", 2);
     ft_putstr_fd(erro, 2);
     ft_putstr_fd("\n", 2);
 }
@@ -50,15 +50,19 @@ int ft_cd(t_cmd *comands,t_env **env)
         str = ft_strdup(comands->args[1]);
     else
         str = get_valuepwd(env,"HOME=");
+    if(str == NULL)
+    {
+        ft_putstr_fd("Home not set\n",2);
+        return(EXIT_FAILURE);
+    }
     result = chdir(str);
     if(result == 0)
     {
-
      case_cd(str,env,len);
+     return(EXIT_SUCCESS);
     }
-    /*
     erro = strerror(errno);
-    erro_cd(comands->args[1],erro);*/
+    erro_cd(str,erro);
     return(EXIT_FAILURE);
 }
  

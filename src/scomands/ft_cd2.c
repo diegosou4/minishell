@@ -54,7 +54,17 @@ void change_old(t_env **env,char *str, int flag)
     if(pwd != NULL)
         free(pwd);
 }
-
+static void checkandfree(char **pwd,char **oldpwd,char **keyold,char **keypwd)
+{
+    if((*pwd) != NULL)
+        free((*pwd));
+    if((*oldpwd) != NULL)
+        free((*oldpwd));
+    if((*keyold) != NULL)
+        free((*keyold));
+    if((*keypwd) != NULL)
+       free((*keypwd));     
+}
 void invert_pwd(t_env **env,char *str)
 {
     char *pwd;
@@ -62,18 +72,22 @@ void invert_pwd(t_env **env,char *str)
     char *keypwd;
     char *keyold;
     
-    pwd = get_valuepwd(env,"PWD=");
-
-    oldpwd = get_valuepwd(env,"OLDPWD=");
-    keypwd = ft_strjoin("PWD=",oldpwd);
-    keyold = ft_strjoin("OLDPWD=", pwd);
+    oldpwd = NULL;
+    keyold = NULL;
+    pwd = NULL;
+    keypwd = NULL;
     
-    export_env(env,keypwd);
-    export_env(env,keyold);
-    free(pwd);
-    free(oldpwd);
-    free(keyold);
-    free(keypwd);
+    pwd = get_valuepwd(env,"PWD=");
+    oldpwd = get_valuepwd(env,"OLDPWD=");
+    if(oldpwd != NULL)
+        keypwd = ft_strjoin("PWD=",oldpwd);
+    if(pwd != NULL)
+        keyold = ft_strjoin("OLDPWD=", pwd);
+    if(keypwd != NULL)
+        export_env(env,keypwd);
+    if(keyold != NULL)
+        export_env(env,keyold);
+   checkandfree(&pwd,&oldpwd,&keyold,&keypwd);
 }
 
 char *get_valuepwd(t_env **env, char *value)
