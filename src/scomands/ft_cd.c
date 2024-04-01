@@ -18,25 +18,33 @@ static void change_pwd(t_env **env, char *str, char *pwd)
     char *slash;
     char *change;
     
-    slash = ft_strjoin(pwd,"/");
-    newpwd = ft_strjoin(slash,str);
-    change = ft_strjoin("PWD=",newpwd);
-    export_env(env,change);
-    free(change);
-    free(slash);
-    free(newpwd);
+    if(pwd != NULL)
+    {
+        slash = ft_strjoin(pwd,"/");
+        newpwd = ft_strjoin(slash,str);
+        change = ft_strjoin("PWD=",newpwd);
+        export_env(env,change);
+        free(change);
+        free(slash);
+        free(newpwd);
+    }
+    
 }
 static void change_old(t_env **env,char *str)
 {
     char *pwd;
     char *oldpwd;
 
-    pwd = get_valuepwd(env,"PWD=");
+   pwd = get_valuepwd(env,"PWD=");
+   if(pwd != NULL)
+   {
     oldpwd = ft_strjoin("OLDPWD=",pwd);
     export_env(env,oldpwd);
     free(oldpwd);
-    change_pwd(env,str,pwd);
-    free(pwd);
+   }
+   change_pwd(env,str,pwd);
+    if(pwd != NULL)
+        free(pwd);
 }
 
 static void invert_pwd(t_env **env,char *str)
