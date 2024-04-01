@@ -13,15 +13,24 @@
 
 #include "../../includes/mini.h"
 
+int case_here(char *delimiter, t_bash *bash_boss)
+{
+    int pipesfd[2];
+    pipe(pipesfd);
+
+    ft_heredoc(delimiter,pipesfd[0],pipesfd[1],bash_boss);
+    return(pipesfd[0]);
+
+}
+
+
 int return_in(t_cmd *cmd, t_bash *bash_boss)
 {
     t_redir *ptr;
     int fd;
     fd = -1;
+
     ptr = cmd->redir;
-    int pipesfd[2];
-    if(ptr == NULL)
-        return(-1);
     while(ptr != NULL)
     {
         if(ptr->token == redir_in || ptr->token == here_doc)
@@ -29,16 +38,13 @@ int return_in(t_cmd *cmd, t_bash *bash_boss)
             if(fd != -1)
                 close(fd);
             if(ptr->token == here_doc)
-            {
-                pipe(pipesfd);
-                ft_heredoc(ptr->path,pipesfd[0],pipesfd[1],bash_boss);
-                fd = pipesfd[0];
-            }
+                fd = case_here(ptr->path,bash_boss);
             else    
                 fd = open_in(ptr->path);
             if(fd < 0)
             {
-                // execucao nao deve funcionar;
+                cmd->executable = 0;
+                return(fd);
             } 
         }
          ptr = ptr->next; 
@@ -50,10 +56,9 @@ int return_out(t_cmd *cmd)
 {
     t_redir *ptr;
     int fd;
+
     fd = -1;
     ptr = cmd->redir;
-    if(ptr == NULL)
-        return(-1);
     while(ptr != NULL)
     {
         if(ptr->token == redir_out || ptr->token == append_out)
@@ -66,10 +71,10 @@ int return_out(t_cmd *cmd)
                 fd = open_append(ptr->path);
             if(fd < 0)
             {
-             // execucao nao deve funcionar;
+                cmd->executable = 0;
+                return(fd);
             }
         }
-    
         ptr = ptr->next;
     }
     return(fd);
@@ -80,7 +85,9 @@ void child_exec(t_cmd *cmd, t_bash *bash_boss)
 {
     bash_boss->fdout = return_out(cmd);
     bash_boss->fdin = return_in(cmd,bash_boss);
-    if(expand_path(&cmd,bash_boss->env) == 1)
+    if(cmd->executable == 0)
+        exit(EXIT_FAILURE);
+    if(expand_path_cpy(&cmd,bash_boss->cpyenv) == 1)
         fail_expander(bash_boss,cmd);
     if(sizepipe(bash_boss->commands) != 1)
         care_inchild(cmd,bash_boss);
@@ -105,7 +112,9 @@ void child_build(t_cmd *cmd, t_bash *bash_boss)
     check = check_builtings(cmd);
     bash_boss->fdout = return_out(cmd);
     bash_boss->fdin = return_in(cmd,bash_boss);
-    if(expand_path(&cmd,bash_boss->env) == 1)
+    if(cmd->executable == 0)
+        exit(EXIT_FAILURE);
+    if(expand_path_cpy(&cmd,bash_boss->cpyenv) == 1)
         exit(EXIT_FAILURE);
     if(sizepipe(bash_boss->commands) != 1)
         care_inchild(cmd,bash_boss);

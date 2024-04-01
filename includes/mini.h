@@ -327,8 +327,8 @@ int open_append(char *path);
 int open_fd(t_redir **redirect);
 int open_redir_fd(t_redir *redir);
 void printf_error_fd(char *strerror,char *file);
-void init_dup(int fdin,int fdout);
-void reset_fd(t_bash *bash_boss);
+void init_dup(t_bash *bash_boss);
+void reset_fd(t_bash *bash_boss, int i);
 void dup_fd(t_bash *bash_boss);
 void close_dup(t_bash *bash_boss);
 void close_fds(t_bash *bash_boss);
@@ -394,13 +394,11 @@ void update_index(t_env **env);
 int ft_export(t_env **env,t_cmd *commands);
 //______________________________________________EXPAND_PATH_______________________________________________//
 int expand_path(t_cmd **commands,char **env);
+int expand_path_cpy(t_cmd **commands,t_env *cpyenv);
 char *ft_getpath(char **env);
 
 void execute_one(t_cmd *command,char **env,t_env **cpy,t_cmd *last);
 char	*ft_string_handle_2(char *line, char *modified_line);
-
-
-
 
 
 

@@ -60,7 +60,7 @@ clean: $(NAME)
 re: $(NAME)
 	clean all
 valgrind:
-	valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-fds=yes -s  --trace-children=yes ./${NAME}
+	valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --trace-children=yes ./${NAME}
 fd:
 	@valgrind -q --tool=none --track-fds=yes --trace-children=yes ./${NAME}
       

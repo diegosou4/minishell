@@ -12,10 +12,17 @@
 
 #include "../../includes/mini.h"
 
-void reset_fd(t_bash *bash_boss)
+void reset_fd(t_bash *bash_boss, int i)
 {
-    dup2(bash_boss->in, 0);
-    dup2(bash_boss->out,1);
+    if(i == 1)
+        dup2(bash_boss->in, 0);
+    if(i == 3)
+        dup2(bash_boss->out,1);
+    if(i == 4)
+    {
+        dup2(bash_boss->in, 0);
+        dup2(bash_boss->out,1);
+    }
 }
 
 void dup_fd(t_bash *bash_boss)
@@ -24,20 +31,38 @@ void dup_fd(t_bash *bash_boss)
     bash_boss->out = dup(1);
 }
 
-void init_dup(int fdin,int fdout)
-{
-    if(fdin != 0)
-        dup2(fdin,0);
-    if(fdout != 1)
-        dup2(fdout,1);
+void init_dup(t_bash *bash_boss)
+{  
+    if(bash_boss->fdin != -1 || bash_boss->fdout != -1)
+        dup_fd(bash_boss);
+    if(bash_boss->fdin != -1)
+        dup2(bash_boss->fdin,0);
+    if(bash_boss->fdout != -1)
+        dup2(bash_boss->fdout,1);    
 }
 
 void close_fds(t_bash *bash_boss)
 {
-    if(bash_boss->fdin != 0)
+    int i;
+    i = 0;
+
+    if(bash_boss->fdout != -1 && bash_boss->fdin != -1)
+    {
+        i = 4;
         close(bash_boss->fdin);
-    if(bash_boss->fdout != 1)
         close(bash_boss->fdout);
+    }
+    else if(bash_boss->fdin != -1)
+    {
+        close(bash_boss->fdin);
+        i = 1;
+    }
+    else if(bash_boss->fdout != -1)
+    {
+        close(bash_boss->fdout);
+        i = 3;
+    }   
+    reset_fd(bash_boss,i);
     bash_boss->fdin = -1;
     bash_boss->fdout = -1;
 }

@@ -25,6 +25,9 @@ static int free_keyandvalue(t_env **ptr, char *key)
 }
 static void change_value(char **key,char **value,char *str)
 {
+    (*key) = NULL;
+    (*value) = NULL;
+
     *key = get_key(str);
     if (*key == NULL)
         *key = ft_strdup(str);
@@ -46,8 +49,7 @@ int unset_env(t_env **env, char *str)
     char *value;
     t_env *ptr;
     t_env *last;
-    
-    last = NULL;
+    last  = NULL;
     ptr = *env;
     change_value(&key,&value,str);
     if(value != NULL)
@@ -73,6 +75,7 @@ int ft_unset(t_env **env,t_cmd *commands)
 {
     int exit;
     int i;
+    exit = 0;
     i = 1;
     if(*env == NULL)
         return(EXIT_FAILURE);
