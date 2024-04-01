@@ -12,6 +12,7 @@
 
 #include "libft.h"
 
+
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	size_t	size_s1;
@@ -24,9 +25,10 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	j = 0;
 	size_s1 = ft_strlen((char *)s1);
 	size_s2 = ft_strlen((char *)s2);
+
 	new = (char *)malloc(((size_s1 + size_s2) + (1)) * sizeof(char));
 	if (!new || (!s1 && !s2))
-		return (0);
+		return (NULL);
 	while (s1[i] != '\0')
 	{
 		new[i] = s1[i];
