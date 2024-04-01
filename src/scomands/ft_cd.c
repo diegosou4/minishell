@@ -26,18 +26,13 @@ int case_cd(char *diretory,t_env **env,int flag)
 {
     char *str;
     str = NULL;
-//     printf("%s diretorio", diretory);
     
     if(ft_strncmp("..",diretory,2) == 0)
             invert_pwd(env,diretory);
     else
-    {
         change_old(env,diretory,(flag - 1));
-    }
-        
             
     return(EXIT_SUCCESS);
-
 
 }
 

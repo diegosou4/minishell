@@ -42,7 +42,7 @@ void change_old(t_env **env,char *str, int flag)
 {
     char *pwd;
     char *oldpwd;
-    printf("%i flag \n",flag);
+
    pwd = get_valuepwd(env,"PWD=");
    if(pwd != NULL)
    {
@@ -50,7 +50,6 @@ void change_old(t_env **env,char *str, int flag)
     export_env(env,oldpwd);
     free(oldpwd);
    }
-  
    change_pwd(env,str,pwd,flag);
     if(pwd != NULL)
         free(pwd);
