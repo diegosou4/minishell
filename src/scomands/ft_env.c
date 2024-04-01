@@ -32,9 +32,15 @@ int ft_env(t_env *env)
 
 int execute_env(t_env *env, t_cmd *commands)
 {
-    if(len_darray(commands->args) > 1)
-        return_error("Error two or more arguments!!\n");
+    int exit;
+
+    exit = 0;
+
+    if(env == NULL)
+        exit = return_error("Error env is empty\n");
+    else if(len_darray(commands->args) > 1)
+       exit = return_error("Error two or more arguments!!\n");
     else
-        return(ft_env(env));
-    return(2);
+        exit = ft_env(env);
+    return(exit);
 }
