@@ -90,7 +90,5 @@ int ft_unset(t_env **env,t_cmd *commands)
         i++;
     }
 
-  
-
     return(exit);
 }

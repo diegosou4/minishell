@@ -22,7 +22,7 @@ static int flag_compare(char *str)
     if(str == NULL)
         return(0);
     
-    if(str[i] == '-')
+    if(str[i] == '-' && ft_strlen(str) > 1)
         flag = 1;
     i++;
     while(str[i] != '\0')
@@ -34,30 +34,62 @@ static int flag_compare(char *str)
     return(flag);
 }
 
-int ft_echo(t_cmd *cmd)
+
+static void first_flag(t_cmd *cmd)
 {
     int flag;
     flag = 0;
-    int i;
     int spaces;
-
     spaces = 0;
+    int i;
     i = 2;
-    flag = flag_compare(cmd->args[1]);
-    if(flag == 0)
-        i = 1;
     while(cmd->args[i] != NULL)
     {
-        if(spaces > 1)
-            printf(" ");
+        flag = flag_compare(cmd->args[i]);
+        if(flag == 1)
+            i++;
+        else
+        {
+         if(spaces > 0)
+             printf(" ");
+        printf("%s",cmd->args[i]);
+        spaces++;
+        i++;
+        }
+    }
+}
+
+static void second_flag(t_cmd *cmd)
+{
+    int spaces;
+    int i;
+    spaces = 0;
+    i = 1;
+    while(cmd->args[i] != NULL)
+    {
+         if(spaces > 0)
+             printf(" ");
         printf("%s",cmd->args[i]);
         spaces++;
         i++;
     }
-    if(flag == 0)
-        printf("\n");
-    return(1);
 }
+
+int ft_echo(t_cmd *cmd)
+{
+    int firstflag;
+
+    firstflag = flag_compare(cmd->args[1]);
+    if(firstflag == 1)
+        first_flag(cmd);
+    else
+    {
+        second_flag(cmd);
+        printf("\n");
+    }
+    return(EXIT_SUCCESS);
+}
+
 
 
 

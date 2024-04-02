@@ -67,6 +67,6 @@ int export_env(t_env **env,char *str)
     if(ft_boolstrchr(str,61) == 1)
         token = 2;
     if(key_exist(env,str,token) == 1)
-      addbackenv(str,env,token);
+        addbackenv(str,env,token);
     return(EXIT_SUCCESS);
 }

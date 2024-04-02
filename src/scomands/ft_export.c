@@ -42,7 +42,10 @@ int ft_exp(t_env *env)
 {
     t_env *ptr;
     if(env ==  NULL)
+    {
+        ft_putstr_fd("Error env is empty\n",2);
         return(EXIT_FAILURE);
+    }
     ptr = env;
     while(ptr != NULL)
     {
