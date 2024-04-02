@@ -92,6 +92,7 @@ int expand_path_cpy(t_cmd **commands,t_env *cpyenv)
     if(ptr->path == NULL)
     {
         error_path(ptr->args[0]);
+        g_exit_status = 127;
         return(EXIT_FAILURE);
     }
 

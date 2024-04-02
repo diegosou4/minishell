@@ -29,4 +29,5 @@ void wait_mypids(t_bash *bash_boss)
         waitpid(bash_boss->pid[j],&bash_boss->exit_status,0);
         j++;
     }
+    g_exit_status = (bash_boss->exit_status & 0xff00) >> 8;
 }
