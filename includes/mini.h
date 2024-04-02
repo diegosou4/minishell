@@ -344,7 +344,7 @@ int ft_cd(t_cmd *comands,t_env **env);
 void change_old(t_env **env,char *str, int flag);
 void invert_pwd(t_env **env,char *str);
 char *get_valuepwd(t_env **env, char *value);
-void change_pwd(t_env **env, char *str, char *pwd,int flag);
+void change_pwd(t_env **env);
 //________________________________________________FT_ENV_____________________________________________//
 int ft_env(t_env *env);
 int execute_env(t_env *env, t_cmd *commands);

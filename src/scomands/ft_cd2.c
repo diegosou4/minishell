@@ -14,28 +14,20 @@
 #include "../../includes/mini.h"
 
 
-void change_pwd(t_env **env, char *str, char *pwd,int flag)
+void change_pwd(t_env **env)
 {
     char *newpwd;
     char *slash;
     char *change;
     
-    if(pwd != NULL && flag == 1)
-    {
-        slash = ft_strjoin(pwd,"/");
-        newpwd = ft_strjoin(slash,str);
-        change = ft_strjoin("PWD=",newpwd);
-        export_env(env,change);
-        free(change);
-        free(slash);
-        free(newpwd);
-    }
-    if(pwd != NULL && flag == 0)
-    {   
-        change = ft_strjoin("PWD=",str);
-        export_env(env,change);
-        free(change);
-    }
+    newpwd = ft_calloc(sizeof(char), FILENAME_MAX);
+    newpwd = getcwd(newpwd,FILENAME_MAX);
+    slash = ft_strjoin(newpwd,"/");
+    change = ft_strjoin("PWD=",slash);
+    export_env(env,change);
+    free(newpwd);
+    free(slash);
+    free(change);
     
 }
 void change_old(t_env **env,char *str, int flag)
@@ -50,44 +42,27 @@ void change_old(t_env **env,char *str, int flag)
     export_env(env,oldpwd);
     free(oldpwd);
    }
-   change_pwd(env,str,pwd,flag);
+   change_pwd(env);
     if(pwd != NULL)
         free(pwd);
 }
-static void checkandfree(char **pwd,char **oldpwd,char **keyold,char **keypwd)
-{
-    if((*pwd) != NULL)
-        free((*pwd));
-    if((*oldpwd) != NULL)
-        free((*oldpwd));
-    if((*keyold) != NULL)
-        free((*keyold));
-    if((*keypwd) != NULL)
-       free((*keypwd));     
-}
+
 void invert_pwd(t_env **env,char *str)
 {
     char *pwd;
-    char *oldpwd;
-    char *keypwd;
     char *keyold;
-    
-    oldpwd = NULL;
-    keyold = NULL;
     pwd = NULL;
-    keypwd = NULL;
     
     pwd = get_valuepwd(env,"PWD=");
-    oldpwd = get_valuepwd(env,"OLDPWD=");
-    if(oldpwd != NULL)
-        keypwd = ft_strjoin("PWD=",oldpwd);
     if(pwd != NULL)
         keyold = ft_strjoin("OLDPWD=", pwd);
-    if(keypwd != NULL)
-        export_env(env,keypwd);
     if(keyold != NULL)
         export_env(env,keyold);
-   checkandfree(&pwd,&oldpwd,&keyold,&keypwd);
+    change_pwd(env);
+    if(pwd != NULL)
+        free(pwd);
+    if(keyold != NULL)
+        free(keyold);
 }
 
 char *get_valuepwd(t_env **env, char *value)
