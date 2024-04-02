@@ -17,6 +17,7 @@ void error_path(char *str)
 {
     ft_putstr_fd(str,2);
     ft_putstr_fd(": command not found\n",2);
+    g_exit_status = 127;
 }
 
 
@@ -91,6 +92,7 @@ int expand_path_cpy(t_cmd **commands,t_env *cpyenv)
     if(ptr->path == NULL)
     {
         error_path(ptr->args[0]);
+        g_exit_status = 127;
         return(EXIT_FAILURE);
     }
 

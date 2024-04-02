@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:33:19 by diegmore          #+#    #+#             */
-/*   Updated: 2024/02/28 14:33:20 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/04/02 18:13:45 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,21 +84,22 @@ int ft_unset(t_env **env,t_cmd *commands)
 {
     int exit;
     int i;
+
     exit = 0;
     i = 1;
     if(*env == NULL)
         return(return_error("Error : env not set\n"));
     if(len_darray(commands->args) == 1)
-        return(EXIT_SUCCESS);
+        return(g_exit_status = EXIT_SUCCESS);
     while(commands->args[i] != NULL)
     {
         if(ft_strncmp("_=",commands->args[i],2) == 0)
             exit = (EXIT_SUCCESS);
-        else 
+        else
             exit = parse_env(env,commands->args[i]);
         i++;
     }
 
-    return(exit);
+    return(g_exit_status = exit);
 }
 

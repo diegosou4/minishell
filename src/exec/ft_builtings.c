@@ -53,5 +53,6 @@ int execute_builtings(t_cmd **cmd,t_env **cpy, int check)
         ft_exit((*cmd));
         return(0);
     }
+    printf("this is the exit :%d:\n", g_exit_status);
     return(0);
 }

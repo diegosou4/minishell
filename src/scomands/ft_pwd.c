@@ -10,21 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../../includes/mini.h"
 
-int print_pwd(t_cmd *comands)
-{  
-    char *pwd;
+int	print_pwd(t_cmd *comands)
+{
+	char	*pwd;
 
-    if(len_darray(comands->args) > 1)
-        return(return_error("pwd: too many arguments\n "));
-    pwd = ft_calloc(sizeof(char) , FILENAME_MAX);
-    pwd = getcwd(pwd,FILENAME_MAX);
-    printf("%s\n", pwd);
-    free(pwd);
-    return(EXIT_SUCCESS);
+	if (len_darray(comands->args) > 1)
+		return (return_error("pwd: too many arguments\n "));
+	pwd = ft_calloc(sizeof(char), FILENAME_MAX);
+	pwd = getcwd(pwd, FILENAME_MAX);
+	printf("%s\n", pwd);
+	free(pwd);
+	return (g_exit_status = EXIT_SUCCESS);
 }
-
-
-

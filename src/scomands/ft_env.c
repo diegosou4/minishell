@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 16:22:20 by diegmore          #+#    #+#             */
-/*   Updated: 2024/02/27 16:22:21 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/04/02 17:56:01 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,11 @@ int execute_env(t_env *env, t_cmd *commands)
     int exit;
 
     exit = 0;
-
     if(env == NULL)
         exit = return_error("Error env is empty\n");
     else if(len_darray(commands->args) > 1)
        exit = return_error("Error two or more arguments!!\n");
     else
         exit = ft_env(env);
-    return(exit);
+    return(g_exit_status = exit);
 }

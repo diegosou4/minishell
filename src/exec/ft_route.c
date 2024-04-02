@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 12:27:13 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/20 19:27:50 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/02 18:54:30 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int simple_bexecutor(t_cmd *ptrcmd,t_bash *bash_boss)
         return(EXIT_FAILURE);
     init_dup(bash_boss);
     execute_builtings(&ptrcmd,&bash_boss->cpyenv,check);
-    close_fds(bash_boss); 
-    close_fderror(ptrcmd->redir);    
+    close_fds(bash_boss);
+    close_fderror(ptrcmd->redir);
     return(EXIT_SUCCESS);
 }
 
@@ -103,7 +103,7 @@ int ft_howpipes(t_cmd *comands)
 void start_execution(t_bash *bash_boss)
 {
     t_cmd *ptr;
-    
+
     ptr = bash_boss->commands;
     while(ptr != NULL)
     {
@@ -111,7 +111,6 @@ void start_execution(t_bash *bash_boss)
         ptr = ptr->next;
     }
     ptr = bash_boss->commands;
-    
     bash_boss->pipein = -1;
     bash_boss->pipeout= -1;
     while(ptr != NULL)
@@ -119,7 +118,5 @@ void start_execution(t_bash *bash_boss)
         ptr->executable = 1;
         ptr = ptr->next;
     }
-
-
     ft_magane_executor(bash_boss);
 }

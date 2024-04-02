@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 19:22:43 by diegmore          #+#    #+#             */
-/*   Updated: 2024/02/27 19:22:44 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/04/02 17:59:09 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int ft_exp(t_env *env)
     while(ptr != NULL)
     {
         if(ptr->token == 3 || ptr->token == 2)
-            print_exp(ptr->key,ptr->value,ptr->token);       
+            print_exp(ptr->key,ptr->value,ptr->token);
         ptr = ptr->next;
     }
     return(EXIT_SUCCESS);
@@ -67,8 +67,8 @@ int ft_indexinenv(t_env *env,char *this)
     int index;
     index = 0;
     t_env *ptr;
+
     ptr = env;
-    
     if(env == NULL)
         return(-1);
     while(ptr != NULL)
@@ -123,5 +123,5 @@ int ft_export(t_env **env,t_cmd *commands)
             exit = export_env(env,commands->args[i]);
         i++;
     }
-    return(exit);
+    return(g_exit_status = exit);
 }

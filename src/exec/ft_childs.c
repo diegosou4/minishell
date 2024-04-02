@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 17:01:11 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/20 19:40:13 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/02 19:08:16 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,11 @@ void child_exec(t_cmd *cmd, t_bash *bash_boss)
     if(cmd->executable == 0)
         exit(EXIT_FAILURE);
     if(expand_path_cpy(&cmd,bash_boss->cpyenv) == 1)
+    {
+        g_exit_status = EXIT_FAILURE;
+        exit(EXIT_FAILURE);
         fail_expander(bash_boss,cmd);
+    }
     if(sizepipe(bash_boss->commands) != 1)
         care_inchild(cmd,bash_boss);
     redir_inchild(bash_boss);
