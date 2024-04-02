@@ -46,8 +46,10 @@ void	handle_signal_here_doc(int signal1)
 	if (signal1 == SIGINT)
 	{
 		g_exit_status = 130;
-        close(in);
-        close(out);
+		if(in != -1)
+        	close(in);
+        if(out != -1)
+			close(out);
 		exit(127);
 	}
 }
