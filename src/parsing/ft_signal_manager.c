@@ -40,11 +40,14 @@ void	handle_signal_here_doc(int signal1)
 {
     int in;
     int out;
-
+	static int bashlvll;
+	
     in = get_file_num()->in;
     out = get_file_num()->out;
+	printf("CHEGA AQUI");
 	if (signal1 == SIGINT)
 	{
+		
 		g_exit_status = 130;
 		if(in != -1)
         	close(in);

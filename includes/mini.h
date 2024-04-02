@@ -431,8 +431,8 @@ int	ft_check_token_size(char *token_line);
 
 
 
-
-
+void free_all(t_cmd *cmd);
+void free_cpyenv(t_env *cpyenv);
 
 
 

@@ -67,6 +67,7 @@ void ft_heredoc(char *delimiter, int in, int out,t_redir *fdclose)
             }
     }
    waitpid(pid,&pid,0);
+   printf("meu processo more aonde %d\n",pid);
     close(out);
 }
 
