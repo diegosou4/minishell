@@ -1,4 +1,5 @@
 
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -23,7 +24,7 @@ char *get_key(char *str)
     {   
         if(str[i] == 61)
         {
-            key = ft_substr(str,0,i);
+            key = ft_substr(str,0,(i + 1));
             return(key);
         }
         i++;
@@ -31,41 +32,42 @@ char *get_key(char *str)
     return(NULL);
 }
 
-t_env *newexp(char *str, int this, int token)
+t_env *newsenv(char *str, int token)
 {
     t_env *cpyenv;
-    cpyenv = ft_calloc(sizeof(t_env),1);
+    char *v;
+    char *key;
+    char *value;
 
-    cpyenv->index = this;
-    cpyenv->key = ft_strjoin(str,"=");
-    cpyenv->value = "''";
+    key = get_key(str);
+    cpyenv = ft_calloc(sizeof(t_env),1);
+    cpyenv->value = NULL;
+    if (key == NULL)
+        key = ft_strjoin(str,"=");
+    else
+        cpyenv->value = ft_substr(str,ft_strlen(key),ft_strlen(str));   
+    cpyenv->key = key;
     cpyenv->token = token;
     cpyenv->next = NULL;
     return(cpyenv);
 }
-
-
-t_env *newsenv(char *str, int this, int token)
-{
-    t_env *cpyenv;
-    cpyenv = ft_calloc(sizeof(t_env),1);
-
-    cpyenv->index = this;
-    cpyenv->key = get_key(str);
-    cpyenv->value = ft_strchr(str,61);
-    cpyenv->token = token;
-    cpyenv->next = NULL;
-    return(cpyenv);
-}
-void addbackenv(char *str,int this,t_env **cpyenv, int token)
+void addbackenv(char *str,t_env **cpyenv, int token)
 {
     t_env *ptr;
     t_env *last;
-
-    last = newsenv(str,this,token);
-    if(last == NULL)
+    
+    if(str == NULL)
         return;
     ptr = (*cpyenv);
+    if(ptr == NULL)
+    {
+        *cpyenv = newsenv(str,token);
+        
+        return;
+    }
+    last = newsenv(str,token);
+    if(last == NULL)
+        return;    
     while(ptr->next != NULL)
     {
         ptr = ptr->next;
@@ -83,13 +85,14 @@ t_env *ft_nenv(char **env, int token)
             
     if(env[0] == NULL)
         return(NULL);
-    cpyenv = newsenv(env[index],index,token);
+    cpyenv = newsenv(env[index],token);
     index++;
     while(env[index] != NULL)
     {
-        addbackenv(env[index],index,&cpyenv,token);
+        addbackenv(env[index],&cpyenv,token);
         index++;
     }
+  
     return(cpyenv);
 }
 

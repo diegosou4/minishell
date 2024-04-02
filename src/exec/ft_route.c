@@ -17,17 +17,16 @@
 int simple_bexecutor(t_cmd *ptrcmd,t_bash *bash_boss)
 {
     int check;
-    dup_fd(bash_boss);
+    
     check = check_builtings(ptrcmd);
     bash_boss->fdin = return_in(ptrcmd,bash_boss);
     bash_boss->fdout = return_out(ptrcmd);
-    init_dup(bash_boss->fdin,bash_boss->fdout);
+    if(ptrcmd->executable == 0)
+        return(EXIT_FAILURE);
+    init_dup(bash_boss);
     execute_builtings(&ptrcmd,&bash_boss->cpyenv,check);
-    close_fds(bash_boss);
-    reset_fd(bash_boss); 
-    close_fderror(ptrcmd->redir);
-    close_dup(bash_boss);
-    
+    close_fds(bash_boss); 
+    close_fderror(ptrcmd->redir);    
     return(EXIT_SUCCESS);
 }
 
@@ -105,7 +104,15 @@ int ft_howpipes(t_cmd *comands)
 
 void start_execution(t_bash *bash_boss)
 {
+    t_cmd *ptr;
+   
+    ptr = bash_boss->commands;
     bash_boss->pipein = -1;
     bash_boss->pipeout= -1;
+    while(ptr != NULL)
+    {
+        ptr->executable = 1;
+        ptr = ptr->next;
+    }
     ft_magane_executor(bash_boss);
 }

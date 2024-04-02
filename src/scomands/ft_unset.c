@@ -13,59 +13,83 @@
 
 #include "../../includes/mini.h"
 
-void update_index(t_env **env)
+static int free_keyandvalue(t_env **ptr, char *key)
 {
-    int i;
-    i = 0;
-    t_env *ptr;
+    free(key);
+    if((*ptr)->key != NULL)
+        free((*ptr)->key);
+    if((*ptr)->value != NULL)
+        free((*ptr)->value);
+    free((*ptr));
+    return(EXIT_SUCCESS);
+}
+static void change_value(char **key,char **value,char *str)
+{
+    (*key) = NULL;
+    (*value) = NULL;
 
-    ptr = (*env);
-    while(ptr != NULL)
-    {
-        ptr->index = i;
-        i++;
-        ptr = ptr->next;
-    }
+    *key = get_key(str);
+    if (*key == NULL)
+        *key = ft_strdup(str);
+    else
+        *value = ft_substr(str, ft_strlen(*key), ft_strlen(str));
 }
 
-void ft_removeinenv(t_env **env, int index)
+static int free_keyvalue(char *value,char *key,int exit)
 {
-
+    if(key != NULL)
+        free(key);
+    if (value != NULL)
+        free(value);
+    return(exit); 
+}
+int unset_env(t_env **env, char *str)
+{
+    char *key;
+    char *value;
     t_env *ptr;
-    t_env *prev;
-    t_env *next;
-    ptr = (*env);
-    while(index != 0)
+    t_env *last;
+    last  = NULL;
+    ptr = *env;
+    change_value(&key,&value,str);
+    if(value != NULL)
+        return(free_keyvalue(value,key,EXIT_SUCCESS));
+    while (ptr != NULL)
     {
-        prev = ptr;
+        if (ft_strncmp(ptr->key, key, ft_strlen(key)) == 0)
+        {
+            if(last == NULL)
+                *env = (*env)->next;
+            else
+                last->next = ptr->next;
+            return(free_keyandvalue(&ptr,key));
+        }
+        last = ptr;
         ptr = ptr->next;
-        index--;
     }
-    if(ptr->next != NULL)
-        next = ptr->next;
-    else
-        next = NULL;
-    if(prev != NULL)
-        prev->next = next;
-    else
-        *env = next;
+    free(key);
+    return (EXIT_FAILURE);
 }
 
 int ft_unset(t_env **env,t_cmd *commands)
 {
-    int index;
-    index = ft_strintchr(commands->args[1],61);
-    if(ft_strncmp("_=",commands->args[1],2) == 0)
-        return(2);
+    int exit;
+    int i;
+    exit = 0;
+    i = 1;
     if(*env == NULL)
-        return(2);
-    if(index == -1)
+        return(EXIT_FAILURE);
+    if(len_darray(commands->args) == 1)
+        return(EXIT_SUCCESS);
+    while(commands->args[i] != NULL)
     {
-        index = ft_indexinenv(*env,commands->args[1]);
-        if(index == -1)
-            return(2);
-        ft_removeinenv(env,index);
-        update_index(env);
+        if(ft_strncmp("_=",commands->args[i],2) == 0)
+            exit = (EXIT_SUCCESS);
+        else 
+            exit = unset_env(env,commands->args[i]);
+        i++;
     }
-    return(0);
+
+    return(exit);
 }
+

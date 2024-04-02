@@ -41,7 +41,7 @@ int execute_builtings(t_cmd **cmd,t_env **cpy, int check)
     else if(check == 2)
         return(ft_cd((*cmd),cpy));
     else if(check == 3)
-        return(ft_env((*cpy)));
+        return(execute_env((*cpy),(*cmd)));
     else if(check == 4)
         return(ft_export(cpy,(*cmd)));
     else if(check == 5)

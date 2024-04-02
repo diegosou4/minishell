@@ -126,7 +126,6 @@ typedef enum s_rediopr
 
 typedef struct s_env{
 
-	int index;
 	char *key;
 	char *value;
 	int token;
@@ -239,16 +238,15 @@ void care_inchild(t_cmd *current, t_bash *bash_boss);
 
 
 int check_builtings(t_cmd *commands);
-t_env *newexp(char *str, int this, int token);
 
 void ft_numberforexit(char *str);
 
 
 // ENV STRUCT
 char *get_key(char *str);
-t_env *newsenv(char *str, int this, int token);
+t_env *newsenv(char *str, int token);
 t_env *ft_nenv(char **env,int token);
-void addbackenv(char *str,int this,t_env **cpyenv, int token);
+void addbackenv(char *str,t_env **cpyenv, int token);
 int len_env(t_env *env);
 
 
@@ -329,8 +327,8 @@ int open_append(char *path);
 int open_fd(t_redir **redirect);
 int open_redir_fd(t_redir *redir);
 void printf_error_fd(char *strerror,char *file);
-void init_dup(int fdin,int fdout);
-void reset_fd(t_bash *bash_boss);
+void init_dup(t_bash *bash_boss);
+void reset_fd(t_bash *bash_boss, int i);
 void dup_fd(t_bash *bash_boss);
 void close_dup(t_bash *bash_boss);
 void close_fds(t_bash *bash_boss);
@@ -343,6 +341,10 @@ int ft_echo(t_cmd *cmd);
 int return_error(char *str);
 //_______________________________________________FT_CD_______________________________________________//
 int ft_cd(t_cmd *comands,t_env **env);
+void change_old(t_env **env,char *str, int flag);
+void invert_pwd(t_env **env,char *str);
+char *get_valuepwd(t_env **env, char *value);
+void change_pwd(t_env **env, char *str, char *pwd,int flag);
 //________________________________________________FT_ENV_____________________________________________//
 int ft_env(t_env *env);
 int execute_env(t_env *env, t_cmd *commands);
@@ -359,8 +361,7 @@ void ft_putinlast(t_env **env,char *this,int token);
 int print_pwd(t_cmd *comands);
 //_______________________________________________FT_UNSET____________________________________________//
 int ft_unset(t_env **env,t_cmd *commands);
-void ft_removeinenv(t_env **env, int index);
-void update_index(t_env **env);
+int unset_env(t_env **env,char *str);
 //________________________________________________EXIT_______________________________________________//
 void ft_exit(t_cmd *comands);
 
@@ -400,6 +401,7 @@ void update_index(t_env **env);
 int ft_export(t_env **env,t_cmd *commands);
 //______________________________________________EXPAND_PATH_______________________________________________//
 int expand_path(t_cmd **commands,char **env);
+int expand_path_cpy(t_cmd **commands,t_env *cpyenv);
 char *ft_getpath(char **env);
 
 void execute_one(t_cmd *command,char **env,t_env **cpy,t_cmd *last);
@@ -413,9 +415,6 @@ char	*ft_string_handle_2(char *line, char *modified_line);
 int	ft_lstsize_(t_word_list *lst);
 t_word_list	*ft_lstlast_(t_word_list *lst);
 int	ft_check_token_size(char *token_line);
-
-
-
 
 
 

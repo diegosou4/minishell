@@ -13,63 +13,54 @@
 
 #include "../../includes/mini.h"
 
-
-t_env *insertion_sort(t_env *env) 
+void print_exp(char *key,char *value, int token)
 {
-    t_env *temp;
-    t_env *sorted;
-    t_env *current;
-
-    if (env == NULL || env->next == NULL)
-        return (env); 
-    sorted = NULL; 
-    while (env != NULL) 
+    char *str;
+   
+    if(token == 3)
     {
-        current = env;
-        env = env->next; 
-        if (sorted == NULL || ft_strncmp(current->key, sorted->key,ft_strlen(current->key)) <= 0) 
-        {
-            current->next = sorted;
-            sorted = current;
-        }else 
-        {
-            temp = sorted;
-            while (temp->next != NULL && ft_strncmp(current->key, temp->next->key,ft_strlen(current->key)) > 0) 
-                temp = temp->next;
-            current->next = temp->next;
-            temp->next = current;
-        }
+        printf("declare -x ");
+        str = ft_substr(key,0,(ft_strlen(key) - 1));
+        printf("%s",str);
+        printf("\n");
+        free(str);
+        return;
     }
-    return(sorted);
+    printf("declare -x ");
+    printf("%s",key);
+    printf("\"");
+    if(value != NULL)
+        printf("%s",value);
+    printf("\"");
+    printf("\n");
+    
+
 }
+
 
 int ft_exp(t_env *env)
 {
     t_env *ptr;
-
-    ptr = insertion_sort(env);
     if(env ==  NULL)
-        return(0);
-    while(ptr != NULL)
     {
-        if(ptr->token == 1)
-        {
-            printf("declare -x ");
-            printf("%s%s\n",ptr->key,ptr->value);
-        }
-          ptr = ptr->next;
+        ft_putstr_fd("Error env is empty\n",2);
+        return(EXIT_FAILURE);
     }
     ptr = env;
     while(ptr != NULL)
     {
-        if(ptr->token == 2)
-        {
-            printf("declare -x ");
-            printf("%s%s\n",ptr->key,ptr->value);
-        }
-         ptr = ptr->next;
+        if(ptr->token == 1)
+            print_exp(ptr->key,ptr->value,ptr->token);
+        ptr = ptr->next;
     }
-    return(1);
+    ptr = env;
+    while(ptr != NULL)
+    {
+        if(ptr->token == 3 || ptr->token == 2)
+            print_exp(ptr->key,ptr->value,ptr->token);       
+        ptr = ptr->next;
+    }
+    return(EXIT_SUCCESS);
 }
 
 int ft_indexinenv(t_env *env,char *this)
@@ -83,7 +74,7 @@ int ft_indexinenv(t_env *env,char *this)
         return(-1);
     while(ptr != NULL)
     {
-        if(strncmp(ptr->key,this, ft_strlen(this)) == 0)
+        if(ft_strncmp(ptr->key,this, ft_strlen(this)) == 0)
             return(index);
         ptr = ptr->next;
         index++;
@@ -105,7 +96,7 @@ int check_var(char *arr)
         i++;
     }
     i = 0;
-    if(arr[0] == 95 && backslash == 1)
+    if((arr[0] == 95 && backslash == 1) || (ft_isalpha(arr[0]) == 0))
     {
         ft_putstr_fd("export: ",STDERR_FILENO);
         ft_putstr_fd(arr,STDERR_FILENO);
@@ -119,19 +110,19 @@ int check_var(char *arr)
 int ft_export(t_env **env,t_cmd *commands)
 {
     int i;
-    i = 0;
+    i = 1;
+    int exit;
     if(len_darray(commands->args) == 1)
-        ft_exp((*env));
+        return(ft_exp((*env)));
     while(commands->args[i] != NULL)
     {
         if(check_var(commands->args[i]) == 0)
-            return(EXIT_FAILURE);
+            exit = EXIT_FAILURE;
         else if(ft_strncmp("_=",commands->args[i],2) == 0)
-            return(EXIT_SUCCESS);
+            exit = EXIT_SUCCESS;
         else
-            export_env(env,commands->args[i]);
+            exit = export_env(env,commands->args[i]);
         i++;
     }
-   
-    return(1);
+    return(exit);
 }

@@ -12,37 +12,58 @@
 
 #include "../../includes/mini.h"
 
-// VERIFICAR PARA QUE EU USO ESSA FUNCAO
-char *ft_returnpath(t_env *env,char *this)
-{   
-    t_env *ptr;
-    ptr = env;
-    while(ptr != NULL)
-    {
-        if(ptr->key == this)
-            return(ft_strdup(ptr->value));
-        ptr = ptr->next;
-    }
-    return(NULL);
-}
 
+
+static void erro_cd(char *str, char *erro)
+{
+    ft_putstr_fd("Error: ", 2);
+    ft_putstr_fd(str, 2);
+    ft_putstr_fd(" ", 2);
+    ft_putstr_fd(erro, 2);
+    ft_putstr_fd("\n", 2);
+}
+int case_cd(char *diretory,t_env **env,int flag)
+{
+    char *str;
+    str = NULL;
+    
+    if(ft_strncmp("..",diretory,2) == 0)
+            invert_pwd(env,diretory);
+    else
+        change_old(env,diretory,(flag - 1));
+            
+    return(EXIT_SUCCESS);
+
+}
 
 int ft_cd(t_cmd *comands,t_env **env)
 {
     int result;
-    if(env != NULL)
-    {
-        printf("O");
-    }
-    if(len_darray(comands->args) > 2)
+    char *erro ;
+    int len;
+    char *str;
+    str = NULL;
+    len = len_darray(comands->args);
+    if(len > 2)
         return(return_error("cd : too many arguments\n"));
-    if(comands->args[1] == NULL)
-        return(return_error("relative or absuloted path\n"));
-    result = chdir(comands->args[1]);
-    if(result == 0)
-        return(0);
+    else if(len == 2)
+        str = ft_strdup(comands->args[1]);
     else
-        perror("Error ");
-    return(2);
+        str = get_valuepwd(env,"HOME=");
+    if(str == NULL)
+    {
+        ft_putstr_fd("Home not set\n",2);
+        return(EXIT_FAILURE);
+    }
+    result = chdir(str);
+    if(result == 0)
+    {
+     case_cd(str,env,len);
+     return(EXIT_SUCCESS);
+    }
+    erro = strerror(errno);
+    erro_cd(str,erro);
+    return(EXIT_FAILURE);
 }
  
+

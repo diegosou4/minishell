@@ -44,3 +44,56 @@ int expand_path(t_cmd **commands,char **env)
     }
     return(EXIT_SUCCESS);
 }
+
+char *givepath(t_env *env)
+{
+    char *path;
+    t_env *ptr;
+    int index;
+    path = NULL;
+
+    ptr = env;
+    index = ft_indexinenv(ptr,"PATH");
+    if(env == NULL && index != -1)
+        ft_putstr_fd("Error : Env not set\n",2);
+    else if(index == -1)
+        ft_putstr_fd("Error : Path not set\n",2);
+    else
+    {
+        while(index-- != 0)
+            ptr = ptr->next;
+        path = ft_strdup(ptr->value);
+    }
+    return(path);
+}
+
+
+
+int expand_path_cpy(t_cmd **commands,t_env *cpyenv)
+{
+    int build;
+    t_cmd *ptr;
+    char *home;
+
+    ptr = (*commands);
+    build = check_builtings(ptr);
+    if(build == 0 && ptr->args[0] == NULL)
+        return(EXIT_SUCCESS);
+    if(build != 0)
+    {
+        ptr->path = ft_strdup(ptr->args[0]);
+        return(EXIT_SUCCESS);
+    }
+    home = givepath(cpyenv);
+    if(home == NULL)
+        return(EXIT_FAILURE);
+    ptr->path = ask_acess(ptr->args[0],home);
+    if(ptr->path == NULL)
+    {
+        error_path(ptr->args[0]);
+        return(EXIT_FAILURE);
+    }
+
+    return(EXIT_SUCCESS);
+
+}
