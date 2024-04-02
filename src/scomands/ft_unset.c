@@ -67,8 +67,16 @@ int unset_env(t_env **env, char *str)
         last = ptr;
         ptr = ptr->next;
     }
-    free(key);
-    return (EXIT_FAILURE);
+    return(error_unset(key));
+}
+static int parse_env(t_env **env,char *str)
+{
+    char c;
+    c = '=';
+    if(ft_boolstrchr(str,c) == 1)
+        return(EXIT_FAILURE);
+    else 
+        return(unset_env(env,str));
 }
 
 int ft_unset(t_env **env,t_cmd *commands)
@@ -78,7 +86,8 @@ int ft_unset(t_env **env,t_cmd *commands)
     exit = 0;
     i = 1;
     if(*env == NULL)
-        return(EXIT_FAILURE);
+        return(return_error("Error : env not set\n"));
+        
     if(len_darray(commands->args) == 1)
         return(EXIT_SUCCESS);
     while(commands->args[i] != NULL)
@@ -86,7 +95,7 @@ int ft_unset(t_env **env,t_cmd *commands)
         if(ft_strncmp("_=",commands->args[i],2) == 0)
             exit = (EXIT_SUCCESS);
         else 
-            exit = unset_env(env,commands->args[i]);
+            exit = parse_env(env,commands->args[i]);
         i++;
     }
 

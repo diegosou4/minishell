@@ -62,7 +62,6 @@ void addbackenv(char *str,t_env **cpyenv, int token)
     if(ptr == NULL)
     {
         *cpyenv = newsenv(str,token);
-        
         return;
     }
     last = newsenv(str,token);
