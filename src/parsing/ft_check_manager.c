@@ -35,12 +35,12 @@ int	ft_lexer_analysis(t_word_list *words_list, t_bash *bash, char *new_string)
 		words_list->redirection = TRUE;
 	else
 		words_list->redirection = FALSE;
-	ft_quotes_remove(words_list);
 	if (ft_check_valid_redir(words_list) == 0)
 	{
 		free(new_string);
 		return (0);
 	}
+	ft_quotes_remove(words_list);
 	return (1);
 }
 
@@ -65,30 +65,56 @@ static	int	ft_special_pipe_case(char *line)
 	return (1);
 }
 
-static	int	ft_check_pipes(char **line)
+static int	ft_whitespace_1(char *line)
 {
 	int	i;
 
 	i = 0;
-	while (line[i] != NULL)
+	while ((line[i] >= '\b' && line[i] <= '\v') || line[i] == ' ')
 	{
-		if (ft_special_pipe_case(line[i]) == 0)
-			return (0);
-		if (strcmp(line[i], "|") == 0
-			&& (line[i + 1] == NULL || strcmp(line[i + 1], "|") == 0))
-		{
-			if (line[i + 1] == NULL)
-				printf("syntax error near `|' (no args) 🚰🙊\n");
-			else
-				printf("syntax error near `||' More than one pipe found! 🚰🐟\n");
-			return (0);
-		}
 		i++;
 	}
-	if (line[i - 1][ft_strlen(line[i - 1]) - 1] == '|')
+	if (line[i] == '\0')
 	{
 		printf("syntax error near `|' (no args) 🚰🙊\n");
 		return (0);
+	}
+	else if (line[i] == '|')
+	{
+		printf("syntax error near `||' More than one pipe found! 🚰🐟\n");
+		return (0);
+	}
+	return (1);
+}
+
+static int	ft_check_pipes(char *line)
+{
+	int	i;
+	char flag;
+
+	flag = 0;
+	i = 0;
+	while (line[i] != '\0')
+	{
+		if (flag == 0 && (line[i] == '\"' || line[i] == '\''))
+			flag = line[i];
+		else if (flag == line[i])
+			flag = 0;
+		if (flag == 0 && ft_special_pipe_case(&line[i]) == 0)
+			return (0);
+		if (flag == 0 && (line[i] == '|')
+			&& (line[i + 1] == '\0' || line[i + 1] == '|' || line[i + 1] == ' '))
+		{
+			if (line[i + 1] == '\0')
+			{
+				printf("syntax error near `|' (no args) 🚰🙊\n");
+				return (0);
+			}
+			else if (line[i + 1] == ' '
+			&& !ft_whitespace_1(&line[i + 1]))
+				return (0);
+		}
+		i++;
 	}
 	return (1);
 }
@@ -134,9 +160,7 @@ int	ft_check_input(char *line, t_bash *bash)
 		free(split_line);
 		return (0);
 	}
-	if (!ft_check_pipes(split_line)
-		|| !ft_check_redir_pipes(split_line)
-		|| !ft_check_directions(split_line))
+	if (!ft_check_pipes(line))
 	{
 		ft_free_double_pointers(split_line);
 		bash->exit_status = 2;
