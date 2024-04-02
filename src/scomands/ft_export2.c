@@ -92,7 +92,6 @@ int export_env(t_env **env,char *str)
         addbackenv(str,env,token);
         swap_value(env);
     }
-        
     return(EXIT_SUCCESS);
 }
 

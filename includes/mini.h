@@ -361,6 +361,7 @@ void ft_putinlast(t_env **env,char *this,int token);
 int print_pwd(t_cmd *comands);
 //_______________________________________________FT_UNSET____________________________________________//
 int ft_unset(t_env **env,t_cmd *commands);
+int error_unset(char *key);
 int unset_env(t_env **env,char *str);
 //________________________________________________EXIT_______________________________________________//
 void ft_exit(t_cmd *comands);
