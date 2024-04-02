@@ -25,8 +25,7 @@ void	ft_bash_boss_init(t_bash *bash, char **env)
 {
 	bash->pid = NULL;
 	bash->env = ft_arrcpy(env);
-	char *ap[] = {NULL};
-	bash->cpyenv = ft_nenv(ap, 1);
+	bash->cpyenv = ft_nenv(env, 1);
 	bash->commands = NULL;
 	bash->in = 0;
 	bash->out = 0;

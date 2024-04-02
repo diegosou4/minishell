@@ -46,15 +46,14 @@ int ft_cd(t_cmd *comands,t_env **env)
     len = len_darray(comands->args);
     if(len > 2)
         return(return_error("cd : too many arguments\n"));
-    else if(len == 2)
-        str = ft_strdup(comands->args[1]);
-    else
-        str = get_valuepwd(env,"HOME=");
-    if(str == NULL)
+    else if(len == 1 || ft_strncmp("~",comands->args[1],1) == 0)
     {
-        ft_putstr_fd("Home not set\n",2);
-        return(EXIT_FAILURE);
+        str = get_valuepwd(env,"HOME=");
+        if(str == NULL)
+            return(return_error("Home not set\n"));
     }
+    else
+        str = ft_strdup(comands->args[1]);
     result = chdir(str);
     if(result == 0)
     {
