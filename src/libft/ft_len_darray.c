@@ -16,7 +16,11 @@ int len_darray(char **arr)
 {
     int i;
     i = 0;
+    if (!arr)
+        return (i);
     while(arr[i] != NULL)
+    {
         i++;
+    }
     return(i);
 }

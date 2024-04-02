@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 16:20:27 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/08 11:01:08 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/02 16:53:09 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,12 @@ int ft_cd(t_cmd *comands,t_env **env)
     if(result == 0)
     {
      case_cd(str,env,len);
+     g_exit_status = EXIT_SUCCESS;
      return(EXIT_SUCCESS);
     }
     erro = strerror(errno);
     erro_cd(str,erro);
-    return(EXIT_FAILURE);
+    return(g_exit_status = EXIT_FAILURE);
 }
  
 
