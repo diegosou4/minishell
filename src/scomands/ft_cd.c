@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 16:20:27 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/02 16:53:09 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/02 18:12:12 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,12 @@ int case_cd(char *diretory,t_env **env,int flag)
 {
     char *str;
     str = NULL;
-    
+
     if(ft_strncmp("..",diretory,2) == 0)
             invert_pwd(env,diretory);
     else
         change_old(env,diretory,(flag - 1));
-            
     return(EXIT_SUCCESS);
-
 }
 
 int ft_cd(t_cmd *comands,t_env **env)
@@ -58,8 +56,7 @@ int ft_cd(t_cmd *comands,t_env **env)
     if(result == 0)
     {
      case_cd(str,env,len);
-     g_exit_status = EXIT_SUCCESS;
-     return(EXIT_SUCCESS);
+     return(g_exit_status = EXIT_SUCCESS);
     }
     erro = strerror(errno);
     erro_cd(str,erro);

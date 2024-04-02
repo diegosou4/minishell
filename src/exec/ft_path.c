@@ -17,6 +17,7 @@ void error_path(char *str)
 {
     ft_putstr_fd(str,2);
     ft_putstr_fd(": command not found\n",2);
+    g_exit_status = 127;
 }
 
 

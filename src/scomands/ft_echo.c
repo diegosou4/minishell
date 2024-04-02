@@ -87,7 +87,7 @@ int ft_echo(t_cmd *cmd)
         second_flag(cmd);
         printf("\n");
     }
-    return(EXIT_SUCCESS);
+    return(g_exit_status = EXIT_SUCCESS);
 }
 
 
