@@ -120,7 +120,8 @@ typedef enum s_rediopr
 	redir_in = 2,
 	here_doc = 3,
 	append_out = 4,
-	inandout = 5
+	inandout = 5,
+	open_here = 6
 } t_rediopr;
 
 
@@ -294,7 +295,9 @@ void ft_env_null();
 //_____________________________________________________HERE_DOC___________________________________________________//
 int redirout(char *path);
 int ft_append(char *path);
-void ft_heredoc(char *delimiter, int in, int out, t_bash *bash_boss);
+void check_heredoc(t_redir **redirect);
+int case_here(char *delimiter, t_redir *fdclose);
+void ft_heredoc(char *delimiter, int in, int out,t_redir *fdclose);
 void ft_putforwe(char *line,int fd);
 void heredoc_simple(t_cmd *cmd,t_bash *bash_boss);
 void case_heredoc(t_cmd *ptrcmd);

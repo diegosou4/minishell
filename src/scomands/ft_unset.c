@@ -49,6 +49,7 @@ int unset_env(t_env **env, char *str)
     char *value;
     t_env *ptr;
     t_env *last;
+    
     last  = NULL;
     ptr = *env;
     change_value(&key,&value,str);
@@ -87,7 +88,6 @@ int ft_unset(t_env **env,t_cmd *commands)
     i = 1;
     if(*env == NULL)
         return(return_error("Error : env not set\n"));
-        
     if(len_darray(commands->args) == 1)
         return(EXIT_SUCCESS);
     while(commands->args[i] != NULL)

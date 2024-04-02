@@ -56,8 +56,6 @@ void ft_magane_executor(t_bash *bash_boss)
     check = check_builtings(ptrcmd);
     if(ptrcmd->next == NULL && check > 0 && check <= 7)
         simple_bexecutor(ptrcmd,bash_boss); 
-    else if(ptrcmd->args[0] == NULL && ptrcmd->redir != NULL)
-        heredoc_simple(ptrcmd,bash_boss);
     else
        pipes_executor(ptrcmd,bash_boss);
     //free_commands(bash_boss.commands);
@@ -105,8 +103,15 @@ int ft_howpipes(t_cmd *comands)
 void start_execution(t_bash *bash_boss)
 {
     t_cmd *ptr;
-   
+    
     ptr = bash_boss->commands;
+    while(ptr != NULL)
+    {
+        check_heredoc(&ptr->redir);
+        ptr = ptr->next;
+    }
+    ptr = bash_boss->commands;
+    
     bash_boss->pipein = -1;
     bash_boss->pipeout= -1;
     while(ptr != NULL)
@@ -114,5 +119,7 @@ void start_execution(t_bash *bash_boss)
         ptr->executable = 1;
         ptr = ptr->next;
     }
+
+
     ft_magane_executor(bash_boss);
 }

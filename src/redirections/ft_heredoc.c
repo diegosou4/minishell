@@ -18,32 +18,27 @@ void ft_putforwe(char *line,int fd)
     ft_putchar_fd('\n',fd);
     free(line);
 }
-/*
-int ft_handle_redir_input(char *delimiter)
-{
-
-    int fd;
-
-    fd = ft_heredoc(delimiter);
-    char *str;
-    str = get_next_line(fd);
-    while(str != NULL)
-    {
-        printf("%s",str);
-        str = get_next_line(fd);    
-    }
-    close(fd);
-    return(0);
-
-}*/
 
 t_file_struct *get_file_num()
 {
 	static t_file_struct instance;
 	return(&instance);
 }
+static void close_here(t_redir *fdclose)
+{
+    t_redir *ptr;
 
-void ft_heredoc(char *delimiter, int in, int out, t_bash *bash_boss)
+    ptr = fdclose;
+
+    while(ptr != NULL)
+    {
+        if(ptr->fd != -1)
+            close(ptr->fd);
+        ptr = ptr->next;
+    }
+
+}
+void ft_heredoc(char *delimiter, int in, int out,t_redir *fdclose)
 {
     char *line;
     char *line_text;
@@ -54,10 +49,7 @@ void ft_heredoc(char *delimiter, int in, int out, t_bash *bash_boss)
     signal(SIGINT, handle_signal_here_doc);
     if(pid == 0)
     {
-        if(bash_boss->pipein != - 1)
-            close(bash_boss->pipein);
-        if(bash_boss->pipeout != -1)
-            close(bash_boss->pipeout);
+        close_here(fdclose);
         while(1)
         {
             line_text = ft_strjoin(ANSI_COLOR_PURPLE,"🐧🐧heredoco>");
@@ -74,9 +66,10 @@ void ft_heredoc(char *delimiter, int in, int out, t_bash *bash_boss)
                 ft_putforwe(line,out);
             }
     }
-    waitpid(pid,&pid,0);
+   waitpid(pid,&pid,0);
     close(out);
 }
+
 
 
 void case_heredoc(t_cmd *ptrcmd)
