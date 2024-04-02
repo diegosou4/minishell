@@ -59,6 +59,27 @@ int key_exist(t_env **env, char *str, int token)
     return (EXIT_FAILURE);
 }
 
+static void swap_value(t_env **env)
+{
+    t_env *ptr;
+    t_env *last;
+    t_env *pen;
+    pen = NULL;
+
+    if(*env == NULL || (*env)->next == NULL)
+        return; 
+    ptr = *env;
+    while(ptr->next != NULL)
+    {
+        last = pen;
+        pen = ptr;
+        ptr = ptr->next;
+    }
+    pen->next = NULL;
+    ptr->next = pen;
+    last->next = ptr;
+}
+
 
 int export_env(t_env **env,char *str)
 {
@@ -67,7 +88,11 @@ int export_env(t_env **env,char *str)
     if(ft_boolstrchr(str,61) == 1)
         token = 2;
     if(key_exist(env,str,token) == 1)
+    {
         addbackenv(str,env,token);
+        swap_value(env);
+    }
+        
     return(EXIT_SUCCESS);
 }
 
