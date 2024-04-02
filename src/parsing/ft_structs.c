@@ -71,6 +71,7 @@ t_redir	*ft_create_node(void)
 void	ft_init_redir_node(t_redir *node, char *path, int token)
 {
 	node->path = (path);
+	node->fd = -1;
 	node->token = token;
 	node->next = NULL;
 }

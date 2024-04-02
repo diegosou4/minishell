@@ -49,6 +49,7 @@ void ft_heredoc(char *delimiter, int in, int out,t_redir *fdclose)
     signal(SIGINT, handle_signal_here_doc);
     if(pid == 0)
     {
+        close_here(fdclose);
         while(1)
         {
             line_text = ft_strjoin(ANSI_COLOR_PURPLE,"🐧🐧heredoco>");

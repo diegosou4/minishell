@@ -46,7 +46,7 @@ COMANDS = ft_echo.c ft_pwd.c ft_cd.c ft_env.c \
 
 ENV = ft_create.c
 
-REDIR = ft_heredoc.c ft_append.c
+REDIR = ft_heredoc.c ft_append.c ft_heredoc2.c
 
 REDIR_SRC = $(addprefix ./src/redirections/, $(REDIR))
 EXEC_SRC = $(addprefix ./src/exec/, $(EXEC))
