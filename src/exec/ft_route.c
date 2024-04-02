@@ -115,3 +115,4 @@ void start_execution(t_bash *bash_boss)
         ptr = ptr->next;
     }
     ft_magane_executor(bash_boss);
+}
