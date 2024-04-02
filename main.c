@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:53:34 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/21 20:45:32 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/28 08:18:07 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ linha de entrada em busca de erros.
 informações relevantes.
 */
 
-int g_exit_status;
+int			g_exit_status;
 
-int	ft_list_creation(t_word_list **words_list, t_bash *bash,
-	char **tokens, char *new_string)
+int	ft_list_creation(t_word_list **words_list, t_bash *bash, char **tokens,
+		char *new_string)
 {
 	int	i;
 
@@ -59,14 +59,16 @@ t_word_list	**ft_tokenizer_manager(char *line, t_env *env, t_bash *bash)
 	if (!new_string)
 		return (NULL);
 	words_list = (t_word_list **)ft_calloc(100, sizeof(t_word_list *));
-	tokens = ft_split(new_string, '3');
+	tokens = ft_split(new_string, '\3');
 	if (!tokens)
 	{
 		ft_free_list_tokens(words_list, tokens, new_string, NULL);
 		return (NULL);
 	}
 	while (tokens[++i] != NULL)
+	{
 		words_list[i] = tokenize_and_print(tokens[i]);
+	}
 	i = -1;
 	if (!ft_list_creation(words_list, bash, tokens, new_string))
 		return (NULL);
@@ -91,8 +93,8 @@ void	ft_structure_manager(t_line *line, t_bash *bash)
 	bash->commands = cmd_structure;
 	if (bash->commands)
 		start_execution(bash);
-	//if(bash->pid != NULL)
-		//free(bash->pid);
+	if (bash->pid != NULL)
+		free(bash->pid);
 	ft_free_double_word_list(list);
 	ft_free_cmd_structure(cmd_structure);
 }
@@ -104,9 +106,7 @@ void	*ft_parse_manager(char **env)
 
 	g_exit_status = 0;
 	ft_signal_manager();
-	bash_boss.pid = NULL;
-	bash_boss.env = ft_arrcpy(env);
-	bash_boss.cpyenv = ft_nenv(env, 1);
+	ft_bash_boss_init(&bash_boss, env);
 	while (1)
 	{
 		ft_line_handler(&line, bash_boss.cpyenv);

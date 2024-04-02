@@ -33,23 +33,6 @@ char	*ft_strcpy(char *dest, const char *src)
 	return (dest);
 }
 
-// This line is to move the string one infront
-//and remove the $ when is followed by a '
-
-// static void	ft_preline(char *line)
-// {
-// 	int	i;
-
-// 	i = -1;
-// 	while (line[++i])
-// 	{
-// 		if (line[i] == '$' && line[i + 1] == '\'')
-// 		{
-// 			ft_memmove(&line[i], &line[i + 1], ft_strlen(&line[i + 1]) + 1);
-// 		}
-// 	}
-// }
-
 void	ft_checker_double_single(char *str, char quote)
 {
 	char	*src;

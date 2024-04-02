@@ -55,3 +55,4 @@ void	ft_free_exit_status(t_line *line, t_env *cpyenv, char **env)
 	write(1, "(exit)\n", 7);
 	ft_free_double_pointers(env);
 }
+

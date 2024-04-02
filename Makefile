@@ -1,4 +1,5 @@
 
+
 NAME = minishell
 
 CFLAGS = -I./
@@ -64,3 +65,4 @@ valgrind:
 fd:
 	@valgrind -q --tool=none --track-fds=yes --trace-children=yes ./${NAME}
       
+

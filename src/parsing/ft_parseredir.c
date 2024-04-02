@@ -13,7 +13,6 @@
 
 #include "../../includes/mini.h"
 
-
 int	caseptr(char first, char second)
 {
 	if (first == '>' && second == '>')

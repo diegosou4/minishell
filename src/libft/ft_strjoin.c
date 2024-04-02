@@ -49,3 +49,4 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	before you need two variables for copy s1 and s2,
 		so in the final you put null in last and return the string
 */
+

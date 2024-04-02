@@ -93,7 +93,7 @@ t_word_lists	*ft_init_word_lista(char *token)
 	word_lists->current_token = NULL;
 	word_lists->node = NULL;
 	word_lists->head = NULL;
-	word_lists->subtoken = ft_strtok(token, "2");
+	word_lists->subtoken = ft_strtok(token, "\2");
 	return (word_lists);
 }
 
@@ -122,7 +122,7 @@ t_word_list	*tokenize_and_print(char *token)
 				wls->current_token = wls->node;
 			}
 		}
-		wls->subtoken = ft_strtok(NULL, "2");
+		wls->subtoken = ft_strtok(NULL, "\2");
 	}
 	head = wls->head;
 	free(wls->subtoken);

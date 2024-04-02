@@ -70,3 +70,4 @@ int export_env(t_env **env,char *str)
         addbackenv(str,env,token);
     return(EXIT_SUCCESS);
 }
+

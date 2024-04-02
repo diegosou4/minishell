@@ -69,9 +69,9 @@ static char	*ft_string_handle(char *line, char *modified_line)
 		else if (flag == *line)
 			flag = 0;
 		if (flag == 0 && *line == ' ')
-			*line = '2';
+			*line = '\2';
 		if (flag == 0 && *line == '|')
-			*line = '3';
+			*line = '\3';
 		modified_line[j++] = *line;
 		line++;
 	}
