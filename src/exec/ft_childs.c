@@ -12,12 +12,12 @@
 
 #include "../../includes/mini.h"
 
-int case_here(char *delimiter, t_bash *bash_boss)
+int case_here(char *delimiter, t_redir *fdclose)
 {
     int pipesfd[2];
     pipe(pipesfd);
 
-    ft_heredoc(delimiter,pipesfd[0],pipesfd[1],bash_boss);
+    ft_heredoc(delimiter,pipesfd[0],pipesfd[1],fdclose);
     return(pipesfd[0]);
 
 }
@@ -32,14 +32,14 @@ int return_in(t_cmd *cmd, t_bash *bash_boss)
     ptr = cmd->redir;
     while(ptr != NULL)
     {
-        if(ptr->token == redir_in || ptr->token == here_doc)
+        if(ptr->token == redir_in || ptr->token == open_here)
         {
             if(fd != -1)
-                close(fd);
-            if(ptr->token == here_doc)
-                fd = case_here(ptr->path,bash_boss);
-            else    
+                close(fd); 
+            if(ptr->token == redir_in)
                 fd = open_in(ptr->path);
+            if(ptr->token == open_here)
+                fd = ptr->fd;
             if(fd < 0)
             {
                 cmd->executable = 0;
