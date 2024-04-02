@@ -35,19 +35,27 @@ void ft_exit(t_cmd *comands)
 {
     char *str;
     int i;
+    int int_len;
+
     i = 0;
-    printf("exit\n");
-    if(len_darray(comands->args) > 2)
+    int_len = len_darray(comands->args);
+    if(int_len > 2)
         ft_putstr_fd("exit: too many arguments\n",2);
-    str = ft_strdup(comands->args[1]);
-    while(str[i] != '\0')
+    else if (int_len == 2)
     {
-        if(ft_isdigit(str[i]) != 1)
+        str = ft_strdup(comands->args[1]);
+        while(str[i] != '\0' )
         {
-            ft_putstr_fd("exit: numeric argument required\n",2);
-            return;
+            if(ft_isdigit(str[i]) != 1)
+            {
+                ft_putstr_fd("exit: numeric argument required\n",2);
+                exit(EXIT_FAILURE);
+                return;
+            }
+        i++;
         }
-    i++;
+        ft_numberforexit(str);
     }
-    ft_numberforexit(str);
+    else 
+        exit(EXIT_SUCCESS);
 }
