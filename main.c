@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:53:34 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/28 08:18:07 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/02 16:31:51 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,8 @@ void	ft_structure_manager(t_line *line, t_bash *bash)
 		start_execution(bash);
 	if (bash->pid != NULL)
 		free(bash->pid);
-	ft_free_double_word_list(list);
-	ft_free_cmd_structure(cmd_structure);
+	// ft_free_double_word_list(list);
+	// ft_free_cmd_structure(cmd_structure);
 }
 
 void	*ft_parse_manager(char **env)
@@ -112,7 +112,8 @@ void	*ft_parse_manager(char **env)
 		ft_line_handler(&line, bash_boss.cpyenv);
 		if (!line.line || (ft_strcmp(line.line, "exit") == 0))
 		{
-			ft_free_exit_status(&line, bash_boss.cpyenv, bash_boss.env);
+			ft_exit(bash_boss.commands);
+			// ft_free_exit_status(&line, bash_boss.cpyenv, bash_boss.env);
 			break ;
 		}
 		if (ft_whitespace(line.line) == 1)
