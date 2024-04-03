@@ -10,90 +10,86 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../../includes/mini.h"
 
-void error_path(char *str)
+void	error_path(char *str)
 {
-    ft_putstr_fd(str,2);
-    ft_putstr_fd(": command not found\n",2);
-    g_exit_status = 127;
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd(": command not found\n", 2);
+	g_exit_status = 127;
 }
 
-
-int expand_path(t_cmd **commands,char **env)
+int	expand_path(t_cmd **commands, char **env)
 {
-    int build;
-    t_cmd *ptr;
-    char *home;
+	int		build;
+	t_cmd	*ptr;
+	char	*home;
 
-    if(env == NULL)
-        return(EXIT_FAILURE);
-    home = ft_getpath(env);
-    ptr = (*commands);
-    build = check_builtings(ptr);
-    if(build == 0 && ptr->args[0] == NULL)
-        return(EXIT_SUCCESS);
-    if(build != 0)
-        ptr->path = ft_strdup(ptr->args[0]);
-    else
-        ptr->path = ask_acess(ptr->args[0],home);         
-    if(ptr->path == NULL)
-    {
-            error_path(ptr->args[0]);
-            return(EXIT_FAILURE);
-    }
-    return(EXIT_SUCCESS);
+	if (env == NULL)
+		return (EXIT_FAILURE);
+	home = ft_getpath(env);
+	ptr = (*commands);
+	build = check_builtings(ptr);
+	if (build == 0 && ptr->args[0] == NULL)
+		return (EXIT_SUCCESS);
+	if (build != 0)
+		ptr->path = ft_strdup(ptr->args[0]);
+	else
+		ptr->path = ask_acess(ptr->args[0], home);
+	if (ptr->path == NULL)
+	{
+		error_path(ptr->args[0]);
+		return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
 }
 
-char *givepath(t_env *env)
+char	*givepath(t_env *env)
 {
-    char *path;
-    t_env *ptr;
-    int index;
-    path = NULL;
+	char	*path;
+	t_env	*ptr;
+	int		index;
 
-    ptr = env;
-    index = ft_indexinenv(ptr,"PATH");
-    if(env == NULL && index != -1)
-        ft_putstr_fd("Error : Env not set\n",2);
-    else if(index == -1)
-        ft_putstr_fd("Error : Path not set\n",2);
-    else
-    {
-        while(index-- != 0)
-            ptr = ptr->next;
-        path = ft_strdup(ptr->value);
-    }
-    return(path);
+	path = NULL;
+	ptr = env;
+	index = ft_indexinenv(ptr, "PATH");
+	if (env == NULL && index != -1)
+		ft_putstr_fd("Error : Env not set\n", 2);
+	else if (index == -1)
+		ft_putstr_fd("Error : Path not set\n", 2);
+	else
+	{
+		while (index-- != 0)
+			ptr = ptr->next;
+		path = ft_strdup(ptr->value);
+	}
+	return (path);
 }
 
-
-
-int expand_path_cpy(t_cmd **commands,t_env *cpyenv)
+int	expand_path_cpy(t_cmd **commands, t_env *cpyenv)
 {
-    int build;
-    t_cmd *ptr;
-    char *home;
+	int		build;
+	t_cmd	*ptr;
+	char	*home;
 
-    ptr = (*commands);
-    build = check_builtings(ptr);
-    if(build == 0 && ptr->args[0] == NULL)
-        return(EXIT_SUCCESS);
-    if(build != 0)
-    {
-        ptr->path = ft_strdup(ptr->args[0]);
-        return(EXIT_SUCCESS);
-    }
-    home = givepath(cpyenv);
-    if(home == NULL)
-        return(EXIT_FAILURE);
-    ptr->path = ask_acess(ptr->args[0],home);
-    if(ptr->path == NULL)
-    {
-        error_path(ptr->args[0]);
-        g_exit_status = 127;
-        return(EXIT_FAILURE);
-    }
-    return(EXIT_SUCCESS);
+	ptr = (*commands);
+	build = check_builtings(ptr);
+	if (build == 0 && ptr->args[0] == NULL)
+		return (EXIT_SUCCESS);
+	if (build != 0)
+	{
+		ptr->path = ft_strdup(ptr->args[0]);
+		return (EXIT_SUCCESS);
+	}
+	home = givepath(cpyenv);
+	if (home == NULL)
+		return (EXIT_FAILURE);
+	ptr->path = ask_acess(ptr->args[0], home);
+	if (ptr->path == NULL)
+	{
+		error_path(ptr->args[0]);
+		g_exit_status = 127;
+		return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
 }
