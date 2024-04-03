@@ -12,9 +12,9 @@
 
 #ifndef LIBFT_H
 # define LIBFT_H
+# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <stdio.h>
 
 // Structs
 typedef struct s_list
@@ -22,7 +22,7 @@ typedef struct s_list
 	void			*content;
 	struct s_list	*next;
 }					t_list;
-// 
+//
 int					ft_isalpha(int c);
 int					ft_isdigit(int c);
 int					ft_isalnum(char c);
@@ -38,21 +38,21 @@ void				*ft_memmove(void *dest, const void *src, size_t n);
 int					ft_memcmp(const void *str1, const void *str2, size_t n);
 void				*ft_memchr(const void *str, int c, size_t n);
 // String Fuctions
-char *ft_strstrjoin(char *s1, char *s2, char s3,char *s4);
-void	*freedouble_malloc(char **s, int i);
-int len_darray(char **arr);
-char    **ft_strrjoin(char **arr, char *str);
-int ft_boolstrchr(const char *str, int c);
+char				*ft_strstrjoin(char *s1, char *s2, char s3, char *s4);
+void				*freedouble_malloc(char **s, int i);
+int					len_darray(char **arr);
+char				**ft_strrjoin(char **arr, char *str);
+int					ft_boolstrchr(const char *str, int c);
 char				**mysplit(char const *s, char c, char n);
 size_t				ft_strlcpy(char *dest, const char *src, size_t dstsize);
 size_t				ft_strlcat(char *dst, const char *src, size_t size);
 int					ft_toupper(int c);
 int					ft_tolower(int c);
-int ft_strintchr(const char *str, int c);
+int					ft_strintchr(const char *str, int c);
 char				*ft_strchr(const char *str, int c);
 char				*ft_strrchr(const char *str, int c);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
-int	ft_strcmp(char *s1, char *s2);
+int					ft_strcmp(char *s1, char *s2);
 char				*ft_strnstr(const char *big, const char *little,
 						size_t len);
 int					ft_atoi(const char *str);
@@ -65,7 +65,7 @@ char				*ft_itoa(int n);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void				ft_striteri(char *s, void (*f)(unsigned int, char *));
 char				*ft_strpbrk(const char *str, const char *charset);
-char	*ft_strstr(char *str, char *to_find);
+char				*ft_strstr(char *str, char *to_find);
 // Output Fuctions
 void				ft_putchar_fd(char c, int fd);
 void				ft_putstr_fd(char *s, int fd);
@@ -84,4 +84,3 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 
 #endif
-

@@ -12,7 +12,6 @@
 
 #include "libft.h"
 
-
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	size_t	size_s1;
@@ -25,7 +24,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	j = 0;
 	size_s1 = ft_strlen((char *)s1);
 	size_s2 = ft_strlen((char *)s2);
-
 	new = (char *)malloc(((size_s1 + size_s2) + (1)) * sizeof(char));
 	if (!new || (!s1 && !s2))
 		return (NULL);
@@ -49,4 +47,3 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	before you need two variables for copy s1 and s2,
 		so in the final you put null in last and return the string
 */
-

@@ -108,7 +108,7 @@ char	**ft_split(char const *s, char c)
 	while (i < ft_countwords((char *)s, c))
 	{
 		str[i] = (char *)ft_calloc((ft_numberchar((char *)(s + p), c) + 1),
-				sizeof(char));
+									sizeof(char));
 		if (!str[i])
 			return (free_malloc(str, i - 1));
 		k = ft_givestring((char *)(s + p), c, str[i]);

@@ -119,7 +119,7 @@ static int	ft_check_pipes(char *line)
 	return (1);
 }
 
-static	int	ft_check_directions(char **line)
+int	ft_check_directions(char **line)
 {
 	int	i;
 

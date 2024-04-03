@@ -20,10 +20,10 @@ int	ft_memcmp(const void *str1, const void *str2, size_t n)
 	if (n == 0)
 		return (0);
 	while ((i < n - 1) && (*(unsigned char *)(str1
-			+ i) == *(unsigned char *)(str2 + i)))
+				+ i) == *(unsigned char *)(str2 + i)))
 	{
 		i++;
 	}
 	return ((*(const unsigned char *)(str1 + i) - *(const unsigned char *)(str2
-		+ i)));
+				+ i)));
 }

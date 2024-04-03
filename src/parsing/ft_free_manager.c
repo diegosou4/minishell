@@ -51,7 +51,7 @@ void	ft_free_line_struct(t_line *line)
 
 void	ft_free_exit_status(t_line *line, t_env *cpyenv, char **env)
 {
-//	ft_free_line_env(line, cpyenv);
+	ft_free_line_env(line, cpyenv);
 	write(1, "(exit)\n", 7);
 	ft_free_double_pointers(env);
 }

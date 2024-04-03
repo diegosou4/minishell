@@ -41,11 +41,8 @@ void wait_mypids(t_bash *bash_boss)
             prev_exit = 131;
         else
             prev_exit = (bash_boss->exit_status & 0xff00) >> 8;
-        if (prev_exit != 0 || prev_exit != 130 || prev_exit != 131)
-        {
-            error_flag = 1;
-            g_exit_status = prev_exit;
-        }
+        error_flag = 1;
+        g_exit_status = prev_exit;
         j++;
     }
     if (!error_flag)

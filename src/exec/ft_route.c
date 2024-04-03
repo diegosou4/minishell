@@ -19,7 +19,7 @@ int simple_bexecutor(t_cmd *ptrcmd,t_bash *bash_boss)
     int check;
     
     check = check_builtings(ptrcmd);
-    bash_boss->fdin = return_in(ptrcmd,bash_boss);
+    bash_boss->fdin = return_in(ptrcmd);
     bash_boss->fdout = return_out(ptrcmd);
     if(ptrcmd->executable == 0)
         return(EXIT_FAILURE);

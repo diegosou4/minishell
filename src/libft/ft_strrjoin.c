@@ -10,29 +10,27 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "libft.h"
 
-
-char    **ft_strrjoin(char **arr, char *str)
+char	**ft_strrjoin(char **arr, char *str)
 {
-    char **newstr;
-    int i;
+	char **newstr;
+	int i;
 
-    i = len_darray(arr) + 2;
+	i = len_darray(arr) + 2;
 
-    newstr = ft_calloc(sizeof(char *), i);
+	newstr = ft_calloc(sizeof(char *), i);
 
-    int j;
-    j = 0;
-    while(j != (i - 3))
-    {
-        newstr[j] = ft_strdup(arr[j]);
-        j++;
-    }
-    i = j;
-    newstr[j++] = ft_strdup(str);
-    newstr[j++] = ft_strdup(arr[i]);
-    freedouble_malloc(arr,len_darray(arr));
-    return(newstr);
+	int j;
+	j = 0;
+	while (j != (i - 3))
+	{
+		newstr[j] = ft_strdup(arr[j]);
+		j++;
+	}
+	i = j;
+	newstr[j++] = ft_strdup(str);
+	newstr[j++] = ft_strdup(arr[i]);
+	freedouble_malloc(arr, len_darray(arr));
+	return (newstr);
 }

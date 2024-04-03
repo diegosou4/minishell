@@ -2,7 +2,7 @@
 
 NAME = minishell
 
-CFLAGS = -I./
+CFLAGS = -I./ -Wall -Wextra -Werror
 LDFLAGS = -lreadline
 CC = cc -g
 
@@ -56,7 +56,7 @@ LIB_SRC = $(addprefix ./src/libft/, $(LIB))
 ENV_SRC = $(addprefix ./src/env/, $(ENV))
 
 all:
-	@${CC} ${CFLAGS} ${LIB_SRC} ${ENV_SRC} ${PARSE_SRC} ${COMANDS_SRC} ${EXEC_SRC} ${REDIR_SRC} main.c -o ${NAME} ${LDFLAGS}
+	${CC} ${CFLAGS} ${LIB_SRC} ${ENV_SRC} ${PARSE_SRC} ${COMANDS_SRC} ${EXEC_SRC} ${REDIR_SRC} main.c -o ${NAME} ${LDFLAGS}
 clean: $(NAME)
 	rm -rf minishell
 re: $(NAME)

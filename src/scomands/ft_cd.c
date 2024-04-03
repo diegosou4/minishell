@@ -22,15 +22,15 @@ static void erro_cd(char *str, char *erro)
     ft_putstr_fd(erro, 2);
     ft_putstr_fd("\n", 2);
 }
-int case_cd(char *diretory,t_env **env,int flag)
+int case_cd(char *diretory,t_env **env)
 {
     char *str;
     str = NULL;
 
     if(ft_strncmp("..",diretory,2) == 0)
-            invert_pwd(env,diretory);
+            invert_pwd(env);
     else
-        change_old(env,diretory,(flag - 1));
+        change_old(env);
     return(EXIT_SUCCESS);
 }
 
@@ -55,7 +55,7 @@ int ft_cd(t_cmd *comands,t_env **env)
     result = chdir(str);
     if(result == 0)
     {
-     case_cd(str,env,len);
+     case_cd(str,env);
      return(g_exit_status = EXIT_SUCCESS);
     }
     erro = strerror(errno);

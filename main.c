@@ -47,7 +47,7 @@ int	ft_list_creation(t_word_list **words_list, t_bash *bash, char **tokens,
 	return (1);
 }
 
-t_word_list	**ft_tokenizer_manager(char *line, t_env *env, t_bash *bash)
+t_word_list	**ft_tokenizer_manager(char *line, t_bash *bash)
 {
 	t_word_list	**words_list;
 	char		**tokens;
@@ -86,7 +86,7 @@ void	ft_structure_manager(t_line *line, t_bash *bash)
 	t_cmd		*cmd_structure;
 
 	bash->exit_status = g_exit_status;
-	list = ft_tokenizer_manager(line->line, bash->cpyenv, bash);
+	list = ft_tokenizer_manager(line->line, bash);
 	if (!list)
 		return ;
 	cmd_structure = ft_structure_creation(list);
@@ -97,8 +97,8 @@ void	ft_structure_manager(t_line *line, t_bash *bash)
 
 	// if (bash->pid != NULL)
 	// 	free(bash->pid);
-	// ft_free_double_word_list(list);
-	// ft_free_cmd_structure(cmd_structure);
+	ft_free_double_word_list(list);
+	ft_free_cmd_structure(cmd_structure);
 }
 
 void	*ft_parse_manager(char **env)
