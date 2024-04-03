@@ -30,7 +30,7 @@ int check_builtings(t_cmd *commands)
     else if(ft_strncmp("echo", commands->args[0],4) == 0)
         return(6);
     else if(ft_strncmp("exit",commands->args[0],4) == 0)
-        return(7);   
+        return(7);
     return(0);
 }
 
@@ -53,6 +53,5 @@ int execute_builtings(t_cmd **cmd,t_env **cpy, int check)
         ft_exit((*cmd));
         return(0);
     }
-    printf("this is the exit :%d:\n", g_exit_status);
     return(0);
 }
