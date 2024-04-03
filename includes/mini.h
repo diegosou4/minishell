@@ -301,7 +301,6 @@ int case_here(char *delimiter, t_redir *fdclose);
 void ft_heredoc(char *delimiter, int in, int out,t_redir *fdclose);
 void ft_putforwe(char *line,int fd);
 void heredoc_simple(t_cmd *cmd,t_bash *bash_boss);
-void case_heredoc(t_cmd *ptrcmd);
 //_________________________________________________ EXEC
 
 int ft_countpipes(t_cmd *cmd);
