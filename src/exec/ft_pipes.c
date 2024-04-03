@@ -20,20 +20,6 @@ int sizepipe(t_cmd *commands)
     return(i);
 }
 
-int ft_countpipes(t_cmd *cmd)
-{
-    int i;
-    i = 0;
-    t_cmd *ptr;
-
-    ptr = cmd;
-    while(ptr != NULL)
-    {
-        i++;
-        ptr = ptr->next;
-    }
-    return(i);
-}
 
 void set_pipes(t_cmd *ptrcmd)
 {

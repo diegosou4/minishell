@@ -12,24 +12,6 @@
 
 #include "../../includes/mini.h"
 
-int	index_env(char **env, char *str)
-{
-	char	*p;
-	int		i;
-	int		j;
-
-	p = NULL;
-	i = 0;
-	j = 0;
-	while (env[i] != NULL)
-	{
-		p = ft_strnstr(env[i], str, ft_strlen(str));
-		if (p != NULL)
-			return (i);
-		i++;
-	}
-	return (-1);
-}
 
 char	*ft_getenv(char **env, char *str, int i)
 {

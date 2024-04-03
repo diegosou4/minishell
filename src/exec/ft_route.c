@@ -58,12 +58,7 @@ void ft_magane_executor(t_bash *bash_boss)
         simple_bexecutor(ptrcmd,bash_boss); 
     else
        pipes_executor(ptrcmd,bash_boss);
-    //free_commands(bash_boss.commands);
-
 }
-
-
-
 
 int open_redir(t_cmd **commands)
 {

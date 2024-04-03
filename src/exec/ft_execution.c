@@ -61,26 +61,6 @@ void check_path(t_cmd **commands,char **env)
 }
 
 
-int sizeredir(t_redir *redir)
-{
-    int i;
-    i = 0;
-
-    t_redir *ptr;
-    
-    ptr = redir;
-    while(ptr != NULL)
-    {
-        i++;
-        ptr = ptr->next;
-    }
-    return(i);
-
-}
-
-
-
-
 void heredoc_simple(t_cmd *cmd,t_bash *bash_boss)
 {
     int in;
