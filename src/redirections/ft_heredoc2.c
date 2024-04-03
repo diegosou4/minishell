@@ -25,6 +25,8 @@ void check_heredoc(t_redir **redirect)
         if(ptr->token == here_doc)
         {
             ptr->fd = case_here(ptr->path,fdclose);
+            if(get_file_num()->exit_code == 127)
+                return;
             ptr->token = open_here;
         }
         ptr = ptr->next;

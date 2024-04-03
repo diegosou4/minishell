@@ -105,11 +105,16 @@ void start_execution(t_bash *bash_boss)
     t_cmd *ptr;
 
     ptr = bash_boss->commands;
+    get_file_num()->exit_code = 0;
     while(ptr != NULL)
     {
         check_heredoc(&ptr->redir);
+        if(get_file_num()->exit_code == 127)
+            break;
         ptr = ptr->next;
     }
+    if(get_file_num()->exit_code == 127)
+        return;
     ptr = bash_boss->commands;
     bash_boss->pipein = -1;
     bash_boss->pipeout= -1;

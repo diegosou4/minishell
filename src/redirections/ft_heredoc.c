@@ -38,6 +38,7 @@ static void close_here(t_redir *fdclose)
     }
 
 }
+
 void ft_heredoc(char *delimiter, int in, int out,t_redir *fdclose)
 {
     char *line;
@@ -72,19 +73,9 @@ void ft_heredoc(char *delimiter, int in, int out,t_redir *fdclose)
     }
     waitpid(pid,&exit_cod,0);
     get_file_num()->exit_code = (exit_cod & 0xff00) >> 8;
-    printf("this is the exit:%d:\n", get_file_num()->exit_code);
     signal(SIGINT,handle_signal );
     close(out);
 }
 
 
 
-void case_heredoc(t_cmd *ptrcmd)
-{
-    if(ptrcmd->args[0] == NULL && ptrcmd->redir != NULL)
-    {
-    //Da free nas coisas
-    //
-        exit(EXIT_SUCCESS);
-    }
-}
