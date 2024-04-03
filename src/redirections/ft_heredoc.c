@@ -53,7 +53,8 @@ void ft_heredoc(char *delimiter, int in, int out,t_redir *fdclose)
     // signal(SIGINT, SIG_IGN);
     if(pid == 0)
     {
-        signal(SIGINT, handle_signal_here_doc);
+        // signal(SIGINT, handle_signal_here_doc);
+        ft_signal_manager_here();
         close_here(fdclose);
         while(1)
         {
@@ -73,7 +74,6 @@ void ft_heredoc(char *delimiter, int in, int out,t_redir *fdclose)
     }
     waitpid(pid,&exit_cod,0);
     get_file_num()->exit_code = (exit_cod & 0xff00) >> 8;
-    // signal(SIGINT,handle_signal );
     close(out);
 }
 

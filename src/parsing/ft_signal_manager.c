@@ -81,3 +81,9 @@ void	handle_signal_here_doc(int signal1)
 		exit(127);
 	}
 }
+
+void	ft_signal_manager_here(void)
+{
+	signal(SIGINT, handle_signal_here_doc);
+	signal(SIGQUIT, SIG_IGN);
+}
