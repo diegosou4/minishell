@@ -38,7 +38,7 @@ EXEC = ft_execution.c ft_builtings.c\
        ft_free.c ft_route.c ft_close.c\
        ft_path.c ft_childs.c ft_openfd.c\
        ft_erros.c ft_pids.c ft_dups.c\
-       ft_pipes.c ft_fail.c 
+       ft_pipes.c ft_fail.c ft_childs2.c
 
 COMANDS = ft_echo.c ft_pwd.c ft_cd.c ft_env.c \
             ft_export.c ft_export2.c ft_unset.c\
@@ -46,7 +46,7 @@ COMANDS = ft_echo.c ft_pwd.c ft_cd.c ft_env.c \
 
 ENV = ft_create.c
 
-REDIR = ft_heredoc.c ft_append.c ft_heredoc2.c
+REDIR = ft_heredoc.c ft_heredoc2.c
 
 REDIR_SRC = $(addprefix ./src/redirections/, $(REDIR))
 EXEC_SRC = $(addprefix ./src/exec/, $(EXEC))

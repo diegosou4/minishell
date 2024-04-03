@@ -83,29 +83,12 @@ int return_out(t_cmd *cmd)
 
 void child_exec(t_cmd *cmd, t_bash *bash_boss)
 {
-    bash_boss->fdout = return_out(cmd);
-    bash_boss->fdin = return_in(cmd,bash_boss);
-    if(cmd->executable == 0)
-        exit(EXIT_FAILURE);
-    if(expand_path_cpy(&cmd,bash_boss->cpyenv) == 1)
-    {
-        g_exit_status = EXIT_FAILURE;
-        exit(EXIT_FAILURE);
-        fail_expander(bash_boss,cmd);
-    }
+    care_redirect(&cmd,&bash_boss);
+    care_expand(&cmd,&bash_boss);
     if(sizepipe(bash_boss->commands) != 1)
         care_inchild(cmd,bash_boss);
     redir_inchild(bash_boss);
-    if(bash_boss->fdin != -1)
-    {
-        dup2(bash_boss->fdin, STDIN_FILENO);
-        close(bash_boss->fdin);
-    }
-    if(bash_boss->fdout != -1)
-    {
-        dup2(bash_boss->fdout, STDOUT_FILENO);
-        close(bash_boss->fdout);
-    } 
+    dup_final(bash_boss);
     execve(cmd->path,cmd->args,bash_boss->env);
 }
 
@@ -114,25 +97,12 @@ void child_build(t_cmd *cmd, t_bash *bash_boss)
     
     int check;
     check = check_builtings(cmd);
-    bash_boss->fdout = return_out(cmd);
-    bash_boss->fdin = return_in(cmd,bash_boss);
-    if(cmd->executable == 0)
-        exit(EXIT_FAILURE);
-    if(expand_path_cpy(&cmd,bash_boss->cpyenv) == 1)
-        exit(EXIT_FAILURE);
+    care_redirect(&cmd,&bash_boss);
+    care_expand(&cmd,&bash_boss);
     if(sizepipe(bash_boss->commands) != 1)
         care_inchild(cmd,bash_boss);
     redir_inchild(bash_boss);
-    if(bash_boss->fdin != -1)
-    {
-        dup2(bash_boss->fdin, STDIN_FILENO);
-        close(bash_boss->fdin);
-    }
-    if(bash_boss->fdout != -1)
-    {
-        dup2(bash_boss->fdout, STDOUT_FILENO);
-        close(bash_boss->fdout);
-    } 
+    dup_final(bash_boss);
     execute_builtings(&cmd,&bash_boss->cpyenv,check);
     free_cpyenv(bash_boss->cpyenv);
     free_all(cmd);
@@ -163,8 +133,8 @@ void pipes_executor(t_cmd *ptrcmd,t_bash *bash_boss)
         ptrcmd = ptrcmd->next;
         i++;
     }
-     wait_mypids(bash_boss);    
-    signal(SIGINT,handle_signal ); 
+    wait_mypids(bash_boss);    
+    signal(SIGINT,handle_signal); 
 }
 
 

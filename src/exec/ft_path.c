@@ -95,7 +95,5 @@ int expand_path_cpy(t_cmd **commands,t_env *cpyenv)
         g_exit_status = 127;
         return(EXIT_FAILURE);
     }
-
     return(EXIT_SUCCESS);
-
 }

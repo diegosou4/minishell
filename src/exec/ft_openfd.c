@@ -72,18 +72,3 @@ int open_fd(t_redir **redirect)
     }
     return(1);   
 }
-
-
-int open_redir_fd(t_redir *redir)
-{
-    t_redir *ptr;
-    int flag;
-    ptr = redir;
-    if(ptr == NULL)
-        return(EXIT_SUCCESS);
-    flag = open_fd(&ptr);
-    if(flag == 0)
-        return(EXIT_FAILURE);
-
-    return(EXIT_SUCCESS);
-}

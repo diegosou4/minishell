@@ -230,9 +230,6 @@ void close_fderror(t_redir *redir);
 
 // Pipes 
 int sizepipe(t_cmd *commands);
-int sizeredir(t_redir *redir);
-void free_commands(t_cmd *comands);
-void free_redirects(t_redir *redir);
 void set_pipes(t_cmd *ptrcmd);
 void care_myprev(t_cmd *ptrcmd);
 void care_inchild(t_cmd *current, t_bash *bash_boss);
@@ -274,7 +271,6 @@ t_file_struct *get_file_num();
 // __________________________________________________FREE_MANAGER ________________________________
 
 void ft_free_double_pointers(char **split_line);
-void close_pipes(t_cmd **cmd);
 
 // __________________________________________________LIST_MANAGER ________________________________
 void ft_extract_var(t_word_list *word_list, t_bash *bash);
@@ -294,17 +290,15 @@ int check_path2(t_cmd **commands, char **env);
 //_____________________________________________________ENV ______________________________________________________
 void ft_env_null();
 //_____________________________________________________HERE_DOC___________________________________________________//
-int redirout(char *path);
-int ft_append(char *path);
 void check_heredoc(t_redir **redirect);
 int case_here(char *delimiter, t_redir *fdclose);
 void ft_heredoc(char *delimiter, int in, int out,t_redir *fdclose);
 void ft_putforwe(char *line,int fd);
 void heredoc_simple(t_cmd *cmd,t_bash *bash_boss);
 //_________________________________________________ EXEC
-
-int ft_countpipes(t_cmd *cmd);
-void open_pipes(t_cmd **cmd);
+void care_redirect(t_cmd **cmd,t_bash **bash_boss);
+void care_expand(t_cmd **cmd,t_bash **bash_boss);
+void dup_final(t_bash *bash_boss);
 int return_in(t_cmd *cmd, t_bash *bash_boss);
 int return_out(t_cmd *cmd);
 void redir_inchild(t_bash *bash_boss);
@@ -314,10 +308,8 @@ void child_build(t_cmd *cmd, t_bash *bash_boss);
 int simple_bexecutor(t_cmd *ptrcmd,t_bash *bash_boss);
 void pipes_executor(t_cmd *ptrcmd,t_bash *bash_boss);
 void fail_expander(t_bash *bash_boss,t_cmd *cmd);
-
 int ft_howpipes(t_cmd *comands);
 
-int return_error_exec(t_bash *executor);
 //_____________________________________________PIDS_____________________________________________________//
 void alloc_mypids(t_bash *bash_boss);
 void wait_mypids(t_bash *bash_boss);
@@ -328,15 +320,12 @@ int open_out(char *path);
 int open_in(char *path);
 int open_append(char *path);
 int open_fd(t_redir **redirect);
-int open_redir_fd(t_redir *redir);
 void printf_error_fd(char *strerror,char *file);
 void init_dup(t_bash *bash_boss);
 void reset_fd(t_bash *bash_boss, int i);
 void dup_fd(t_bash *bash_boss);
 void close_dup(t_bash *bash_boss);
 void close_fds(t_bash *bash_boss);
-//________________________________________________FORKS_FD___________________________________________//
-void close_child(t_cmd **ptrcmd,t_bash *bash_boss,t_cmd **last);
 //_________________________________________________FT_ECHO_____________________________________________//
 int ft_echo(t_cmd *cmd);
 
@@ -354,12 +343,7 @@ int execute_env(t_env *env, t_cmd *commands);
 //________________________________________________FT_EXP_____________________________________________//
 int export_env(t_env **env,char *str);
 int ft_exp(t_env *env);
-int ft_haveinenv(t_env *env, char *str);
 int ft_indexinenv(t_env *env,char *this);
-int index_env(char **env, char *str);
-int ft_casewithout(t_env **env,char *command);
-int ft_caseequal(t_env **env,char *command);
-void ft_putinlast(t_env **env,char *this,int token);
 //________________________________________________FT_PWD________________________________________________//
 int print_pwd(t_cmd *comands);
 //_______________________________________________FT_UNSET____________________________________________//

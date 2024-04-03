@@ -13,40 +13,7 @@
 
 #include "../../includes/mini.h"
 
-void free_redirects(t_redir *redir)
-{
-    t_redir *ptr;
-    t_redir *next;
 
-    ptr = redir;
-
-    while(ptr != NULL)
-    {
-        next = ptr->next;
-        free(ptr->path);
-        if(ptr->fd >= 3 )
-            close(ptr->fd);
-        ptr = next;
-    }
-}
-
-
-void free_commands(t_cmd *comands)
-{
-    t_cmd *ptr;
-    t_cmd *next;
-    ptr = comands;
-
-    while(ptr != NULL)
-    {
-        next = ptr->next;
-        if(ptr->redir != NULL)
-            free_redirects(ptr->redir);
-        free(ptr->path);
-       // freedouble_malloc(ptr->args,(len_darray(ptr->args)) - 1);
-        ptr = next;
-    }
-}
 
 void closeandfree(t_redir *redir)
 {

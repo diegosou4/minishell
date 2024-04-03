@@ -13,21 +13,6 @@
 #include "../../includes/mini.h"
 
 
-int return_error_exec(t_bash *executor)
-{
-    if(executor->exit_status == EXIT_FAILURE)
-    {
-        ft_putstr_fd("Error: File error\n",2);
-        return(EXIT_FAILURE);
-    }
-    if(executor->env == NULL)
-    {
-        ft_putstr_fd("Error: Env not found\n",2);
-        return(EXIT_FAILURE);
-    }
-    return(0);
-}
-
 void printf_error_fd(char *strerror,char *file)
 {
     ft_putstr_fd(file,STDERR_FILENO);
