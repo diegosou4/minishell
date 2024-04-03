@@ -36,13 +36,14 @@ char	*ft_strstr(char *str, char *to_find)
 	return (0);
 }
 /*
-int main()
+int	main(void)
 {
-        char array[] = "";
-        char array1[] = "";
+	char	array[];
+	char	array1[];
 
+        array[] = "";
+        array1[] = "";
         printf("%s : ft_strstr \n", ft_strstr(array, array1));
         printf("%s : strstr \n", strstr(array,array1));
-
 }
 */

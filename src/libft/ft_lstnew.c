@@ -26,5 +26,5 @@ t_list	*ft_lstnew(void *content)
 
 //    Criamos uma lista fazemos a
 //     allocao de memoria  verificamos se foi alocado
-//    e colocamos o content dentro da nossa estrutura 
+//    e colocamos o content dentro da nossa estrutura
 // e informamos que a proxima vai ser nula

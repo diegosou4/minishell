@@ -24,7 +24,7 @@ int case_here(char *delimiter, t_redir *fdclose)
 }
 
 
-int return_in(t_cmd *cmd, t_bash *bash_boss)
+int return_in(t_cmd *cmd)
 {
     t_redir *ptr;
     int fd;

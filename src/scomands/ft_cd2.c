@@ -30,7 +30,7 @@ void change_pwd(t_env **env)
     free(change);
     
 }
-void change_old(t_env **env,char *str, int flag)
+void change_old(t_env **env)
 {
     char *pwd;
     char *oldpwd;
@@ -47,11 +47,13 @@ void change_old(t_env **env,char *str, int flag)
         free(pwd);
 }
 
-void invert_pwd(t_env **env,char *str)
+void invert_pwd(t_env **env)
 {
     char *pwd;
     char *keyold;
+    
     pwd = NULL;
+    keyold = NULL;
     
     pwd = get_valuepwd(env,"PWD=");
     if(pwd != NULL)

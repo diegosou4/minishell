@@ -64,7 +64,6 @@ void	handle_signal_here_doc(int signal1)
 {
     int in;
     int out;
-	static int bashlvll;
 
     in = get_file_num()->in;
     out = get_file_num()->out;

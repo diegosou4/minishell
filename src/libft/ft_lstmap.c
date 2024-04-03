@@ -15,13 +15,13 @@
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
 	t_list	*element;
-	t_list	*listreturn;
 	void	*temp;
 
+	t_list *listreturn ;
 	if (!lst || !f || !del)
 		return (0);
 	element = NULL;
-	listreturn = NULL;
+	listreturn (= NULL);
 	while (lst)
 	{
 		temp = f(lst->content);
@@ -60,10 +60,10 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 // E importante frizar caso nossa alocacao
 // der errado quando chamamos a ft_lstnew
 // nos devemos da um free no nosso temp
-// e a lstclear vai da free na 
+// e a lstclear vai da free na
 // lista que vamos rertonar
-// pois o comportamento e que 
-// devemos retornar um nullo 
+// pois o comportamento e que
+// devemos retornar um nullo
 // mas temos que ser bem criteriosos
 // desta forma faz corre bem
 //  void *(*f)(void *) permite que você aponte para

@@ -35,9 +35,7 @@ char *get_key(char *str)
 t_env *newsenv(char *str, int token)
 {
     t_env *cpyenv;
-    char *v;
     char *key;
-    char *value;
 
     key = get_key(str);
     cpyenv = ft_calloc(sizeof(t_env),1);

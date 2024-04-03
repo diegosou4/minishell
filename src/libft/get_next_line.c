@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-static	char	*ft_substr_gnl(char *str, int start, int len_str)
+static char	*ft_substr_gnl(char *str, int start, int len_str)
 {
 	int		i;
 	char	*subs;
@@ -39,7 +39,7 @@ static	char	*ft_substr_gnl(char *str, int start, int len_str)
 	return (subs);
 }
 
-static	void	ft_free_gnl(char **str, char *buffer)
+static void	ft_free_gnl(char **str, char *buffer)
 {
 	free(buffer);
 	free((*str));

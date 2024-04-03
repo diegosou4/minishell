@@ -27,17 +27,17 @@ char	*ft_strrchr(const char *str, int c)
 	}
 	return (0);
 }
-int ft_strintchr(const char *str, int c)
+int	ft_strintchr(const char *str, int c)
 {
 	int i;
 	i = 0;
-	while(str[i])
+	while (str[i])
 		i++;
-	while(i >= 0)
+	while (i >= 0)
 	{
-		if(str[i] == (char)c )
-			return(i);
-	i--;
+		if (str[i] == (char)c)
+			return (i);
+		i--;
 	}
-	return(i);
+	return (i);
 }

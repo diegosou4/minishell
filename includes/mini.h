@@ -297,12 +297,12 @@ void check_heredoc(t_redir **redirect);
 int case_here(char *delimiter, t_redir *fdclose);
 void ft_heredoc(char *delimiter, int in, int out,t_redir *fdclose);
 void ft_putforwe(char *line,int fd);
-void heredoc_simple(t_cmd *cmd,t_bash *bash_boss);
+
 //_________________________________________________ EXEC
 void care_redirect(t_cmd **cmd,t_bash **bash_boss);
 void care_expand(t_cmd **cmd,t_bash **bash_boss);
 void dup_final(t_bash *bash_boss);
-int return_in(t_cmd *cmd, t_bash *bash_boss);
+int return_in(t_cmd *cmd);
 int return_out(t_cmd *cmd);
 void redir_inchild(t_bash *bash_boss);
 void start_execution(t_bash *bash_boss);
@@ -336,8 +336,9 @@ int ft_echo(t_cmd *cmd);
 int return_error(char *str);
 //_______________________________________________FT_CD_______________________________________________//
 int ft_cd(t_cmd *comands,t_env **env);
-void change_old(t_env **env,char *str, int flag);
-void invert_pwd(t_env **env,char *str);
+void change_old(t_env **env);
+void invert_pwd(t_env **env);
+int case_cd(char *diretory,t_env **env);
 char *get_valuepwd(t_env **env, char *value);
 void change_pwd(t_env **env);
 //________________________________________________FT_ENV_____________________________________________//

@@ -12,18 +12,18 @@
 
 #include "libft.h"
 
-int ft_boolstrchr(const char *str, int c)
+int	ft_boolstrchr(const char *str, int c)
 {
-	int i;
-	i = 0;
+	int	i;
 
-	while(str[i] != '\0')
+	i = 0;
+	while (str[i] != '\0')
 	{
-		if(str[i] == c)
-			return(1);
+		if (str[i] == c)
+			return (1);
 		i++;
 	}
-	return(0);
+	return (0);
 }
 
 char	*ft_strchr(const char *str, int c)
@@ -48,4 +48,3 @@ char	*ft_strchr(const char *str, int c)
 		return (NULL);
 	}
 }
-

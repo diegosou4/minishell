@@ -21,4 +21,3 @@ int	ft_isalpha(int c)
 
 // Verifica se o char e um
 // alfabeto
-
