@@ -26,3 +26,4 @@ void	fail_expander(t_bash *bash_boss, t_cmd *cmd)
 	g_exit_status = 127;
 	exit(EXIT_FAILURE);
 }
+
