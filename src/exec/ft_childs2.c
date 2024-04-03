@@ -17,6 +17,10 @@ void care_redirect(t_cmd **cmd,t_bash **bash_boss)
 {
     (*bash_boss)->fdout = return_out((*cmd));
     (*bash_boss)->fdin = return_in((*cmd));
+    if((*cmd)->prev != NULL)
+        close_myhereprev((*cmd)->prev);
+    if((*cmd) != NULL)
+        close_myherenext((*cmd)->next);
     if((*cmd)->executable == 0)
     {
         printf("Preciso da free");

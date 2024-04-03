@@ -103,7 +103,7 @@ void start_execution(t_bash *bash_boss)
     get_file_num()->exit_code = 0;
     while(ptr != NULL)
     {
-        check_heredoc(&ptr->redir);
+        check_heredoc(&ptr->redir,ptr);
         if(get_file_num()->exit_code == 127)
             break;
         ptr = ptr->next;
@@ -113,6 +113,7 @@ void start_execution(t_bash *bash_boss)
     ptr = bash_boss->commands;
     bash_boss->pipein = -1;
     bash_boss->pipeout= -1;
+
     while(ptr != NULL)
     {
         ptr->executable = 1;

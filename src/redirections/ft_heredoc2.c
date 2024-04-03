@@ -13,21 +13,78 @@
 #include "../../includes/mini.h"
 
 
-void check_heredoc(t_redir **redirect)
+void check_heredoc(t_redir **redirect, t_cmd *cmd)
 {
     t_redir *ptr;
-    t_redir *fdclose;
-    fdclose = (*redirect);
     ptr = (*redirect);
 
     while(ptr != NULL)
     {
         if(ptr->token == here_doc)
         {
-            ptr->fd = case_here(ptr->path,fdclose);
+            ptr->fd = case_here(ptr->path,cmd);
+            if(len_darray(cmd->args) == 0)
+                close(ptr->fd);
             if(get_file_num()->exit_code == 127)
-                return;
+                return; 
             ptr->token = open_here;
+        }
+        ptr = ptr->next;
+    }
+}
+
+void close_myhere(t_cmd *cmd)
+{
+    t_cmd *ptr;
+    t_redir *ptrredir;
+
+    ptr = cmd;
+    while(ptr != NULL)
+    {
+        ptrredir = cmd->redir;
+        while(ptrredir != NULL)
+        {
+            if(ptrredir->token == open_here)
+                close(ptrredir->fd);
+            ptrredir = ptrredir->next;
+        }
+        ptr = ptr->next;
+    }
+}
+
+void close_myhereprev(t_cmd *cmd)
+{
+    t_cmd *ptr;
+    t_redir *ptrredir;
+
+    ptr = cmd;
+    while(ptr != NULL)
+    {
+        ptrredir = ptr->redir;
+        while(ptrredir != NULL)
+        {
+            if(ptrredir->token == open_here)
+                close(ptrredir->fd);
+            ptrredir = ptrredir->next;
+        }
+        ptr = ptr->prev;
+    }
+}
+
+void close_myherenext(t_cmd *cmd)
+{
+    t_cmd *ptr;
+    t_redir *ptrredir;
+
+    ptr = cmd;
+    while(ptr != NULL)
+    {
+        ptrredir = ptr->redir;
+        while(ptrredir != NULL)
+        {
+            if(ptrredir->token == open_here)
+                close(ptrredir->fd);
+            ptrredir = ptrredir->next;
         }
         ptr = ptr->next;
     }

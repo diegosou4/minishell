@@ -13,12 +13,13 @@
 
 #include "../../includes/mini.h"
 
-int case_here(char *delimiter, t_redir *fdclose)
+int case_here(char *delimiter, t_cmd *cmd)
 {
     int pipesfd[2];
     pipe(pipesfd);
 
-    ft_heredoc(delimiter,pipesfd[0],pipesfd[1],fdclose);
+    ft_heredoc(delimiter,pipesfd[0],pipesfd[1],cmd);
+    close(pipesfd[1]);
     return(pipesfd[0]);
 
 }
@@ -131,11 +132,12 @@ void pipes_executor(t_cmd *ptrcmd,t_bash *bash_boss)
             child_build(ptrcmd,bash_boss);
         }
         care_myprev(ptrcmd);
+        close_myhere(ptrcmd);
         ptrcmd = ptrcmd->next;
         i++;
     }
      wait_mypids(bash_boss);    
-    // signal(SIGINT,handle_signal ); 
+ 
 }
 
 

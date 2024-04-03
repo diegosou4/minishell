@@ -73,6 +73,4 @@ void ft_exit(t_cmd *comands, t_env **cpy)
         free_all_exit(comands,(*cpy));
         exit(EXIT_SUCCESS);
     }
-   
-   
 }

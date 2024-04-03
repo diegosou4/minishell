@@ -24,6 +24,7 @@ t_file_struct *get_file_num()
 	static t_file_struct instance;
 	return(&instance);
 }
+/*
 static void close_here(t_redir *fdclose)
 {
     t_redir *ptr;
@@ -37,9 +38,9 @@ static void close_here(t_redir *fdclose)
         ptr = ptr->next;
     }
 
-}
+}*/
 
-void ft_heredoc(char *delimiter, int in, int out,t_redir *fdclose)
+void ft_heredoc(char *delimiter, int in, int out,t_cmd *cmd)
 {
     char *line;
     char *line_text;
@@ -50,12 +51,11 @@ void ft_heredoc(char *delimiter, int in, int out,t_redir *fdclose)
     get_file_num()->in = in;
     get_file_num()->out = out;
     get_file_num()->exit_code = 0;
-    // signal(SIGINT, SIG_IGN);
     if(pid == 0)
     {
-        // signal(SIGINT, handle_signal_here_doc);
+        close(in);
         ft_signal_manager_here();
-        close_here(fdclose);
+        close_myhereprev(cmd);
         while(1)
         {
             line_text = ft_strjoin(ANSI_COLOR_PURPLE,"🐧🐧heredoco>");
@@ -65,7 +65,6 @@ void ft_heredoc(char *delimiter, int in, int out,t_redir *fdclose)
             {
                 free(line);
                 close(out);
-                close(in);
                 exit(EXIT_SUCCESS);
             }
             else
@@ -74,7 +73,6 @@ void ft_heredoc(char *delimiter, int in, int out,t_redir *fdclose)
     }
     waitpid(pid,&exit_cod,0);
     get_file_num()->exit_code = (exit_cod & 0xff00) >> 8;
-    close(out);
 }
 
 
