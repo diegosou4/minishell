@@ -269,6 +269,7 @@ void handle_signal(int signal1);
 void	handle_signal_here_doc(int signal1);
 void	handle_signal_child(int signal1);
 void	ft_signal_manager_child(void);
+void	ft_signal_manager_here(void);
 t_file_struct *get_file_num();
 // __________________________________________________FREE_MANAGER ________________________________
 
