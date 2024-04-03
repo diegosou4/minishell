@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 13:07:06 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/03/21 14:56:43 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/03 16:00:56 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	ft_check_words_list(t_word_list *tokens)
 	return (0);
 }
 
-static	int	ft_special_pipe_case(char *line)
+static int	ft_special_pipe_case(char *line)
 {
 	if (line[0] == '|' && line[1] == '|')
 	{
@@ -89,8 +89,8 @@ static int	ft_whitespace_1(char *line)
 
 static int	ft_check_pipes(char *line)
 {
-	int	i;
-	char flag;
+	int		i;
+	char	flag;
 
 	flag = 0;
 	i = 0;
@@ -102,16 +102,14 @@ static int	ft_check_pipes(char *line)
 			flag = 0;
 		if (flag == 0 && ft_special_pipe_case(&line[i]) == 0)
 			return (0);
-		if (flag == 0 && (line[i] == '|')
-			&& (line[i + 1] == '\0' || line[i + 1] == '|' || line[i + 1] == ' '))
+		if (flag == 0 && (line[i] == '|') && (line[i + 1] == '\0' || line[i + 1] == '|' || line[i + 1] == ' '))
 		{
 			if (line[i + 1] == '\0')
 			{
 				printf("syntax error near `|' (no args) 🚰🙊\n");
 				return (0);
 			}
-			else if (line[i + 1] == ' '
-			&& !ft_whitespace_1(&line[i + 1]))
+			else if (line[i + 1] == ' ' && !ft_whitespace_1(&line[i + 1]))
 				return (0);
 		}
 		i++;
@@ -131,8 +129,7 @@ int	ft_check_directions(char **line)
 		printf("-🚫 bash: syntax error near unexpected token `newline'\n");
 		return (0);
 	}
-	else if (ft_strcmp(line[i - 1], "<") == 0
-		|| ft_strcmp(line[i - 1], ">") == 0)
+	else if (ft_strcmp(line[i - 1], "<") == 0 || ft_strcmp(line[i - 1], ">") == 0)
 	{
 		printf("-🚫 bash: syntax error near unexpected token `newline'\n");
 		return (0);
