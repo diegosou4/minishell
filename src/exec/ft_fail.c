@@ -14,8 +14,6 @@
 
 void fail_expander(t_bash *bash_boss,t_cmd *cmd)
 {
-    printf("hello this is fail_expander :%d:\n", g_exit_status);
-
     if(bash_boss->fdin != -1)
         close(bash_boss->fdin);
     if(bash_boss->fdout != -1)

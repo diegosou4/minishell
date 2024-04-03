@@ -114,8 +114,8 @@ void pipes_executor(t_cmd *ptrcmd,t_bash *bash_boss)
 
     int i;
     i = 0;
-    t_cmd *ptr;
-    ptr = ptrcmd;
+    // t_cmd *ptr;
+    // ptr = ptrcmd;
     alloc_mypids(bash_boss);
     ft_signal_manager_child();
     // signal(SIGINT, handle_signal_child);
