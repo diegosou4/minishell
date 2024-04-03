@@ -24,6 +24,24 @@ void	handle_signal(int signal1)
 	}
 }
 
+void	handle_signal_child(int signal1)
+{
+	if (signal1 == SIGINT)
+	{
+		write(1, "\n", 2);
+		g_exit_status = 130;
+		rl_on_new_line();
+		rl_replace_line("", 0);
+	}
+	else if (signal1 == SIGQUIT)
+	{
+		write(1, "Quit\n", 5);
+		g_exit_status = 131;
+		rl_on_new_line();
+		rl_replace_line("", 0);
+	}
+}
+
 void	ft_signal_manager(void)
 {
 	struct sigaction	sa;
@@ -34,6 +52,12 @@ void	ft_signal_manager(void)
 	sigaction(SIGINT, &sa, NULL);
 	sa.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &sa, NULL);
+}
+
+void	ft_signal_manager_child(void)
+{
+	signal(SIGINT, handle_signal_child);
+    signal(SIGQUIT, handle_signal_child);
 }
 
 void	handle_signal_here_doc(int signal1)

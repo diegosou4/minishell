@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 12:27:13 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/02 18:54:30 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/03 13:31:42 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int ft_howpipes(t_cmd *comands)
 void start_execution(t_bash *bash_boss)
 {
     t_cmd *ptr;
-
+    signal(SIGINT, SIG_IGN);
     ptr = bash_boss->commands;
     get_file_num()->exit_code = 0;
     while(ptr != NULL)
@@ -119,4 +119,6 @@ void start_execution(t_bash *bash_boss)
         ptr = ptr->next;
     }
     ft_magane_executor(bash_boss);
+    signal(SIGINT,handle_signal );
+
 }
