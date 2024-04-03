@@ -48,6 +48,7 @@ extern int g_exit_status;
 typedef struct {
 	int in;
 	int out;
+	int exit_code;
 } t_file_struct;
 
 typedef struct s_number
