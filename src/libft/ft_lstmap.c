@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 20:07:11 by diegmore          #+#    #+#             */
-/*   Updated: 2023/10/12 15:53:57 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/04/03 17:00:13 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 	if (!lst || !f || !del)
 		return (0);
 	element = NULL;
-	listreturn (= NULL);
+	listreturn = NULL;
 	while (lst)
 	{
 		temp = f(lst->content);
