@@ -270,6 +270,8 @@ int ft_check_valid_redir(t_word_list *word_list);
 void ft_signal_manager();
 void handle_signal(int signal1);
 void	handle_signal_here_doc(int signal1);
+void	handle_signal_child(int signal1);
+void	ft_signal_manager_child(void);
 t_file_struct *get_file_num();
 // __________________________________________________FREE_MANAGER ________________________________
 
