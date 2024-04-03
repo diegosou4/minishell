@@ -147,14 +147,15 @@ void pipes_executor(t_cmd *ptrcmd,t_bash *bash_boss)
     t_cmd *ptr;
     ptr = ptrcmd;
     alloc_mypids(bash_boss);
-    signal(SIGINT, SIG_IGN);
+    ft_signal_manager_child();
+    // signal(SIGINT, handle_signal_child);
+    // signal(SIGQUIT, handle_signal_child);
     while(ptrcmd != NULL)
     { 
         set_pipes(ptrcmd);
         bash_boss->pid[i] = fork();
         if(bash_boss->pid[i] == 0)
         {  
-            signal(SIGINT, handle_signal_here_doc);
             if(check_builtings(ptrcmd) == 0)
                  child_exec(ptrcmd,bash_boss);
             child_build(ptrcmd,bash_boss);
@@ -164,7 +165,7 @@ void pipes_executor(t_cmd *ptrcmd,t_bash *bash_boss)
         i++;
     }
      wait_mypids(bash_boss);    
-    signal(SIGINT,handle_signal ); 
+    // signal(SIGINT,handle_signal ); 
 }
 
 
