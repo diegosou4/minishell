@@ -50,7 +50,7 @@ int execute_builtings(t_cmd **cmd,t_env **cpy, int check)
         return(ft_echo((*cmd)));
     else if(check == 7)
     {
-        ft_exit((*cmd));
+        ft_exit((*cmd),cpy);
         return(0);
     }
     return(0);

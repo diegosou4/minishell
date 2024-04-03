@@ -31,7 +31,18 @@ void ft_numberforexit(char *str)
     res = (unsigned char)i;
     exit(res);
 }
-void ft_exit(t_cmd *comands)
+
+void free_all_exit(t_cmd *comands,t_env *cpy)
+{
+    ft_free_env_list(cpy);
+
+    if(comands->path != NULL)
+    {
+        free(comands->path);
+    }
+}
+
+void ft_exit(t_cmd *comands, t_env **cpy)
 {
     char *str;
     int i;
@@ -54,8 +65,14 @@ void ft_exit(t_cmd *comands)
             }
         i++;
         }
+
         ft_numberforexit(str);
     }
     else 
+    {
+        free_all_exit(comands,(*cpy));
         exit(EXIT_SUCCESS);
+    }
+   
+   
 }
