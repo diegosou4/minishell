@@ -6,7 +6,7 @@
 /*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 20:07:11 by diegmore          #+#    #+#             */
-/*   Updated: 2023/10/12 15:53:57 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/04/03 15:26:45 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
 	t_list	*element;
 	void	*temp;
+	t_list	*listreturn;
 
-	t_list *listreturn ;
 	if (!lst || !f || !del)
 		return (0);
 	element = NULL;
