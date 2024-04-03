@@ -3,10 +3,11 @@
 /*                                                        :::      ::::::::   */
 /*   ft_childs.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: diemorei <diemorei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 17:01:11 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/03 11:38:53 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/02 22:12:27 by diemorei         ###   ########.fr       */
+
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +134,8 @@ void child_build(t_cmd *cmd, t_bash *bash_boss)
         close(bash_boss->fdout);
     } 
     execute_builtings(&cmd,&bash_boss->cpyenv,check);
+    free_cpyenv(bash_boss->cpyenv);
+    free_all(cmd);
     exit(EXIT_SUCCESS);
 }
 
