@@ -46,9 +46,9 @@ void ft_heredoc(char *delimiter, int in, int out,t_redir *fdclose)
     pid = fork();
     get_file_num()->in = in;
     get_file_num()->out = out;
-    signal(SIGINT, handle_signal_here_doc);
     if(pid == 0)
     {
+        signal(SIGINT, handle_signal_here_doc);
         close_here(fdclose);
         while(1)
         {
@@ -66,7 +66,7 @@ void ft_heredoc(char *delimiter, int in, int out,t_redir *fdclose)
                 ft_putforwe(line,out);
             }
     }
-   waitpid(pid,&pid,0);
+    waitpid(pid,&pid,0);
     close(out);
 }
 
