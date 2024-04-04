@@ -6,7 +6,7 @@
 /*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:29:14 by diegmore          #+#    #+#             */
-/*   Updated: 2023/10/04 13:58:29 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/04/03 15:22:42 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,11 @@ char	*ft_strrchr(const char *str, int c)
 	}
 	return (0);
 }
+
 int	ft_strintchr(const char *str, int c)
 {
-	int i;
+	int	i;
+
 	i = 0;
 	while (str[i])
 		i++;

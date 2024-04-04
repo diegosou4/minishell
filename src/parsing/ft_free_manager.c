@@ -37,7 +37,10 @@ void	ft_free_env_list(t_env *env)
 	{
 		temp = current;
 		current = current->next;
-		free(temp->key);
+		if(temp->key != NULL)
+			free(temp->key);
+		if(temp->value != NULL)
+			free(temp->value);
 		free(temp);
 	}
 }

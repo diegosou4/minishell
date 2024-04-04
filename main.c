@@ -96,10 +96,11 @@ void	ft_structure_manager(t_line *line, t_bash *bash)
 	if (bash->commands)
 		start_execution(bash);
 	bash->exit_status = g_exit_status;
-
-	// if (bash->pid != NULL)
-	// 	free(bash->pid);
 	ft_free_double_word_list(list);
+	bash->exit_status = g_exit_status;
+	 if (bash->pid != NULL)
+	 	free(bash->pid);
+	
 	ft_free_cmd_structure(cmd_structure);
 }
 

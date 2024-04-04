@@ -299,9 +299,9 @@ int check_path2(t_cmd **commands, char **env);
 //_____________________________________________________ENV ______________________________________________________
 void ft_env_null();
 //_____________________________________________________HERE_DOC___________________________________________________//
-void check_heredoc(t_redir **redirect);
-int case_here(char *delimiter, t_redir *fdclose);
-void ft_heredoc(char *delimiter, int in, int out,t_redir *fdclose);
+void check_heredoc(t_redir **redirect, t_cmd *cmd);
+int case_here(char *delimiter,t_cmd *cmd);
+void ft_heredoc(char *delimiter, int in, int out,t_cmd *cmd);
 void ft_putforwe(char *line,int fd);
 
 //_________________________________________________ EXEC
@@ -318,7 +318,9 @@ int simple_bexecutor(t_cmd *ptrcmd,t_bash *bash_boss);
 void pipes_executor(t_cmd *ptrcmd,t_bash *bash_boss);
 void fail_expander(t_bash *bash_boss,t_cmd *cmd);
 int ft_howpipes(t_cmd *comands);
-
+void close_myhere(t_cmd *cmd);
+void close_myhereprev(t_cmd *cmd);
+void close_myherenext(t_cmd *cmd);
 //_____________________________________________PIDS_____________________________________________________//
 void alloc_mypids(t_bash *bash_boss);
 void wait_mypids(t_bash *bash_boss);
@@ -361,7 +363,7 @@ int ft_unset(t_env **env,t_cmd *commands);
 int error_unset(char *key);
 int unset_env(t_env **env,char *str);
 //________________________________________________EXIT_______________________________________________//
-void ft_exit(t_cmd *comands);
+void ft_exit(t_cmd *comands,t_env **cpy);
 
 //____________________________________________EXECUTEBUILTINGS_______________________________________//
 int execute_builtings(t_cmd **cmd,t_env **cpy, int check);
