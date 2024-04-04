@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init_manager.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: diemorei <diemorei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 14:13:49 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/04/04 12:32:01 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/04 22:41:22 by diemorei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,5 @@ void	ft_bash_boss_init(t_bash *bash, char **env)
 	bash->pipeout = 0;
 	bash->exit_status = 0;
 	bash->line = NULL;
+	
 }
