@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_fail.c                                          :+:      :+:    :+:   */
+/*   ft_free2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/25 17:30:52 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/03 18:42:09 by diegmore         ###   ########.fr       */
+/*   Created: 2024/04/03 15:41:46 by diegmore          #+#    #+#             */
+/*   Updated: 2024/04/03 15:41:48 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/mini.h"
 
-void	fail_expander(t_bash *bash_boss, t_cmd *cmd)
+void	free_cpyenv(t_env *cpyenv)
 {
-	if (bash_boss->fdin != -1)
-		close(bash_boss->fdin);
-	if (bash_boss->fdout != -1)
-		close(bash_boss->fdout);
-	if (bash_boss->pipein != -1)
-		close(bash_boss->pipein);
-	if (bash_boss->pipeout != -1)
-		close(bash_boss->pipeout);
-	ft_free_cmd_structure(cmd);
-	g_exit_status = 127;
-	exit(EXIT_FAILURE);
-}
+	t_env	*ptr;
+	t_env	*next;
 
+	ptr = cpyenv;
+	while (ptr != NULL)
+	{
+		if (ptr->key != NULL)
+			free(ptr->key);
+		if (ptr->value != NULL)
+			free(ptr->value);
+		next = ptr->next;
+		free(ptr);
+		ptr = next;
+	}
+}

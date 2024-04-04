@@ -10,115 +10,82 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../../includes/mini.h"
 
-
-int simple_bexecutor(t_cmd *ptrcmd,t_bash *bash_boss)
+int	simple_bexecutor(t_cmd *ptrcmd, t_bash *bash_boss)
 {
-    int check;
-    
-    check = check_builtings(ptrcmd);
-    bash_boss->fdin = return_in(ptrcmd);
-    bash_boss->fdout = return_out(ptrcmd);
-    if(ptrcmd->executable == 0)
-        return(EXIT_FAILURE);
-    init_dup(bash_boss);
-    execute_builtings(&ptrcmd,&bash_boss->cpyenv,check);
-    close_fds(bash_boss);
-    close_fderror(ptrcmd->redir);
-    return(EXIT_SUCCESS);
+	int	check;
+
+	check = check_builtings(ptrcmd);
+	bash_boss->fdin = return_in(ptrcmd);
+	bash_boss->fdout = return_out(ptrcmd);
+	if (ptrcmd->executable == 0)
+		return (EXIT_FAILURE);
+	init_dup(bash_boss);
+	execute_builtings(&ptrcmd, &bash_boss->cpyenv, check);
+	close_fds(bash_boss);
+	close_fderror(ptrcmd->redir);
+	return (EXIT_SUCCESS);
 }
 
-
-
-int return_heredoc(t_redir *redir)
+int	return_heredoc(t_redir *redir)
 {
-    // int i;
-    t_redir *ptr;
-    // i = 0;
-    ptr = redir;
-    while(ptr != NULL)
-    {
-        if(ptr->token == 3)
-            return(1);
-        ptr = ptr->next;
-    }
-    return(0);
+	int		i;
+	t_redir	*ptr;
+
+	i = 0;
+	ptr = redir;
+	while (ptr != NULL)
+	{
+		if (ptr->token == 3)
+			return (1);
+		ptr = ptr->next;
+	}
+	return (0);
 }
 
-void ft_magane_executor(t_bash *bash_boss)
+void	ft_magane_executor(t_bash *bash_boss)
 {
-    t_cmd *ptrcmd;
-    int check;
-    
-    ptrcmd = bash_boss->commands;
-    check = check_builtings(ptrcmd);
-    if(ptrcmd->next == NULL && check > 0 && check <= 7)
-        simple_bexecutor(ptrcmd,bash_boss); 
-    else
-       pipes_executor(ptrcmd,bash_boss);
+	t_cmd	*ptrcmd;
+	int		check;
+
+	ptrcmd = bash_boss->commands;
+	check = check_builtings(ptrcmd);
+	if (ptrcmd->next == NULL && check > 0 && check <= 7)
+		simple_bexecutor(ptrcmd, bash_boss);
+	else
+		pipes_executor(ptrcmd, bash_boss);
 }
 
-int open_redir(t_cmd **commands)
+int	open_redir(t_cmd **commands)
 {
-    t_cmd *ptrcmd;
-    t_redir *ptrredir;
+	t_cmd	*ptrcmd;
+	t_redir	*ptrredir;
 
-    ptrcmd = (*commands);
-    while(ptrcmd != NULL)
-    {
-        ptrredir = ptrcmd->redir;
-        if(open_fd(&ptrredir) == 0)
-            ptrcmd->executable = FALSE;
-        else
-            ptrcmd->executable = TRUE;
-        ptrcmd = ptrcmd->next;
-    }
-    return(1);
+	ptrcmd = (*commands);
+	while (ptrcmd != NULL)
+	{
+		ptrredir = ptrcmd->redir;
+		if (open_fd(&ptrredir) == 0)
+			ptrcmd->executable = FALSE;
+		else
+			ptrcmd->executable = TRUE;
+		ptrcmd = ptrcmd->next;
+	}
+	return (1);
 }
 
-int ft_howpipes(t_cmd *comands)
+int	ft_howpipes(t_cmd *comands)
 {
-    int i;
-    i = 0;
+	int		i;
+	t_cmd	*ptr;
 
-    t_cmd *ptr;
-    ptr = comands;
-    while(ptr != NULL)
-    {
-        ptr = ptr->next;
-        i++;
-    }
-    return(i);
-
-}
-
-
-void start_execution(t_bash *bash_boss)
-{
-    t_cmd *ptr;
-    signal(SIGINT, SIG_IGN);
-    ptr = bash_boss->commands;
-    get_file_num()->exit_code = 0;
-    while(ptr != NULL)
-    {
-        check_heredoc(&ptr->redir);
-        if(get_file_num()->exit_code == 127)
-            break;
-        ptr = ptr->next;
-    }
-    if(get_file_num()->exit_code == 127)
-        return;
-    ptr = bash_boss->commands;
-    bash_boss->pipein = -1;
-    bash_boss->pipeout= -1;
-    while(ptr != NULL)
-    {
-        ptr->executable = 1;
-        ptr = ptr->next;
-    }
-    ft_magane_executor(bash_boss);
-    ft_signal_manager();
-
+	i = 0;
+	ptr = comands;
+	while (ptr != NULL)
+	{
+		ptr = ptr->next;
+		i++;
+	}
+	return (i);
 }
