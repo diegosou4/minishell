@@ -45,10 +45,15 @@
 //_______________________Exit status _________________
 extern int g_exit_status;
 
+typedef struct s_bash t_bash;
+
+typedef struct s_word_list t_word_list;
 typedef struct {
 	int in;
 	int out;
 	int exit_code;
+	t_bash *bash;
+	t_word_list **list;
 } t_file_struct;
 
 typedef struct s_number
@@ -171,6 +176,7 @@ typedef struct s_bash
 	int exit_status;
 	char **env;
 	t_env *cpyenv;
+	t_line *line;
 } t_bash;
 
 void *ft_parse_manager(char **env);
