@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:53:34 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/03 17:20:33 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/04 12:51:56 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,15 +85,17 @@ void	ft_structure_manager(t_line *line, t_bash *bash)
 	t_word_list	**list;
 	t_cmd		*cmd_structure;
 
+	get_file_num()->bash = bash;
 	bash->exit_status = g_exit_status;
 	list = ft_tokenizer_manager(line->line, bash);
 	if (!list)
 		return ;
+	get_file_num()->list = list;
 	cmd_structure = ft_structure_creation(list);
 	bash->commands = cmd_structure;
-	// if (bash->commands)
-	// 	start_execution(bash);
-	// bash->exit_status = g_exit_status;
+	if (bash->commands)
+		start_execution(bash);
+	bash->exit_status = g_exit_status;
 
 	// if (bash->pid != NULL)
 	// 	free(bash->pid);
@@ -112,6 +114,7 @@ void	*ft_parse_manager(char **env)
 	while (1)
 	{
 		ft_line_handler(&line, bash_boss.cpyenv);
+		bash_boss.line = &line;
 		if (!line.line)
 		{
 			ft_free_exit_status(&line, bash_boss.cpyenv, bash_boss.env);

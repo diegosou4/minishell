@@ -37,6 +37,13 @@ void ft_exit(t_cmd *comands)
     int i;
     int int_len;
 
+    t_bash *bash_boss;
+
+
+    ft_putstr_fd(ANSI_COLOR_GREEN"exit, see you 😉\n"ANSI_COLOR_RESET, 2);
+    bash_boss = (get_file_num()->bash);
+    ft_free_exit_status(bash_boss->line, bash_boss->cpyenv, bash_boss->env);
+    ft_free_double_word_list(get_file_num()->list);
     i = 0;
     int_len = len_darray(comands->args);
     if(int_len > 2)

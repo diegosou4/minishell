@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 14:13:49 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/03/28 08:13:08 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/04 12:32:01 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,5 @@ void	ft_bash_boss_init(t_bash *bash, char **env)
 	bash->pipein = 0;
 	bash->pipeout = 0;
 	bash->exit_status = 0;
+	bash->line = NULL;
 }
