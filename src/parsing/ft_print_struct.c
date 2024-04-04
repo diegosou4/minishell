@@ -123,3 +123,17 @@ void ft_print_cmd_struct(t_cmd *cmd)
     cmd = cmd->next;
     }
 }
+
+
+void print_dancing_penguin_frame1() {
+    printf(ANSI_COLOR_GREEN"MM M M M M M M M M M MM\n");
+    printf("M       MINISHELLO    M\n");
+    printf("MM M M M M M M M M M MM\n"ANSI_COLOR_RESET);
+    printf(ANSI_COLOR_YELLOW"      .--.\n");
+    printf("     |o_o |\n");
+    printf("     |:_/ |\n");
+    printf("    //   \\ \\\n");
+    printf("   (|  <  | )\n");
+    printf("  /'\\_   _/`\\\n");
+    printf("  \\___)=(___/\n");
+}

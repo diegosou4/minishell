@@ -31,7 +31,7 @@ void ft_numberforexit(char *str)
     res = (unsigned char)i;
     exit(res);
 }
-void ft_exit(t_cmd *comands)
+void ft_exit(t_cmd *comands, t_env **cpy)
 {
     char *str;
     int i;
@@ -39,7 +39,8 @@ void ft_exit(t_cmd *comands)
 
     t_bash *bash_boss;
 
-
+    if (cpy)
+        printf(":n:\n");
     ft_putstr_fd(ANSI_COLOR_GREEN"exit, see you 😉\n"ANSI_COLOR_RESET, 2);
     bash_boss = (get_file_num()->bash);
     ft_free_exit_status(bash_boss->line, bash_boss->cpyenv, bash_boss->env);
@@ -55,6 +56,7 @@ void ft_exit(t_cmd *comands)
         {
             if(ft_isdigit(str[i]) != 1)
             {
+                ft_free_cmd_structure(bash_boss->commands);
                 ft_putstr_fd("exit: numeric argument required\n",2);
                 exit(EXIT_FAILURE);
                 return;
@@ -63,6 +65,9 @@ void ft_exit(t_cmd *comands)
         }
         ft_numberforexit(str);
     }
-    else 
+    else
+    {
+        ft_free_cmd_structure(bash_boss->commands);
         exit(EXIT_SUCCESS);
+    }
 }
