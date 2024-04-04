@@ -332,6 +332,7 @@ int open_out(char *path);
 int open_in(char *path);
 int open_append(char *path);
 int open_fd(t_redir **redirect);
+void close_pipes(t_cmd *commands);
 void printf_error_fd(char *strerror,char *file);
 void init_dup(t_bash *bash_boss);
 void reset_fd(t_bash *bash_boss, int i);

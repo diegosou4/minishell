@@ -91,8 +91,11 @@ void	child_build(t_cmd *cmd, t_bash *bash_boss)
 	redir_inchild(bash_boss);
 	dup_final(bash_boss,cmd);
 	execute_builtings(&cmd, &bash_boss->cpyenv, check);
+	freedouble_malloc(bash_boss->env,len_darray(bash_boss->env));
 	free_cpyenv(bash_boss->cpyenv);
 	free_all(cmd);
+	if (bash_boss->pid != NULL)
+	 	free(bash_boss->pid);
 	exit(EXIT_SUCCESS);
 }
 
@@ -121,4 +124,5 @@ void	pipes_executor(t_cmd *ptrcmd, t_bash *bash_boss)
 		i++;
 	}
 	wait_mypids(bash_boss);
+	close_pipes(bash_boss->commands);
 }

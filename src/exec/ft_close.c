@@ -11,3 +11,20 @@
 /* ************************************************************************** */
 
 #include "../../includes/mini.h"
+
+
+void close_pipes(t_cmd *commands)
+{
+    t_cmd *ptr;
+
+    ptr = commands;
+
+    while(ptr != NULL)
+    {
+        if(ptr->pipes[0] > 0)
+            close(ptr->pipes[0]);
+        if(ptr->pipes[1] > 0)
+            close(ptr->pipes[1]);
+        ptr = ptr->next;
+    }
+}
