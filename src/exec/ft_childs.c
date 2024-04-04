@@ -6,7 +6,7 @@
 /*   By: diemorei <diemorei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 17:01:11 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/03 18:50:02 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/04/04 21:54:06 by diemorei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,5 +124,5 @@ void	pipes_executor(t_cmd *ptrcmd, t_bash *bash_boss)
 		i++;
 	}
 	wait_mypids(bash_boss);
-	close_pipes(bash_boss->commands);
+	close_pipes(ptr);
 }

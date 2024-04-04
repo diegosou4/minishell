@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_path.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: diemorei <diemorei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 16:01:12 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/19 16:01:13 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/04/04 22:30:46 by diemorei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ char	*givepath(t_env *env)
 	index = ft_indexinenv(ptr, "PATH");
 	if (env == NULL && index != -1)
 		ft_putstr_fd("Error : Env not set\n", 2);
-	else if (index == -1)
+	else if(index == -1)
 		ft_putstr_fd("Error : Path not set\n", 2);
-	else
+	else if(index != -1)
 	{
 		while (index-- != 0)
 			ptr = ptr->next;
@@ -76,20 +76,22 @@ int	expand_path_cpy(t_cmd **commands, t_env *cpyenv)
 	build = check_builtings(ptr);
 	if (build == 0 && ptr->args[0] == NULL)
 		return (EXIT_SUCCESS);
-	if (build != 0)
+	if((access(ptr->args[0], F_OK) == 0 ) || build != 0)
 	{
 		ptr->path = ft_strdup(ptr->args[0]);
 		return (EXIT_SUCCESS);
-	}
-	home = givepath(cpyenv);
-	if (home == NULL)
-		return (EXIT_FAILURE);
-	ptr->path = ask_acess(ptr->args[0], home);
-	if (ptr->path == NULL)
+	}else
 	{
-		error_path(ptr->args[0]);
-		g_exit_status = 127;
-		return (EXIT_FAILURE);
+		home = givepath(cpyenv);
+		if (home == NULL)
+			return (EXIT_FAILURE);
+		ptr->path = ask_acess(ptr->args[0], home);
+		if (ptr->path == NULL)
+		{
+			error_path(ptr->args[0]);
+			g_exit_status = 127;
+			return (EXIT_FAILURE);
+		}
 	}
 	return (EXIT_SUCCESS);
 }

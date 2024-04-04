@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_route.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: diemorei <diemorei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 12:27:13 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/03 15:26:29 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/04 21:53:15 by diemorei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,8 @@ int	simple_bexecutor(t_cmd *ptrcmd, t_bash *bash_boss)
 
 int	return_heredoc(t_redir *redir)
 {
-	int		i;
 	t_redir	*ptr;
 
-	i = 0;
 	ptr = redir;
 	while (ptr != NULL)
 	{
