@@ -109,7 +109,7 @@ t_word_list	*tokenize_and_print(char *token)
 	{
 		if (wls->subtoken[0] != '\0')
 		{
-			wls->word_desc = ft_cte_wd_d(wls->subtoken, ft_flag(wls->subtoken));
+			wls->word_desc = ft_cte_wd_d(ft_strdup(wls->subtoken), ft_flag(wls->subtoken));
 			wls->node = create_word_node(wls->word_desc);
 			if (wls->head == NULL)
 			{

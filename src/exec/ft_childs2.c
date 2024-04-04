@@ -37,8 +37,17 @@ void	care_expand(t_cmd **cmd, t_bash **bash_boss)
 	}
 }
 
-void	dup_final(t_bash *bash_boss)
+void	dup_final(t_bash *bash_boss, t_cmd *cmd)
 {
+	if(cmd->args[0] == NULL)
+	{
+		if(bash_boss->fdin != - 1)
+			close(bash_boss->fdin);
+		if(bash_boss->fdout != - 1)
+			close(bash_boss->fdout);
+		
+		exit(EXIT_SUCCESS);
+	}
 	if (bash_boss->fdin != -1)
 	{
 		dup2(bash_boss->fdin, STDIN_FILENO);
@@ -51,16 +60,6 @@ void	dup_final(t_bash *bash_boss)
 	}
 }
 
-int	case_here(char *delimiter, t_cmd *cmd)
-{
-	int	pipesfd[2];
-
-	pipe(pipesfd);
-	ft_heredoc(delimiter, pipesfd[0], pipesfd[1], cmd);
-	close(pipesfd[1]);
-	return (pipesfd[0]);
-}
-
 void	start_execution(t_bash *bash_boss)
 {
 	t_cmd	*ptr;
@@ -70,7 +69,7 @@ void	start_execution(t_bash *bash_boss)
 	get_file_num()->exit_code = 0;
 	while (ptr != NULL)
 	{
-		check_heredoc(&ptr->redir, ptr);
+		check_heredoc(&ptr->redir, ptr,bash_boss);
 		if (get_file_num()->exit_code == 127)
 			break ;
 		ptr = ptr->next;

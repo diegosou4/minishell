@@ -62,7 +62,7 @@ t_cmd	*ft_parse_array(t_word_list *words_list)
 		if (words_list->word->tags != EXCECUTOR
 			&& words_list->word->tags != PATH)
 		{
-			cmd->args[args_index++] = (words_list->word->word);
+			cmd->args[args_index++] = ft_strdup(words_list->word->word);
 		}
 		if (!redir)
 		{

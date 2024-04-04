@@ -12,7 +12,7 @@
 
 #include "../../includes/mini.h"
 
-void	check_heredoc(t_redir **redirect, t_cmd *cmd)
+void	check_heredoc(t_redir **redirect, t_cmd *cmd,t_bash *bash_boss)
 {
 	t_redir	*ptr;
 
@@ -21,7 +21,7 @@ void	check_heredoc(t_redir **redirect, t_cmd *cmd)
 	{
 		if (ptr->token == here_doc)
 		{
-			ptr->fd = case_here(ptr->path, cmd);
+			ptr->fd = ft_heredoc(ptr->path, bash_boss,cmd);
 			if (len_darray(cmd->args) == 0)
 				close(ptr->fd);
 			if (get_file_num()->exit_code == 127)

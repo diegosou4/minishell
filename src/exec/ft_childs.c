@@ -75,7 +75,7 @@ void	child_exec(t_cmd *cmd, t_bash *bash_boss)
 	if (sizepipe(bash_boss->commands) != 1)
 		care_inchild(cmd, bash_boss);
 	redir_inchild(bash_boss);
-	dup_final(bash_boss);
+	dup_final(bash_boss,cmd);
 	execve(cmd->path, cmd->args, bash_boss->env);
 }
 
@@ -89,7 +89,7 @@ void	child_build(t_cmd *cmd, t_bash *bash_boss)
 	if (sizepipe(bash_boss->commands) != 1)
 		care_inchild(cmd, bash_boss);
 	redir_inchild(bash_boss);
-	dup_final(bash_boss);
+	dup_final(bash_boss,cmd);
 	execute_builtings(&cmd, &bash_boss->cpyenv, check);
 	free_cpyenv(bash_boss->cpyenv);
 	free_all(cmd);
