@@ -104,9 +104,9 @@ typedef struct s_word_desc
 
 typedef struct s_word_list
 {
-	struct s_word_list *next;
 	t_word_desc *word;
 	t_bool redirection;
+	struct s_word_list *next;
 } t_word_list;
 
 typedef struct s_word_lists
@@ -177,6 +177,8 @@ typedef struct s_bash
 	char **env;
 	t_env *cpyenv;
 	t_line *line;
+	t_word_list **list;
+	
 } t_bash;
 
 void *ft_parse_manager(char **env);
@@ -299,15 +301,14 @@ int check_path2(t_cmd **commands, char **env);
 //_____________________________________________________ENV ______________________________________________________
 void ft_env_null();
 //_____________________________________________________HERE_DOC___________________________________________________//
-void check_heredoc(t_redir **redirect, t_cmd *cmd);
-int case_here(char *delimiter,t_cmd *cmd);
-void ft_heredoc(char *delimiter, int in, int out,t_cmd *cmd);
+void check_heredoc(t_redir **redirect, t_cmd *cmd,t_bash *bash_boss);
+int	ft_heredoc(char *delimiter, t_bash *bash_boss, t_cmd *cmd);
 void ft_putforwe(char *line,int fd);
 
 //_________________________________________________ EXEC
 void care_redirect(t_cmd **cmd,t_bash **bash_boss);
 void care_expand(t_cmd **cmd,t_bash **bash_boss);
-void dup_final(t_bash *bash_boss);
+void dup_final(t_bash *bash_boss,t_cmd *cmd);
 int return_in(t_cmd *cmd);
 int return_out(t_cmd *cmd);
 void redir_inchild(t_bash *bash_boss);

@@ -28,25 +28,31 @@ void	ft_free_t_word_list(t_word_list *word_list)
 {
 	t_word_list	*temp;
 
-	while (word_list)
+	temp = word_list;
+	while (temp != NULL)
 	{
-		temp = word_list;
 		word_list = word_list->next;
-		free(temp->word->word);
-		free(temp->word);
-		free(temp);
+		//if(temp->word->word != NULL)
+			//free(temp->word->word);
+		if(temp->word != NULL)
+			free(temp->word);
+		if(temp != NULL)
+			free(temp);
+		temp = word_list;
 	}
-	free(word_list);
+	if(word_list != NULL)
+		free(word_list);
 }
 
 void	ft_free_double_word_list(t_word_list **word_desc)
 {
 	int	i;
 
-	i = -1;
-	while (word_desc[++i])
+	i = 0;
+	while (word_desc[i] != NULL)
 	{
 		ft_free_t_word_list(word_desc[i]);
+		i++;
 	}
 	free(word_desc);
 }
@@ -58,6 +64,8 @@ void	ft_free_redir_list(t_redir *redir)
 	while (redir)
 	{
 		temp = redir;
+		if(temp->path != NULL)
+			free(temp->path);
 		redir = redir->next;
 		free(temp);
 	}
