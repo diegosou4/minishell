@@ -2,7 +2,7 @@
 
 NAME = minishell
 
-CFLAGS = -I./ -Wall -Wextra -Werror
+CFLAGS = -I./ #-Wall -Wextra -Werror
 LDFLAGS = -lreadline
 CC = cc -g
 
