@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 16:14:44 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/03 18:57:34 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/04/07 22:03:12 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/mini.h"
 
-void	check_heredoc(t_redir **redirect, t_cmd *cmd,t_bash *bash_boss)
+void	check_heredoc(t_redir **redirect, t_cmd *cmd, t_bash *bash_boss)
 {
 	t_redir	*ptr;
 
@@ -21,7 +21,7 @@ void	check_heredoc(t_redir **redirect, t_cmd *cmd,t_bash *bash_boss)
 	{
 		if (ptr->token == here_doc)
 		{
-			ptr->fd = ft_heredoc(ptr->path, bash_boss,cmd);
+			ptr->fd = ft_heredoc(ptr->path, bash_boss, cmd);
 			if (len_darray(cmd->args) == 0)
 				close(ptr->fd);
 			if (get_file_num()->exit_code == 127)
