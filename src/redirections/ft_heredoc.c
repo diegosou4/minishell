@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 16:43:29 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/08 10:51:16 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/08 11:21:01 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,25 @@ static void	child_heredoc(char *delimiter, t_bash *bash_boss, int out, t_cmd *cm
 		if (ft_strcmp(delimiter, line.line) == 0 || !line.line)
 		{
 			printf("======================---------------------------------------- this is free \n");
-			ft_free_cmd_structure(bash_boss->commands);
-		    ft_free_exit_status(bash_boss->line, bash_boss->cpyenv, bash_boss->env);
+			// ft_free_cmd_structure(bash_boss->commands);
+		    // ft_free_exit_status(bash_boss->line, bash_boss->cpyenv, bash_boss->env);
 			close(out);
-			exit(EXIT_SUCCESS);
-			// ft_exit(bash_boss->commands,&bash_boss->cpyenv);
-			// break;
+			//exit(EXIT_SUCCESS);
+			printf("%i meu PID NO FILHO \n", getpid());
+			ft_exit(bash_boss->commands,&bash_boss->cpyenv);
+			t_env *env;
+
+			env = bash_boss->cpyenv;
+
+			while(env != NULL)
+			{
+				if(env->value)
+					printf("Valor %s\n",env->value);
+				if(env->key)
+					printf("Valor %s\n",env->key);
+				env = env->next;
+			}
+			break;
 		}
 		else
 		{
@@ -52,7 +65,7 @@ static void	child_heredoc(char *delimiter, t_bash *bash_boss, int out, t_cmd *cm
 		ft_free_line_struct(&line);
 	}
 	close(out);
-	// ft_exit(bash_boss->commands, &bash_boss->cpyenv);
+	ft_exit(bash_boss->commands, &bash_boss->cpyenv);
 }
 
 int	ft_heredoc(char *delimiter, t_bash *bash_boss, t_cmd *cmd)

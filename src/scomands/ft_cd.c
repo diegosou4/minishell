@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: diemorei <diemorei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 16:20:27 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/03 15:25:50 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/04 21:52:41 by diemorei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,6 @@ static void	erro_cd(char *str, char *erro)
 }
 int	case_cd(char *diretory, t_env **env)
 {
-	char	*str;
-
-	str = NULL;
 	if (ft_strncmp("..", diretory, 2) == 0)
 		invert_pwd(env);
 	else

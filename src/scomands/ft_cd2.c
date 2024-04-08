@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: diemorei <diemorei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:11:00 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/03 18:59:14 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/04/04 23:41:32 by diemorei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,43 @@ void	change_pwd(t_env **env)
 	char	*newpwd;
 	char	*slash;
 	char	*change;
-
+	int key;
 	newpwd = ft_calloc(sizeof(char), FILENAME_MAX);
 	newpwd = getcwd(newpwd, FILENAME_MAX);
 	slash = ft_strjoin(newpwd, "/");
-	change = ft_strjoin("PWD=", slash);
-	export_env(env, change);
-	free(newpwd);
-	free(slash);
-	free(change);
+	change = ft_strjoin("PWD=", slash);	
+	key = key_exist(env, change, 1);
+	if (key == 1)
+	{
+		addbackenv(change, env, 1);
+		swap_value(env);
+	}
+	if(newpwd != NULL)
+		free(newpwd);
+	if(slash != NULL)
+		free(slash);
+	if(change != NULL)
+		free(change);
 }
 
 void	change_old(t_env **env)
 {
 	char	*pwd;
 	char	*oldpwd;
+	int key;
 
 	pwd = get_valuepwd(env, "PWD=");
 	if (pwd != NULL)
 	{
 		oldpwd = ft_strjoin("OLDPWD=", pwd);
-		export_env(env, oldpwd);
-		free(oldpwd);
+		key = key_exist(env, oldpwd, 1);
+		if (key == 1)
+		{
+		addbackenv(oldpwd, env, 1);
+		swap_value(env);
+		}
+		if(oldpwd != NULL)
+			free(oldpwd);
 	}
 	change_pwd(env);
 	if (pwd != NULL)
@@ -49,14 +64,22 @@ void	invert_pwd(t_env **env)
 {
 	char	*pwd;
 	char	*keyold;
-
+	int key;
+	
 	pwd = NULL;
 	keyold = NULL;
 	pwd = get_valuepwd(env, "PWD=");
 	if (pwd != NULL)
 		keyold = ft_strjoin("OLDPWD=", pwd);
 	if (keyold != NULL)
-		export_env(env, keyold);
+	{
+		key = key_exist(env, keyold, 1);
+		if (key == 1)
+		{
+		addbackenv(keyold, env, 1);
+		swap_value(env);
+		}
+	}
 	change_pwd(env);
 	if (pwd != NULL)
 		free(pwd);
