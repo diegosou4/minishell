@@ -371,8 +371,7 @@ int ft_unset(t_env **env,t_cmd *commands);
 int error_unset(char *key);
 int unset_env(t_env **env,char *str);
 //________________________________________________EXIT_______________________________________________//
-void ft_exit(t_cmd *comands,t_env **cpy);
-
+void	ft_exit(t_cmd *comands);
 //____________________________________________EXECUTEBUILTINGS_______________________________________//
 int execute_builtings(t_cmd **cmd,t_env **cpy, int check);
 
