@@ -76,11 +76,7 @@ int	expand_path_cpy(t_cmd **commands, t_env *cpyenv)
 	build = check_builtings(ptr);
 	if (build == 0 && ptr->args[0] == NULL)
 		return (EXIT_SUCCESS);
-	if((access(ptr->args[0], F_OK) == 0 ) || build != 0)
-	{
-		ptr->path = ft_strdup(ptr->args[0]);
-		return (EXIT_SUCCESS);
-	}else
+	if((access(ptr->args[0], F_OK) != 0 ) || build == 0)
 	{
 		home = givepath(cpyenv);
 		if (home == NULL)
@@ -92,6 +88,10 @@ int	expand_path_cpy(t_cmd **commands, t_env *cpyenv)
 			g_exit_status = 127;
 			return (EXIT_FAILURE);
 		}
+	}else
+	{
+		ptr->path = ft_strdup(ptr->args[0]);
+		return (EXIT_SUCCESS);
 	}
 	return (EXIT_SUCCESS);
 }
