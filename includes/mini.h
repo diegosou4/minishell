@@ -237,8 +237,7 @@ char *findfile(char *cmd);
 
 
 // Free and close
-void closeandfree(t_redir *redir);
-int closeredir(t_redir *redir);
+void exit_msg(char *str);
 void close_fderror(t_redir *redir);
 
 // Pipes 
