@@ -124,14 +124,6 @@ void ft_print_cmd_struct(t_cmd *cmd)
     }
 }
 
-void print_aciii_cloud() {
-    printf("      ___   ___\n");
-    printf("     /   \\_/   \\\n");
-    printf("    |           |\n");
-    printf("    |  ~~~~ ~~~ |   /\\\n");
-    printf("     \\  ~~~~ ~ /___/  \\\n");
-    printf("      \\________/       \\/\n");
-}
 void print_dancing_penguin_frame1() {
     printf(ANSI_COLOR_GREEN"- 0  0   1   0   1   0 -\n");
     printf("|  WELCOME MINISHELLO  |\n");

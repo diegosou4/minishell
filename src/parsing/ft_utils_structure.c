@@ -77,7 +77,7 @@ void	ft_line_handler(t_line *line, t_env *cpyenv, int num)
 		line->color_line = NULL;
 		line->line_text = NULL;
 		line->line = readline(ANSI_COLOR_PURPLE "🐧🐧heredoco> " ANSI_COLOR_RESET);
-		if (!line->line)
-			line->line = NULL;
+		// if (!line->line)
+		// 	line->line = NULL;
 	}
 }
