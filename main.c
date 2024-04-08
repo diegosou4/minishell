@@ -97,7 +97,9 @@ void	ft_structure_manager(t_line *line, t_bash *bash)
 	if (bash->commands)
 		start_execution(bash);
 	bash->exit_status = g_exit_status;
-	ft_free_cmd_structure(cmd_structure);
+	if (bash->pid != NULL)
+	 	free(bash->pid);
+
 }
 
 void	*ft_parse_manager(char **env)

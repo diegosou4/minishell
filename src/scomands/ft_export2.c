@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: diemorei <diemorei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:01:17 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/26 16:01:19 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/04/04 23:40:21 by diemorei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,14 @@ int	key_exist(t_env **env, char *str, int token)
 	{
 		if (ft_strncmp(ptr->key, key, ft_strlen(key)) == 0)
 		{
-			free(key);
+			if(key != NULL)
+				free(key);
 			if (ft_boolstrchr(str, 61) == 0 || value == NULL
 				|| ft_strlen(value) == 0)
 				return (EXIT_SUCCESS);
 			change_key(&ptr, value, token);
-			free(value);
+			if(value != NULL)
+				free(value);
 			return (EXIT_SUCCESS);
 		}
 		ptr = ptr->next;
@@ -57,7 +59,7 @@ int	key_exist(t_env **env, char *str, int token)
 	return (EXIT_FAILURE);
 }
 
-static void	swap_value(t_env **env)
+void	swap_value(t_env **env)
 {
 	t_env	*ptr;
 	t_env	*last;
@@ -82,10 +84,13 @@ int	export_env(t_env **env, char *str)
 {
 	int	token;
 
+	int key;
+		printf(" %s ", str);
 	token = 3;
 	if (ft_boolstrchr(str, 61) == 1)
 		token = 2;
-	if (key_exist(env, str, token) == 1)
+	key = key_exist(env, str, token);
+	if (key == 1)
 	{
 		addbackenv(str, env, token);
 		swap_value(env);

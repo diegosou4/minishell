@@ -337,6 +337,7 @@ int open_out(char *path);
 int open_in(char *path);
 int open_append(char *path);
 int open_fd(t_redir **redirect);
+void close_pipes(t_cmd *commands);
 void printf_error_fd(char *strerror,char *file);
 void init_dup(t_bash *bash_boss);
 void reset_fd(t_bash *bash_boss, int i);
@@ -358,6 +359,8 @@ void change_pwd(t_env **env);
 //________________________________________________FT_ENV_____________________________________________//
 int ft_env(t_env *env);
 int execute_env(t_env *env, t_cmd *commands);
+int	key_exist(t_env **env, char *str, int token);
+void	swap_value(t_env **env);
 //________________________________________________FT_EXP_____________________________________________//
 int export_env(t_env **env,char *str);
 int ft_exp(t_env *env);
