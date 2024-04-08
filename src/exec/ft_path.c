@@ -82,6 +82,8 @@ int	expand_path_cpy(t_cmd **commands, t_env *cpyenv)
 		if (home == NULL)
 			return (EXIT_FAILURE);
 		ptr->path = ask_acess(ptr->args[0], home);
+		if(home != NULL)
+			free(home);
 		if (ptr->path == NULL)
 		{
 			error_path(ptr->args[0]);

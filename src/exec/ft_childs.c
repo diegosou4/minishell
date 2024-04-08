@@ -91,8 +91,9 @@ void	child_build(t_cmd *cmd, t_bash *bash_boss)
 	redir_inchild(bash_boss);
 	dup_final(bash_boss,cmd);
 	execute_builtings(&cmd, &bash_boss->cpyenv, check);
-	ft_free_exit_status(bash_boss->line,bash_boss->cpyenv,bash_boss->env);
 	free_all(cmd);
+	ft_free_exit_status(bash_boss->line,bash_boss->cpyenv,bash_boss->env);
+
 	if (bash_boss->pid != NULL)
 	 	free(bash_boss->pid);
 	exit(EXIT_SUCCESS);
