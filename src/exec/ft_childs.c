@@ -72,7 +72,6 @@ void	child_exec(t_cmd *cmd, t_bash *bash_boss)
 {
 	care_redirect(&cmd, &bash_boss);
 	care_expand(&cmd, &bash_boss);
-	printf("PID do meu filho %i \n",getpid());
 	if (sizepipe(bash_boss->commands) != 1)
 		care_inchild(cmd, bash_boss);
 	redir_inchild(bash_boss);
