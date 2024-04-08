@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 14:14:31 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/03/21 20:15:06 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/07 22:29:59 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,11 @@ void	ft_free_double_pointers(char **split_line)
 		free(split_line[i]);
 		split_line[i] = NULL;
 	}
-	free(split_line);
+	if (split_line)
+	{
+		free(split_line);
+		split_line = NULL;
+	}
 }
 
 void	ft_free_env_list(t_env *env)
@@ -47,15 +51,35 @@ void	ft_free_env_list(t_env *env)
 
 void	ft_free_line_struct(t_line *line)
 {
-	free(line->line_text);
-	free(line->color_line);
+	if (line->line_text)
+	{
+		free(line->line_text);
+		line->line_text = NULL;
+	}
+	if (line->color_line)
+	{
+		free(line->color_line);
+		line->color_line = NULL;
+	}
+	if (line->line)
+	{
 	free(line->line);
+	}
 }
 
 void	ft_free_exit_status(t_line *line, t_env *cpyenv, char **env)
 {
-	ft_free_line_env(line, cpyenv);
+	if (line || cpyenv)
+	{
+		ft_free_line_env(line, cpyenv);
+		line = NULL;
+		cpyenv = NULL;
+	}
 	write(1, "(exit)\n", 7);
-	ft_free_double_pointers(env);
+	if (env != NULL)
+	{
+		ft_free_double_pointers(env);
+		env = NULL;
+	}
 }
 

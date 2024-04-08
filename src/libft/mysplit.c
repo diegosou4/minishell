@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mysplit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 15:43:10 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/03 15:25:52 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/04/05 08:47:08 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,14 @@ void	*freedouble_malloc(char **s, int i)
 	while (i >= 0)
 	{
 		free(s[i]);
+		s[i] = NULL;
 		i--;
 	}
+	if (s)
+	{
 	free(s);
+	s = NULL;
+	}
 	return (NULL);
 }
 

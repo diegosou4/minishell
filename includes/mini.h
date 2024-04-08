@@ -42,18 +42,23 @@
 #define ANSI_COLOR_RESET "\x1b[0m"
 #define ANSI_COLOR_PURPLE "\e[0;35m"
 
+#define MAIN 1
+#define HERE 2
 //_______________________Exit status _________________
 extern int g_exit_status;
 
 typedef struct s_bash t_bash;
-
 typedef struct s_word_list t_word_list;
+typedef struct s_line t_line;
+
 typedef struct {
 	int in;
 	int out;
 	int exit_code;
+	t_line *line;
 	t_bash *bash;
 	t_word_list **list;
+	char **env;
 } t_file_struct;
 
 typedef struct s_number
@@ -263,7 +268,7 @@ t_redir *ft_parse_redir_create(t_word_list *token_list);
 t_cmd *ft_parse_array(t_word_list *words_list);
 t_redir *ft_create_node(void); // node redir creation
 void ft_init_redir_node(t_redir *node, char *path, int token);
-void ft_line_handler(t_line *line, t_env *cpyenv);
+void ft_line_handler(t_line *line, t_env *cpyenv, int num);
 
 // __________________________________________________Fuctions_Test_____________________________
 int ft_handle_redir_input(char *delimiter);

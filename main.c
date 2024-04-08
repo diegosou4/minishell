@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:53:34 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/04 13:19:52 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/07 00:50:05 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,15 +93,13 @@ void	ft_structure_manager(t_line *line, t_bash *bash)
 	get_file_num()->list = list;
 	cmd_structure = ft_structure_creation(list);
 	bash->commands = cmd_structure;
-	bash->list = list;
-
+	ft_free_double_word_list(list);
 	if (bash->commands)
 		start_execution(bash);
-	ft_free_double_word_list(list);
 	bash->exit_status = g_exit_status;
 	if (bash->pid != NULL)
 	 	free(bash->pid);
-	ft_free_cmd_structure(cmd_structure);
+
 }
 
 void	*ft_parse_manager(char **env)
@@ -114,7 +112,7 @@ void	*ft_parse_manager(char **env)
 	ft_bash_boss_init(&bash_boss, env);
 	while (1)
 	{
-		ft_line_handler(&line, bash_boss.cpyenv);
+		ft_line_handler(&line, bash_boss.cpyenv, MAIN);
 		bash_boss.line = &line;
 		if (!line.line)
 		{
@@ -128,6 +126,7 @@ void	*ft_parse_manager(char **env)
 		g_exit_status = bash_boss.exit_status;
 		ft_free_line_struct(&line);
 	}
+	ft_free_line_struct(&line);
 	rl_clear_history();
 	return (NULL);
 }

@@ -46,16 +46,38 @@ int	ft_whitespace(char *line)
 
 //-----------------------------------Line Handler...........................
 
-void	ft_line_handler(t_line *line, t_env *cpyenv)
+static void free_and_null(char **ptr)
 {
-	if (cpyenv == NULL)
-		line->value_env = ("non-env@user");
-	else
-		line->value_env = ft_path_handler(cpyenv, "USER");
-	if (line->value_env == NULL)
-		line->value_env = ("non-env@user");
-	line->color_line = ft_strjoin(ANSI_COLOR_CYAN, (line->value_env));
-	line->line_text = ft_strjoin(line->color_line,
-			"@🐧shell:$ " ANSI_COLOR_RESET);
-	line->line = readline(line->line_text);
+	if (*ptr)
+	{
+        free(*ptr);
+        *ptr = NULL;
+    }
+}
+
+void	ft_line_handler(t_line *line, t_env *cpyenv, int num)
+{
+	if (num == MAIN)
+	{
+		if (cpyenv == NULL)
+			line->value_env = ("non-env@user");
+		else
+			line->value_env = ft_path_handler(cpyenv, "USER");
+		if (line->value_env == NULL)
+			line->value_env = ("non-env@user");
+		line->color_line = ft_strjoin(ANSI_COLOR_CYAN, (line->value_env));
+		line->line_text = ft_strjoin(line->color_line,
+				"@🐧shell:$ " ANSI_COLOR_RESET);
+		free_and_null(&line->color_line);
+		line->line = readline(line->line_text);
+		free_and_null(&line->line_text);
+	}
+	else if (num == HERE)
+	{
+		line->color_line = NULL;
+		line->line_text = NULL;
+		line->line = readline(ANSI_COLOR_PURPLE "🐧🐧heredoco> " ANSI_COLOR_RESET);
+		if (!line->line)
+			line->line = NULL;
+	}
 }

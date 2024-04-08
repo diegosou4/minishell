@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_childs.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diemorei <diemorei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 17:01:11 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/04 21:54:06 by diemorei         ###   ########.fr       */
+/*   Updated: 2024/04/07 00:46:51 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,5 +124,10 @@ void	pipes_executor(t_cmd *ptrcmd, t_bash *bash_boss)
 		i++;
 	}
 	wait_mypids(bash_boss);
-	close_pipes(ptr);
+	if (bash_boss->pid)
+	{
+		free(bash_boss->pid);
+		bash_boss->pid = NULL;
+	}
+	printf("---------------------5 hello\n");
 }
