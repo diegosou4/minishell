@@ -28,3 +28,9 @@ int	error_unset(char *key)
 	g_exit_status = EXIT_FAILURE;
 	return (EXIT_FAILURE);
 }
+
+void exit_msg(char *str)
+{
+	ft_putstr_fd(str,2);
+	exit(EXIT_FAILURE);
+}
