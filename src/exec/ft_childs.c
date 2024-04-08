@@ -91,9 +91,12 @@ void	child_build(t_cmd *cmd, t_bash *bash_boss)
 	redir_inchild(bash_boss);
 	dup_final(bash_boss,cmd);
 	execute_builtings(&cmd, &bash_boss->cpyenv, check);
-	free_all(cmd);
-	ft_free_exit_status(bash_boss->line,bash_boss->cpyenv,bash_boss->env);
-
+	ft_free_env_list(bash_boss->cpyenv);
+	//if(bash_boss->line == NULL)
+//		bash_boss->line = get_file_num()->line;
+	ft_free_line_struct(bash_boss->line);
+	ft_free_double_pointers(bash_boss->env);
+	free_all(bash_boss->commands);
 	if (bash_boss->pid != NULL)
 	 	free(bash_boss->pid);
 	exit(EXIT_SUCCESS);
