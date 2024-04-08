@@ -131,7 +131,6 @@ void	*ft_parse_manager(char **env)
 
 int	main(int argc, char *argv[], char **env)
 {
-	// print_dancing_penguin_frame1();
 	if (argc == 1 && argv[0])
 		ft_parse_manager(env);
 }
