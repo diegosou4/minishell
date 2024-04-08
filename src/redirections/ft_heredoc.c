@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 16:43:29 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/07 22:40:31 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/08 10:51:16 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,21 @@ static void	child_heredoc(char *delimiter, t_bash *bash_boss, int out, t_cmd *cm
 {
 	t_line	line;
 
-	ft_signal_manager_here();
 	close_myhereprev(cmd);
 	while (1)
 	{
+		ft_signal_manager_here();
 		ft_line_handler(&line, bash_boss->cpyenv, HERE);
 		get_file_num()->line = &line;
 		if (ft_strcmp(delimiter, line.line) == 0 || !line.line)
 		{
 			printf("======================---------------------------------------- this is free \n");
-			// ft_free_cmd_structure(bash_boss->commands);
-		    // ft_free_exit_status(bash_boss->line, bash_boss->cpyenv, bash_boss->env);
-			// close(out);
-			// exit(EXIT_SUCCESS);
+			ft_free_cmd_structure(bash_boss->commands);
+		    ft_free_exit_status(bash_boss->line, bash_boss->cpyenv, bash_boss->env);
+			close(out);
+			exit(EXIT_SUCCESS);
 			// ft_exit(bash_boss->commands,&bash_boss->cpyenv);
-			break;
+			// break;
 		}
 		else
 		{
@@ -78,7 +78,7 @@ int	ft_heredoc(char *delimiter, t_bash *bash_boss, t_cmd *cmd)
 		// freedouble_malloc(bash_boss->env,len_darray(bash_boss->env));
 		// ft_free_exit_status(bash_boss->line, bash_boss->cpyenv, bash_boss->env);
 		// ft_free_cmd_structure(bash_boss->commands);
-	ft_exit(bash_boss->commands, &bash_boss->cpyenv);
+	// ft_exit(bash_boss->commands, &bash_boss->cpyenv);
 	}
 	waitpid(pid, &exit_cod, 0);
 	get_file_num()->exit_code = (exit_cod & 0xff00) >> 8;
