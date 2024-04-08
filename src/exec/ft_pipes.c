@@ -65,9 +65,16 @@ void	redir_inchild(t_bash *bash_boss)
 	if (bash_boss->fdout == -1)
 		bash_boss->fdout = bash_boss->pipeout;
 	else
-		close(bash_boss->pipeout);
+	{
+		if(bash_boss->pipeout != -1)
+			close(bash_boss->pipeout);
+	}
 	if (bash_boss->fdin == -1)
 		bash_boss->fdin = bash_boss->pipein;
 	else
-		close(bash_boss->pipein);
+	{
+		if(bash_boss->pipein)
+			close(bash_boss->pipein);
+	}
+		
 }

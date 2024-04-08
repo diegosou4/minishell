@@ -72,6 +72,7 @@ void	child_exec(t_cmd *cmd, t_bash *bash_boss)
 {
 	care_redirect(&cmd, &bash_boss);
 	care_expand(&cmd, &bash_boss);
+	printf("PID do meu filho %i \n",getpid());
 	if (sizepipe(bash_boss->commands) != 1)
 		care_inchild(cmd, bash_boss);
 	redir_inchild(bash_boss);
@@ -91,8 +92,7 @@ void	child_build(t_cmd *cmd, t_bash *bash_boss)
 	redir_inchild(bash_boss);
 	dup_final(bash_boss,cmd);
 	execute_builtings(&cmd, &bash_boss->cpyenv, check);
-	freedouble_malloc(bash_boss->env,len_darray(bash_boss->env));
-	free_cpyenv(bash_boss->cpyenv);
+	ft_free_exit_status(bash_boss->line,bash_boss->cpyenv,bash_boss->env);
 	free_all(cmd);
 	if (bash_boss->pid != NULL)
 	 	free(bash_boss->pid);
@@ -129,5 +129,4 @@ void	pipes_executor(t_cmd *ptrcmd, t_bash *bash_boss)
 		free(bash_boss->pid);
 		bash_boss->pid = NULL;
 	}
-	printf("---------------------5 hello\n");
 }

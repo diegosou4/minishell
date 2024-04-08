@@ -78,6 +78,7 @@ void	ft_exit(t_cmd *comands)
 	int		i;
 	int		int_len;
 	t_bash	*bash_boss;
+	
 	if(ft_strncmp(comands->args[0],"exit",4) == 0)
 		ft_putstr_fd(ANSI_COLOR_GREEN "exit, see you 😉\n" ANSI_COLOR_RESET, 2);
 	ft_freepids();
