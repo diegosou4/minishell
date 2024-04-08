@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:53:34 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/07 00:50:05 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/08 11:10:14 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ void	*ft_parse_manager(char **env)
 
 int	main(int argc, char *argv[], char **env)
 {
+	// print_dancing_penguin_frame1();
 	if (argc == 1 && argv[0])
 		ft_parse_manager(env);
 }
