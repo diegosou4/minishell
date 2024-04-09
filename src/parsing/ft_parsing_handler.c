@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:44:08 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/03/21 18:38:39 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/09 13:28:32 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,17 @@ char	*ft_create_string(char *line, t_bash *bash)
 	char	*new_line;
 	char	*new_line_2;
 
-	new_line = ft_calloc((ft_strlen(line) * 3), sizeof(char ));
-	new_line_2 = ft_calloc((ft_strlen(line) * 3), sizeof(char ));
+	if (!line)
+		return (NULL);
+	new_line = ft_calloc((ft_strlen(line) * 3), sizeof(char));
+	new_line_2 = ft_calloc((ft_strlen(line) * 3), sizeof(char));
 	ft_string_handle(line, new_line);
+	if (!ft_strcmp(new_line, ">") || !ft_strcmp(new_line, "<"))
+	{
+		free(new_line);
+		printf("🚫 in-bash: syntax error near unexpected token `\n");
+		return (NULL);
+	}
 	ft_string_handle_2(new_line, new_line_2);
 	if (!new_line_2)
 	{

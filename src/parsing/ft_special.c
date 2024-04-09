@@ -53,9 +53,9 @@ char	*ft_string_handle_2(char *line, char *modified_line)
 			if (*line == '<' || *line == '>')
 				return (NULL);
 			modified_line[num.j++] = '\2';
-			num.flag_quotes = *line;
 		}
-		modified_line[num.j++] = *line;
+		if (*line)
+			modified_line[num.j++] = *line;
 		line++;
 	}
 	modified_line[num.j] = '\0';
