@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 14:44:43 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/04/03 15:55:07 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/09 13:17:10 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	ft_check_valid_redir(t_word_list *word_list)
 	}
 	if (word_list->word->word[i] == '<' || word_list->word->word[i] == '>')
 	{
-		printf("direction🚫 on-bash: syntax error near unexpected token `\n");
+		printf("-direction🚫 on-bash: syntax error near unexpected token `\n");
 		return (0);
 	}
 	return (1);

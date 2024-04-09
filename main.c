@@ -124,7 +124,6 @@ void	*ft_parse_manager(char **env)
 		g_exit_status = bash_boss.exit_status;
 		ft_free_line_struct(&line);
 	}
-	ft_free_line_struct(&line);
 	rl_clear_history();
 	return (NULL);
 }
