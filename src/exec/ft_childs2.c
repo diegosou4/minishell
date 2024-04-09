@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 13:43:09 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/07 00:18:15 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/09 17:06:06 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,15 @@ void	dup_final(t_bash *bash_boss, t_cmd *cmd)
 void	start_execution(t_bash *bash_boss)
 {
 	t_cmd	*ptr;
-
+	printf("this is -----start : \n");
+	// ft_signal_manager_child();
 	signal(SIGINT, SIG_IGN);
+	signal(SIGKILL, SIG_IGN);
 	ptr = bash_boss->commands;
 	get_file_num()->exit_code = 0;
 	while (ptr != NULL)
 	{
+		ft_signal_manager_child();
 		check_heredoc(&ptr->redir, ptr,bash_boss);
 		if (get_file_num()->exit_code == 127)
 			break ;
@@ -90,5 +93,6 @@ void	start_execution(t_bash *bash_boss)
 		ptr = ptr->next;
 	}
 	ft_magane_executor(bash_boss);
-	ft_signal_manager();
+	// ft_signal_manager();
+	printf("this is -----END : \n");
 }

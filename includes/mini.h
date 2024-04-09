@@ -29,6 +29,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include "src/libft/get_next_line.h"
+# include <sys/ioctl.h> /* */
 
 /*
 	Color codes.

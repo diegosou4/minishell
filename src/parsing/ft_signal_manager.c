@@ -16,7 +16,8 @@ void	handle_signal(int signal1)
 {
 	if (signal1 == SIGINT)
 	{
-		write(0, "\n", 1);
+		write(STDIN_FILENO, "\n", 1);
+		// ioctl(STDIN_FILENO, TIOCSTI, "\n");
 		g_exit_status = 130;
 		rl_on_new_line();
 		rl_replace_line("", 0);
@@ -26,20 +27,22 @@ void	handle_signal(int signal1)
 
 void	handle_signal_child(int signal1)
 {
-	if (signal1 == SIGINT)
-	{
-		write(1, "\n", 2);
-		g_exit_status = 130;
-		rl_on_new_line();
-		rl_replace_line("", 0);
-	}
-	else if (signal1 == SIGQUIT)
-	{
-		write(1, "Quit\n", 5);
-		g_exit_status = 131;
-		rl_on_new_line();
-		rl_replace_line("", 0);
-	}
+	if (signal1 == SIGINT || signal1 == SIGQUIT)
+		return ;
+	// if (signal1 == SIGINT)
+	// {
+	// 	write(1, "\n", 2);
+	// 	g_exit_status = 130;
+	// 	rl_on_new_line();
+	// 	rl_replace_line("", 0);
+	// }
+	// else if (signal1 == SIGQUIT)
+	// {
+	// 	write(1, "Quit\n", 5);
+	// 	g_exit_status = 131;
+	// 	rl_on_new_line();
+	// 	rl_replace_line("", 0);
+	// }
 }
 
 void	ft_signal_manager(void)
@@ -69,7 +72,7 @@ void	handle_signal_here_doc(int signal1)
     out = get_file_num()->out;
 	if (signal1 == SIGINT)
 	{
-		write(1, "\n", 1);
+		write(STDERR_FILENO, "\n", 1);
 		// rl_on_new_line();
 		// rl_replace_line("", 0);
 		ft_free_cmd_structure(get_file_num()->bash->commands);
