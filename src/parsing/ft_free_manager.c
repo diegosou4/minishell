@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 14:14:31 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/04/07 22:29:59 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/09 13:01:36 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,11 @@ void	ft_free_env_list(t_env *env)
 
 void	ft_free_line_struct(t_line *line)
 {
-	if (line->line_text)
-		free(line->line_text);
-	if (line->color_line)
-		free(line->color_line);
 	if(line->value_env)
+	{
 		free(line->value_env);
+		line->value_env = NULL;
+	}
 	// if(line->usr)
 	// 	free(line->usr);
 	if (line->line)
