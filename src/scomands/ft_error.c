@@ -34,3 +34,11 @@ void exit_msg(char *str)
 	ft_putstr_fd(str,2);
 	exit(EXIT_FAILURE);
 }
+
+void export_msg(char *arr)
+{
+	ft_putstr_fd("export: ", STDERR_FILENO);
+	ft_putstr_fd(arr, STDERR_FILENO);
+	ft_putstr_fd(" : not a valid identifier", STDERR_FILENO);
+	ft_putstr_fd("\n", STDERR_FILENO);
+}

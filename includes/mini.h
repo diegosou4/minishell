@@ -367,6 +367,7 @@ void	swap_value(t_env **env);
 int export_env(t_env **env,char *str);
 int ft_exp(t_env *env);
 int ft_indexinenv(t_env *env,char *this);
+void export_msg(char *arr);
 //________________________________________________FT_PWD________________________________________________//
 int print_pwd(t_cmd *comands);
 //_______________________________________________FT_UNSET____________________________________________//

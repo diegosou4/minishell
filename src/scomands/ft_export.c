@@ -95,10 +95,7 @@ int	check_var(char *arr)
 	i = 0;
 	if ((arr[0] == 95 && backslash == 1) || (ft_isalpha(arr[0]) == 0))
 	{
-		ft_putstr_fd("export: ", STDERR_FILENO);
-		ft_putstr_fd(arr, STDERR_FILENO);
-		ft_putstr_fd(" : not a valid identifier", STDERR_FILENO);
-		ft_putstr_fd("\n", STDERR_FILENO);
+		export_msg(arr);
 		return (0);
 	}
 	return (1);
@@ -109,15 +106,18 @@ int check_last(char *str)
 
 	i = 0;
 
-	while(str[i] != '\0' || str[i] != '=')
+	while(str[i] != '\0' && str[i] != '=')
 	{
 		i++;
 	}
-	if(str[i] == '=')
+	if(str[i] == '=' && ft_strlen(str) > 1)
 	{
 		i--;
 		if(ft_isalpha(str[i]) == 0)
+		{
+			export_msg(str);
 			return(0);
+		}
 	}
 	return(1);
 }
@@ -133,6 +133,8 @@ int	ft_export(t_env **env, t_cmd *commands)
 	while (commands->args[i] != NULL)
 	{
 		if (check_var(commands->args[i]) == 0)
+			exit = EXIT_FAILURE;
+		else if(check_last(commands->args[i]) == 0)
 			exit = EXIT_FAILURE;
 		else if (ft_strncmp("_=", commands->args[i], 2) == 0)
 			exit = EXIT_SUCCESS;
