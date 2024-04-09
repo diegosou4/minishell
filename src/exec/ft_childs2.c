@@ -66,7 +66,6 @@ void	dup_final(t_bash *bash_boss, t_cmd *cmd)
 void	start_execution(t_bash *bash_boss)
 {
 	t_cmd	*ptr;
-	printf("this is -----start : \n");
 	// ft_signal_manager_child();
 	signal(SIGINT, SIG_IGN);
 	signal(SIGKILL, SIG_IGN);
@@ -94,5 +93,4 @@ void	start_execution(t_bash *bash_boss)
 	}
 	ft_magane_executor(bash_boss);
 	// ft_signal_manager();
-	printf("this is -----END : \n");
 }
