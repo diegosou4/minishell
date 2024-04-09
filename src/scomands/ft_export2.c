@@ -83,9 +83,8 @@ void	swap_value(t_env **env)
 int	export_env(t_env **env, char *str)
 {
 	int	token;
-
 	int key;
-		printf(" %s ", str);
+	
 	token = 3;
 	if (ft_boolstrchr(str, 61) == 1)
 		token = 2;

@@ -57,8 +57,10 @@ static void free_and_null(char **ptr)
 
 void	ft_line_handler(t_line *line, t_env *cpyenv, int num)
 {
+		
 	if (num == MAIN)
 	{
+	
 		if (cpyenv == NULL)
 			line->value_env = ft_strdup("non-env@user");
 		else
@@ -70,6 +72,8 @@ void	ft_line_handler(t_line *line, t_env *cpyenv, int num)
 				"@🐧shell:$ " ANSI_COLOR_RESET);
 		free_and_null(&line->color_line);
 		line->line = readline(line->line_text);
+		if(line->value_env != NULL)
+			free(line->value_env);
 		free_and_null(&line->line_text);
 	}
 	else if (num == HERE)
