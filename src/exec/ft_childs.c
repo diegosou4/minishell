@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 17:01:11 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/07 00:46:51 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/09 16:19:53 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,9 @@ void	pipes_executor(t_cmd *ptrcmd, t_bash *bash_boss)
 	i = 0;
 	ptr = ptrcmd;
 	alloc_mypids(bash_boss);
-	ft_signal_manager_child();
 	while (ptrcmd != NULL)
 	{
+		// ft_signal_manager_child();
 		set_pipes(ptrcmd);
 		bash_boss->pid[i] = fork();
 		if (bash_boss->pid[i] == 0)
