@@ -429,7 +429,7 @@ int	ft_check_token_size(char *token_line);
 
 
 
-
+char	*ft_duplineenv(t_env *env, char *variable);
 
 
 
