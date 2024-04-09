@@ -52,19 +52,17 @@ void	ft_free_env_list(t_env *env)
 void	ft_free_line_struct(t_line *line)
 {
 	if (line->line_text)
-	{
 		free(line->line_text);
-		line->line_text = NULL;
-	}
 	if (line->color_line)
-	{
 		free(line->color_line);
-		line->color_line = NULL;
-	}
-	if (line->line)
-	{
-	free(line->line);
-	}
+	if(line->value_env)
+		free(line->value_env);
+	// if(line->usr)
+	// 	free(line->usr);
+	// if (line->line)
+	// 	free(line->line);
+	
+
 }
 
 void	ft_free_exit_status(t_line *line, t_env *cpyenv, char **env)

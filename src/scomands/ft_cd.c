@@ -19,6 +19,7 @@ static void	erro_cd(char *str, char *erro)
 	ft_putstr_fd(" ", 2);
 	ft_putstr_fd(erro, 2);
 	ft_putstr_fd("\n", 2);
+	free(str);
 }
 int	case_cd(char *diretory, t_env **env)
 {
@@ -26,6 +27,7 @@ int	case_cd(char *diretory, t_env **env)
 		invert_pwd(env);
 	else
 		change_old(env);
+	free(diretory);
 	return (EXIT_SUCCESS);
 }
 

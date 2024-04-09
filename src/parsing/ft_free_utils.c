@@ -26,7 +26,7 @@ void	ft_free_tokens_new_string(char **tokens, char *new_string)
 
 void	ft_free_line_env(t_line *line, t_env *cpyenv)
 {
-	if (line)
+	if (line != NULL)
 		ft_free_line_struct(line);
 	if (cpyenv)
 		ft_free_env_list(cpyenv);

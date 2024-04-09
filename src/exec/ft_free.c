@@ -49,7 +49,7 @@ void	free_all(t_cmd *cmd)
 		if (ptr->path != NULL)
 			free(ptr->path);
 		if (ptr->args != NULL)
-			freedouble_malloc(ptr->args, (len_darray(ptr->args)) - 1);
+			ft_free_double_pointers(ptr->args);
 		if (ptr->redir != NULL)
 			free_redir(ptr->redir);
 		free(ptr);

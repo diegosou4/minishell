@@ -41,7 +41,7 @@ char	*ft_path_handler(t_env *env, char *variable)
 	{
 		env = env->next;
 	}
-	holder = (env->value);
+	holder = ft_strdup(env->value);
 	return (holder);
 }
 

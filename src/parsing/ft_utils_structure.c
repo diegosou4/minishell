@@ -60,11 +60,11 @@ void	ft_line_handler(t_line *line, t_env *cpyenv, int num)
 	if (num == MAIN)
 	{
 		if (cpyenv == NULL)
-			line->value_env = ("non-env@user");
+			line->value_env = ft_strdup("non-env@user");
 		else
 			line->value_env = ft_path_handler(cpyenv, "USER");
 		if (line->value_env == NULL)
-			line->value_env = ("non-env@user");
+			line->value_env = ft_strdup("non-env@user");
 		line->color_line = ft_strjoin(ANSI_COLOR_CYAN, (line->value_env));
 		line->line_text = ft_strjoin(line->color_line,
 				"@🐧shell:$ " ANSI_COLOR_RESET);
