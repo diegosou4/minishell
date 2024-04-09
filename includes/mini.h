@@ -307,7 +307,8 @@ void ft_env_null();
 //_____________________________________________________HERE_DOC___________________________________________________//
 void check_heredoc(t_redir **redirect, t_cmd *cmd,t_bash *bash_boss);
 int	ft_heredoc(char *delimiter, t_bash *bash_boss, t_cmd *cmd);
-void ft_putforwe(char *line,int fd);
+int ft_putforwe(char *line,int fd);
+void free_here(t_bash *bash_boss);
 
 //_________________________________________________ EXEC
 void care_redirect(t_cmd **cmd,t_bash **bash_boss);

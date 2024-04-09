@@ -12,10 +12,17 @@
 
 #include "../../includes/mini.h"
 
-void	ft_putforwe(char *line, int fd)
+int	ft_putforwe(char *line, int fd)
 {
-	ft_putstr_fd(line, fd);
+	char *str;
+	int len;
+
+	str = ft_strdup(line);
+	len = ft_strlen(str);
+	ft_putstr_fd(str, fd);
 	ft_putchar_fd('\n', fd);
+	free(str);
+	return(len);
 }
 
 t_file_struct	*get_file_num(void)
@@ -24,10 +31,26 @@ t_file_struct	*get_file_num(void)
 
 	return (&instance);
 }
+static void badsignal_here(t_bash *bash_boss, int count, char *delimiter)
+{
+	char *str;
+
+	str = ft_itoa(count);
+	ft_putstr_fd("minishell warning: here-document at line ",2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd(" by end-of-file (wanted `",2);
+	ft_putstr_fd(delimiter,2);
+	ft_putstr_fd("')\n",2);
+	if(str != NULL)
+		free(str);
+}
+
 
 static void	child_heredoc(char *delimiter, t_bash *bash_boss, int out, t_cmd *cmd)
 {
 	t_line	line;
+	int count;
+	count = 0;
 
 	close_myhereprev(cmd);
 	while (1)
@@ -37,17 +60,19 @@ static void	child_heredoc(char *delimiter, t_bash *bash_boss, int out, t_cmd *cm
 		get_file_num()->line = &line;
 		if (ft_strcmp(delimiter, line.line) == 0 || !line.line)
 		{
-			close(out);
-			ft_exit(bash_boss->commands);
+			if(!line.line)
+				badsignal_here(bash_boss,count,delimiter);
+			break;
 		}
 		else
-		{
-			ft_putforwe(line.line, out);
-		}
-		ft_free_line_struct(&line);
+			count += ft_putforwe(line.line, out);
+		free(line.line);
 	}
+	if(line.line != NULL)
+		free(line.line);
+	free_here(bash_boss);
 	close(out);
-	ft_exit(bash_boss->commands);
+	exit(EXIT_SUCCESS);
 }
 
 int	ft_heredoc(char *delimiter, t_bash *bash_boss, t_cmd *cmd)
