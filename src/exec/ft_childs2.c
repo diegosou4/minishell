@@ -31,6 +31,7 @@ void	care_expand(t_cmd **cmd, t_bash **bash_boss)
 {
 	if (expand_path_cpy(cmd, (*bash_boss)->cpyenv) == 1)
 	{
+		care_inchild((*cmd),(*bash_boss));
 		fail_expander((*bash_boss), (*cmd));
 		g_exit_status = EXIT_FAILURE;
 		exit(EXIT_FAILURE);
@@ -45,7 +46,8 @@ void	dup_final(t_bash *bash_boss, t_cmd *cmd)
 			close(bash_boss->fdin);
 		if(bash_boss->fdout != - 1)
 			close(bash_boss->fdout);
-	ft_free_exit_status(bash_boss->line,bash_boss->cpyenv,bash_boss->env);	
+		free_pids(bash_boss);
+		free_here(bash_boss);
 		exit(EXIT_SUCCESS);
 	}
 	if (bash_boss->fdin != -1)

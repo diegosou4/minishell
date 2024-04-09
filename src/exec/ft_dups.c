@@ -15,20 +15,29 @@
 void	reset_fd(t_bash *bash_boss, int i)
 {
 	if (i == 1)
-		dup2(bash_boss->in, 0);
-	if (i == 3)
-		dup2(bash_boss->out, 1);
-	if (i == 4)
 	{
 		dup2(bash_boss->in, 0);
+		close(bash_boss->in);
+	}
+	if (i == 3)
+	{
 		dup2(bash_boss->out, 1);
+		close(bash_boss->out);
+	}
+		
+	if (i == 4)
+	{
+		dup2(bash_boss->in, STDIN_FILENO);
+		dup2(bash_boss->out, STDOUT_FILENO);
 	}
 }
 
 void	dup_fd(t_bash *bash_boss)
 {
-	bash_boss->in = dup(0);
-	bash_boss->out = dup(1);
+	if(bash_boss->fdin != -1)
+		bash_boss->in = dup(STDIN_FILENO);
+	if(bash_boss->fdout != -1)
+		bash_boss->out = dup(STDOUT_FILENO);
 }
 
 void	init_dup(t_bash *bash_boss)
@@ -63,8 +72,6 @@ void	close_fds(t_bash *bash_boss)
 		i = 3;
 	}
 	reset_fd(bash_boss, i);
-	bash_boss->fdin = -1;
-	bash_boss->fdout = -1;
 }
 
 void	close_dup(t_bash *bash_boss)

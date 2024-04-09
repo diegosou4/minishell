@@ -330,6 +330,7 @@ void close_myherenext(t_cmd *cmd);
 //_____________________________________________PIDS_____________________________________________________//
 void alloc_mypids(t_bash *bash_boss);
 void wait_mypids(t_bash *bash_boss);
+void free_pids(t_bash *bash_boss);
 //______________________________________________FILES___________________________________________________//
 
 int open_redir(t_cmd **commands);

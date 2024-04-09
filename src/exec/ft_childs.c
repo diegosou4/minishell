@@ -85,20 +85,13 @@ void	child_build(t_cmd *cmd, t_bash *bash_boss)
 
 	check = check_builtings(cmd);
 	care_redirect(&cmd, &bash_boss);
-	care_expand(&cmd, &bash_boss);
 	if (sizepipe(bash_boss->commands) != 1)
 		care_inchild(cmd, bash_boss);
 	redir_inchild(bash_boss);
 	dup_final(bash_boss,cmd);
 	execute_builtings(&cmd, &bash_boss->cpyenv, check);
-	ft_free_env_list(bash_boss->cpyenv);
-	//if(bash_boss->line == NULL)
-//		bash_boss->line = get_file_num()->line;
-	ft_free_line_struct(bash_boss->line);
-	ft_free_double_pointers(bash_boss->env);
-	free_all(bash_boss->commands);
-	if (bash_boss->pid != NULL)
-	 	free(bash_boss->pid);
+	free_here(bash_boss);
+	free_pids(bash_boss);
 	exit(EXIT_SUCCESS);
 }
 
@@ -119,7 +112,8 @@ void	pipes_executor(t_cmd *ptrcmd, t_bash *bash_boss)
 		{
 			if (check_builtings(ptrcmd) == 0)
 				child_exec(ptrcmd, bash_boss);
-			child_build(ptrcmd, bash_boss);
+			else
+				child_build(ptrcmd, bash_boss);
 		}
 		care_myprev(ptrcmd);
 		close_myhere(ptrcmd);
@@ -127,9 +121,5 @@ void	pipes_executor(t_cmd *ptrcmd, t_bash *bash_boss)
 		i++;
 	}
 	wait_mypids(bash_boss);
-	if (bash_boss->pid)
-	{
-		free(bash_boss->pid);
-		bash_boss->pid = NULL;
-	}
+	free_pids(bash_boss);
 }

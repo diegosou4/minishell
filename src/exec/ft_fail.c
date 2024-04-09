@@ -22,7 +22,8 @@ void	fail_expander(t_bash *bash_boss, t_cmd *cmd)
 		close(bash_boss->pipein);
 	if (bash_boss->pipeout != -1)
 		close(bash_boss->pipeout);
-	ft_free_cmd_structure(cmd);
+	free_here(bash_boss);
+	free_pids(bash_boss);
 	g_exit_status = 127;
 	exit(EXIT_FAILURE);
 }
