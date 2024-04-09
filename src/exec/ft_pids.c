@@ -32,9 +32,9 @@ void	wait_mypids(t_bash *bash_boss)
 	while (j != sizepipe(bash_boss->commands))
 	{
 		waitpid(bash_boss->pid[j], &bash_boss->exit_status, 0);
-		if (bash_boss->exit_status == 256)
-			prev_exit = bash_boss->exit_status - 129;
-		else if (bash_boss->exit_status == 2)
+		// if (bash_boss->exit_status == 256)
+		// 	prev_exit = bash_boss->exit_status - 129;
+		if (bash_boss->exit_status == 2)
 			prev_exit = 130;
 		else if (bash_boss->exit_status == 3)
 			prev_exit = 131;

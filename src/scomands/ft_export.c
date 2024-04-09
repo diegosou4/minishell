@@ -103,6 +103,24 @@ int	check_var(char *arr)
 	}
 	return (1);
 }
+int check_last(char *str)
+{
+	int i;
+
+	i = 0;
+
+	while(str[i] != '\0' || str[i] != '=')
+	{
+		i++;
+	}
+	if(str[i] == '=')
+	{
+		i--;
+		if(ft_isalpha(str[i]) == 0)
+			return(0);
+	}
+	return(1);
+}
 
 int	ft_export(t_env **env, t_cmd *commands)
 {
