@@ -27,6 +27,8 @@ static char	*ft_create_token(char *token_line)
 	return (token);
 }
 
+
+
 char	*ft_path_handler(t_env *env, char *variable)
 {
 	int		index;
@@ -41,7 +43,7 @@ char	*ft_path_handler(t_env *env, char *variable)
 	{
 		env = env->next;
 	}
-	holder = ft_strdup(env->value);
+	holder = env->value;
 	return (holder);
 }
 

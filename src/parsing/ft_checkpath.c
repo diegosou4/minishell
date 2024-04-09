@@ -84,3 +84,21 @@ char	*checkpath(char **path, char *command)
 	}
 	return (NULL);
 }
+
+char	*ft_duplineenv(t_env *env, char *variable)
+{
+	int		index;
+	char	*holder;
+
+	if (env == NULL)
+		return (NULL);
+	index = ft_indexinenv(env, variable);
+	if (index == -1)
+		return (NULL);
+	while (index--)
+	{
+		env = env->next;
+	}
+	holder = ft_strdup(env->value);
+	return (holder);
+}
