@@ -22,7 +22,8 @@ void	care_redirect(t_cmd **cmd, t_bash **bash_boss)
 		close_myherenext((*cmd)->next);
 	if ((*cmd)->executable == 0)
 	{
-		printf("Preciso da free");
+		free_here((*bash_boss));
+		free_pids((*bash_boss));
 		exit(EXIT_FAILURE);
 	}
 }

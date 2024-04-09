@@ -51,16 +51,16 @@ void	ft_free_env_list(t_env *env)
 
 void	ft_free_line_struct(t_line *line)
 {
-	if(line->value_env)
-	{
-		free(line->value_env);
-		line->value_env = NULL;
-	}
+	if (line->line_text)
+		free(line->line_text);
+	if (line->color_line)
+		free(line->color_line);
+	// if(line->value_env)
+	// 	free(line->value_env);
 	// if(line->usr)
 	// 	free(line->usr);
 	if (line->line)
 		free(line->line);
-	
 
 }
 
