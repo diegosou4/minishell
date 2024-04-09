@@ -72,7 +72,8 @@ void	ft_free_exit_status(t_line *line, t_env *cpyenv, char **env)
 		line = NULL;
 		cpyenv = NULL;
 	}
-	write(1, "(exit)\n", 7);
+	//write(1, "(exit)\n", 7);
+	//printf("%i",ft_atoi(ft_itoa(g_exit_status)));
 	if (env != NULL)
 	{
 		ft_free_double_pointers(env);
