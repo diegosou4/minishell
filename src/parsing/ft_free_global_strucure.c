@@ -77,8 +77,8 @@ void	ft_free_double_word_list(t_word_list **word_desc)
 void	ft_free_redir_list(t_redir *redir)
 {
 	t_redir	*temp;
-
-	while (redir)
+	
+	while (redir !=  NULL)
 	{
 		temp = redir;
 		if(temp->path != NULL)
@@ -99,14 +99,17 @@ void	ft_free_cmd_structure(t_cmd *cmd_structure)
 		return ;
 	while (cmd_structure)
 	{
+			
 		temp = cmd_structure->next;
 		if(cmd_structure->path != NULL)
 			free(cmd_structure->path);
-		if (cmd_structure->args)
+		if (cmd_structure->args != NULL)
 			ft_free_double_pointers(cmd_structure->args);
 		if(cmd_structure->redir != NULL)
 		{
+			
 			ft_free_redir_list(cmd_structure->redir);
+			
 			cmd_structure->redir = NULL;
 		}
 		if(cmd_structure != NULL)
