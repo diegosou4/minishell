@@ -127,9 +127,5 @@ void	pipes_executor(t_cmd *ptrcmd, t_bash *bash_boss)
 		i++;
 	}
 	wait_mypids(bash_boss);
-	if (bash_boss->pid)
-	{
-		free(bash_boss->pid);
-		bash_boss->pid = NULL;
-	}
+	free_pids(bash_boss);
 }

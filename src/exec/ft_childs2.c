@@ -45,7 +45,8 @@ void	dup_final(t_bash *bash_boss, t_cmd *cmd)
 			close(bash_boss->fdin);
 		if(bash_boss->fdout != - 1)
 			close(bash_boss->fdout);
-	ft_free_exit_status(bash_boss->line,bash_boss->cpyenv,bash_boss->env);	
+		free_pids(bash_boss);
+		free_here(bash_boss);
 		exit(EXIT_SUCCESS);
 	}
 	if (bash_boss->fdin != -1)

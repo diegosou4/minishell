@@ -73,7 +73,7 @@ void	redir_inchild(t_bash *bash_boss)
 		bash_boss->fdin = bash_boss->pipein;
 	else
 	{
-		if(bash_boss->pipein)
+		if(bash_boss->pipein != -1)
 			close(bash_boss->pipein);
 	}
 		

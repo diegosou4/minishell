@@ -59,8 +59,8 @@ void	ft_free_line_struct(t_line *line)
 		free(line->value_env);
 	// if(line->usr)
 	// 	free(line->usr);
-	// if (line->line)
-	// 	free(line->line);
+	if (line->line)
+		free(line->line);
 	
 
 }
