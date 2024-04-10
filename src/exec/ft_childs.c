@@ -71,13 +71,15 @@ int	return_out(t_cmd *cmd)
 void	child_exec(t_cmd *cmd, t_bash *bash_boss)
 {
 	char **new;
+	check_here(bash_boss);
 	care_redirect(&cmd, &bash_boss);
 	care_expand(&cmd, &bash_boss);
 	if (sizepipe(bash_boss->commands) != 1)
 		care_inchild(cmd, bash_boss);
 	redir_inchild(bash_boss);
-	new = newenv_child(bash_boss->cpyenv);
 	dup_final(bash_boss,cmd);
+	new = newenv_child(bash_boss->cpyenv);
+	check_dir(bash_boss,cmd);
 	execve(cmd->path, cmd->args, new);
 		exit(EXIT_FAILURE);
 }

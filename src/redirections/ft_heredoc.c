@@ -34,7 +34,6 @@ t_file_struct	*get_file_num(void)
 static void badsignal_here(t_bash *bash_boss, int count, char *delimiter)
 {
 	char *str;
-
 	str = ft_itoa(count);
 	ft_putstr_fd("minishell warning: here-document at line ",2);
 	ft_putstr_fd(str, 2);
