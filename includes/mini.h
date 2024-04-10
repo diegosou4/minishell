@@ -317,6 +317,7 @@ void free_here(t_bash *bash_boss);
 void care_redirect(t_cmd **cmd,t_bash **bash_boss);
 void care_expand(t_cmd **cmd,t_bash **bash_boss);
 void dup_final(t_bash *bash_boss,t_cmd *cmd);
+void check_dir(t_bash *bash_boss,t_cmd *cmd);
 int return_in(t_cmd *cmd);
 int return_out(t_cmd *cmd);
 void redir_inchild(t_bash *bash_boss);

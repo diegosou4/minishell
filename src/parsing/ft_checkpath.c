@@ -57,7 +57,7 @@ char	*ask_acess(char *comand, char *path)
 		i++;
 	}
 	free_paths(paths);
-	return (ask_command(comand));
+	return (NULL);
 }
 
 char	*checkpath(char **path, char *command)
