@@ -138,6 +138,8 @@ int	ft_export(t_env **env, t_cmd *commands)
 	{
 		if (check_var(commands->args[i]) == 0)
 			exit = EXIT_FAILURE;
+		else if(case_plus(env,commands->args[i],1) == 0)
+			exit = EXIT_SUCCESS;
 		else if(check_last(commands->args[i]) == 0)
 			exit = EXIT_FAILURE;
 		else if (ft_strncmp("_=", commands->args[i], 2) == 0)

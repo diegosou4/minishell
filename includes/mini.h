@@ -372,6 +372,7 @@ int export_env(t_env **env,char *str);
 void have_key(char *str,t_env **cpyenv,int token);
 int ft_exp(t_env *env);
 int ft_indexinenv(t_env *env,char *this);
+int case_plus(t_env **env,char *str,int token);
 void export_msg(char *arr);
 //________________________________________________FT_PWD________________________________________________//
 int print_pwd(t_cmd *comands);
