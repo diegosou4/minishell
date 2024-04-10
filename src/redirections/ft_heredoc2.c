@@ -88,3 +88,17 @@ void	close_myherenext(t_cmd *cmd)
 		ptr = ptr->next;
 	}
 }
+
+void check_here(t_bash *bash_boss)
+{
+	if(get_file_num()->heredoc == 0)
+	{
+		if(bash_boss->fdin != - 1)
+			close(bash_boss->fdin);
+		if(bash_boss->fdout != - 1)
+			close(bash_boss->fdout);
+		free_here((bash_boss));
+		free_pids((bash_boss));
+		exit(EXIT_FAILURE);
+	}
+}

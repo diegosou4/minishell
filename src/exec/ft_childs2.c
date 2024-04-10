@@ -41,7 +41,6 @@ void	care_expand(t_cmd **cmd, t_bash **bash_boss)
 
 void	dup_final(t_bash *bash_boss, t_cmd *cmd)
 {
-	
 	if(cmd->args[0] == NULL)
 	{
 		if(bash_boss->fdin != - 1)
@@ -52,7 +51,6 @@ void	dup_final(t_bash *bash_boss, t_cmd *cmd)
 		free_here(bash_boss);
 		exit(EXIT_SUCCESS);
 	}	
-	check_dir(bash_boss,cmd);
 	if (bash_boss->fdin != -1)
 	{
 		dup2(bash_boss->fdin, STDIN_FILENO);
@@ -72,6 +70,7 @@ void	start_execution(t_bash *bash_boss)
 	signal(SIGINT, SIG_IGN);
 	ptr = bash_boss->commands;
 	get_file_num()->exit_code = 0;
+	get_file_num()->heredoc = 1;
 	while (ptr != NULL)
 	{
 		ft_signal_manager_child();

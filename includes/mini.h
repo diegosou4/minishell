@@ -56,8 +56,7 @@ typedef struct {
 	int in;
 	int out;
 	int exit_code;
-	int shlvl;
-	int pid;
+	int heredoc;
 	t_line *line;
 	t_bash *bash;
 	t_word_list **list;
@@ -309,6 +308,7 @@ int check_path2(t_cmd **commands, char **env);
 void ft_env_null();
 //_____________________________________________________HERE_DOC___________________________________________________//
 void check_heredoc(t_redir **redirect, t_cmd *cmd,t_bash *bash_boss);
+void check_here(t_bash *bash_boss);
 int	ft_heredoc(char *delimiter, t_bash *bash_boss, t_cmd *cmd);
 int ft_putforwe(char *line,int fd);
 void free_here(t_bash *bash_boss);
