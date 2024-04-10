@@ -157,7 +157,7 @@ int	ft_check_input(char *line, t_bash *bash)
 		free(split_line);
 		return (0);
 	}
-	if ((split_line[0][0] == '|'))
+	if (ft_charcmp(split_line[0][0],124) == 1)
 	{
 		ft_free_double_pointers(split_line);
 		printf("syntax error near `|' (no args) 🚰🙊\n");
