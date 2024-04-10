@@ -58,8 +58,8 @@ t_word_list	**ft_tokenizer_manager(char *line, t_bash *bash)
 	new_string = ft_create_string(line, bash);
 	if (!new_string)
 		return (NULL);
-	words_list = (t_word_list **)ft_calloc(100, sizeof(t_word_list *));
 	tokens = ft_split(new_string, '\3');
+	words_list = (t_word_list **)ft_calloc(ft_double_strlen(tokens) + 1, sizeof(t_word_list *));
 	if (!tokens)
 	{
 		ft_free_list_tokens(words_list, tokens, new_string, NULL);
