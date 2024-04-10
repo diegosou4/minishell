@@ -26,6 +26,13 @@ int	ft_boolstrchr(const char *str, int c)
 	return (0);
 }
 
+int ft_charcmp(char c,char s)
+{
+	if(c == s)
+		return(1);
+	return(0);
+}
+
 char	*ft_strchr(const char *str, int c)
 {
 	size_t	i;

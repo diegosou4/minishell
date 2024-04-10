@@ -39,6 +39,7 @@ void				*ft_memmove(void *dest, const void *src, size_t n);
 int					ft_memcmp(const void *str1, const void *str2, size_t n);
 void				*ft_memchr(const void *str, int c, size_t n);
 // String Fuctions
+int ft_charcmp(char c,char s);
 char				*ft_strstrjoin(char *s1, char *s2, char s3, char *s4);
 void				*freedouble_malloc(char **s, int i);
 int					len_darray(char **arr);
