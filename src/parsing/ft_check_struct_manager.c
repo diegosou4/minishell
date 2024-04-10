@@ -33,7 +33,7 @@ char	*ft_path_handler(t_env *env, char *variable)
 {
 	int		index;
 	char	*holder;
-
+	
 	if (env == NULL)
 		return (NULL);
 	index = ft_indexinenv(env, variable);

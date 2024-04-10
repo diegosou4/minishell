@@ -21,11 +21,31 @@ static void	change_value(char **key, char **value, char *str)
 		*value = ft_substr(str, ft_strlen(*key), ft_strlen(str));
 }
 
-static void	change_key(t_env **ptr, char *value, int token)
+static void	change_key(t_env **ptr, char *value, int token,char *key)
 {
-	if ((*ptr)->value != NULL)
-		free((*ptr)->value);
-	(*ptr)->value = ft_strdup(value);
+	int i;
+	i = 0;
+	int j;
+	char *add;
+	j = ft_strlen(key);
+	while(key[i] != '\0')
+	{
+		if(key[i] == '=')
+		{
+			break;
+		}
+		i++;
+	}
+	if(j == i)
+	{
+		if ((*ptr)->value != NULL)
+			free((*ptr)->value);
+		(*ptr)->value = ft_strdup(value);
+	}else{
+		add = ft_strjoin((*ptr)->value,value);
+		if ((*ptr)->value != NULL)
+			free((*ptr)->value);
+	}
 	(*ptr)->token = token;
 }
 
@@ -47,7 +67,7 @@ int	key_exist(t_env **env, char *str, int token)
 			if (ft_boolstrchr(str, 61) == 0 || value == NULL
 				|| ft_strlen(value) == 0)
 				return (EXIT_SUCCESS);
-			change_key(&ptr, value, token);
+			change_key(&ptr, value, token,key);
 			if(value != NULL)
 				free(value);
 			return (EXIT_SUCCESS);
