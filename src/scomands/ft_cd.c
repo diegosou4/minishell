@@ -30,6 +30,18 @@ int	case_cd(char *diretory, t_env **env)
 	free(diretory);
 	return (EXIT_SUCCESS);
 }
+void have_key(char *str,t_env **cpyenv,int token)
+{
+	int key;
+
+	key = key_exist(cpyenv, str, token);
+	if (key == 1)
+	{
+		addbackenv(str, cpyenv, token);
+		swap_value(cpyenv);
+	}
+
+}
 
 int	ft_cd(t_cmd *comands, t_env **env)
 {
