@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 08:55:06 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/03/28 08:55:06 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/09 19:50:18 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_word_list	*ft_lstlast_(t_word_list *lst)
 
 int	ft_check_token_size(char *token_line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (token_line[i] != '\0' && ((ft_isalnum(token_line[i])

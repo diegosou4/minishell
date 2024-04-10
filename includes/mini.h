@@ -41,7 +41,7 @@
 #define ANSI_COLOR_MAGENTA "\x1b[35m"
 #define ANSI_COLOR_CYAN "\x1b[36m"
 #define ANSI_COLOR_RESET "\x1b[0m"
-#define ANSI_COLOR_PURPLE "\e[0;35m"
+#define A_C_P "\e[0;35m"
 
 #define MAIN 1
 #define HERE 2

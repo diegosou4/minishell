@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 17:33:05 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/03/28 10:29:32 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/09 18:37:55 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	ft_extract_var(t_word_list *word_list, t_bash *bash)
 		}
 		else if (word_list->word->tags == VARIABLE)
 		{
-			word_cpy = ft_calloc(100 + 1, sizeof(char));
+			word_cpy = ft_calloc(10000 + 1, sizeof(char));
 			dest = word_cpy;
 			ft_check_variable_expansion(word_list->word->word, dest,
 				bash->cpyenv);

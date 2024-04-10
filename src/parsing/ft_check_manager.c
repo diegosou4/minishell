@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 13:07:06 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/04/03 16:00:56 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/09 19:04:52 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,13 @@ int	ft_check_input(char *line, t_bash *bash)
 	if (!split_line || !split_line[0])
 	{
 		free(split_line);
+		return (0);
+	}
+	if ((split_line[0][0] == '|'))
+	{
+		ft_free_double_pointers(split_line);
+		printf("syntax error near `|' (no args) 🚰🙊\n");
+		bash->exit_status = 127;
 		return (0);
 	}
 	if (!ft_check_pipes(line))
