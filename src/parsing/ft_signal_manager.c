@@ -17,32 +17,11 @@ void	handle_signal(int signal1)
 	if (signal1 == SIGINT)
 	{
 		write(STDIN_FILENO, "\n", 1);
-		// ioctl(STDIN_FILENO, TIOCSTI, "\n");
 		g_exit_status = 130;
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-}
-
-void	handle_signal_child(int signal1)
-{
-	if (signal1 == SIGINT || signal1 == SIGQUIT)
-		return ;
-	// if (signal1 == SIGINT)
-	// {
-	// 	write(1, "\n", 2);
-	// 	g_exit_status = 130;
-	// 	rl_on_new_line();
-	// 	rl_replace_line("", 0);
-	// }
-	// else if (signal1 == SIGQUIT)
-	// {
-	// 	write(1, "Quit\n", 5);
-	// 	g_exit_status = 131;
-	// 	rl_on_new_line();
-	// 	rl_replace_line("", 0);
-	// }
 }
 
 void	ft_signal_manager(void)
@@ -60,29 +39,27 @@ void	ft_signal_manager(void)
 void	ft_signal_manager_child(void)
 {
 	signal(SIGINT, handle_signal_child);
-    signal(SIGQUIT, handle_signal_child);
+	signal(SIGQUIT, handle_signal_child);
 }
 
 void	handle_signal_here_doc(int signal1)
 {
-    int in;
-    int out;
+	int	in;
+	int	out;
 
-    in = get_file_num()->in;
-    out = get_file_num()->out;
+	in = get_file_num()->in;
+	out = get_file_num()->out;
 	if (signal1 == SIGINT)
 	{
 		write(STDERR_FILENO, "\n", 1);
-		// rl_on_new_line();
-		// rl_replace_line("", 0);
 		ft_free_cmd_structure(get_file_num()->bash->commands);
 		ft_free_exit_status(get_file_num()->bash->line,
 			get_file_num()->bash->cpyenv,
 			get_file_num()->bash->env);
 		g_exit_status = 130;
-		if(in != -1)
-        	close(in);
-        if(out != -1)
+		if (in != -1)
+			close(in);
+		if (out != -1)
 			close(out);
 		exit(127);
 	}

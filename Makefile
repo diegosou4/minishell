@@ -32,7 +32,7 @@ PARSE = ft_special.c ft_parse_manager.c ft_utils.c\
       ft_caseredir.c ft_signal_manager.c ft_free_manager.c \
       ft_check_struct_manager.c ft_check_directions.c ft_utils_structure.c \
       ft_structs_creation.c ft_free_global_strucure.c ft_free_utils.c\
-      ft_struct_manager_utils.c
+      ft_signal_utilities.c ft_struct_manager_utils.c
 
 EXEC = ft_execution.c ft_builtings.c\
       ft_route.c ft_close.c ft_path.c\
@@ -66,5 +66,5 @@ valgrind:
 	valgrind --suppressions=readline.supp --leak-check=full --track-fds=yes --show-leak-kinds=all ./${NAME}
 fd:
 	@valgrind -q --tool=none --track-fds=yes  ./${NAME}
-      
+
 

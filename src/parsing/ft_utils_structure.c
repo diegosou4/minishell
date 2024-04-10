@@ -46,18 +46,17 @@ int	ft_whitespace(char *line)
 
 //-----------------------------------Line Handler...........................
 
-static void free_and_null(char **ptr)
+static	void	free_and_null(char **ptr)
 {
 	if (*ptr)
 	{
-        free(*ptr);
-        *ptr = NULL;
-    }
+		free(*ptr);
+		*ptr = NULL;
+	}
 }
 
 void	ft_line_handler(t_line *line, t_env *cpyenv, int num)
 {
-		
 	if (num == MAIN)
 	{
 		if (cpyenv == NULL)
@@ -72,7 +71,7 @@ void	ft_line_handler(t_line *line, t_env *cpyenv, int num)
 				"@🐧shell:$ " ANSI_COLOR_RESET);
 		free_and_null(&line->color_line);
 		line->line = readline(line->line_text);
-		if(line->value_env != NULL)
+		if (line->value_env != NULL)
 			free(line->value_env);
 		free_and_null(&line->line_text);
 	}
@@ -80,8 +79,6 @@ void	ft_line_handler(t_line *line, t_env *cpyenv, int num)
 	{
 		line->color_line = NULL;
 		line->line_text = NULL;
-		line->line = readline(ANSI_COLOR_PURPLE "🐧🐧heredoco> " ANSI_COLOR_RESET);
-		// if (!line->line)
-		// 	line->line = NULL;
+		line->line = readline(A_C_P "🐧🐧heredoco> " ANSI_COLOR_RESET);
 	}
 }

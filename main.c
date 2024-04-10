@@ -105,7 +105,6 @@ void	*ft_parse_manager(char **env)
 	t_line	line;
 	t_bash	bash_boss;
 
-	// ft_signal_manager();
 	g_exit_status = 0;
 	ft_bash_boss_init(&bash_boss, env);
 	while (1)
