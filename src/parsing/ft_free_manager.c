@@ -15,7 +15,6 @@
 void	ft_free_double_pointers(char **split_line)
 {
 	int	i;
-
 	i = -1;
 	if (split_line == NULL)
 		return ;

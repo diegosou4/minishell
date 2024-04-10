@@ -13,50 +13,89 @@
 #include "../../includes/mini.h"
 
 
-static void	change_key(t_env **ptr, int token)
+static int  shel_exist(char **env)
 {
-    int shelvl;
-    char *newvalue;
+    int i;
+    int j;
+    i = 0;
+    char *str;
+    char *value;
 
-    shelvl = 0;
-	if ((*ptr)->value != NULL)
+	while (env[i] != NULL)
 	{
-        shelvl = ft_atoi((*ptr)->value);
-        shelvl += 1;
-        free((*ptr)->value);
+		if(ft_strncmp(env[i],"SHLVL=",6) == 0)
+        {
+            j = ft_atoi(env[i] + 6);
+            str = ft_strdup("SHLVL=");
+            value = ft_itoa(j + 1);
+            free(env[i]);
+            env[i] = ft_strjoin(str,value);
+            free(value);
+            free(str);
+            return(1);
+        }
+        i++;
+	}
+	return(0);
+}
+char **ft_newlvl(char **env, char *newlvl)
+{   
+    char **new;
+    int i;
+    int j;
+    j = 0;
+    i = len_darray(env);
+    new = ft_calloc(sizeof(char *), i + 2); 
+
+    while(j < i)
+    {
+        new[j] = ft_strdup(env[j]);
+        j++;
+    }
+    if(i > 0)
+    {
+        new[j - 1] = ft_strdup(newlvl);
+        new[j] = ft_strdup(env[j - 1]);
     }
     else
-        shelvl = 1;
+        new[j] = ft_strdup(newlvl);
+    return(new);
+}
+void ft_shlvl(char **env)
+{
+    char **new;
     
-    newvalue = ft_itoa(shelvl);
-    (*ptr)->value = ft_strdup(newvalue);
-    free(newvalue);    
-	(*ptr)->token = token;
+    if(shel_exist(env) == 0)
+    {
+        new = ft_newlvl(env,"SHLVL=1");
+        ft_free_double_pointers(env);
+        env = ft_arrcpy(new);
+        ft_free_double_pointers(new);
+    }
 }
 
-static int  shel_exist(t_env **env)
+
+char **newenv_child(t_env *env)
 {
-	t_env	*ptr;
     int i;
     i = 0;
-    
-	ptr = *env;
-	while (ptr != NULL)
-	{
-		if (ft_strncmp(ptr->key, "SHLVL", 5) == 0)
-		{
-			change_key(&ptr, 1);
-			return (EXIT_SUCCESS);
-		}
-		ptr = ptr->next;
-	}
-	return(EXIT_FAILURE);
-}
-void ft_shlvl(t_env **env)
-{
-    if(shel_exist(env) == 1)
+    int j;
+    j = 0;
+    t_env *ptr;
+    char **new;
+    ptr = env;
+    while(ptr != NULL)
     {
-        addbackenv("SHLVL=1",env,1);
+        i++;
+        ptr = ptr->next;
     }
-
+    new = ft_calloc(sizeof(char *), i + 1);
+    ptr = env;
+    while(j != i)
+    {
+        new[j] = ft_strjoin(ptr->key,ptr->value); 
+        j++;
+        ptr = ptr->next;
+    }
+    return(new);
 }
