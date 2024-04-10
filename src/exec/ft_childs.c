@@ -70,13 +70,15 @@ int	return_out(t_cmd *cmd)
 
 void	child_exec(t_cmd *cmd, t_bash *bash_boss)
 {
+	char **new;
 	care_redirect(&cmd, &bash_boss);
 	care_expand(&cmd, &bash_boss);
 	if (sizepipe(bash_boss->commands) != 1)
 		care_inchild(cmd, bash_boss);
 	redir_inchild(bash_boss);
 	dup_final(bash_boss,cmd);
-	execve(cmd->path, cmd->args, bash_boss->env);
+	new = newenv_child(bash_boss->cpyenv);
+	execve(cmd->path, cmd->args, new);
 }
 
 void	child_build(t_cmd *cmd, t_bash *bash_boss)
@@ -105,7 +107,6 @@ void	pipes_executor(t_cmd *ptrcmd, t_bash *bash_boss)
 	alloc_mypids(bash_boss);
 	while (ptrcmd != NULL)
 	{
-		// ft_signal_manager_child();
 		set_pipes(ptrcmd);
 		bash_boss->pid[i] = fork();
 		if (bash_boss->pid[i] == 0)

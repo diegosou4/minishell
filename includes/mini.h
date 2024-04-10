@@ -56,6 +56,8 @@ typedef struct {
 	int in;
 	int out;
 	int exit_code;
+	int shlvl;
+	int pid;
 	t_line *line;
 	t_bash *bash;
 	t_word_list **list;
@@ -443,10 +445,8 @@ char	*ft_duplineenv(t_env *env, char *variable);
 void free_all(t_cmd *cmd);
 void free_cpyenv(t_env *cpyenv);
 
-
-
-
-
+void ft_shlvl(char **env);
+char **newenv_child(t_env *env);
 
 
 

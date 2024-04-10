@@ -24,8 +24,10 @@ t_line	*ft_init_manager(t_line *line)
 void	ft_bash_boss_init(t_bash *bash, char **env)
 {
 	bash->pid = NULL;
+
 	bash->env = ft_arrcpy(env);
-	bash->cpyenv = ft_nenv(env, 1);
+	ft_shlvl(bash->env);
+	bash->cpyenv = ft_nenv(bash->env, 1);
 	bash->commands = NULL;
 	bash->in = 0;
 	bash->out = 0;
@@ -35,6 +37,6 @@ void	ft_bash_boss_init(t_bash *bash, char **env)
 	bash->pipeout = 0;
 	bash->exit_status = 0;
 	bash->line = NULL;
-	//ft_shlvl(&bash->cpyenv);
+
 	
 }

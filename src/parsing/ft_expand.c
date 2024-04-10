@@ -87,3 +87,34 @@ char	**ft_arrcpy(char **str)
 	return(str_copy);
 }
 
+
+char	**ft_arrplus(char **str,char *new)
+{
+	int i = 0;
+	int j = 0;
+	int	len;
+	char	**str_copy;
+	if (!str || !str[0])
+		return NULL;
+	while (str[i])
+		i++;
+	str_copy = (char **)ft_calloc((i + 2) , sizeof(char *));
+	if (!str_copy)
+		return NULL;
+	while (j < i)
+	{
+		len = strlen(str[j]);
+		str_copy[j] = (char *)ft_calloc((len + 1) , sizeof(char));
+		if (!str_copy[j]) 
+		{
+			return(free_malloc(str_copy,j));
+		}
+		ft_strcpy(str_copy[j], str[j]);
+		j++;
+	}
+	ft_strcpy(str_copy[j],new);
+	return(str_copy);
+}
+
+
+
