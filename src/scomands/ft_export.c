@@ -69,10 +69,14 @@ int	ft_indexinenv(t_env *env, char *this)
 	ptr = env;
 	if (env == NULL)
 		return (-1);
+	if(ft_strlen(this) == 0) 
+		return(-1);
 	while (ptr != NULL)
 	{
 		if (ft_strncmp(ptr->key, this, ft_strlen(this)) == 0)
+		{
 			return (index);
+		}
 		ptr = ptr->next;
 		index++;
 	}
