@@ -19,3 +19,19 @@ void	printf_error_fd(char *strerror, char *file)
 	ft_putstr_fd(strerror, STDERR_FILENO);
 	ft_putstr_fd("\n", STDERR_FILENO);
 }
+
+
+void check_dir(t_bash *bash_boss,t_cmd *cmd)
+{
+	int checkdir;
+	checkdir = - 1;
+	checkdir = chdir(cmd->path);
+	if(checkdir == 0)
+	{
+		ft_putstr_fd(cmd->path,2);
+		ft_putstr_fd(" is a directory\n",2);
+		free_pids(bash_boss);
+		free_here(bash_boss);
+		exit(EXIT_FAILURE);
+	}
+}
