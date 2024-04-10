@@ -25,9 +25,11 @@ void	ft_numberforexit(char *str)
 			ft_putstr_fd("exit: ", 2);
 			ft_putstr_fd(str, 2);
 			ft_putstr_fd(" numeric argument required\n", 2);
+			free(str);
 			exit(2);
 		}
 	}
+	free(str);
 	res = (unsigned char)i;
 	exit(res);
 }
@@ -60,10 +62,14 @@ static void ft_exitaux(t_cmd *comands,t_bash *bash_boss, char *str)
 		while (str[i] != '\0')
 		{
 			if (ft_isdigit(str[i]) != 1)
+			{
+				free(str);
 				exit_msg("exit: numeric argument required\n");
+			}
 			i++;
 		}
 		ft_numberforexit(str);
+		
 	}
 	else
 	{
