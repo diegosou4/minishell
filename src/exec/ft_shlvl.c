@@ -97,7 +97,10 @@ char **newenv_child(t_env *env)
     while(j != i)
     {
         if(ptr->token >= 1 && ptr->token <= 2)
-              j++;
+        {
+            new[j] = ft_strjoin(ptr->key,ptr->value);
+            j++;
+        }
         ptr = ptr->next;
     }
     return(new);

@@ -43,11 +43,14 @@ static void plus_key(t_env **ptr,char *value,int token)
     {
         plus = ft_strjoin((*ptr)->value,value);
         free((*ptr)->value);
+        (*ptr)->value = ft_strdup(plus);
+        free(plus);
     }
-    (*ptr)->value = ft_strdup(plus);
-    free(plus);
+    else
+    {
+        (*ptr)->value = ft_strdup(value);
+    }
     (*ptr)->token = token;
-
 }
 static void update_key(char **newvalue,char **key,char **value)
 {
