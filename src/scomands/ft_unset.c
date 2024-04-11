@@ -68,6 +68,10 @@ int	unset_env(t_env **env, char *str)
 		last = ptr;
 		ptr = ptr->next;
 	}
+	if(key != NULL)
+		free(key);
+	if(value != NULL)
+		free(value);
 	return (EXIT_SUCCESS);
 }
 

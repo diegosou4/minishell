@@ -92,6 +92,8 @@ int	check_var(char *arr)
 	prohibited = 0;
 	while (arr[i] != '\0')
 	{
+		if(arr[i] == '=')
+			break;
 		if (arr[i] >= 33 && arr[i] <= 47 && arr[i] != 43)
 			prohibited = 1;
 		i++;
@@ -121,6 +123,7 @@ int export_with(char *str,t_env **env)
 		i--;
 		if(ft_isalpha(str[i]) == 0)
 		{
+
 			export_msg(str);
 			return(EXIT_FAILURE);
 		}
