@@ -76,7 +76,7 @@ int	expand_path_cpy(t_cmd **commands, t_env *cpyenv)
 	build = check_builtings(ptr);
 	if(ft_strlen(ptr->args[0]) == 0)
 	{
-		return(EXIT_SUCCESS);
+		return(EXIT_FAILURE);
 	}
 	if (build == 0 && ptr->args[0] == NULL)
 		return (EXIT_SUCCESS);

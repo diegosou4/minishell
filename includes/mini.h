@@ -318,9 +318,10 @@ void care_redirect(t_cmd **cmd,t_bash **bash_boss);
 void care_expand(t_cmd **cmd,t_bash **bash_boss);
 void dup_final(t_bash *bash_boss,t_cmd *cmd);
 void check_dir(t_bash *bash_boss,t_cmd *cmd,char **new);
-int return_in(t_cmd *cmd);
+int	return_in(t_bash *bash_boss,t_redir *ptr);
+int	return_out(t_bash *bash_boss,t_redir *ptr);
 void	error_path(char *str);
-int return_out(t_cmd *cmd);
+void close_error(t_bash *bash_boss);
 void redir_inchild(t_bash *bash_boss);
 void start_execution(t_bash *bash_boss);
 void ft_magane_executor(t_bash *bash_boss);
@@ -478,7 +479,7 @@ void print_dancing_penguin_frame1();
 
 
 
-
+int return_intout(t_cmd *cmd,t_bash *bash_boss);
 
 
 #endif

@@ -14,14 +14,14 @@
 
 void	care_redirect(t_cmd **cmd, t_bash **bash_boss)
 {
-	(*bash_boss)->fdout = return_out((*cmd));
-	(*bash_boss)->fdin = return_in((*cmd));
+	return_intout((*cmd),(*bash_boss));
 	if ((*cmd)->prev != NULL)
 		close_myhereprev((*cmd)->prev);
 	if ((*cmd) != NULL)
 		close_myherenext((*cmd)->next);
 	if ((*cmd)->executable == 0)
 	{
+		close_error((*bash_boss));
 		free_here((*bash_boss));
 		free_pids((*bash_boss));
 		exit(EXIT_FAILURE);
@@ -41,10 +41,7 @@ void	dup_final(t_bash *bash_boss, t_cmd *cmd)
 {
 	if(cmd->args[0] == NULL)
 	{
-		if(bash_boss->fdin != - 1)
-			close(bash_boss->fdin);
-		if(bash_boss->fdout != - 1)
-			close(bash_boss->fdout);
+		close_error(bash_boss);
 		free_pids(bash_boss);
 		free_here(bash_boss);
 		exit(EXIT_SUCCESS);

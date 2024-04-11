@@ -28,3 +28,20 @@ void close_pipes(t_cmd *commands)
         ptr = ptr->next;
     }
 }
+
+void close_error(t_bash *bash_boss)
+{
+    if(bash_boss->in != -1)
+        close(bash_boss->in);
+    if(bash_boss->out != -1)
+        close(bash_boss->in);
+    if(bash_boss->fdin != - 1)
+		close(bash_boss->fdin);
+	if(bash_boss->fdout != - 1)
+		close(bash_boss->fdout);
+	if(bash_boss->pipein != -1)
+		close(bash_boss->pipein);
+	if(bash_boss->pipeout != -1)
+		close(bash_boss->pipeout);
+
+}

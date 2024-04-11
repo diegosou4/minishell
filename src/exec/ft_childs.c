@@ -12,60 +12,67 @@
 
 #include "../../includes/mini.h"
 
-int	return_in(t_cmd *cmd)
+int	return_in(t_bash *bash_boss,t_redir *ptr)
 {
-	t_redir	*ptr;
-	int		fd;
-
-	fd = -1;
-	ptr = cmd->redir;
-	while (ptr != NULL)
+	if(ptr->token == redir_out || ptr->token == append_out)
 	{
-		if (ptr->token == redir_in || ptr->token == open_here)
-		{
-			if (fd != -1)
-				close(fd);
-			if (ptr->token == redir_in)
-				fd = open_in(ptr->path);
-			if (ptr->token == open_here)
-				fd = ptr->fd;
-			if (fd < 0)
-			{
-				cmd->executable = 0;
-				return (fd);
-			}
-		}
-		ptr = ptr->next;
+		if (bash_boss->fdout != -1)
+			close(bash_boss->fdout);
+		if(ptr->token == redir_out)
+			bash_boss->fdout = open_out(ptr->path);
+		else
+			bash_boss->fdout = open_append(ptr->path);
+		if(bash_boss->fdout < 0)
+				return(-1);
 	}
-	return (fd);
+	return(EXIT_SUCCESS);
 }
 
-int	return_out(t_cmd *cmd)
-{
-	t_redir	*ptr;
-	int		fd;
 
-	fd = -1;
+int	return_out(t_bash *bash_boss,t_redir *ptr)
+{
+	if(ptr->token == redir_in || ptr->token == open_here)
+	{	
+		if (bash_boss->fdin != -1)
+			close(bash_boss->fdin);
+		if (ptr->token == redir_in)
+			bash_boss->fdin = open_in(ptr->path);
+		if (ptr->token == open_here)
+			bash_boss->fdin = ptr->fd;
+		if (bash_boss->fdin < 0)
+				return (-1);
+	}
+	return (EXIT_SUCCESS);
+}
+
+int return_intout(t_cmd *cmd,t_bash *bash_boss)
+{
+	t_redir *ptr;
+
 	ptr = cmd->redir;
-	while (ptr != NULL)
+	bash_boss->fdin = -1;
+	bash_boss->fdout = -1;
+	while(ptr != NULL)
 	{
-		if (ptr->token == redir_out || ptr->token == append_out)
+		if(return_in(bash_boss,ptr) == -1 || return_out(bash_boss,ptr))
 		{
-			if (fd != -1)
-				close(fd);
-			if (ptr->token == redir_out)
-				fd = open_out(ptr->path);
-			else
-				fd = open_append(ptr->path);
-			if (fd < 0)
-			{
-				cmd->executable = 0;
-				return (fd);
-			}
+			cmd->executable = 0;
+			return(-1);
 		}
 		ptr = ptr->next;
 	}
-	return (fd);
+	return(1);
+}
+
+
+
+void error_exec(t_bash *bass_boss,char **new)
+{
+//	ft_free_double_pointers(new);
+	//free_pids(bass_boss);
+	//free_here(bass_boss);
+	exit(EXIT_SUCCESS);
+
 }
 
 void	child_exec(t_cmd *cmd, t_bash *bash_boss)
@@ -81,7 +88,7 @@ void	child_exec(t_cmd *cmd, t_bash *bash_boss)
 	new = newenv_child(bash_boss->cpyenv);
 	check_dir(bash_boss,cmd,new);
 	execve(cmd->path, cmd->args, new);
-		exit(EXIT_FAILURE);
+//	error_exec(bash_boss,new);
 }
 
 void	child_build(t_cmd *cmd, t_bash *bash_boss)

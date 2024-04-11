@@ -14,8 +14,7 @@
 
 int	simple_bexecutor(t_cmd *ptrcmd, t_bash *bash_boss, int check)
 {
-	bash_boss->fdin = return_in(ptrcmd);
-	bash_boss->fdout = return_out(ptrcmd);
+	return_intout(ptrcmd,bash_boss);
 	if (ptrcmd->executable == 0)
 		return (EXIT_FAILURE);
 	init_dup(bash_boss);
