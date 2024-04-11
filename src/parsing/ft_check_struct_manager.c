@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 17:33:05 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/04/11 09:21:40 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/11 09:27:40 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	ft_check_variable_expansion(char *src, char *dest, t_env *env)
 	char	*pid;
 	char	*exit_status;
 
+	path = NULL;
 	double_quote = 0;
 	in_quotes = 0;
 	pid = ft_itoa(getpid());
