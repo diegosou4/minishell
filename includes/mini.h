@@ -365,6 +365,7 @@ void change_pwd(t_env **env);
 //________________________________________________FT_ENV_____________________________________________//
 int ft_env(t_env *env);
 int execute_env(t_env *env, t_cmd *commands);
+void	change_value(char **key, char **value, char *str);
 int	key_exist(t_env **env, char *str, int token);
 void	swap_value(t_env **env);
 //________________________________________________FT_EXP_____________________________________________//
@@ -372,6 +373,7 @@ int export_env(t_env **env,char *str);
 void have_key(char *str,t_env **cpyenv,int token);
 int ft_exp(t_env *env);
 int ft_indexinenv(t_env *env,char *this);
+int case_plus(t_env **env,char *str,int token);
 void export_msg(char *arr);
 //________________________________________________FT_PWD________________________________________________//
 int print_pwd(t_cmd *comands);

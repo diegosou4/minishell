@@ -12,7 +12,7 @@
 
 #include "../../includes/mini.h"
 
-static void	change_value(char **key, char **value, char *str)
+void	change_value(char **key, char **value, char *str)
 {
 	*key = get_key(str);
 	if (*key == NULL)
@@ -21,31 +21,11 @@ static void	change_value(char **key, char **value, char *str)
 		*value = ft_substr(str, ft_strlen(*key), ft_strlen(str));
 }
 
-static void	change_key(t_env **ptr, char *value, int token,char *key)
+static void	change_key(t_env **ptr, char *value, int token)
 {
-	int i;
-	i = 0;
-	int j;
-	char *add;
-	j = ft_strlen(key);
-	while(key[i] != '\0')
-	{
-		if(key[i] == '=')
-		{
-			break;
-		}
-		i++;
-	}
-	if(j == i)
-	{
-		if ((*ptr)->value != NULL)
-			free((*ptr)->value);
-		(*ptr)->value = ft_strdup(value);
-	}else{
-		add = ft_strjoin((*ptr)->value,value);
-		if ((*ptr)->value != NULL)
-			free((*ptr)->value);
-	}
+	if ((*ptr)->value != NULL)
+		free((*ptr)->value);
+	(*ptr)->value = ft_strdup(value);
 	(*ptr)->token = token;
 }
 
@@ -60,14 +40,14 @@ int	key_exist(t_env **env, char *str, int token)
 	change_value(&key, &value, str);
 	while (ptr != NULL)
 	{
-		if (ft_strncmp(ptr->key, key, ft_strlen(key)) == 0)
+		if (ft_strncmp(ptr->key, key, ft_strlen(key))  == 0)
 		{
 			if(key != NULL)
 				free(key);
 			if (ft_boolstrchr(str, 61) == 0 || value == NULL
 				|| ft_strlen(value) == 0)
 				return (EXIT_SUCCESS);
-			change_key(&ptr, value, token,key);
+			change_key(&ptr, value, token);
 			if(value != NULL)
 				free(value);
 			return (EXIT_SUCCESS);

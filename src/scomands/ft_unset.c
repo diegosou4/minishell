@@ -23,7 +23,7 @@ static int	free_keyandvalue(t_env **ptr, char *key)
 	return (EXIT_SUCCESS);
 }
 
-static void	change_value(char **key, char **value, char *str)
+static void	unset_value(char **key, char **value, char *str)
 {
 	(*key) = NULL;
 	(*value) = NULL;
@@ -52,7 +52,7 @@ int	unset_env(t_env **env, char *str)
 
 	last = NULL;
 	ptr = *env;
-	change_value(&key, &value, str);
+	unset_value(&key, &value, str);
 	if (value != NULL)
 		return (free_keyvalue(value, key, EXIT_SUCCESS));
 	while (ptr != NULL)

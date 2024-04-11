@@ -25,7 +25,6 @@ int	simple_bexecutor(t_cmd *ptrcmd, t_bash *bash_boss)
 	execute_builtings(&ptrcmd, &bash_boss->cpyenv, check);
 	close_fds(bash_boss);
 	close_fderror(ptrcmd->redir);
-	
 	return (EXIT_SUCCESS);
 }
 

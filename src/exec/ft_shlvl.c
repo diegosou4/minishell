@@ -86,15 +86,21 @@ char **newenv_child(t_env *env)
     ptr = env;
     while(ptr != NULL)
     {
-        i++;
+        if(ptr->token >= 1 && ptr->token <= 2)
+        {
+            i++;
+        }
         ptr = ptr->next;
     }
     new = ft_calloc(sizeof(char *), i + 1);
     ptr = env;
     while(j != i)
     {
-        new[j] = ft_strjoin(ptr->key,ptr->value); 
-        j++;
+        if(ptr->token >= 1 && ptr->token <= 2)
+        {
+            new[j] = ft_strjoin(ptr->key,ptr->value);
+            j++;
+        }
         ptr = ptr->next;
     }
     return(new);
