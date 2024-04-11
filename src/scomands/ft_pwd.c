@@ -16,9 +16,11 @@ int	print_pwd(t_cmd *comands)
 {
 	char	*pwd;
 	
-	pwd = ft_calloc(sizeof(char), FILENAME_MAX);
-	pwd = getcwd(pwd, FILENAME_MAX);
-	printf("%s\n", pwd);
-	free(pwd);
+	pwd = getcwd(NULL, FILENAME_MAX);
+	if(pwd != NULL)
+	{
+		printf("%s\n", pwd);
+		free(pwd);
+	}
 	return (g_exit_status = EXIT_SUCCESS);
 }

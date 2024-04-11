@@ -63,7 +63,11 @@ void	close_myhereprev(t_cmd *cmd)
 		while (ptrredir != NULL)
 		{
 			if (ptrredir->token == open_here)
-				close(ptrredir->fd);
+			{
+				if(ptrredir->fd != -1)
+					close(ptrredir->fd);
+			}
+				
 			ptrredir = ptrredir->next;
 		}
 		ptr = ptr->prev;
@@ -82,14 +86,18 @@ void	close_myherenext(t_cmd *cmd)
 		while (ptrredir != NULL)
 		{
 			if (ptrredir->token == open_here)
-				close(ptrredir->fd);
+			{
+				if(ptrredir->fd != -1)
+					close(ptrredir->fd);
+			}
+				
 			ptrredir = ptrredir->next;
 		}
 		ptr = ptr->next;
 	}
 }
 
-void check_here(t_bash *bash_boss)
+void check_here(t_bash *bash_boss,t_cmd *cmd)
 {
 	if(get_file_num()->heredoc == 0)
 	{
@@ -97,6 +105,10 @@ void check_here(t_bash *bash_boss)
 			close(bash_boss->fdin);
 		if(bash_boss->fdout != - 1)
 			close(bash_boss->fdout);
+		if(cmd->pipes[0] != -1)
+			close(cmd->pipes[0]);
+		if(cmd->pipes[1] != -1)
+			close(cmd->pipes[1]);
 		free_here((bash_boss));
 		free_pids((bash_boss));
 		exit(EXIT_FAILURE);

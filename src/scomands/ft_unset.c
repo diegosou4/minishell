@@ -68,7 +68,11 @@ int	unset_env(t_env **env, char *str)
 		last = ptr;
 		ptr = ptr->next;
 	}
-	return (error_unset(key));
+	if(key != NULL)
+		free(key);
+	if(value != NULL)
+		free(value);
+	return (EXIT_SUCCESS);
 }
 
 static int	parse_env(t_env **env, char *str)

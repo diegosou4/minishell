@@ -25,8 +25,8 @@ int	error_unset(char *key)
 	ft_putstr_fd(key, 2);
 	ft_putstr_fd(" not found\n", 2);
 	free(key);
-	g_exit_status = EXIT_FAILURE;
-	return (EXIT_FAILURE);
+	g_exit_status = EXIT_SUCCESS;
+	return (EXIT_SUCCESS);
 }
 
 void exit_msg(char *str)
