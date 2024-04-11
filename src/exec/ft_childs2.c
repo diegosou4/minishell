@@ -34,8 +34,6 @@ void	care_expand(t_cmd **cmd, t_bash **bash_boss)
 	{
 		care_inchild((*cmd),(*bash_boss));
 		fail_expander((*bash_boss), (*cmd));
-		g_exit_status = EXIT_FAILURE;
-		exit(EXIT_FAILURE);
 	}
 }
 

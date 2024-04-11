@@ -319,6 +319,7 @@ void care_expand(t_cmd **cmd,t_bash **bash_boss);
 void dup_final(t_bash *bash_boss,t_cmd *cmd);
 void check_dir(t_bash *bash_boss,t_cmd *cmd,char **new);
 int return_in(t_cmd *cmd);
+void	error_path(char *str);
 int return_out(t_cmd *cmd);
 void redir_inchild(t_bash *bash_boss);
 void start_execution(t_bash *bash_boss);

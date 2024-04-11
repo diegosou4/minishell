@@ -74,6 +74,10 @@ int	expand_path_cpy(t_cmd **commands, t_env *cpyenv)
 
 	ptr = (*commands);
 	build = check_builtings(ptr);
+	if(ft_strlen(ptr->args[0]) == 0)
+	{
+		return(EXIT_SUCCESS);
+	}
 	if (build == 0 && ptr->args[0] == NULL)
 		return (EXIT_SUCCESS);
 	if(access(ptr->args[0], F_OK) == 0 && build == 0 && ft_boolstrchr(ptr->args[0], 47) == 1)
