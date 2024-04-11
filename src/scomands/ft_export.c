@@ -85,45 +85,72 @@ int	ft_indexinenv(t_env *env, char *this)
 
 int	check_var(char *arr)
 {
-	int	backslash;
+	int	prohibited;
 	int	i;
 
 	i = 0;
-	backslash = 0;
+	prohibited = 0;
 	while (arr[i] != '\0')
 	{
-		if (arr[i] == 47)
-			backslash = 1;
+		if (arr[i] >= 33 && arr[i] <= 47 && arr[i] != 43)
+			prohibited = 1;
 		i++;
 	}
 	i = 0;
-	if ((arr[0] == 95 && backslash == 1) || (ft_isalpha(arr[0]) == 0))
+	if ((prohibited == 1) || (ft_isalpha(arr[0]) == 0))
 	{
 		export_msg(arr);
-		return (0);
+		return (EXIT_FAILURE);
 	}
-	return (1);
+	return (EXIT_SUCCESS);
 }
-int check_last(char *str)
+
+int export_with(char *str,t_env **env)
 {
 	int i;
 
 	i = 0;
-
-	while(str[i] != '\0' && str[i] != '=')
-	{
+	if(check_var(str) == 1)
+		return(EXIT_FAILURE);
+	if(ft_strncmp("_=", str, 2) == 0)
+		return(EXIT_SUCCESS);
+	while(str[i] != '\0' && str[i] != '=')	
 		i++;
-	}
 	if(str[i] == '=' && ft_strlen(str) > 1)
 	{
 		i--;
 		if(ft_isalpha(str[i]) == 0)
 		{
 			export_msg(str);
-			return(0);
+			return(EXIT_FAILURE);
 		}
 	}
-	return(1);
+	if(str[i] == '+')
+		case_plus(env,str,2);
+	else
+		export_env(env,str);
+	return(EXIT_SUCCESS);
+}
+
+int export_without(char *str,t_env **env)
+{
+	int	prohibited;
+	int	i;
+
+	i = 0;
+	prohibited = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] >= 33 && str[i]  <= 47)
+			prohibited = 1;
+		i++;
+	}
+	if ((prohibited == 1) || (ft_isalphatwo(str[0]) == 0))
+	{
+		export_msg(str);
+		return (EXIT_FAILURE);
+	}
+	return(export_env(env,str));
 }
 
 int	ft_export(t_env **env, t_cmd *commands)
@@ -135,17 +162,11 @@ int	ft_export(t_env **env, t_cmd *commands)
 	if (len_darray(commands->args) == 1)
 		return (ft_exp((*env)));
 	while (commands->args[i] != NULL)
-	{
-		if (check_var(commands->args[i]) == 0)
-			exit = EXIT_FAILURE;
-		else if(case_plus(env,commands->args[i],1) == 0)
-			exit = EXIT_SUCCESS;
-		else if(check_last(commands->args[i]) == 0)
-			exit = EXIT_FAILURE;
-		else if (ft_strncmp("_=", commands->args[i], 2) == 0)
-			exit = EXIT_SUCCESS;
+	{	
+		if(ft_boolstrchr(commands->args[i],61) == 1)
+			exit = export_with(commands->args[i],env);
 		else
-			exit = export_env(env, commands->args[i]);
+			exit = export_without(commands->args[i],env);
 		i++;
 	}
 	return (g_exit_status = exit);

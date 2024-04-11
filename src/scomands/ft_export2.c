@@ -12,7 +12,7 @@
 
 #include "../../includes/mini.h"
 
-static void	change_value(char **key, char **value, char *str)
+void	change_value(char **key, char **value, char *str)
 {
 	*key = get_key(str);
 	if (*key == NULL)
@@ -40,7 +40,7 @@ int	key_exist(t_env **env, char *str, int token)
 	change_value(&key, &value, str);
 	while (ptr != NULL)
 	{
-		if (ft_strncmp(ptr->key, key, ft_strlen(key) == 0))
+		if (ft_strncmp(ptr->key, key, ft_strlen(key))  == 0)
 		{
 			if(key != NULL)
 				free(key);

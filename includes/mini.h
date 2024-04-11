@@ -365,6 +365,7 @@ void change_pwd(t_env **env);
 //________________________________________________FT_ENV_____________________________________________//
 int ft_env(t_env *env);
 int execute_env(t_env *env, t_cmd *commands);
+void	change_value(char **key, char **value, char *str);
 int	key_exist(t_env **env, char *str, int token);
 void	swap_value(t_env **env);
 //________________________________________________FT_EXP_____________________________________________//
