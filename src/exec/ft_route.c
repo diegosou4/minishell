@@ -12,11 +12,8 @@
 
 #include "../../includes/mini.h"
 
-int	simple_bexecutor(t_cmd *ptrcmd, t_bash *bash_boss)
+int	simple_bexecutor(t_cmd *ptrcmd, t_bash *bash_boss, int check)
 {
-	int	check;
-
-	check = check_builtings(ptrcmd);
 	bash_boss->fdin = return_in(ptrcmd);
 	bash_boss->fdout = return_out(ptrcmd);
 	if (ptrcmd->executable == 0)
@@ -50,7 +47,7 @@ void	ft_magane_executor(t_bash *bash_boss)
 	ptrcmd = bash_boss->commands;
 	check = check_builtings(ptrcmd);
 	if (ptrcmd->next == NULL && check > 0 && check <= 7)
-		simple_bexecutor(ptrcmd, bash_boss);
+		simple_bexecutor(ptrcmd, bash_boss,check);
 	else
 		pipes_executor(ptrcmd, bash_boss);
 }

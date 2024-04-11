@@ -26,6 +26,6 @@ void	fail_expander(t_bash *bash_boss, t_cmd *cmd)
 	free_pids(bash_boss);
 	
 	g_exit_status = 127;
-	exit(EXIT_FAILURE);
+	exit(127);
 }
 

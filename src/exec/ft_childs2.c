@@ -34,8 +34,6 @@ void	care_expand(t_cmd **cmd, t_bash **bash_boss)
 	{
 		care_inchild((*cmd),(*bash_boss));
 		fail_expander((*bash_boss), (*cmd));
-		g_exit_status = EXIT_FAILURE;
-		exit(EXIT_FAILURE);
 	}
 }
 
@@ -66,6 +64,7 @@ void	dup_final(t_bash *bash_boss, t_cmd *cmd)
 void	start_execution(t_bash *bash_boss)
 {
 	t_cmd	*ptr;
+
 
 	signal(SIGINT, SIG_IGN);
 	ptr = bash_boss->commands;

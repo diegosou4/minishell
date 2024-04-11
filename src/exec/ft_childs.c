@@ -79,7 +79,7 @@ void	child_exec(t_cmd *cmd, t_bash *bash_boss)
 	redir_inchild(bash_boss);
 	dup_final(bash_boss,cmd);
 	new = newenv_child(bash_boss->cpyenv);
-	check_dir(bash_boss,cmd);
+	check_dir(bash_boss,cmd,new);
 	execve(cmd->path, cmd->args, new);
 		exit(EXIT_FAILURE);
 }

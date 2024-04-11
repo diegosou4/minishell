@@ -21,17 +21,20 @@ void	printf_error_fd(char *strerror, char *file)
 }
 
 
-void check_dir(t_bash *bash_boss,t_cmd *cmd)
+void check_dir(t_bash *bash_boss,t_cmd *cmd, char **new)
 {
 	int checkdir;
 	checkdir = - 1;
-	checkdir = chdir(cmd->path);
-	if(checkdir == 0)
 	{
-		ft_putstr_fd(cmd->path,2);
-		ft_putstr_fd(" is a directory\n",2);
+	if(ft_strlen(cmd->args[0]) > 1)
+		checkdir = chdir(cmd->path);
+		if(checkdir == 0)
+		{
+		ft_putstr_fd(" Is a directory\n",2);
+		ft_free_double_pointers(new);
 		free_pids(bash_boss);
 		free_here(bash_boss);
-		exit(EXIT_FAILURE);
+		exit(126);
+		}
 	}
 }
