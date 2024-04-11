@@ -16,7 +16,9 @@ int	check_builtings(t_cmd *commands)
 {
 	if (commands->args[0] == NULL)
 		return (0);
-	if (ft_strncmp("pwd", commands->args[0], 4) == 0)
+	if(chdir(commands->args[0]) == 0)
+		return(8);
+	else if (ft_strncmp("pwd", commands->args[0], 4) == 0)
 		return (1);
 	else if (ft_strncmp("cd", commands->args[0], 2) == 0)
 		return (2);
@@ -30,6 +32,7 @@ int	check_builtings(t_cmd *commands)
 		return (6);
 	else if (ft_strncmp("exit", commands->args[0], 4) == 0)
 		return (7);
+	
 	return (0);
 }
 
@@ -51,6 +54,10 @@ int	execute_builtings(t_cmd **cmd, t_env **cpy, int check)
 	{
 		ft_exit((*cmd));
 		return (0);
+	}else if(check == 8)
+	{
+		printf("cd -- %s\n",(*cmd)->args[0]);
+		return(EXIT_SUCCESS);
 	}
 	return (0);
 }

@@ -67,6 +67,7 @@ void	start_execution(t_bash *bash_boss)
 {
 	t_cmd	*ptr;
 
+
 	signal(SIGINT, SIG_IGN);
 	ptr = bash_boss->commands;
 	get_file_num()->exit_code = 0;
