@@ -40,7 +40,7 @@ t_tags	ft_tags(t_word_desc *word)
 	else if (ft_strcmp(word->word, "$") == 0)
 		return (WORD);
 	else if (ft_strcmp(word_cpy, "$?") == 0)
-		return (SPECIAL_VAR);
+		return (VARIABLE);
 	else if (ft_strchr(word->word, '$'))
 		return (VARIABLE);
 	else
