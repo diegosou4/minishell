@@ -75,14 +75,45 @@ void error_exec(t_bash *bass_boss,char **new)
 
 }
 
+void only_redir(t_cmd *current, t_bash *bash_boss)
+{
+	t_redir *ptr;
+
+	ptr = current->redir;
+
+
+	if(current->args[0] == NULL)
+	{
+		if(current->pipes[0] != -1)
+			close(current->pipes[0]);
+		if(current->pipes[1] != -1)
+			close(current->pipes[1]);
+		close_error(bash_boss);
+		free_here(bash_boss);
+		free_pids(bash_boss);
+		
+		exit(EXIT_SUCCESS);
+	}
+
+
+
+
+}
+
+
 void	child_exec(t_cmd *cmd, t_bash *bash_boss)
 {
 	char **new;
-	check_here(bash_boss);
+	check_here(bash_boss,cmd);
 	care_redirect(&cmd, &bash_boss);
+	only_redir(cmd,bash_boss);
+
 	care_expand(&cmd, &bash_boss);
 	if (sizepipe(bash_boss->commands) != 1)
+	{
 		care_inchild(cmd, bash_boss);
+	}
+		
 	redir_inchild(bash_boss);
 	dup_final(bash_boss,cmd);
 	new = newenv_child(bash_boss->cpyenv);
@@ -126,11 +157,16 @@ void	pipes_executor(t_cmd *ptrcmd, t_bash *bash_boss)
 			else
 				child_build(ptrcmd, bash_boss);
 		}
-		care_myprev(ptrcmd);
-		close_myhere(ptrcmd);
+		if(ptrcmd->next != NULL)
+			close(ptrcmd->pipes[1]);
+		if(ptrcmd->next != NULL && ptrcmd->prev != NULL)
+			close(ptrcmd->prev->pipes[0]);
+		//close_myhere(ptrcmd);
 		ptrcmd = ptrcmd->next;
+
 		i++;
 	}
+
 	wait_mypids(bash_boss);
 	free_pids(bash_boss);
 }

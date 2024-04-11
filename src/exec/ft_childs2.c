@@ -15,12 +15,16 @@
 void	care_redirect(t_cmd **cmd, t_bash **bash_boss)
 {
 	return_intout((*cmd),(*bash_boss));
-	if ((*cmd)->prev != NULL)
-		close_myhereprev((*cmd)->prev);
-	if ((*cmd) != NULL)
-		close_myherenext((*cmd)->next);
+	// if ((*cmd)->prev != NULL && (*cmd)->next != NULL)
+	// 	close_myhereprev((*cmd)->prev);
+	// // if ((*cmd) != NULL)
+	// // 	close_myherenext((*cmd)->next);
 	if ((*cmd)->executable == 0)
 	{
+		if((*cmd)->pipes[0] != -1)
+			close((*cmd)->pipes[0]);
+		if((*cmd)->pipes[1] != -1)
+			close((*cmd)->pipes[1]);
 		close_error((*bash_boss));
 		free_here((*bash_boss));
 		free_pids((*bash_boss));
@@ -48,7 +52,7 @@ void	dup_final(t_bash *bash_boss, t_cmd *cmd)
 	}	
 	if (bash_boss->fdin != -1)
 	{
-		dup2(bash_boss->fdin, STDIN_FILENO);
+		dup2(bash_boss->fdin , STDIN_FILENO);
 		close(bash_boss->fdin);
 	}
 	if (bash_boss->fdout != -1)
