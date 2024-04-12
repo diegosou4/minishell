@@ -6,7 +6,7 @@
 /*   By: diemorei <diemorei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 17:01:11 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/12 11:38:36 by diemorei         ###   ########.fr       */
+/*   Updated: 2024/04/12 12:15:52 by diemorei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ void	child_exec(t_cmd *cmd, t_bash *bash_boss)
 //	error_exec(bash_boss,new);
 }
 
+
 void	child_build(t_cmd *cmd, t_bash *bash_boss)
 {
 	int	check;
@@ -138,11 +139,28 @@ void	child_build(t_cmd *cmd, t_bash *bash_boss)
 	exit(EXIT_SUCCESS);
 }
 
+void garabe_colletor(t_cmd *cmd)
+{
+	t_cmd *ptr;
+	
+	ptr = cmd;
+
+	if(cmd != NULL)
+	{
+		if(cmd->pipes[0] > 0)
+			close(cmd->pipes[0]);
+		if(cmd->pipes[1] > 0)
+			close(cmd->pipes[1]);	
+	}
+
+}
+
+
+
 void	pipes_executor(t_cmd *ptrcmd, t_bash *bash_boss)
 {
 	int		i;
 	t_cmd	*ptr;
-
 	i = 0;
 	ptr = ptrcmd;
 	alloc_mypids(bash_boss);
@@ -150,8 +168,14 @@ void	pipes_executor(t_cmd *ptrcmd, t_bash *bash_boss)
 	{
 		set_pipes(ptrcmd);
 		bash_boss->pid[i] = fork();
+		if(ptrcmd->prev != NULL)
+		{
+			if(ptrcmd->prev->prev != NULL)
+			close(ptrcmd->prev->prev->pipes[0]);
+		}
 		if (bash_boss->pid[i] == 0)
 		{
+				
 			if (check_builtings(ptrcmd) == 0)
 				child_exec(ptrcmd, bash_boss);
 			else
@@ -160,7 +184,7 @@ void	pipes_executor(t_cmd *ptrcmd, t_bash *bash_boss)
 		if(ptrcmd->next != NULL)
 			close(ptrcmd->pipes[1]);
 		ptrcmd = ptrcmd->next;
-
+	
 		i++;
 	}
 
