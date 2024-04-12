@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: diemorei <diemorei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 16:14:44 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/07 22:03:12 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/12 11:37:37 by diemorei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,10 @@ void	close_myhere(t_cmd *cmd)
 		while (ptrredir != NULL)
 		{
 			if (ptrredir->token == open_here)
-				close(ptrredir->fd);
+			{
+				if(ptrredir->fd > 0)
+					close(ptrredir->fd);	
+			}
 			ptrredir = ptrredir->next;
 		}
 		ptr = ptr->next;

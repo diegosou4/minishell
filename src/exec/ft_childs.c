@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_childs.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: diemorei <diemorei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 17:01:11 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/09 16:19:53 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/12 11:38:36 by diemorei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,9 +159,6 @@ void	pipes_executor(t_cmd *ptrcmd, t_bash *bash_boss)
 		}
 		if(ptrcmd->next != NULL)
 			close(ptrcmd->pipes[1]);
-		if(ptrcmd->next != NULL && ptrcmd->prev != NULL)
-			close(ptrcmd->prev->pipes[0]);
-		//close_myhere(ptrcmd);
 		ptrcmd = ptrcmd->next;
 
 		i++;
@@ -169,4 +166,15 @@ void	pipes_executor(t_cmd *ptrcmd, t_bash *bash_boss)
 
 	wait_mypids(bash_boss);
 	free_pids(bash_boss);
+	ptr = bash_boss->commands;
+	close_myhere(ptr);
+	while(ptr != NULL)
+	{
+		if(ptr->pipes[0] > 0)
+			close(ptr->pipes[0]);
+		if(ptr->pipes[1] > 0)
+			close(ptr->pipes[1]);
+		ptr = ptr->next;
+	}
+
 }
