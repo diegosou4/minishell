@@ -6,7 +6,7 @@
 /*   By: diemorei <diemorei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 17:01:11 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/12 12:15:52 by diemorei         ###   ########.fr       */
+/*   Updated: 2024/04/13 12:31:21 by diemorei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,29 +91,19 @@ void only_redir(t_cmd *current, t_bash *bash_boss)
 		close_error(bash_boss);
 		free_here(bash_boss);
 		free_pids(bash_boss);
-		
 		exit(EXIT_SUCCESS);
 	}
-
-
-
-
 }
 
 
 void	child_exec(t_cmd *cmd, t_bash *bash_boss)
 {
 	char **new;
-	check_here(bash_boss,cmd);
-	care_redirect(&cmd, &bash_boss);
+	
 	only_redir(cmd,bash_boss);
-
 	care_expand(&cmd, &bash_boss);
 	if (sizepipe(bash_boss->commands) != 1)
-	{
 		care_inchild(cmd, bash_boss);
-	}
-		
 	redir_inchild(bash_boss);
 	dup_final(bash_boss,cmd);
 	new = newenv_child(bash_boss->cpyenv);
@@ -128,7 +118,6 @@ void	child_build(t_cmd *cmd, t_bash *bash_boss)
 	int	check;
 
 	check = check_builtings(cmd);
-	care_redirect(&cmd, &bash_boss);
 	if (sizepipe(bash_boss->commands) != 1)
 		care_inchild(cmd, bash_boss);
 	redir_inchild(bash_boss);
@@ -155,8 +144,6 @@ void garabe_colletor(t_cmd *cmd)
 
 }
 
-
-
 void	pipes_executor(t_cmd *ptrcmd, t_bash *bash_boss)
 {
 	int		i;
@@ -175,7 +162,8 @@ void	pipes_executor(t_cmd *ptrcmd, t_bash *bash_boss)
 		}
 		if (bash_boss->pid[i] == 0)
 		{
-				
+			check_here(bash_boss,ptrcmd);
+			care_redirect(&ptrcmd, &bash_boss);
 			if (check_builtings(ptrcmd) == 0)
 				child_exec(ptrcmd, bash_boss);
 			else
