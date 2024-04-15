@@ -89,6 +89,7 @@ void only_redir(t_cmd *current, t_bash *bash_boss)
 void	child_exec(t_cmd *cmd, t_bash *bash_boss)
 {
 	char **new;
+
 	
 	only_redir(cmd,bash_boss);
 	care_expand(&cmd, &bash_boss);
@@ -105,7 +106,6 @@ void	child_exec(t_cmd *cmd, t_bash *bash_boss)
 void	child_build(t_cmd *cmd, t_bash *bash_boss)
 {
 	int	check;
-
 	check = check_builtings(cmd);
 	if (sizepipe(bash_boss->commands) != 1)
 		care_inchild(cmd, bash_boss);
@@ -119,14 +119,30 @@ void	child_build(t_cmd *cmd, t_bash *bash_boss)
 
 void rotine_executor(t_cmd *ptrcmd,t_bash *bash_boss)
 {
-	int		i;
-	i = 0;
 
+
+}
+
+void	care_myprev(t_cmd *ptrcmd)
+{
+	if (ptrcmd->prev)
+	{
+		close(ptrcmd->prev->pipes[0]);
+		close(ptrcmd->prev->pipes[1]);
+	}
+}
+void	pipes_executor(t_cmd *ptrcmd, t_bash *bash_boss)
+{
+	int		i;
+	t_cmd	*ptr;
+	i = 0;
+	ptr = ptrcmd;
+	alloc_mypids(bash_boss);
 	while (ptrcmd != NULL)
 	{
 		set_pipes(ptrcmd);
 		bash_boss->pid[i] = fork();
-		pipes_prev(ptrcmd);
+		//pipes_prev(ptrcmd);
 		if (bash_boss->pid[i] == 0)
 		{
 			check_here(bash_boss,ptrcmd);
@@ -136,18 +152,11 @@ void rotine_executor(t_cmd *ptrcmd,t_bash *bash_boss)
 			else
 				child_build(ptrcmd, bash_boss);
 		}
-		if(ptrcmd->next != NULL)
-			close(ptrcmd->pipes[1]);
+		care_myprev(ptrcmd);
 		ptrcmd = ptrcmd->next;
 		i++;
 	}
-
-}
-
-void	pipes_executor(t_cmd *ptrcmd, t_bash *bash_boss)
-{
-	alloc_mypids(bash_boss);
-	rotine_executor(ptrcmd,bash_boss);
+	
 	wait_mypids(bash_boss);
 	free_pids(bash_boss);
 }

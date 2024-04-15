@@ -50,16 +50,15 @@ void	set_pipes(t_cmd *ptrcmd)
 
 void	care_inchild(t_cmd *current, t_bash *bash_boss)
 {
-	if (current->prev == NULL)
+	if (!current->prev)
 	{
-		if(current->pipes[0] != -1)
-			close(current->pipes[0]);
+		close(current->pipes[0]);
 		bash_boss->pipein = -1;
 		bash_boss->pipeout = current->pipes[1];
 		return ;
 	}
 	close(current->prev->pipes[1]);
-	if (current->next != NULL)
+	if (current->next)
 	{
 		close(current->pipes[0]);
 		bash_boss->pipeout = current->pipes[1];
@@ -70,10 +69,7 @@ void	care_inchild(t_cmd *current, t_bash *bash_boss)
 void	redir_inchild(t_bash *bash_boss)
 {
 	if (bash_boss->fdout == -1)
-	{
-		if(bash_boss->pipeout > 0)
-			bash_boss->fdout = bash_boss->pipeout;
-	}
+		bash_boss->fdout = bash_boss->pipeout;
 	else
 	{
 		if(bash_boss->pipeout != -1)
