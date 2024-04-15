@@ -37,16 +37,16 @@ void	set_pipes(t_cmd *ptrcmd)
 		
 }
 
-void	care_myprev(t_cmd *ptrcmd)
-{
-	if (ptrcmd->prev != NULL && ptrcmd->next != NULL)
-	{
-		if(ptrcmd->prev->pipes[0] > 0)
-			close(ptrcmd->prev->pipes[0]);
-		if(ptrcmd->prev->pipes[1] > 0)
-			close(ptrcmd->prev->pipes[1]);
-	}
-}
+// void	care_myprev(t_cmd *ptrcmd)
+// {
+// 	if (ptrcmd->prev != NULL && ptrcmd->next != NULL)
+// 	{
+// 		if(ptrcmd->prev->pipes[0] > 0)
+// 			close(ptrcmd->prev->pipes[0]);
+// 		if(ptrcmd->prev->pipes[1] > 0)
+// 			close(ptrcmd->prev->pipes[1]);
+// 	}
+// }
 
 void	care_inchild(t_cmd *current, t_bash *bash_boss)
 {
@@ -87,4 +87,20 @@ void	redir_inchild(t_bash *bash_boss)
 			close(bash_boss->pipein);
 	}
 		
+}
+
+void end_pipes(t_cmd *cmd)
+{
+	t_cmd *ptr;
+
+	ptr = cmd;
+
+	while(ptr != NULL)
+	{
+		if(ptr->pipes[0] > 0)
+			close(ptr->pipes[0]);
+		if(ptr->pipes[1] > 0)
+			close(ptr->pipes[1]);
+		ptr = ptr->next;
+	}
 }

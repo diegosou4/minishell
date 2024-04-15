@@ -12,6 +12,25 @@
 
 #include "../../includes/mini.h"
 
+void manage_heredoc(t_bash **bash_boss)
+{
+
+	t_cmd *ptr;
+
+	ptr = (*bash_boss)->commands;
+	signal(SIGINT, SIG_IGN);
+	get_file_num()->exit_code = 0;
+	get_file_num()->heredoc = 1;
+	while (ptr != NULL)
+	{
+		ft_signal_manager_child();
+		check_heredoc(&ptr->redir, ptr,(*bash_boss));
+		if (get_file_num()->exit_code == 127)
+			break ;
+		ptr = ptr->next;
+	}
+}
+
 void	check_heredoc(t_redir **redirect, t_cmd *cmd, t_bash *bash_boss)
 {
 	t_redir	*ptr;

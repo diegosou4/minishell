@@ -45,3 +45,12 @@ void close_error(t_bash *bash_boss)
 		close(bash_boss->pipeout);
 
 }
+
+void pipes_prev(t_cmd *ptrcmd)
+{
+    if(ptrcmd->prev != NULL)
+	{
+		if(ptrcmd->prev->prev != NULL)
+		    close(ptrcmd->prev->prev->pipes[0]);
+	}
+}

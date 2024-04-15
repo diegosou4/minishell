@@ -77,7 +77,6 @@ void	ft_free_double_word_list(t_word_list **word_desc)
 void	ft_free_redir_list(t_redir *redir)
 {
 	t_redir	*temp;
-	
 	while (redir !=  NULL)
 	{
 		temp = redir;
@@ -95,8 +94,10 @@ void	ft_free_cmd_structure(t_cmd *cmd_structure)
 {
 	t_cmd	*temp;
 
+	end_pipes(cmd_structure);
 	if (!cmd_structure)
 		return ;
+	close_allfd(cmd_structure);
 	while (cmd_structure)
 	{
 			

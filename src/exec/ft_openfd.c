@@ -70,3 +70,25 @@ int	open_fd(t_redir **redirect)
 	}
 	return (1);
 }
+
+
+void close_allfd(t_cmd *cmd)
+{
+	t_cmd *ptrcmd;
+	t_redir *ptr;
+
+	ptrcmd = cmd;
+
+	while(ptrcmd != NULL)
+	{
+		ptr = ptrcmd->redir;
+		while(ptr != NULL)
+		{
+			if(ptr->fd > 0)
+				close(ptr->fd);
+		ptr = ptr->next;
+		}
+		ptrcmd = ptrcmd->next;
+	}
+
+}

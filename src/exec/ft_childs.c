@@ -65,16 +65,6 @@ int return_intout(t_cmd *cmd,t_bash *bash_boss)
 }
 
 
-
-void error_exec(t_bash *bass_boss,char **new)
-{
-//	ft_free_double_pointers(new);
-	//free_pids(bass_boss);
-	//free_here(bass_boss);
-	exit(EXIT_SUCCESS);
-
-}
-
 void only_redir(t_cmd *current, t_bash *bash_boss)
 {
 	t_redir *ptr;
@@ -109,7 +99,6 @@ void	child_exec(t_cmd *cmd, t_bash *bash_boss)
 	new = newenv_child(bash_boss->cpyenv);
 	check_dir(bash_boss,cmd,new);
 	execve(cmd->path, cmd->args, new);
-//	error_exec(bash_boss,new);
 }
 
 
@@ -128,38 +117,16 @@ void	child_build(t_cmd *cmd, t_bash *bash_boss)
 	exit(EXIT_SUCCESS);
 }
 
-void garabe_colletor(t_cmd *cmd)
-{
-	t_cmd *ptr;
-	
-	ptr = cmd;
-
-	if(cmd != NULL)
-	{
-		if(cmd->pipes[0] > 0)
-			close(cmd->pipes[0]);
-		if(cmd->pipes[1] > 0)
-			close(cmd->pipes[1]);	
-	}
-
-}
-
-void	pipes_executor(t_cmd *ptrcmd, t_bash *bash_boss)
+void rotine_executor(t_cmd *ptrcmd,t_bash *bash_boss)
 {
 	int		i;
-	t_cmd	*ptr;
 	i = 0;
-	ptr = ptrcmd;
-	alloc_mypids(bash_boss);
+
 	while (ptrcmd != NULL)
 	{
 		set_pipes(ptrcmd);
 		bash_boss->pid[i] = fork();
-		if(ptrcmd->prev != NULL)
-		{
-			if(ptrcmd->prev->prev != NULL)
-			close(ptrcmd->prev->prev->pipes[0]);
-		}
+		pipes_prev(ptrcmd);
 		if (bash_boss->pid[i] == 0)
 		{
 			check_here(bash_boss,ptrcmd);
@@ -172,21 +139,16 @@ void	pipes_executor(t_cmd *ptrcmd, t_bash *bash_boss)
 		if(ptrcmd->next != NULL)
 			close(ptrcmd->pipes[1]);
 		ptrcmd = ptrcmd->next;
-	
 		i++;
 	}
 
+}
+
+void	pipes_executor(t_cmd *ptrcmd, t_bash *bash_boss)
+{
+	alloc_mypids(bash_boss);
+	rotine_executor(ptrcmd,bash_boss);
 	wait_mypids(bash_boss);
 	free_pids(bash_boss);
-	ptr = bash_boss->commands;
-	close_myhere(ptr);
-	while(ptr != NULL)
-	{
-		if(ptr->pipes[0] > 0)
-			close(ptr->pipes[0]);
-		if(ptr->pipes[1] > 0)
-			close(ptr->pipes[1]);
-		ptr = ptr->next;
-	}
-
 }
+
