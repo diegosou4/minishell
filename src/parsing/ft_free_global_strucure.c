@@ -93,11 +93,12 @@ void	ft_free_redir_list(t_redir *redir)
 void	ft_free_cmd_structure(t_cmd *cmd_structure)
 {
 	t_cmd	*temp;
-
+	
+	close_allfd(cmd_structure);
 	end_pipes(cmd_structure);
 	if (!cmd_structure)
 		return ;
-	close_allfd(cmd_structure);
+
 	while (cmd_structure)
 	{
 			

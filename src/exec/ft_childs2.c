@@ -63,6 +63,10 @@ void	start_execution(t_bash *bash_boss)
 	t_cmd	*ptr;
 	ptr = bash_boss->commands;
 
+
+	manage_heredoc(&bash_boss);
+	if (get_file_num()->exit_code == 127)
+		return ;
 	bash_boss->pipein = -1;
 	bash_boss->pipeout = -1;
 	while (ptr != NULL)
@@ -70,9 +74,5 @@ void	start_execution(t_bash *bash_boss)
 		ptr->executable = 1;
 		ptr = ptr->next;
 	}	
-	manage_heredoc(&bash_boss);
-	if (get_file_num()->exit_code == 127)
-		return ;
-
 	ft_magane_executor(bash_boss);
 }
