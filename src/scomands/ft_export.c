@@ -20,7 +20,7 @@ void	print_exp(char *key, char *value, int token)
 	{
 		printf("declare -x ");
 		str = ft_substr(key, 0, (ft_strlen(key) - 1));
-		printf("%s", str);
+		printf("%s=\"\"", str);
 		printf("\n");
 		free(str);
 		return ;
@@ -47,7 +47,10 @@ int	ft_exp(t_env *env)
 	while (ptr != NULL)
 	{
 		if (ptr->token == 1)
+		{
 			print_exp(ptr->key, ptr->value, ptr->token);
+		}
+			
 		ptr = ptr->next;
 	}
 	ptr = env;
