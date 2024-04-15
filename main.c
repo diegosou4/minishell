@@ -100,6 +100,7 @@ void	ft_structure_manager(t_line *line, t_bash *bash)
 	ft_free_cmd_structure(cmd_structure);
 }
 
+
 void	*ft_parse_manager(char **env)
 {
 	t_line	line;

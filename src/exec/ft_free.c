@@ -37,22 +37,3 @@ void	free_redir(t_redir *redir)
 	}
 }
 
-void	free_all(t_cmd *cmd)
-{
-	t_cmd	*ptr;
-	t_cmd	*next;
-
-	ptr = cmd;
-	while (ptr != NULL)
-	{
-		next = ptr->next;
-		if (ptr->path != NULL)
-			free(ptr->path);
-		if (ptr->args != NULL)
-			ft_free_double_pointers(ptr->args);
-		if (ptr->redir != NULL)
-			free_redir(ptr->redir);
-		free(ptr);
-		ptr = next;
-	}
-}

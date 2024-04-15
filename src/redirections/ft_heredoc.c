@@ -96,3 +96,5 @@ int	ft_heredoc(char *delimiter, t_bash *bash_boss, t_cmd *cmd)
 	close(pipesfd[1]);
 	return (pipesfd[0]);
 }
+
+
