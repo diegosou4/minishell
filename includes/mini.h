@@ -313,7 +313,7 @@ void dup_final(t_bash *bash_boss,t_cmd *cmd);
 void check_dir(t_bash *bash_boss,t_cmd *cmd,char **new);
 int	return_in(t_bash *bash_boss,t_redir *ptr);
 int	return_out(t_bash *bash_boss,t_redir *ptr);
-void	error_path(char *str);
+int	error_path(char *str);
 void pipes_prev(t_cmd *ptrcmd);
 void close_error(t_bash *bash_boss);
 void redir_inchild(t_bash *bash_boss);
@@ -373,7 +373,7 @@ int print_pwd(t_cmd *comands);
 //_______________________________________________FT_UNSET____________________________________________//
 int ft_unset(t_env **env,t_cmd *commands);
 int error_unset(char *key);
-int unset_env(t_env **env,char *str);
+int unset_env(t_env **env,char *str,int i);
 //________________________________________________EXIT_______________________________________________//
 void	ft_exit(t_cmd *comands);
 //____________________________________________EXECUTEBUILTINGS_______________________________________//

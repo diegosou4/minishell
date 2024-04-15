@@ -117,11 +117,6 @@ void	child_build(t_cmd *cmd, t_bash *bash_boss)
 	exit(EXIT_SUCCESS);
 }
 
-void rotine_executor(t_cmd *ptrcmd,t_bash *bash_boss)
-{
-
-
-}
 
 void	care_myprev(t_cmd *ptrcmd)
 {
@@ -136,13 +131,13 @@ void	pipes_executor(t_cmd *ptrcmd, t_bash *bash_boss)
 	int		i;
 	t_cmd	*ptr;
 	i = 0;
+
 	ptr = ptrcmd;
 	alloc_mypids(bash_boss);
 	while (ptrcmd != NULL)
 	{
 		set_pipes(ptrcmd);
 		bash_boss->pid[i] = fork();
-		//pipes_prev(ptrcmd);
 		if (bash_boss->pid[i] == 0)
 		{
 			check_here(bash_boss,ptrcmd);
@@ -156,7 +151,6 @@ void	pipes_executor(t_cmd *ptrcmd, t_bash *bash_boss)
 		ptrcmd = ptrcmd->next;
 		i++;
 	}
-	
 	wait_mypids(bash_boss);
 	free_pids(bash_boss);
 }

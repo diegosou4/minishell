@@ -12,11 +12,12 @@
 
 #include "../../includes/mini.h"
 
-void	error_path(char *str)
+int	error_path(char *str)
 {
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(": command not found\n", 2);
 	g_exit_status = 127;
+	return (EXIT_FAILURE);
 }
 
 int	expand_path(t_cmd **commands, char **env)
@@ -37,10 +38,7 @@ int	expand_path(t_cmd **commands, char **env)
 	else
 		ptr->path = ask_acess(ptr->args[0], home);
 	if (ptr->path == NULL)
-	{
-		error_path(ptr->args[0]);
-		return (EXIT_FAILURE);
-	}
+		return(error_path(ptr->args[0]));
 	return (EXIT_SUCCESS);
 }
 
@@ -66,6 +64,8 @@ char	*givepath(t_env *env)
 	return (path);
 }
 
+
+
 int	expand_path_cpy(t_cmd **commands, t_env *cpyenv)
 {
 	int		build;
@@ -75,9 +75,7 @@ int	expand_path_cpy(t_cmd **commands, t_env *cpyenv)
 	ptr = (*commands);
 	build = check_builtings(ptr);
 	if(ft_strlen(ptr->args[0]) == 0)
-	{
 		return(EXIT_FAILURE);
-	}
 	if (build == 0 && ptr->args[0] == NULL)
 		return (EXIT_SUCCESS);
 	if(access(ptr->args[0], F_OK) == 0 && build == 0 && ft_boolstrchr(ptr->args[0], 47) == 1)
@@ -92,10 +90,6 @@ int	expand_path_cpy(t_cmd **commands, t_env *cpyenv)
 	if(home != NULL)
 		free(home);
 	if (ptr->path == NULL)
-	{
-		error_path(ptr->args[0]);
-		g_exit_status = 127;
-		return (EXIT_FAILURE);
-	}	
+		return(error_path(ptr->args[0]));
 	return (EXIT_SUCCESS);
 }
