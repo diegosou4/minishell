@@ -40,7 +40,7 @@ int	key_exist(t_env **env, char *str, int token)
 	change_value(&key, &value, str);
 	while (ptr != NULL)
 	{
-		if (ft_strncmp(ptr->key, key, ft_strlen(key))  == 0)
+		if (ft_strncmp(ptr->key, key, ft_strlen(ptr->key))  == 0)
 		{
 			if(key != NULL)
 				free(key);
