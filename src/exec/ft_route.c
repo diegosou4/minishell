@@ -51,23 +51,6 @@ void	ft_magane_executor(t_bash *bash_boss)
 		pipes_executor(ptrcmd, bash_boss);
 }
 
-int	open_redir(t_cmd **commands)
-{
-	t_cmd	*ptrcmd;
-	t_redir	*ptrredir;
-
-	ptrcmd = (*commands);
-	while (ptrcmd != NULL)
-	{
-		ptrredir = ptrcmd->redir;
-		if (open_fd(&ptrredir) == 0)
-			ptrcmd->executable = FALSE;
-		else
-			ptrcmd->executable = TRUE;
-		ptrcmd = ptrcmd->next;
-	}
-	return (1);
-}
 
 int	ft_howpipes(t_cmd *comands)
 {

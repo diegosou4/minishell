@@ -204,11 +204,7 @@ char **ft_arrcpy(char **str);
 char	*ask_acess(char *comand, char *path);
 
 // Struct redir
-t_cmd *cmdnew(char *args);
-t_cmd *putcmds(char *args);
 t_redir *redirnew(void);
-// t_redir *addredirnew(int flag);
-// void add_redir(t_cmd **commands);
 //  Checker quotes.
 void ft_checker_quotes(char *str);
 char *findpath(char **args, int flag, int location);
@@ -241,7 +237,7 @@ void close_fderror(t_redir *redir);
 int sizepipe(t_cmd *commands);
 void set_pipes(t_cmd *ptrcmd);
 void end_pipes(t_cmd *cmd);
-void care_myprev(t_cmd *ptrcmd);
+
 void care_inchild(t_cmd *current, t_bash *bash_boss);
 // Builtings
 
@@ -288,7 +284,6 @@ void ft_free_double_pointers(char **split_line);
 // __________________________________________________LIST_MANAGER ________________________________
 void ft_extract_var(t_word_list *word_list, t_bash *bash);
 t_word_list	*ft_lstlast_(t_word_list *lst);
-int ft_check_struct_redir(t_word_list *tokens);
 
 //___________________________________________________QUOTES REMOVAL _______________________________
 void ft_quotes_remove(t_word_list *word_list);
@@ -330,14 +325,11 @@ void fail_expander(t_bash *bash_boss,t_cmd *cmd);
 int ft_howpipes(t_cmd *comands);
 void close_myhere(t_cmd *cmd);
 void close_myhereprev(t_cmd *cmd);
-void close_myherenext(t_cmd *cmd);
 //_____________________________________________PIDS_____________________________________________________//
 void alloc_mypids(t_bash *bash_boss);
 void wait_mypids(t_bash *bash_boss);
 void free_pids(t_bash *bash_boss);
 //______________________________________________FILES___________________________________________________//
-
-int open_redir(t_cmd **commands);
 int open_out(char *path);
 int open_in(char *path);
 int open_append(char *path);
@@ -445,9 +437,7 @@ char	*ft_duplineenv(t_env *env, char *variable);
 
 
 
-void free_all(t_cmd *cmd);
-void free_cpyenv(t_env *cpyenv);
-
+//______________________________________________________SHLVL_____________________________________________________//
 void ft_shlvl(char **env);
 char **newenv_child(t_env *env);
 

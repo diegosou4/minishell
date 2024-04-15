@@ -15,10 +15,6 @@
 void	care_redirect(t_cmd **cmd, t_bash **bash_boss)
 {
 	return_intout((*cmd),(*bash_boss));
-	// if ((*cmd)->prev != NULL && (*cmd)->next != NULL)
-	// 	close_myhereprev((*cmd)->prev);
-	// // if ((*cmd) != NULL)
-	// // 	close_myherenext((*cmd)->next);
 	if ((*cmd)->executable == 0)
 	{
 		if((*cmd)->pipes[0] != -1)

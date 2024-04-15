@@ -96,29 +96,6 @@ void	close_myhereprev(t_cmd *cmd)
 	}
 }
 
-void	close_myherenext(t_cmd *cmd)
-{
-	t_cmd	*ptr;
-	t_redir	*ptrredir;
-
-	ptr = cmd;
-	while (ptr != NULL)
-	{
-		ptrredir = ptr->redir;
-		while (ptrredir != NULL)
-		{
-			if (ptrredir->token == open_here)
-			{
-				if(ptrredir->fd != -1)
-					close(ptrredir->fd);
-			}
-				
-			ptrredir = ptrredir->next;
-		}
-		ptr = ptr->next;
-	}
-}
-
 void check_here(t_bash *bash_boss,t_cmd *cmd)
 {
 	if(get_file_num()->heredoc == 0)
