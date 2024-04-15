@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 14:44:43 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/04/09 13:17:10 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/15 14:33:20 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ int	ft_check_valid_redir(t_word_list *word_list)
 	{
 		if (word_list->word->word[0] == '\''
 			|| word_list->word->word[0] == '\"')
-			i = 1;
-		if (word_list->word->word[i] == '>' || word_list->word->word[i] == '<')
+			 i = 0;
+		else if (word_list->word->word[i] == '>' || word_list->word->word[i] == '<')
 		{
 			if (!ft_has_valid_redir_flag(word_list->word))
 			{

@@ -66,6 +66,7 @@ typedef struct {
 typedef struct s_number
 {
 	int j;
+	int i;
 	char flag_quotes;
 } t_number;
 
