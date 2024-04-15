@@ -21,6 +21,7 @@ static int  shel_exist(char **env)
     char *str;
     char *value;
 
+
 	while (env[i] != NULL)
 	{
 		if(ft_strncmp(env[i],"SHLVL=",6) == 0)

@@ -14,21 +14,24 @@
 
 int	check_builtings(t_cmd *commands)
 {
+	int len;
+
+	len = ft_strlen(commands->args[0]);
 	if (commands->args[0] == NULL)
 		return (0);
-	else if (ft_strncmp("pwd", commands->args[0], 4) == 0)
+	else if (ft_strncmp("pwd", commands->args[0], len) == 0)
 		return (1);
-	else if (ft_strncmp("cd", commands->args[0], 2) == 0)
+	else if (ft_strncmp("cd", commands->args[0], len) == 0)
 		return (2);
-	else if (ft_strncmp("env", commands->args[0], 3) == 0)
+	else if (ft_strncmp("env", commands->args[0], len) == 0)
 		return (3);
-	else if (ft_strncmp("export", commands->args[0], 6) == 0)
+	else if (ft_strncmp("export", commands->args[0], len) == 0)
 		return (4);
-	else if (ft_strncmp("unset", commands->args[0], 5) == 0)
+	else if (ft_strncmp("unset", commands->args[0], len) == 0)
 		return (5);
-	else if (ft_strncmp("echo", commands->args[0], 4) == 0)
+	else if (ft_strncmp("echo", commands->args[0], len) == 0)
 		return (6);
-	else if (ft_strncmp("exit", commands->args[0], 4) == 0)
+	else if (ft_strncmp("exit", commands->args[0], len) == 0)
 		return (7);
 	
 	return (0);

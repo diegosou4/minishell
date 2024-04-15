@@ -57,6 +57,7 @@ static	void	free_and_null(char **ptr)
 
 void	ft_line_handler(t_line *line, t_env *cpyenv, int num)
 {
+	
 	if (num == MAIN)
 	{
 		if (cpyenv == NULL)
