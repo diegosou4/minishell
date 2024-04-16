@@ -82,10 +82,11 @@ static void ft_exitaux(t_cmd *comands,t_bash *bash_boss, char *str)
 void	ft_exit(t_cmd *comands)
 {
 	char	*str;
-	int		i;
 	int		int_len;
 	t_bash	*bash_boss;
 	
+	str = NULL;
+	int_len = 0;
 	if(ft_strncmp(comands->args[0],"exit",4) == 0)
 		ft_putstr_fd(ANSI_COLOR_GREEN "exit, see you 😉\n" ANSI_COLOR_RESET, 2);
 	ft_freepids();

@@ -320,7 +320,7 @@ void	child_exec(t_cmd *cmd, t_bash *bash_boss);
 void child_build(t_cmd *cmd, t_bash *bash_boss);
 int simple_bexecutor(t_cmd *ptrcmd,t_bash *bash_boss,int check);
 void pipes_executor(t_cmd *ptrcmd,t_bash *bash_boss);
-void fail_expander(t_bash *bash_boss,t_cmd *cmd);
+void	fail_expander(t_bash *bash_boss);
 int ft_howpipes(t_cmd *comands);
 void close_myhere(t_cmd *cmd);
 void close_myhereprev(t_cmd *cmd);
@@ -366,7 +366,7 @@ int ft_indexinenv(t_env *env,char *this);
 int case_plus(t_env **env,char *str,int token);
 void export_msg(char *arr);
 //________________________________________________FT_PWD________________________________________________//
-int print_pwd(t_cmd *comands);
+int print_pwd(void);
 //_______________________________________________FT_UNSET____________________________________________//
 int ft_unset(t_env **env,t_cmd *commands);
 int unset_env(t_env **env,char *str,int i);

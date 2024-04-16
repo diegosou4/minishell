@@ -12,7 +12,7 @@
 
 #include "../../includes/mini.h"
 
-void	fail_expander(t_bash *bash_boss, t_cmd *cmd)
+void	fail_expander(t_bash *bash_boss)
 {
 	if (bash_boss->fdin != -1)
 		close(bash_boss->fdin);

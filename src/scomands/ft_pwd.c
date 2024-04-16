@@ -12,7 +12,7 @@
 
 #include "../../includes/mini.h"
 
-int	print_pwd(t_cmd *comands)
+int	print_pwd(void)
 {
 	char	*pwd;
 	

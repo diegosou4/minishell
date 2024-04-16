@@ -114,7 +114,7 @@ void	ft_extract_var(t_word_list *word_list, t_bash *bash)
 {
 	char	*dest;
 	char	*word_cpy;
-	int i =0;
+
 	while (word_list)
 	{
 		if (ft_strcmp(word_list->word->word, "<<") == 0 && word_list->next)

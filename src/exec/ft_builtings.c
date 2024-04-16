@@ -39,7 +39,7 @@ int	check_builtings(t_cmd *commands)
 int	execute_builtings(t_cmd **cmd, t_env **cpy, int check)
 {
 	if (check == 1)
-		return (print_pwd((*cmd)));
+		return (print_pwd());
 	else if (check == 2)
 		return (ft_cd((*cmd), cpy));
 	else if (check == 3)
