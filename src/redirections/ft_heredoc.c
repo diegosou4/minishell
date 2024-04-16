@@ -67,7 +67,7 @@ t_file_struct	*get_file_num(void)
 
 	return (&instance);
 }
-static void badsignal_here(t_bash *bash_boss, int count, char *delimiter)
+static void badsignal_here(int count, char *delimiter)
 {
 	char *str;
 	str = ft_itoa(count);
@@ -96,7 +96,7 @@ static void	child_heredoc(char *delimiter, t_bash *bash_boss, int out, t_cmd *cm
 		if (ft_strcmp(delimiter, line.line) == 0 || !line.line)
 		{
 			if(!line.line)
-				badsignal_here(bash_boss,count,delimiter);
+				badsignal_here(count,delimiter);
 			break;
 		}
 		else
