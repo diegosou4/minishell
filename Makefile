@@ -73,7 +73,9 @@ clean:
 fclean: clean
 	rm -rf $(NAME)
 
-re: $(NAME)
-	fclean all
-valgrind:
+re: fclean all
+
+valgrind: $(NAME)
 	valgrind --suppressions=readline.supp --leak-check=full --track-fds=yes --show-leak-kinds=all ./${NAME}
+
+.PHONY	: re fclean clean all
