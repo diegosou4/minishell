@@ -65,6 +65,12 @@ typedef struct {
 
 typedef struct s_number
 {
+	char	*token;
+	char	*path;
+	int		in_quotes;
+	int		double_quote;
+	char	*pid;
+	char	*exit_status;  
 	int j;
 	int i;
 	char flag_quotes;

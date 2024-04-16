@@ -84,52 +84,60 @@ void	ft_check_variable_quotes_expansion(char *dest)
 	}
 }
 
+static void ft_variable_help(t_number *num, char *src, char **dest, t_env *env)
+{
+	num->token = ft_create_token(src);
+	if (!ft_strcmp(num->token, "?")) 
+		num->path = num->exit_status; 
+	else if (!ft_strcmp(num->token, "$")) 
+		num->path = num->pid; 
+	else if (!*num->token)
+		**dest++ = '$';
+	else
+		num->path = ft_path_handler(env, num->token); 		
+}
+static void ft_num_init(t_number *num)
+{
+	num->path = NULL;
+	num->double_quote = 0;
+	num->in_quotes = 0;
+	num->pid = ft_itoa(getpid());
+	num->exit_status = ft_itoa(get_file_num()->bash->exit_status);
+
+}
+static void ft_num_free(t_number *num)
+{
+	free(num->pid);
+	free(num->exit_status);
+}
 void	ft_check_variable_expansion(char *src, char *dest, t_env *env)
 {
-	char	*token;
-	char	*path;
-	int		in_quotes;
-	int		double_quote;
-	char	*pid;
-	char	*exit_status;
+	t_number	num;
 
-	path = NULL;
-	double_quote = 0;
-	in_quotes = 0;
-	pid = ft_itoa(getpid());
-	exit_status = ft_itoa(get_file_num()->bash->exit_status);
+	ft_num_init(&num);
 	while (*src)
 	{
 		if (*src == '\"' && ft_strchr(src, '$'))
-			double_quote = !double_quote;
-		if (*src == '\'' && !double_quote)
+			num.double_quote = !num.double_quote;
+		if (*src == '\'' && !num.double_quote)
 		{
-			in_quotes = !in_quotes;
+			num.in_quotes = !num.in_quotes;
 			*dest++ = *src++;
 			continue ;
 		}
-		if (!in_quotes && *src == '$' && (*(src + 1) != '\''
+		if (!num.in_quotes && *src == '$' && (*(src + 1) != '\''
 				&& *(src + 1) != '\"'))
 		{
-			token = ft_create_token(src + 1);
-			if (!ft_strcmp(token, "?"))
-				path = exit_status;
-			else if (!ft_strcmp(token, "$"))
-				path = pid;
-			else if (!*token)
-				*dest++ = '$';
-			else
-				path = ft_path_handler(env, token);
-			while (path != NULL && *path)
-				*dest++ = *path++;
-			src += ft_strlen(token) + 1;
-			free(token);
+			ft_variable_help(&num, src + 1, &dest, env);
+			while (num.path != NULL && *num.path)
+				*dest++ = *num.path++;
+			src += ft_strlen(num.token) + 1;
+			free(num.token);
 		}
 		else
 			*dest++ = *src++;
 	}
-	free(pid);
-	free(exit_status);
+	ft_num_free(&num);
 	*dest = '\0';
 }
 
