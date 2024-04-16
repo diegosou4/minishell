@@ -12,12 +12,19 @@
 
 #include "../../includes/mini.h"
 
-// static int	ft_space(char **line)
-// {
-// 	while (**line == '2')
-// 		(*line)++;
-// 	return (1);
-// }
+static int	ft_space(char *line, t_number *num)
+{
+	int i;
+
+	i = num->i + 1;
+	while (line[i] == '\2')
+		i++;
+	if (line[i] == '>' || line[i] == '<')
+	{
+		return (0);
+	}
+	return (1);
+}
 
 // static void	ft_flag_update(char *flag_quotes, char line)
 // {
@@ -53,9 +60,9 @@ char	*ft_string_handle_2(char *line, char *modified_line)
 			modified_line[num.j++] = '\2';
 			modified_line[num.j++] = line[num.i];
 			if (line[num.i + 1] == line[num.i])
-			{
 				modified_line[num.j++] = line[++num.i];
-			}
+			if (!ft_space(line, (&num)))
+				return NULL;
 			modified_line[num.j++] = '\2';
 			num.i++;
 		}
