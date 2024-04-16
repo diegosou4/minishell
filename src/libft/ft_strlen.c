@@ -24,7 +24,7 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-size_t ft_double_strlen(char **str)
+size_t	ft_double_strlen(char **str)
 {
 	size_t	i;
 

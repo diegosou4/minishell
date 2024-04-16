@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 15:43:10 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/05 08:47:08 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/16 11:14:24 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ void	*freedouble_malloc(char **s, int i)
 	}
 	if (s)
 	{
-	free(s);
-	s = NULL;
+		free(s);
+		s = NULL;
 	}
 	return (NULL);
 }
