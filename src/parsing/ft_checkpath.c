@@ -85,6 +85,7 @@ char	*checkpath(char **path, char *command)
 	return (NULL);
 }
 
+
 char	*ft_duplineenv(t_env *env, char *variable)
 {
 	int		index;
