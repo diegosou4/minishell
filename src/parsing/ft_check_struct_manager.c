@@ -84,17 +84,17 @@ void	ft_check_variable_quotes_expansion(char *dest)
 	}
 }
 
-static void ft_variable_help(t_number *num, char *src, char **dest, t_env *env)
+static void ft_variable_help(t_number *num, char *src, t_env *env)
 {
 	num->token = ft_create_token(src);
 	if (!ft_strcmp(num->token, "?")) 
 		num->path = num->exit_status; 
 	else if (!ft_strcmp(num->token, "$")) 
 		num->path = num->pid; 
-	else if (!*num->token)
-		**dest++ = '$';
+	else if (num->token[0] == '\0')
+		num->path = (num->dolar);
 	else
-		num->path = ft_path_handler(env, num->token); 		
+		num->path = (ft_path_handler(env, num->token)); 
 }
 static void ft_num_init(t_number *num)
 {
@@ -103,12 +103,13 @@ static void ft_num_init(t_number *num)
 	num->in_quotes = 0;
 	num->pid = ft_itoa(getpid());
 	num->exit_status = ft_itoa(get_file_num()->bash->exit_status);
-
+	num->dolar = ft_strdup("$");
 }
 static void ft_num_free(t_number *num)
 {
 	free(num->pid);
 	free(num->exit_status);
+	free(num->dolar);
 }
 void	ft_check_variable_expansion(char *src, char *dest, t_env *env)
 {
@@ -128,7 +129,7 @@ void	ft_check_variable_expansion(char *src, char *dest, t_env *env)
 		if (!num.in_quotes && *src == '$' && (*(src + 1) != '\''
 				&& *(src + 1) != '\"'))
 		{
-			ft_variable_help(&num, src + 1, &dest, env);
+			ft_variable_help(&num, src + 1, env);
 			while (num.path != NULL && *num.path)
 				*dest++ = *num.path++;
 			src += ft_strlen(num.token) + 1;

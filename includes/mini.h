@@ -66,6 +66,7 @@ typedef struct {
 typedef struct s_number
 {
 	char	*token;
+	char	*dolar;
 	char	*path;
 	int		in_quotes;
 	int		double_quote;
