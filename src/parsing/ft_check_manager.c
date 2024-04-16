@@ -59,8 +59,7 @@ static int	ft_special_pipe_case(char *line)
 {
 	if (line[0] == '|' && line[1] == '|')
 	{
-		printf("syntax error near `||' More than one pipe found! 🚰🐟\n");
-		return (0);
+		return (error_syntax("syntax error near `||' More than one pipe found! 🚰🐟\n",0));
 	}
 	return (1);
 }
@@ -76,13 +75,11 @@ static int	ft_whitespace_1(char *line)
 	}
 	if (line[i] == '\0')
 	{
-		printf("syntax error near `|' (no args) 🚰🙊\n");
-		return (0);
+		return (error_syntax("syntax error near `|' (no args) 🚰🙊\n",0));
 	}
 	else if (line[i] == '|')
 	{
-		printf("syntax error near `||' More than one pipe found! 🚰🐟\n");
-		return (0);
+		return(error_syntax("syntax error near `||' More than one pipe found! 🚰🐟\n",0));
 	}
 	return (1);
 }
