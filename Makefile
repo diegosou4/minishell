@@ -1,10 +1,7 @@
-
-
 NAME = minishell
-
-CFLAGS = -I./ #-Wall -Wextra -Werror
+CFLAGS = -g -I./ -Wall -Wextra -Werror
 LDFLAGS = -lreadline
-CC = cc -g
+CC = cc
 
 LIB = ft_isalpha.c ft_isdigit.c ft_isalnum.c \
       ft_isascii.c ft_isprint.c ft_strlen.c ft_memset.c \
@@ -47,8 +44,8 @@ COMANDS = ft_echo.c ft_pwd.c ft_cd.c ft_env.c \
             ft_exit.c ft_error.c ft_cd2.c\
             ft_export3.c
 
-ENV = ft_create.c
 
+ENV = ft_create.c
 REDIR = ft_heredoc.c ft_heredoc2.c
 
 REDIR_SRC = $(addprefix ./src/redirections/, $(REDIR))
@@ -58,15 +55,25 @@ PARSE_SRC = $(addprefix ./src/parsing/, $(PARSE))
 LIB_SRC = $(addprefix ./src/libft/, $(LIB))
 ENV_SRC = $(addprefix ./src/env/, $(ENV))
 
-all:
-	@${CC} ${CFLAGS} ${LIB_SRC} ${ENV_SRC} ${PARSE_SRC} ${COMANDS_SRC} ${EXEC_SRC} ${REDIR_SRC} main.c -o ${NAME} ${LDFLAGS}
-clean: $(NAME)
-	rm -rf minishell
+SRC = $(PARSE_SRC) $(REDIR_SRC) $(EXEC_SRC) $(COMANDS_SRC) $(LIB_SRC) $(ENV_SRC)
+
+SRCOBJ = obj/
+OBJ = $(addprefix $(SRCOBJ), $(SRC:./src/%.c=%.o))
+
+all: $(NAME)
+$(NAME): $(OBJ)
+	@${CC} ${CFLAGS} ${LDFLAGS} main.c ${OBJ} -o $(NAME)
+
+$(SRCOBJ)%.o: src/%.c
+	@mkdir -p $(dir $@)
+	@${CC} ${CFLAGS} -c $< -o $@
+
+clean: 
+	@rm -rf $(SRCOBJ)
+fclean: clean
+	@rm -rf $(NAME)
+
 re: $(NAME)
-	clean all
+	fclean all
 valgrind:
 	valgrind --suppressions=readline.supp --leak-check=full --track-fds=yes --show-leak-kinds=all ./${NAME}
-fd:
-	@valgrind -q --tool=none --track-fds=yes  ./${NAME}
-
-
