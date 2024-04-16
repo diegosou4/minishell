@@ -53,9 +53,7 @@ char	*ft_string_handle_2(char *line, char *modified_line)
 			modified_line[num.j++] = '\2';
 			modified_line[num.j++] = line[num.i];
 			if (line[num.i + 1] == line[num.i])
-			{
 				modified_line[num.j++] = line[++num.i];
-			}
 			modified_line[num.j++] = '\2';
 			num.i++;
 		}

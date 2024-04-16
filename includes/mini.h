@@ -410,53 +410,19 @@ int ft_export(t_env **env,t_cmd *commands);
 int expand_path(t_cmd **commands,char **env);
 int expand_path_cpy(t_cmd **commands,t_env *cpyenv);
 char *ft_getpath(char **env);
-
-void execute_one(t_cmd *command,char **env,t_env **cpy,t_cmd *last);
 char	*ft_string_handle_2(char *line, char *modified_line);
-
-
-
-
 //__________________________________________ft_struct_manager_utils____________________________________
 
 int	ft_lstsize_(t_word_list *lst);
 t_word_list	*ft_lstlast_(t_word_list *lst);
 int	ft_check_token_size(char *token_line);
-
-
-
-
-
 char	*ft_duplineenv(t_env *env, char *variable);
-
-
-
-
-
-
 //______________________________________________________SHLVL_____________________________________________________//
 void ft_shlvl(char **env);
 char **newenv_child(t_env *env);
 
-
-
-
-
-
-
-
-
 int	ft_check_words_list(t_word_list *tokens);
 int	ft_lexer_analysis(t_word_list *words_list, t_bash *bash, char *new_string);
-
-
-
-
-
-
-
-
-
 
 void print_dancing_penguin_frame1();
 
