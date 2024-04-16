@@ -6,16 +6,15 @@
 /*   By: diemorei <diemorei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 16:14:44 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/12 11:37:37 by diemorei         ###   ########.fr       */
+/*   Updated: 2024/04/16 16:00:04 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/mini.h"
 
-void manage_heredoc(t_bash **bash_boss)
+void	manage_heredoc(t_bash **bash_boss)
 {
-
-	t_cmd *ptr;
+	t_cmd	*ptr;
 
 	ptr = (*bash_boss)->commands;
 	signal(SIGINT, SIG_IGN);
@@ -24,7 +23,7 @@ void manage_heredoc(t_bash **bash_boss)
 	while (ptr != NULL)
 	{
 		ft_signal_manager_child();
-		check_heredoc(&ptr->redir, ptr,(*bash_boss));
+		check_heredoc(&ptr->redir, ptr, (*bash_boss));
 		if (get_file_num()->exit_code == 127)
 			break ;
 		ptr = ptr->next;
@@ -64,8 +63,8 @@ void	close_myhere(t_cmd *cmd)
 		{
 			if (ptrredir->token == open_here)
 			{
-				if(ptrredir->fd > 0)
-					close(ptrredir->fd);	
+				if (ptrredir->fd > 0)
+					close(ptrredir->fd);
 			}
 			ptrredir = ptrredir->next;
 		}
@@ -86,27 +85,26 @@ void	close_myhereprev(t_cmd *cmd)
 		{
 			if (ptrredir->token == open_here)
 			{
-				if(ptrredir->fd != -1)
+				if (ptrredir->fd != -1)
 					close(ptrredir->fd);
 			}
-				
 			ptrredir = ptrredir->next;
 		}
 		ptr = ptr->prev;
 	}
 }
 
-void check_here(t_bash *bash_boss,t_cmd *cmd)
+void	check_here(t_bash *bash_boss, t_cmd *cmd)
 {
-	if(get_file_num()->heredoc == 0)
+	if (get_file_num()->heredoc == 0)
 	{
-		if(bash_boss->fdin != - 1)
+		if (bash_boss->fdin != -1)
 			close(bash_boss->fdin);
-		if(bash_boss->fdout != - 1)
+		if (bash_boss->fdout != -1)
 			close(bash_boss->fdout);
-		if(cmd->pipes[0] != -1)
+		if (cmd->pipes[0] != -1)
 			close(cmd->pipes[0]);
-		if(cmd->pipes[1] != -1)
+		if (cmd->pipes[1] != -1)
 			close(cmd->pipes[1]);
 		free_here((bash_boss));
 		free_pids((bash_boss));

@@ -6,12 +6,11 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:29:14 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/21 19:54:12 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/16 16:31:09 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/mini.h"
-
 
 char	*ft_getenv(char **env, char *str, int i)
 {

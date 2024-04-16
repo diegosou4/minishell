@@ -43,13 +43,12 @@ static int	free_keyvalue(char *value, char *key, int exit)
 	return (exit);
 }
 
-int	unset_env(t_env **env, char *str, int i)
+int	unset_env(t_env **env, char *str, int i, int len)
 {
 	char	*key;
 	char	*value;
 	t_env	*ptr;
 	t_env	*last;
-	int len;
 
 	last = NULL;
 	ptr = *env;
@@ -57,7 +56,7 @@ int	unset_env(t_env **env, char *str, int i)
 	if (value != NULL)
 		return (free_keyvalue(value, key, EXIT_SUCCESS));
 	while (ptr != NULL)
-	{	
+	{
 		len = (int)ft_strlen(ptr->key) + i;
 		if (ft_strncmp(ptr->key, key, len) == 0)
 		{
@@ -70,45 +69,5 @@ int	unset_env(t_env **env, char *str, int i)
 		last = ptr;
 		ptr = ptr->next;
 	}
-	if(key != NULL)
-		free(key);
-	if(value != NULL)
-		free(value);
-	return (EXIT_SUCCESS);
-}
-
-static int	parse_env(t_env **env, char *str)
-{
-	char	c;
-	
-	c = '=';
-	if (ft_boolstrchr(str, c) == 1)
-	{
-		return (unset_env(env, str, (int)0));
-	}
-	else
-		return (unset_env(env, str, (int)-1));
-}
-
-int	ft_unset(t_env **env, t_cmd *commands)
-{
-	int	exit;
-	int	i;
-
-	exit = 0;
-	i = 1;
-
-	if (*env == NULL)
-		return (return_error("Error : env not set\n"));
-	if (len_darray(commands->args) == 1)
-		return (g_exit_status = EXIT_SUCCESS);
-	while (commands->args[i] != NULL)
-	{
-		if (ft_strncmp("_=", commands->args[i], 2) == 0)
-			exit = (EXIT_SUCCESS);
-		else
-			exit = parse_env(env, commands->args[i]);
-		i++;
-	}
-	return (g_exit_status = exit);
+	return (free_keyvalue(key, value, EXIT_SUCCESS));
 }

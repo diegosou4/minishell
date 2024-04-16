@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 16:30:40 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/07 22:01:13 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/16 16:22:17 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ void	ft_numberforexit(char *str)
 	exit(res);
 }
 
-
-static void ft_freepids(void)
+static void	ft_freepids(void)
 {
 	if (get_file_num()->bash->pid != NULL)
 	{
@@ -44,13 +43,20 @@ static void ft_freepids(void)
 	}
 }
 
-
-
-static void ft_exitaux(t_cmd *comands,t_bash *bash_boss, char *str)
+static void	help_exit(t_bash *bash_boss, int len)
 {
-	int i;
-	int len;
-	
+	ft_free_cmd_structure(bash_boss->commands);
+	ft_freepids();
+	if (len > 2)
+		exit_msg("exit: too many arguments");
+	exit(EXIT_SUCCESS);
+}
+
+static void	ft_exitaux(t_cmd *comands, t_bash *bash_boss, char *str)
+{
+	int	i;
+	int	len;
+
 	i = 0;
 	len = len_darray(comands->args);
 	if (len == 2)
@@ -64,34 +70,28 @@ static void ft_exitaux(t_cmd *comands,t_bash *bash_boss, char *str)
 				free(str);
 				exit_msg("exit: numeric argument required\n");
 			}
-				
 			i++;
 		}
 		ft_numberforexit(str);
 	}
 	else
 	{
-		ft_free_cmd_structure(bash_boss->commands);
-		ft_freepids();
-		if(len > 2)
-			exit_msg("exit: too many arguments");
-	
-		exit(EXIT_SUCCESS);
+		help_exit(bash_boss, len);
 	}
-		
 }
+
 void	ft_exit(t_cmd *comands)
 {
 	char	*str;
 	int		int_len;
 	t_bash	*bash_boss;
-	
+
 	str = NULL;
 	int_len = 0;
-	if(ft_strncmp(comands->args[0],"exit",4) == 0)
+	if (ft_strncmp(comands->args[0], "exit", 4) == 0)
 		ft_putstr_fd(ANSI_COLOR_GREEN "exit, see you 😉\n" ANSI_COLOR_RESET, 2);
 	ft_freepids();
 	bash_boss = (get_file_num()->bash);
 	ft_free_exit_status(bash_boss->line, bash_boss->cpyenv, bash_boss->env);
-	ft_exitaux(comands,bash_boss,str);
+	ft_exitaux(comands, bash_boss, str);
 }

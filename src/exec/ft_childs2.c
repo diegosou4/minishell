@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_childs2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/03 13:43:09 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/10 11:58:49 by marvin           ###   ########.fr       */
+/*   Created: 2024/04/16 16:03:22 by diegmore          #+#    #+#             */
+/*   Updated: 2024/04/16 16:03:55 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,5 @@ void	start_execution(t_bash *bash_boss)
 		ptr->executable = 1;
 		ptr = ptr->next;
 	}
-
 	ft_magane_executor(bash_boss);
 }
