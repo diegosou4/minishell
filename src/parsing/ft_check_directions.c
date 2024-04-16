@@ -28,7 +28,7 @@
 
 static void	ft_print_syntax_error(void)
 {
-	ft_putstr_fd("dir 🚫 in-bash: syntax error near unexpected token `\n",2);
+	ft_putstr_fd("dir 🚫 in-bash: syntax error near unexpected token `\n", 2);
 }
 
 static int	ft_has_valid_redir_flag(t_word_desc *word)
@@ -68,7 +68,8 @@ int	ft_check_valid_redir(t_word_list *word_list)
 		word_list = word_list->next;
 	}
 	if (word_list->word->word[i] == '<' || word_list->word->word[i] == '>')
-		return (error_syntax("-direction🚫 on-bash: syntax error near unexpected token `\n",0));
+		return (error_syntax
+			("-direction🚫 on-bash: syntax error near unexpected token `\n", 0));
 	return (1);
 }
 
@@ -84,12 +85,12 @@ int	ft_check_redir_pipes(char **line)
 		if ((ft_strcmp(line[i], "<<") == 0 || ft_strcmp(line[i], ">>") == 0)
 			&& ft_strcmp(line[i + 1], "|") == 0)
 		{
-			return (error_syntax("parse error near `|' 🚫. \n",0));
+			return (error_syntax("parse error near `|' 🚫. \n", 0));
 		}
 		else if ((ft_strcmp(line[i], ">") == 0 || ft_strcmp(line[i], "<") == 0)
 			&& ft_strcmp(line[i + 1], "|") == 0)
 		{
-			return (error_syntax("parse error near `|' 🚫.\n",0));
+			return (error_syntax("parse error near `|' 🚫.\n", 0));
 		}
 	}
 	return (1);
