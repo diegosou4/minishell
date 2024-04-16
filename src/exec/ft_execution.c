@@ -16,3 +16,10 @@ void	ft_env_null(void)
 {
 	ft_putstr_fd("Error env no set\n", 2);
 }
+
+t_file_struct	*get_file_num(void)
+{
+	static t_file_struct	instance;
+
+	return (&instance);
+}
