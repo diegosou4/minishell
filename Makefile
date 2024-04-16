@@ -30,7 +30,7 @@ PARSE = ft_special.c ft_parse_manager.c ft_utils.c\
       ft_check_struct_manager.c ft_check_directions.c ft_utils_structure.c \
       ft_structs_creation.c ft_free_global_strucure.c ft_free_utils.c\
       ft_signal_utilities.c ft_struct_manager_utils.c ft_parseredir_util.c \
-      ft_path_utils.c
+      ft_path_utils.c ft_check_manager_utils.c
 
 EXEC = ft_execution.c ft_builtings.c\
       ft_route.c ft_close.c ft_path.c\

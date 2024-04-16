@@ -383,6 +383,12 @@ int							execute_builtings(t_cmd **cmd, t_env **cpy,
 
 //_____________________VAR EXP _______________________________
 char						*ft_path_handler(t_env *env, char *variable);
+void						ft_check_variable_quotes_expansion(char *dest);
+void						ft_check_variable_expansion(char *src, char *dest, t_env *env);
+void						ft_variable_help(t_number *num, char *src, t_env *env);
+void						ft_num_init(t_number *num);
+char						*ft_create_token(char *token_line);
+int							ft_check_variable_helper(char **dest, char **src, t_number *num);
 
 //--Create the array of structures.
 t_word_list					*tokenize_and_print(char *token);
@@ -429,6 +435,10 @@ int							ft_lstsize_(t_word_list *lst);
 t_word_list					*ft_lstlast_(t_word_list *lst);
 int							ft_check_token_size(char *token_line);
 char						*ft_duplineenv(t_env *env, char *variable);
+int							ft_special_pipe_case(char *line);
+int							ft_whitespace_1(char *line);
+int							ft_check_pipes(char *line);
+int							ft_check_directions(char **line);
 //______________SHLVL_____________________________________________________//
 void						ft_shlvl(char **env);
 char						**newenv_child(t_env *env);
