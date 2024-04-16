@@ -37,6 +37,4 @@ void	ft_bash_boss_init(t_bash *bash, char **env)
 	bash->pipeout = 0;
 	bash->exit_status = 0;
 	bash->line = NULL;
-
-	
 }
