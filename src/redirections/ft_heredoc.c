@@ -32,12 +32,8 @@ static char *myexpander(t_env *ptr, char *line,char *delimiter)
 			ptr = ptr->next;
 			i--;
 		}
-		if(ptr->value != NULL)
-		{
-			new = ft_strdup(ptr->value);
-			return(new);
-		}else
-			return(NULL);
+		new = ft_strdup(ptr->value);
+		return(new);
 	}
 	return(NULL);
 }
