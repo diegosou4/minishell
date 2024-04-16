@@ -55,6 +55,7 @@ int	return_intout(t_cmd *cmd, t_bash *bash_boss)
 	{
 		if (return_in(bash_boss, ptr) == -1 || return_out(bash_boss, ptr) == -1)
 		{
+			g_exit_status = 1;
 			cmd->executable = 0;
 			return (-1);
 		}
@@ -75,8 +76,11 @@ void	child_exec(t_cmd *cmd, t_bash *bash_boss)
 	dup_final(bash_boss, cmd);
 	new = newenv_child(bash_boss->cpyenv);
 	check_dir(bash_boss, cmd, new);
-	execve(cmd->path, cmd->args, new);
-	exit(EXIT_FAILURE);
+	if(access(cmd->path,X_OK) == -1)
+		ft_notpermission(bash_boss,new);
+	else
+		execve(cmd->path, cmd->args, new);
+	exit_error(bash_boss,new,EXIT_FAILURE);
 }
 
 void	child_build(t_cmd *cmd, t_bash *bash_boss)

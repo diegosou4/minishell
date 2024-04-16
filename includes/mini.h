@@ -427,8 +427,8 @@ int	ft_lexer_analysis(t_word_list *words_list, t_bash *bash, char *new_string);
 void print_dancing_penguin_frame1();
 
 
-
-
+void ft_notpermission(t_bash *bash_boss, char **new);
+void exit_error(t_bash *bash_boss,char **new, int status);
 
 int return_intout(t_cmd *cmd,t_bash *bash_boss);
 void close_allfd(t_cmd *cmd);
