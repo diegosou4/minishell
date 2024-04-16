@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 12:27:13 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/16 10:58:37 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/04/16 15:56:42 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	pipes_executor(t_cmd *ptrcmd, t_bash *bash_boss)
 
 	i = 0;
 	ptr = ptrcmd;
-	alloc_mypids(bash_boss);	
+	alloc_mypids(bash_boss);
 	while (ptrcmd != NULL)
 	{
 		set_pipes(ptrcmd);

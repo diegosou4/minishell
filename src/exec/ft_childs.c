@@ -76,11 +76,11 @@ void	child_exec(t_cmd *cmd, t_bash *bash_boss)
 	dup_final(bash_boss, cmd);
 	new = newenv_child(bash_boss->cpyenv);
 	check_dir(bash_boss, cmd, new);
-	if(access(cmd->path,X_OK) == -1)
-		ft_notpermission(bash_boss,new);
+	if (access(cmd->path, X_OK) == -1)
+		ft_notpermission(bash_boss, new);
 	else
 		execve(cmd->path, cmd->args, new);
-	exit_error(bash_boss,new,EXIT_FAILURE);
+	exit_error(bash_boss, new, EXIT_FAILURE);
 }
 
 void	child_build(t_cmd *cmd, t_bash *bash_boss)
