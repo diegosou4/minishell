@@ -67,6 +67,8 @@ void	swap_value(t_env **env)
 	pen = NULL;
 	if (*env == NULL || (*env)->next == NULL)
 		return ;
+	if(len_env((*env)) <= 2)
+		return;
 	ptr = *env;
 	while (ptr->next != NULL)
 	{
