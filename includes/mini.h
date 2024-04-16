@@ -189,6 +189,8 @@ typedef struct s_bash
 	
 } t_bash;
 
+
+int error_syntax(char *str, int value);
 void *ft_parse_manager(char **env);
 
 // Parsing utils.

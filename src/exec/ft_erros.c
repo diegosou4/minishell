@@ -38,3 +38,9 @@ void	check_dir(t_bash *bash_boss, t_cmd *cmd, char **new)
 		}
 	}
 }
+
+int error_syntax(char *str, int value)
+{
+	ft_putstr_fd(str,STDERR_FILENO);
+	return(value);
+}
