@@ -27,49 +27,6 @@ static char	*ft_create_token(char *token_line)
 	return (token);
 }
 
-
-static int	ft_index(t_env *env, char *this)
-{
-	int		index;
-	t_env	*ptr;
-
-	index = 0;
-	ptr = env;
-	if (env == NULL)
-		return (-1);
-	if (ft_strlen(this) == 0)
-		return (-1);
-	while (ptr != NULL)
-	{
-		if ((ft_strncmp(ptr->key, this, ft_strlen(this)) == 0) 
-			&& (ft_strlen(ptr->key) == ft_strlen(this) + 1))
-		{
-			return (index);
-		}
-		ptr = ptr->next;
-		index++;
-	}
-	return (-1);
-}
-
-char	*ft_path_handler(t_env *env, char *variable)
-{
-	int		index;
-	char	*holder;
-
-	if (env == NULL)
-		return (NULL);
-	index = ft_index(env, variable);
-	if (index == -1)
-		return (NULL);
-	while (index--)
-	{
-		env = env->next;
-	}
-	holder = env->value;
-	return (holder);
-}
-
 void	ft_check_variable_quotes_expansion(char *dest)
 {
 	int	i;
@@ -84,7 +41,7 @@ void	ft_check_variable_quotes_expansion(char *dest)
 	}
 }
 
-static void ft_variable_help(t_number *num, char *src, t_env *env)
+static void	ft_variable_help(t_number *num, char *src, t_env *env)
 {
 	num->token = ft_create_token(src);
 	if (!ft_strcmp(num->token, "?")) 
@@ -96,6 +53,7 @@ static void ft_variable_help(t_number *num, char *src, t_env *env)
 	else
 		num->path = (ft_path_handler(env, num->token)); 
 }
+
 static void ft_num_init(t_number *num)
 {
 	num->path = NULL;
