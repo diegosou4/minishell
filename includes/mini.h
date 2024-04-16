@@ -189,6 +189,8 @@ typedef struct s_bash
 	
 } t_bash;
 
+
+int error_syntax(char *str, int value);
 void *ft_parse_manager(char **env);
 
 // Parsing utils.
@@ -290,11 +292,6 @@ t_word_list	*ft_lstlast_(t_word_list *lst);
 void ft_quotes_remove(t_word_list *word_list);
 
 
-//___________________________________________________Test Execution____________________________________
-
-
-void check_path(t_cmd **commands, char **env);
-int check_path2(t_cmd **commands, char **env);
 
 //_____________________________________________________ENV ______________________________________________________
 void ft_env_null();
@@ -313,12 +310,14 @@ void dup_final(t_bash *bash_boss,t_cmd *cmd);
 void check_dir(t_bash *bash_boss,t_cmd *cmd,char **new);
 int	return_in(t_bash *bash_boss,t_redir *ptr);
 int	return_out(t_bash *bash_boss,t_redir *ptr);
-void	error_path(char *str);
-void pipes_prev(t_cmd *ptrcmd);
+int	error_path(char *str);
 void close_error(t_bash *bash_boss);
+void	care_myprev(t_cmd *ptrcmd);
+void	only_redir(t_cmd *current, t_bash *bash_boss);
 void redir_inchild(t_bash *bash_boss);
 void start_execution(t_bash *bash_boss);
 void ft_magane_executor(t_bash *bash_boss);
+void	child_exec(t_cmd *cmd, t_bash *bash_boss);
 void child_build(t_cmd *cmd, t_bash *bash_boss);
 int simple_bexecutor(t_cmd *ptrcmd,t_bash *bash_boss,int check);
 void pipes_executor(t_cmd *ptrcmd,t_bash *bash_boss);
@@ -334,7 +333,6 @@ void free_pids(t_bash *bash_boss);
 int open_out(char *path);
 int open_in(char *path);
 int open_append(char *path);
-int open_fd(t_redir **redirect);
 void close_pipes(t_cmd *commands);
 void printf_error_fd(char *strerror,char *file);
 void init_dup(t_bash *bash_boss);
@@ -372,8 +370,7 @@ void export_msg(char *arr);
 int print_pwd(t_cmd *comands);
 //_______________________________________________FT_UNSET____________________________________________//
 int ft_unset(t_env **env,t_cmd *commands);
-int error_unset(char *key);
-int unset_env(t_env **env,char *str);
+int unset_env(t_env **env,char *str,int i);
 //________________________________________________EXIT_______________________________________________//
 void	ft_exit(t_cmd *comands);
 //____________________________________________EXECUTEBUILTINGS_______________________________________//

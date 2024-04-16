@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 13:07:06 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/04/15 14:32:58 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/16 11:19:09 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,10 +105,7 @@ static int	ft_check_pipes(char *line)
 		if (flag == 0 && (line[i] == '|') && (line[i + 1] == '\0' || line[i + 1] == '|' || line[i + 1] == ' '))
 		{
 			if (line[i + 1] == '\0')
-			{
-				printf("syntax error near `|' (no args) 🚰🙊\n");
-				return (0);
-			}
+				return (error_syntax("syntax error near `|' (no args) 🚰🙊\n",0));
 			else if (line[i + 1] == ' ' && !ft_whitespace_1(&line[i + 1]))
 				return (0);
 		}
@@ -125,15 +122,9 @@ int	ft_check_directions(char **line)
 	while (line[++i])
 		;
 	if (ft_strcmp(line[i - 1], "<<") == 0 || ft_strcmp(line[i - 1], ">>") == 0)
-	{
-		printf("-🚫 bash: syntax error near unexpected token `newline'\n");
-		return (0);
-	}
+		return (error_syntax("-🚫 bash: syntax error near unexpected token `newline'\n",0));
 	else if (ft_strcmp(line[i - 1], "<") == 0 || ft_strcmp(line[i - 1], ">") == 0)
-	{
-		printf("-🚫 bash: syntax error near unexpected token `newline'\n");
-		return (0);
-	}
+		return (error_syntax("-🚫 bash: syntax error near unexpected token `newline'\n",0));
 	return (1);
 }
 /*
@@ -160,9 +151,8 @@ int	ft_check_input(char *line, t_bash *bash)
 	if (ft_charcmp(split_line[0][0],124) == 1)
 	{
 		ft_free_double_pointers(split_line);
-		printf("syntax error near `|' (no args) 🚰🙊\n");
 		bash->exit_status = 127;
-		return (0);
+		return (error_syntax("syntax error near `|' (no args) 🚰🙊\n",0));
 	}
 	if (!ft_check_pipes(line))
 	{

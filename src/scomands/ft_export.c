@@ -20,8 +20,7 @@ void	print_exp(char *key, char *value, int token)
 	{
 		printf("declare -x ");
 		str = ft_substr(key, 0, (ft_strlen(key) - 1));
-		printf("%s", str);
-		printf("\n");
+		printf("%s\n", str);
 		free(str);
 		return ;
 	}
@@ -47,7 +46,10 @@ int	ft_exp(t_env *env)
 	while (ptr != NULL)
 	{
 		if (ptr->token == 1)
+		{
 			print_exp(ptr->key, ptr->value, ptr->token);
+		}
+			
 		ptr = ptr->next;
 	}
 	ptr = env;
@@ -139,7 +141,7 @@ int export_without(char *str,t_env **env)
 {
 	int	prohibited;
 	int	i;
-
+	char *newstr;
 	i = 0;
 	prohibited = 0;
 	while (str[i] != '\0')
@@ -153,7 +155,10 @@ int export_without(char *str,t_env **env)
 		export_msg(str);
 		return (EXIT_FAILURE);
 	}
-	return(export_env(env,str));
+	newstr = ft_strjoin(str,"=");
+	i = export_env(env,newstr);
+	free(newstr);
+	return(i);
 }
 
 int	ft_export(t_env **env, t_cmd *commands)

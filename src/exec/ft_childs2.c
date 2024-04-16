@@ -14,12 +14,12 @@
 
 void	care_redirect(t_cmd **cmd, t_bash **bash_boss)
 {
-	return_intout((*cmd),(*bash_boss));
+	return_intout((*cmd), (*bash_boss));
 	if ((*cmd)->executable == 0)
 	{
-		if((*cmd)->pipes[0] != -1)
+		if ((*cmd)->pipes[0] != -1)
 			close((*cmd)->pipes[0]);
-		if((*cmd)->pipes[1] != -1)
+		if ((*cmd)->pipes[1] != -1)
 			close((*cmd)->pipes[1]);
 		close_error((*bash_boss));
 		free_here((*bash_boss));
@@ -32,23 +32,23 @@ void	care_expand(t_cmd **cmd, t_bash **bash_boss)
 {
 	if (expand_path_cpy(cmd, (*bash_boss)->cpyenv) == 1)
 	{
-		care_inchild((*cmd),(*bash_boss));
+		care_inchild((*cmd), (*bash_boss));
 		fail_expander((*bash_boss), (*cmd));
 	}
 }
 
 void	dup_final(t_bash *bash_boss, t_cmd *cmd)
 {
-	if(cmd->args[0] == NULL)
+	if (cmd->args[0] == NULL)
 	{
 		close_error(bash_boss);
 		free_pids(bash_boss);
 		free_here(bash_boss);
 		exit(EXIT_SUCCESS);
-	}	
+	}
 	if (bash_boss->fdin != -1)
 	{
-		dup2(bash_boss->fdin , STDIN_FILENO);
+		dup2(bash_boss->fdin, STDIN_FILENO);
 		close(bash_boss->fdin);
 	}
 	if (bash_boss->fdout != -1)
@@ -61,9 +61,8 @@ void	dup_final(t_bash *bash_boss, t_cmd *cmd)
 void	start_execution(t_bash *bash_boss)
 {
 	t_cmd	*ptr;
+
 	ptr = bash_boss->commands;
-
-
 	manage_heredoc(&bash_boss);
 	if (get_file_num()->exit_code == 127)
 		return ;
@@ -73,6 +72,6 @@ void	start_execution(t_bash *bash_boss)
 	{
 		ptr->executable = 1;
 		ptr = ptr->next;
-	}	
+	}
 	ft_magane_executor(bash_boss);
 }

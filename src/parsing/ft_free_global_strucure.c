@@ -109,9 +109,7 @@ void	ft_free_cmd_structure(t_cmd *cmd_structure)
 			ft_free_double_pointers(cmd_structure->args);
 		if(cmd_structure->redir != NULL)
 		{
-			
 			ft_free_redir_list(cmd_structure->redir);
-			
 			cmd_structure->redir = NULL;
 		}
 		if(cmd_structure != NULL)

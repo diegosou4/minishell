@@ -67,7 +67,7 @@ char	**ft_arrcpy(char **str)
 	int	len;
 	char	**str_copy;
 	if (!str || !str[0])
-		return NULL;
+		return (ft_calloc(1,sizeof(char *)));
 	while (str[i])
 		i++;
 	str_copy = (char **)ft_calloc((i + 1) , sizeof(char *));
