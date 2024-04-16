@@ -24,7 +24,6 @@ void	reset_fd(t_bash *bash_boss, int i)
 		dup2(bash_boss->out, 1);
 		close(bash_boss->out);
 	}
-		
 	if (i == 4)
 	{
 		dup2(bash_boss->in, STDIN_FILENO);
@@ -34,9 +33,9 @@ void	reset_fd(t_bash *bash_boss, int i)
 
 void	dup_fd(t_bash *bash_boss)
 {
-	if(bash_boss->fdin != -1)
+	if (bash_boss->fdin != -1)
 		bash_boss->in = dup(STDIN_FILENO);
-	if(bash_boss->fdout != -1)
+	if (bash_boss->fdout != -1)
 		bash_boss->out = dup(STDOUT_FILENO);
 }
 

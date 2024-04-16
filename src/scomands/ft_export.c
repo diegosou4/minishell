@@ -20,9 +20,7 @@ void	print_exp(char *key, char *value, int token)
 	{
 		printf("declare -x ");
 		str = ft_substr(key, 0, (ft_strlen(key) - 1));
-		printf("%s", str);
-		// printf("%s=\"\"", str);
-		printf("\n");
+		printf("%s\n", str);
 		free(str);
 		return ;
 	}

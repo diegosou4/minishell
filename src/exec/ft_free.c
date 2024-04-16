@@ -36,4 +36,3 @@ void	free_redir(t_redir *redir)
 		ptr = ptr->next;
 	}
 }
-

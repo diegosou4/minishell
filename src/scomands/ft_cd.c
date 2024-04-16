@@ -12,7 +12,7 @@
 
 #include "../../includes/mini.h"
 
-static void	erro_cd(char *str, char *erro)
+static int	erro_cd(char *str, char *erro)
 {
 	ft_putstr_fd("Error: ", 2);
 	ft_putstr_fd(str, 2);
@@ -20,6 +20,7 @@ static void	erro_cd(char *str, char *erro)
 	ft_putstr_fd(erro, 2);
 	ft_putstr_fd("\n", 2);
 	free(str);
+	return(g_exit_status = EXIT_FAILURE);
 }
 int	case_cd(char *diretory, t_env **env)
 {
@@ -70,5 +71,5 @@ int	ft_cd(t_cmd *comands, t_env **env)
 	}
 	erro = strerror(errno);
 	erro_cd(str, erro);
-	return (g_exit_status = EXIT_FAILURE);
+	return (EXIT_FAILURE);
 }

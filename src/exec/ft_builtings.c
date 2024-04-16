@@ -14,7 +14,7 @@
 
 int	check_builtings(t_cmd *commands)
 {
-	int len;
+	int	len;
 
 	len = ft_strlen(commands->args[0]);
 	if (commands->args[0] == NULL)
@@ -33,7 +33,6 @@ int	check_builtings(t_cmd *commands)
 		return (6);
 	else if (ft_strncmp("exit", commands->args[0], len) == 0)
 		return (7);
-	
 	return (0);
 }
 

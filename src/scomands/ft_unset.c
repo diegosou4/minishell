@@ -80,8 +80,7 @@ int	unset_env(t_env **env, char *str, int i)
 static int	parse_env(t_env **env, char *str)
 {
 	char	c;
-
-
+	
 	c = '=';
 	if (ft_boolstrchr(str, c) == 1)
 	{

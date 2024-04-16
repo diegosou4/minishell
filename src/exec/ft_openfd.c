@@ -6,7 +6,7 @@
 /*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:17:43 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/03 18:47:49 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/04/16 10:56:21 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,44 +51,21 @@ int	open_append(char *path)
 	return (fd);
 }
 
-int	open_fd(t_redir **redirect)
+void	close_allfd(t_cmd *cmd)
 {
-	t_redir	*ptrredir;
-
-	ptrredir = (*redirect);
-	while (ptrredir != NULL)
-	{
-		if (ptrredir->token == redir_out)
-			ptrredir->fd = open_out(ptrredir->path);
-		else if (ptrredir->token == redir_in)
-			ptrredir->fd = open_in(ptrredir->path);
-		else if (ptrredir->token == append_out)
-			ptrredir->fd = open_append(ptrredir->path);
-		if (ptrredir->fd < 0 && ptrredir->token != here_doc)
-			return (0);
-		ptrredir = ptrredir->next;
-	}
-	return (1);
-}
-
-
-void close_allfd(t_cmd *cmd)
-{
-	t_cmd *ptrcmd;
-	t_redir *ptr;
+	t_cmd	*ptrcmd;
+	t_redir	*ptr;
 
 	ptrcmd = cmd;
-
-	while(ptrcmd != NULL)
+	while (ptrcmd != NULL)
 	{
 		ptr = ptrcmd->redir;
-		while(ptr != NULL)
+		while (ptr != NULL)
 		{
-			if(ptr->fd > 0)
+			if (ptr->fd > 0)
 				close(ptr->fd);
-		ptr = ptr->next;
+			ptr = ptr->next;
 		}
 		ptrcmd = ptrcmd->next;
 	}
-
 }
