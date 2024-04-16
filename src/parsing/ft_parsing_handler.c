@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:44:08 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/04/09 20:39:41 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/15 13:54:14 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,12 @@ static int	ft_check_close_q(const char *ptr)
 	if (*ptr == '\'')
 	{
 		if (!ft_strchr((const char *)(ptr + 1), '\''))
-		{
-			printf("Error Unclosing quotes \' 🔓\n");
-			return (0);
-		}
+			return (error_syntax("Error Unclosing quotes \' 🔓\n",0));
 	}
 	else if (*ptr == '\"')
 	{
 		if (!ft_strchr((const char *)(ptr + 1), '\"'))
-		{
-			printf("Error Unclosing quotes \" 🔓\n");
-			return (0);
-		}
+			return (error_syntax("Error Unclosing quotes \" 🔓\n",0));
 	}
 	return (1);
 }
@@ -84,14 +78,12 @@ static void ft_free_null(char **ptr, char **line2, t_bash *bash, int num)
 	{
 		free(*ptr);
 		free(*line2);
-		bash->exit_status = 2;
-		printf("🚫 in-bash: syntax error near unexpected token `\n");
+		bash->exit_status = error_syntax("🚫 in-bash: syntax error near unexpected token `\n",2);
 	}
 	else
 	{
 		free(line2);
-		bash->exit_status = 2;
-		printf("🚫 in-bash: syntax error near unexpected token `\n");
+		bash->exit_status =  error_syntax("🚫 in-bash: syntax error near unexpected token `\n",2);
 	}
 }
 char	*ft_create_string(char *line, t_bash *bash)

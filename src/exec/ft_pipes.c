@@ -30,15 +30,8 @@ int	sizepipe(t_cmd *commands)
 void	set_pipes(t_cmd *ptrcmd)
 {
 	if (ptrcmd->next != NULL)
-		pipe(ptrcmd->pipes);
-}
-
-void	care_myprev(t_cmd *ptrcmd)
-{
-	if (ptrcmd->prev)
 	{
-		close(ptrcmd->prev->pipes[0]);
-		close(ptrcmd->prev->pipes[1]);
+		pipe(ptrcmd->pipes);
 	}
 }
 
@@ -66,15 +59,29 @@ void	redir_inchild(t_bash *bash_boss)
 		bash_boss->fdout = bash_boss->pipeout;
 	else
 	{
-		if(bash_boss->pipeout != -1)
+		if (bash_boss->pipeout != -1)
 			close(bash_boss->pipeout);
 	}
 	if (bash_boss->fdin == -1)
 		bash_boss->fdin = bash_boss->pipein;
 	else
 	{
-		if(bash_boss->pipein != -1)
+		if (bash_boss->pipein != -1)
 			close(bash_boss->pipein);
 	}
-		
+}
+
+void	end_pipes(t_cmd *cmd)
+{
+	t_cmd	*ptr;
+
+	ptr = cmd;
+	while (ptr != NULL)
+	{
+		if (ptr->pipes[0] > 0)
+			close(ptr->pipes[0]);
+		if (ptr->pipes[1] > 0)
+			close(ptr->pipes[1]);
+		ptr = ptr->next;
+	}
 }

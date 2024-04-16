@@ -17,18 +17,17 @@ void	change_pwd(t_env **env)
 	char	*newpwd;
 	char	*slash;
 	char	*change;
-	
+
 	newpwd = ft_calloc(sizeof(char), FILENAME_MAX);
 	newpwd = getcwd(newpwd, FILENAME_MAX);
 	slash = ft_strjoin(newpwd, "/");
-	change = ft_strjoin("PWD=", slash);	
-	
-	have_key(change,env,1);
-	if(newpwd != NULL)
+	change = ft_strjoin("PWD=", slash);
+	have_key(change, env, 1);
+	if (newpwd != NULL)
 		free(newpwd);
-	if(slash != NULL)
+	if (slash != NULL)
 		free(slash);
-	if(change != NULL)
+	if (change != NULL)
 		free(change);
 }
 
@@ -41,8 +40,8 @@ void	change_old(t_env **env)
 	if (pwd != NULL)
 	{
 		oldpwd = ft_strjoin("OLDPWD=", pwd);
-		have_key(oldpwd,env,1);
-		if(oldpwd != NULL)
+		have_key(oldpwd, env, 1);
+		if (oldpwd != NULL)
 			free(oldpwd);
 	}
 	change_pwd(env);
@@ -54,14 +53,14 @@ void	invert_pwd(t_env **env)
 {
 	char	*pwd;
 	char	*keyold;
-	
+
 	pwd = NULL;
 	keyold = NULL;
 	pwd = get_valuepwd(env, "PWD=");
 	if (pwd != NULL)
 		keyold = ft_strjoin("OLDPWD=", pwd);
 	if (keyold != NULL)
-		have_key(keyold,env,1);
+		have_key(keyold, env, 1);
 	change_pwd(env);
 	if (pwd != NULL)
 		free(pwd);

@@ -24,11 +24,14 @@ static int	flag_compare(char *str)
 	if (str[i] == '-' && ft_strlen(str) > 1)
 		flag = 1;
 	i++;
-	while (str[i] != '\0')
+	if (ft_strlen(str) > 1)
 	{
-		if (str[i] != 'n')
-			flag = 0;
-		i++;
+		while (str[i] != '\0')
+		{
+			if (str[i] != 'n')
+				flag = 0;
+			i++;
+		}
 	}
 	return (flag);
 }

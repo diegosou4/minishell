@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:42:12 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/03/21 15:42:12 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/16 16:35:52 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ int	ft_whitespace(char *line)
 		return (0);
 	return (1);
 }
-
-//-----------------------------------Line Handler...........................
 
 static	void	free_and_null(char **ptr)
 {

@@ -12,7 +12,7 @@
 
 #include "../../includes/mini.h"
 
-void	fail_expander(t_bash *bash_boss, t_cmd *cmd)
+void	fail_expander(t_bash *bash_boss)
 {
 	if (bash_boss->fdin != -1)
 		close(bash_boss->fdin);
@@ -24,8 +24,6 @@ void	fail_expander(t_bash *bash_boss, t_cmd *cmd)
 		close(bash_boss->pipeout);
 	free_here(bash_boss);
 	free_pids(bash_boss);
-	
 	g_exit_status = 127;
-	exit(EXIT_FAILURE);
+	exit(127);
 }
-

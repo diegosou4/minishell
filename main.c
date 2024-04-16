@@ -100,12 +100,14 @@ void	ft_structure_manager(t_line *line, t_bash *bash)
 	ft_free_cmd_structure(cmd_structure);
 }
 
+
 void	*ft_parse_manager(char **env)
 {
 	t_line	line;
 	t_bash	bash_boss;
 
 	g_exit_status = 0;
+
 	ft_bash_boss_init(&bash_boss, env);
 	while (1)
 	{

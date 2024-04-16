@@ -23,7 +23,8 @@ int	ft_env(t_env *env)
 	{
 		if (ptr->token == 1 || ptr->token == 2)
 		{
-			printf("%s%s\n", ptr->key, ptr->value);
+			if (ft_strlen(ptr->value) > 0)
+				printf("%s%s\n", ptr->key, ptr->value);
 		}
 		ptr = ptr->next;
 	}

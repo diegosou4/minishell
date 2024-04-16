@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 08:55:06 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/04/09 19:50:18 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/10 20:24:18 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,16 @@ int	ft_check_token_size(char *token_line)
 	int	i;
 
 	i = 0;
-	while (token_line[i] != '\0' && ((ft_isalnum(token_line[i])
-				|| ft_isdigit(token_line[i]) || ft_isalnum(token_line[i])
-				|| token_line[i] == '_')))
+	if (token_line[i] == '?')
 		i++;
+	else if (token_line[i] == '$')
+		i++;
+	else
+	{
+		while (token_line[i] != '\0' && ((ft_isalnum(token_line[i])
+					|| ft_isdigit(token_line[i]) || ft_isalnum(token_line[i])
+					|| token_line[i] == '_')))
+			i++;
+	}
 	return (i);
 }

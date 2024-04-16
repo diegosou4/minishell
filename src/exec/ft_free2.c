@@ -12,20 +12,16 @@
 
 #include "../../includes/mini.h"
 
-void	free_cpyenv(t_env *cpyenv)
+void	exit_error(t_bash *bash_boss, char **new, int status)
 {
-	t_env	*ptr;
-	t_env	*next;
+	ft_free_double_pointers(new);
+	free_here(bash_boss);
+	free_pids(bash_boss);
+	exit(status);
+}
 
-	ptr = cpyenv;
-	while (ptr != NULL)
-	{
-		if (ptr->key != NULL)
-			free(ptr->key);
-		if (ptr->value != NULL)
-			free(ptr->value);
-		next = ptr->next;
-		free(ptr);
-		ptr = next;
-	}
+void	ft_notpermission(t_bash *bash_boss, char **new)
+{
+	ft_putstr_fd(" Permission denied\n", 2);
+	exit_error(bash_boss, new, 126);
 }

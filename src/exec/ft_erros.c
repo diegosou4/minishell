@@ -6,7 +6,7 @@
 /*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 15:25:50 by diegmore          #+#    #+#             */
-/*   Updated: 2024/03/20 15:25:53 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/04/16 15:53:46 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,29 @@ void	printf_error_fd(char *strerror, char *file)
 	ft_putstr_fd("\n", STDERR_FILENO);
 }
 
-
-void check_dir(t_bash *bash_boss,t_cmd *cmd)
+void	check_dir(t_bash *bash_boss, t_cmd *cmd, char **new)
 {
-	int checkdir;
-	checkdir = - 1;
+	int	checkdir;
+
+	checkdir = -1;
 	checkdir = chdir(cmd->path);
 	if(checkdir == 0)
 	{
-		ft_putstr_fd(cmd->path,2);
-		ft_putstr_fd(" is a directory\n",2);
-		free_pids(bash_boss);
-		free_here(bash_boss);
-		exit(EXIT_FAILURE);
+		if (ft_strlen(cmd->args[0]) > 1)
+			checkdir = chdir(cmd->path);
+		if (checkdir == 0)
+		{
+			ft_putstr_fd(" Is a directory\n", 2);
+			ft_free_double_pointers(new);
+			free_pids(bash_boss);
+			free_here(bash_boss);
+			exit(126);
+		}
 	}
+}
+
+int	error_syntax(char *str, int value)
+{
+	ft_putstr_fd(str, STDERR_FILENO);
+	return (value);
 }

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 15:30:44 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/03 18:48:31 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/04/16 15:55:59 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ void	wait_mypids(t_bash *bash_boss)
 	while (j != sizepipe(bash_boss->commands))
 	{
 		waitpid(bash_boss->pid[j], &bash_boss->exit_status, 0);
-		// if (bash_boss->exit_status == 256)
-		// 	prev_exit = bash_boss->exit_status - 129;
 		if (bash_boss->exit_status == 2)
 			prev_exit = 130;
 		else if (bash_boss->exit_status == 3)

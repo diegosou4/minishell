@@ -6,13 +6,13 @@
 /*   By: diemorei <diemorei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 16:20:27 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/04 21:52:41 by diemorei         ###   ########.fr       */
+/*   Updated: 2024/04/16 16:07:33 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/mini.h"
 
-static void	erro_cd(char *str, char *erro)
+static int	erro_cd(char *str, char *erro)
 {
 	ft_putstr_fd("Error: ", 2);
 	ft_putstr_fd(str, 2);
@@ -20,7 +20,9 @@ static void	erro_cd(char *str, char *erro)
 	ft_putstr_fd(erro, 2);
 	ft_putstr_fd("\n", 2);
 	free(str);
+	return (g_exit_status = EXIT_FAILURE);
 }
+
 int	case_cd(char *diretory, t_env **env)
 {
 	if (ft_strncmp("..", diretory, 2) == 0)
@@ -30,9 +32,10 @@ int	case_cd(char *diretory, t_env **env)
 	free(diretory);
 	return (EXIT_SUCCESS);
 }
-void have_key(char *str,t_env **cpyenv,int token)
+
+void	have_key(char *str, t_env **cpyenv, int token)
 {
-	int key;
+	int	key;
 
 	key = key_exist(cpyenv, str, token);
 	if (key == 1)
@@ -40,7 +43,6 @@ void have_key(char *str,t_env **cpyenv,int token)
 		addbackenv(str, cpyenv, token);
 		swap_value(cpyenv);
 	}
-
 }
 
 int	ft_cd(t_cmd *comands, t_env **env)
@@ -64,11 +66,8 @@ int	ft_cd(t_cmd *comands, t_env **env)
 		str = ft_strdup(comands->args[1]);
 	result = chdir(str);
 	if (result == 0)
-	{
-		case_cd(str, env);
-		return (g_exit_status = EXIT_SUCCESS);
-	}
+		return (g_exit_status = case_cd(str, env));
 	erro = strerror(errno);
 	erro_cd(str, erro);
-	return (g_exit_status = EXIT_FAILURE);
+	return (EXIT_FAILURE);
 }

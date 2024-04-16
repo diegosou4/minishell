@@ -51,6 +51,7 @@ void	handle_signal_here_doc(int signal1)
 	out = get_file_num()->out;
 	if (signal1 == SIGINT)
 	{
+		get_file_num()->heredoc = 0;
 		write(STDERR_FILENO, "\n", 1);
 		ft_free_cmd_structure(get_file_num()->bash->commands);
 		ft_free_exit_status(get_file_num()->bash->line,
@@ -64,6 +65,7 @@ void	handle_signal_here_doc(int signal1)
 		exit(127);
 	}
 }
+
 
 void	ft_signal_manager_here(void)
 {

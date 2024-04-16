@@ -3,83 +3,84 @@
 /*                                                        :::      ::::::::   */
 /*   ft_childs.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: diemorei <diemorei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 17:01:11 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/09 16:19:53 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/16 16:01:48 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/mini.h"
 
-int	return_in(t_cmd *cmd)
+int	return_in(t_bash *bash_boss, t_redir *ptr)
 {
-	t_redir	*ptr;
-	int		fd;
-
-	fd = -1;
-	ptr = cmd->redir;
-	while (ptr != NULL)
+	if (ptr->token == redir_out || ptr->token == append_out)
 	{
-		if (ptr->token == redir_in || ptr->token == open_here)
-		{
-			if (fd != -1)
-				close(fd);
-			if (ptr->token == redir_in)
-				fd = open_in(ptr->path);
-			if (ptr->token == open_here)
-				fd = ptr->fd;
-			if (fd < 0)
-			{
-				cmd->executable = 0;
-				return (fd);
-			}
-		}
-		ptr = ptr->next;
+		if (bash_boss->fdout != -1)
+			close(bash_boss->fdout);
+		if (ptr->token == redir_out)
+			bash_boss->fdout = open_out(ptr->path);
+		else
+			bash_boss->fdout = open_append(ptr->path);
+		if (bash_boss->fdout < 0)
+			return (-1);
 	}
-	return (fd);
+	return (EXIT_SUCCESS);
 }
 
-int	return_out(t_cmd *cmd)
+int	return_out(t_bash *bash_boss, t_redir *ptr)
+{
+	if (ptr->token == redir_in || ptr->token == open_here)
+	{
+		if (bash_boss->fdin != -1)
+			close(bash_boss->fdin);
+		if (ptr->token == redir_in)
+			bash_boss->fdin = open_in(ptr->path);
+		if (ptr->token == open_here)
+			bash_boss->fdin = ptr->fd;
+		if (bash_boss->fdin < 0)
+			return (-1);
+	}
+	return (EXIT_SUCCESS);
+}
+
+int	return_intout(t_cmd *cmd, t_bash *bash_boss)
 {
 	t_redir	*ptr;
-	int		fd;
 
-	fd = -1;
 	ptr = cmd->redir;
+	bash_boss->fdin = -1;
+	bash_boss->fdout = -1;
 	while (ptr != NULL)
 	{
-		if (ptr->token == redir_out || ptr->token == append_out)
+		if (return_in(bash_boss, ptr) == -1 || return_out(bash_boss, ptr) == -1)
 		{
-			if (fd != -1)
-				close(fd);
-			if (ptr->token == redir_out)
-				fd = open_out(ptr->path);
-			else
-				fd = open_append(ptr->path);
-			if (fd < 0)
-			{
-				cmd->executable = 0;
-				return (fd);
-			}
+			g_exit_status = 1;
+			cmd->executable = 0;
+			return (-1);
 		}
 		ptr = ptr->next;
 	}
-	return (fd);
+	return (1);
 }
 
 void	child_exec(t_cmd *cmd, t_bash *bash_boss)
 {
-	char **new;
-	care_redirect(&cmd, &bash_boss);
+	char	**new;
+
+	only_redir(cmd, bash_boss);
 	care_expand(&cmd, &bash_boss);
 	if (sizepipe(bash_boss->commands) != 1)
 		care_inchild(cmd, bash_boss);
 	redir_inchild(bash_boss);
+	dup_final(bash_boss, cmd);
 	new = newenv_child(bash_boss->cpyenv);
-	dup_final(bash_boss,cmd);
-	execve(cmd->path, cmd->args, new);
-		exit(EXIT_FAILURE);
+	check_dir(bash_boss, cmd, new);
+	if (access(cmd->path, X_OK) == -1)
+		ft_notpermission(bash_boss, new);
+	else
+		execve(cmd->path, cmd->args, new);
+	exit_error(bash_boss, new, EXIT_FAILURE);
 }
 
 void	child_build(t_cmd *cmd, t_bash *bash_boss)
@@ -87,41 +88,12 @@ void	child_build(t_cmd *cmd, t_bash *bash_boss)
 	int	check;
 
 	check = check_builtings(cmd);
-	care_redirect(&cmd, &bash_boss);
 	if (sizepipe(bash_boss->commands) != 1)
 		care_inchild(cmd, bash_boss);
 	redir_inchild(bash_boss);
-	dup_final(bash_boss,cmd);
+	dup_final(bash_boss, cmd);
 	execute_builtings(&cmd, &bash_boss->cpyenv, check);
 	free_here(bash_boss);
 	free_pids(bash_boss);
 	exit(EXIT_SUCCESS);
-}
-
-void	pipes_executor(t_cmd *ptrcmd, t_bash *bash_boss)
-{
-	int		i;
-	t_cmd	*ptr;
-
-	i = 0;
-	ptr = ptrcmd;
-	alloc_mypids(bash_boss);
-	while (ptrcmd != NULL)
-	{
-		set_pipes(ptrcmd);
-		bash_boss->pid[i] = fork();
-		if (bash_boss->pid[i] == 0)
-		{
-			if (check_builtings(ptrcmd) == 0)
-				child_exec(ptrcmd, bash_boss);
-			else
-				child_build(ptrcmd, bash_boss);
-		}
-		care_myprev(ptrcmd);
-		close_myhere(ptrcmd);
-		ptrcmd = ptrcmd->next;
-		i++;
-	}
-	wait_mypids(bash_boss);
-	free_pids(bash_boss);
 }

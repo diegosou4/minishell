@@ -163,27 +163,3 @@ void	initredir(t_redir **redir, int flag, char *file)
 		addbackredir(*redir, file, flag);
 }
 
-t_redir	*haveredir(char *cmd)
-{
-	int i = 0;
-	t_redir	*new = NULL;
-	int	flag;
-	char	*file;
-	while (cmd[i] != '\0')
-	{
-		flag = checkcase(cmd[i]);
-		if (flag != 0)
-		{
-			file = findfile(cmd + i + 1);
-			initredir(&new, flag, file);
-			free(file);
-		}
-		i++;
-	}
-	printf("%s FILE IN \n", new->path);
-	if(new->next != NULL)
-	{
-		printf("%s FILE IN NEXT \n", new->next->path);
-	}
-	return (new);
-}

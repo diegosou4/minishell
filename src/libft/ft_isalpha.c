@@ -12,9 +12,16 @@
 
 #include "libft.h"
 
-int	ft_isalpha(int c)
+int	ft_isalphatwo(int c)
 {
 	if ((c >= 97 && c <= 122) || (c == 95) || (c >= 65 && c <= 90))
+		return (1);
+	return (0);
+}
+
+int	ft_isalpha(int c)
+{
+	if ((c >= 97 && c <= 122) || (c == 43) || (c >= 65 && c <= 90))
 		return (1);
 	return (0);
 }

@@ -14,21 +14,24 @@
 
 int	check_builtings(t_cmd *commands)
 {
+	int	len;
+
+	len = ft_strlen(commands->args[0]);
 	if (commands->args[0] == NULL)
 		return (0);
-	if (ft_strncmp("pwd", commands->args[0], 4) == 0)
+	else if (ft_strncmp("pwd", commands->args[0], len) == 0 && (len == 3))
 		return (1);
-	else if (ft_strncmp("cd", commands->args[0], 2) == 0)
+	else if (ft_strncmp("cd", commands->args[0], len) == 0 && (len == 2))
 		return (2);
-	else if (ft_strncmp("env", commands->args[0], 3) == 0)
+	else if (ft_strncmp("env", commands->args[0], len) == 0 && (len == 3))
 		return (3);
-	else if (ft_strncmp("export", commands->args[0], 6) == 0)
+	else if (ft_strncmp("export", commands->args[0], len) == 0 && (len == 6))
 		return (4);
-	else if (ft_strncmp("unset", commands->args[0], 5) == 0)
+	else if (ft_strncmp("unset", commands->args[0], len) == 0 && (len == 5))
 		return (5);
-	else if (ft_strncmp("echo", commands->args[0], 4) == 0)
+	else if (ft_strncmp("echo", commands->args[0], len) == 0 && (len == 4))
 		return (6);
-	else if (ft_strncmp("exit", commands->args[0], 4) == 0)
+	else if (ft_strncmp("exit", commands->args[0], len) == 0 && (len == 4))
 		return (7);
 	return (0);
 }
@@ -36,7 +39,7 @@ int	check_builtings(t_cmd *commands)
 int	execute_builtings(t_cmd **cmd, t_env **cpy, int check)
 {
 	if (check == 1)
-		return (print_pwd((*cmd)));
+		return (print_pwd());
 	else if (check == 2)
 		return (ft_cd((*cmd), cpy));
 	else if (check == 3)

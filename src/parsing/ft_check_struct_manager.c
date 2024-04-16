@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 17:33:05 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/04/09 18:37:55 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/11 09:27:40 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,29 @@ static char	*ft_create_token(char *token_line)
 }
 
 
+static int	ft_index(t_env *env, char *this)
+{
+	int		index;
+	t_env	*ptr;
+
+	index = 0;
+	ptr = env;
+	if (env == NULL)
+		return (-1);
+	if (ft_strlen(this) == 0)
+		return (-1);
+	while (ptr != NULL)
+	{
+		if ((ft_strncmp(ptr->key, this, ft_strlen(this)) == 0) 
+			&& (ft_strlen(ptr->key) == ft_strlen(this) + 1))
+		{
+			return (index);
+		}
+		ptr = ptr->next;
+		index++;
+	}
+	return (-1);
+}
 
 char	*ft_path_handler(t_env *env, char *variable)
 {
@@ -36,7 +59,7 @@ char	*ft_path_handler(t_env *env, char *variable)
 
 	if (env == NULL)
 		return (NULL);
-	index = ft_indexinenv(env, variable);
+	index = ft_index(env, variable);
 	if (index == -1)
 		return (NULL);
 	while (index--)
@@ -61,38 +84,61 @@ void	ft_check_variable_quotes_expansion(char *dest)
 	}
 }
 
+static void ft_variable_help(t_number *num, char *src, t_env *env)
+{
+	num->token = ft_create_token(src);
+	if (!ft_strcmp(num->token, "?")) 
+		num->path = num->exit_status; 
+	else if (!ft_strcmp(num->token, "$")) 
+		num->path = num->pid; 
+	else if (num->token[0] == '\0')
+		num->path = (num->dolar);
+	else
+		num->path = (ft_path_handler(env, num->token)); 
+}
+static void ft_num_init(t_number *num)
+{
+	num->path = NULL;
+	num->double_quote = 0;
+	num->in_quotes = 0;
+	num->pid = ft_itoa(getpid());
+	num->exit_status = ft_itoa(get_file_num()->bash->exit_status);
+	num->dolar = ft_strdup("$");
+}
+static void ft_num_free(t_number *num)
+{
+	free(num->pid);
+	free(num->exit_status);
+	free(num->dolar);
+}
 void	ft_check_variable_expansion(char *src, char *dest, t_env *env)
 {
-	char	*token;
-	char	*path;
-	int		in_quotes;
-	int		double_quote;
+	t_number	num;
 
-	double_quote = 0;
-	in_quotes = 0;
+	ft_num_init(&num);
 	while (*src)
 	{
 		if (*src == '\"' && ft_strchr(src, '$'))
-			double_quote = !double_quote;
-		if (*src == '\'' && !double_quote)
+			num.double_quote = !num.double_quote;
+		if (*src == '\'' && !num.double_quote)
 		{
-			in_quotes = !in_quotes;
+			num.in_quotes = !num.in_quotes;
 			*dest++ = *src++;
 			continue ;
 		}
-		if (!in_quotes && *src == '$' && (*(src + 1) != '\''
+		if (!num.in_quotes && *src == '$' && (*(src + 1) != '\''
 				&& *(src + 1) != '\"'))
 		{
-			token = ft_create_token(src + 1);
-			path = ft_path_handler(env, token);
-			while (path != NULL && *path)
-				*dest++ = *path++;
-			src += ft_strlen(token) + 1;
-			free(token);
+			ft_variable_help(&num, src + 1, env);
+			while (num.path != NULL && *num.path)
+				*dest++ = *num.path++;
+			src += ft_strlen(num.token) + 1;
+			free(num.token);
 		}
 		else
 			*dest++ = *src++;
 	}
+	ft_num_free(&num);
 	*dest = '\0';
 }
 
@@ -108,12 +154,7 @@ void	ft_extract_var(t_word_list *word_list, t_bash *bash)
 			if (word_list->next->word->tags == VARIABLE)
 				word_list->next->word->tags = WORD;
 		}
-		if (word_list->word->tags == SPECIAL_VAR)
-		{
-			free(word_list->word->word);
-			word_list->word->word = ft_itoa(bash->exit_status);
-		}
-		else if (word_list->word->tags == VARIABLE)
+		if (word_list->word->tags == VARIABLE)
 		{
 			word_cpy = ft_calloc(10000 + 1, sizeof(char));
 			dest = word_cpy;
