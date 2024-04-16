@@ -222,7 +222,6 @@ int ft_check_redir_pipes(char **line);
 
 // Fuctions for redir
 
-t_redir *haveredir(char *cmd);
 void checkpathredir(t_redir *redir, char *file, int flag);
 
 
