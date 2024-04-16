@@ -299,7 +299,7 @@ void check_heredoc(t_redir **redirect, t_cmd *cmd,t_bash *bash_boss);
 void manage_heredoc(t_bash **bash_boss);
 void check_here(t_bash *bash_boss,t_cmd *cmd);
 int	ft_heredoc(char *delimiter, t_bash *bash_boss, t_cmd *cmd);
-int ft_putforwe(char *line,int fd);
+int	ft_putforwe(char *line,char *delimiter, int fd,t_bash *bash_boss);
 void free_here(t_bash *bash_boss);
 
 //_________________________________________________ EXEC

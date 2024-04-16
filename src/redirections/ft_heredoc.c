@@ -12,14 +12,54 @@
 
 #include "../../includes/mini.h"
 
-int	ft_putforwe(char *line, int fd)
+
+static char *myexpander(t_env *ptr, char *line,char *delimiter)
+{
+	char *new;
+	int i;
+	i = 0;
+	if(ft_strncmp(line,delimiter,ft_strlen(delimiter)) == 0)
+		return(NULL);
+	if(line[0] == '$')
+	{	
+		new = ft_substr(line,1,ft_strlen(line));
+		i = ft_indexinenv(ptr,new);
+		free(new);
+		if(i <= 0)
+			return(NULL);
+		while(i != 0)
+		{
+			ptr = ptr->next;
+			i--;
+		}
+		if(ptr->value != NULL)
+		{
+			new = ft_strdup(ptr->value);
+			return(new);
+		}else
+			return(NULL);
+	}
+	return(NULL);
+}
+
+int	ft_putforwe(char *line,char *delimiter, int fd,t_bash *bash_boss)
 {
 	char *str;
 	int len;
-
 	str = ft_strdup(line);
 	len = ft_strlen(str);
-	ft_putstr_fd(str, fd);
+	char *n;
+	t_env *ptr;
+
+	ptr = bash_boss->cpyenv;
+	n = myexpander(ptr,line,delimiter);
+	if(n == NULL)
+		ft_putstr_fd(str, fd);
+	else
+	{
+		ft_putstr_fd(n,fd);
+		free(n);
+	}
 	ft_putchar_fd('\n', fd);
 	free(str);
 	return(len);
@@ -64,7 +104,7 @@ static void	child_heredoc(char *delimiter, t_bash *bash_boss, int out, t_cmd *cm
 			break;
 		}
 		else
-			count += ft_putforwe(line.line, out);
+			count += ft_putforwe(line.line,delimiter, out, bash_boss);
 		free(line.line);
 	}
 	if(line.line != NULL)

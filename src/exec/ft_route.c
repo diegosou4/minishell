@@ -59,11 +59,9 @@ void	pipes_executor(t_cmd *ptrcmd, t_bash *bash_boss)
 
 	i = 0;
 	ptr = ptrcmd;
-	alloc_mypids(bash_boss);
-				
+	alloc_mypids(bash_boss);	
 	while (ptrcmd != NULL)
 	{
-
 		set_pipes(ptrcmd);
 		bash_boss->pid[i] = fork();
 		if (bash_boss->pid[i] == 0)

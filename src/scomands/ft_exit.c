@@ -71,10 +71,11 @@ static void ft_exitaux(t_cmd *comands,t_bash *bash_boss, char *str)
 	}
 	else
 	{
-		if(len > 2)
-			exit_msg("exit: too many arguments");
 		ft_free_cmd_structure(bash_boss->commands);
 		ft_freepids();
+		if(len > 2)
+			exit_msg("exit: too many arguments");
+	
 		exit(EXIT_SUCCESS);
 	}
 		
