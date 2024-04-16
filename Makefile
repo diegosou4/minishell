@@ -1,3 +1,11 @@
+
+
+BOLD = \033[1m
+RESET = \033[0m
+BLUE = \033[34m
+RED = \033[31m
+
+
 NAME = minishell
 CFLAGS = -g -I./ -Wall -Wextra -Werror
 LDFLAGS = -lreadline
@@ -62,16 +70,19 @@ OBJ = $(addprefix $(SRCOBJ), $(SRC:./src/%.c=%.o))
 
 all: $(NAME)
 $(NAME): $(OBJ)
-	${CC} ${CFLAGS} ${LDFLAGS} main.c ${OBJ} -o $(NAME)
+	@echo "$(BOLD)$(BLUE)Minishell has been compiled successfully!$(RESET)"
+	@${CC} ${CFLAGS} ${LDFLAGS} main.c ${OBJ} -o $(NAME)
 
 $(SRCOBJ)%.o: src/%.c
 	@mkdir -p $(dir $@)
-	${CC} ${CFLAGS} -c $< -o $@
+	@${CC} ${CFLAGS} -c $< -o $@
 
-clean: 
-	rm -rf $(SRCOBJ)
+clean:
+	@echo "$(BOLD)$(RED)Cleaning objects!$(RESET)"
+	@rm -rf $(SRCOBJ)
 fclean: clean
-	rm -rf $(NAME)
+	@echo "$(BOLD)$(RED)Deleting $(NAME)!$(RESET)"
+	@rm -rf $(NAME)
 
 re: fclean all
 
