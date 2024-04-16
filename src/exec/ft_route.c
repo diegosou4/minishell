@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 12:27:13 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/16 15:56:42 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/04/16 18:17:17 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,10 @@
 
 int	simple_bexecutor(t_cmd *ptrcmd, t_bash *bash_boss, int check)
 {
-	
 	return_intout(ptrcmd, bash_boss);
 	if (ptrcmd->executable == 0)
 		return (EXIT_FAILURE);
 	init_dup(bash_boss);
-
 	execute_builtings(&ptrcmd, &bash_boss->cpyenv, check);
 	close_fds(bash_boss);
 	close_fderror(ptrcmd->redir);
@@ -30,6 +28,7 @@ void	ft_magane_executor(t_bash *bash_boss)
 {
 	t_cmd	*ptrcmd;
 	int		check;
+
 	ptrcmd = bash_boss->commands;
 	check = check_builtings(ptrcmd);
 	if (ptrcmd->next == NULL && check > 0 && check <= 7)
