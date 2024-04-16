@@ -6,7 +6,7 @@
 /*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:51:49 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/03 18:58:55 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/04/16 16:07:51 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,13 @@ int	return_error(char *str)
 	return (EXIT_FAILURE);
 }
 
-
-void exit_msg(char *str)
+void	exit_msg(char *str)
 {
-	ft_putstr_fd(str,2);
+	ft_putstr_fd(str, 2);
 	exit(EXIT_FAILURE);
 }
 
-void export_msg(char *arr)
+void	export_msg(char *arr)
 {
 	ft_putstr_fd("export: ", STDERR_FILENO);
 	ft_putstr_fd(arr, STDERR_FILENO);

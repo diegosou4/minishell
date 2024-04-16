@@ -15,9 +15,9 @@
 int	print_pwd(void)
 {
 	char	*pwd;
-	
+
 	pwd = getcwd(NULL, FILENAME_MAX);
-	if(pwd != NULL)
+	if (pwd != NULL)
 	{
 		printf("%s\n", pwd);
 		free(pwd);

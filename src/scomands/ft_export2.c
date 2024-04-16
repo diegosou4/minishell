@@ -40,14 +40,14 @@ int	key_exist(t_env **env, char *str, int token)
 	change_value(&key, &value, str);
 	while (ptr != NULL)
 	{
-		if (ft_strncmp(ptr->key, key, ft_strlen(ptr->key))  == 0)
+		if (ft_strncmp(ptr->key, key, ft_strlen(ptr->key)) == 0)
 		{
-			if(key != NULL)
+			if (key != NULL)
 				free(key);
 			if (ft_boolstrchr(str, 61) == 0 || value == NULL)
 				return (EXIT_SUCCESS);
 			change_key(&ptr, value, token);
-			if(value != NULL)
+			if (value != NULL)
 				free(value);
 			return (EXIT_SUCCESS);
 		}
@@ -67,8 +67,8 @@ void	swap_value(t_env **env)
 	pen = NULL;
 	if (*env == NULL || (*env)->next == NULL)
 		return ;
-	if(len_env((*env)) <= 2)
-		return;
+	if (len_env((*env)) <= 2)
+		return ;
 	ptr = *env;
 	while (ptr->next != NULL)
 	{
@@ -84,8 +84,8 @@ void	swap_value(t_env **env)
 int	export_env(t_env **env, char *str)
 {
 	int	token;
-	int key;
-	
+	int	key;
+
 	token = 3;
 	if (ft_boolstrchr(str, 61) == 1)
 		token = 2;

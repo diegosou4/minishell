@@ -360,6 +360,7 @@ int	key_exist(t_env **env, char *str, int token);
 void	swap_value(t_env **env);
 //________________________________________________FT_EXP_____________________________________________//
 int export_env(t_env **env,char *str);
+void	print_exp(char *key, char *value, int token);
 void have_key(char *str,t_env **cpyenv,int token);
 int ft_exp(t_env *env);
 int ft_indexinenv(t_env *env,char *this);
@@ -369,7 +370,7 @@ void export_msg(char *arr);
 int print_pwd(void);
 //_______________________________________________FT_UNSET____________________________________________//
 int ft_unset(t_env **env,t_cmd *commands);
-int unset_env(t_env **env,char *str,int i);
+int	unset_env(t_env **env, char *str, int i,int len);
 //________________________________________________EXIT_______________________________________________//
 void	ft_exit(t_cmd *comands);
 //____________________________________________EXECUTEBUILTINGS_______________________________________//
