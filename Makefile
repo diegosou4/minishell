@@ -62,16 +62,16 @@ OBJ = $(addprefix $(SRCOBJ), $(SRC:./src/%.c=%.o))
 
 all: $(NAME)
 $(NAME): $(OBJ)
-	@${CC} ${CFLAGS} ${LDFLAGS} main.c ${OBJ} -o $(NAME)
+	${CC} ${CFLAGS} ${LDFLAGS} main.c ${OBJ} -o $(NAME)
 
 $(SRCOBJ)%.o: src/%.c
 	@mkdir -p $(dir $@)
-	@${CC} ${CFLAGS} -c $< -o $@
+	${CC} ${CFLAGS} -c $< -o $@
 
 clean: 
-	@rm -rf $(SRCOBJ)
+	rm -rf $(SRCOBJ)
 fclean: clean
-	@rm -rf $(NAME)
+	rm -rf $(NAME)
 
 re: $(NAME)
 	fclean all
