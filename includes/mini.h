@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 12:40:39 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/17 11:34:13 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/04/17 11:42:16 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -460,6 +460,7 @@ void						exit_error(t_bash *bash_boss, char **new,
 
 int							return_intout(t_cmd *cmd, t_bash *bash_boss);
 void						close_allfd(t_cmd *cmd);
-int	ft_flag(char *word);
-t_word_lists	*ft_init_word_lista(char *token);
+
+int						ft_flag(char *word);
+t_word_lists					*ft_init_word_lista(char *token);
 #endif
