@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 12:40:39 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/17 11:42:16 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/04/17 11:51:54 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -430,8 +430,8 @@ int							ft_export(t_env **env, t_cmd *commands);
 //______________EXPAND_PATH_______________________________________________//
 int							expand_path(t_cmd **commands, char **env);
 int							expand_path_cpy(t_cmd **commands, t_env *cpyenv);
-char								*ft_getpath(char **env);
-char									*ft_string_handle_2(char *line,
+char						*ft_getpath(char **env);
+char						*ft_string_handle_2(char *line,
 								char *modified_line);
 //______________ft_struct_manager_utils____________________________________
 
@@ -448,7 +448,7 @@ void						ft_shlvl(char **env);
 char						**newenv_child(t_env *env);
 
 int							ft_check_words_list(t_word_list *tokens);
-int						ft_lexer_analysis(t_word_list *words_list,
+int							ft_lexer_analysis(t_word_list *words_list,
 								t_bash *bash,
 								char *new_string);
 
@@ -461,6 +461,6 @@ void						exit_error(t_bash *bash_boss, char **new,
 int							return_intout(t_cmd *cmd, t_bash *bash_boss);
 void						close_allfd(t_cmd *cmd);
 
-int						ft_flag(char *word);
-t_word_lists					*ft_init_word_lista(char *token);
+int							ft_flag(char *word);
+t_word_lists				*ft_init_word_lista(char *token);
 #endif
