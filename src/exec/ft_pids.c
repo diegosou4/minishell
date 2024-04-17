@@ -39,9 +39,9 @@ void	wait_mypids(t_bash *bash_boss)
 		else
 			prev_exit = (bash_boss->exit_status & 0xff00) >> 8;
 		error_flag = 1;
-		g_exit_status = prev_exit;
+			get_file_num()->exit_code = prev_exit;
 		j++;
 	}
 	if (!error_flag)
-		g_exit_status = 0;
+			get_file_num()->exit_code = 0;
 }

@@ -127,5 +127,5 @@ int	ft_export(t_env **env, t_cmd *commands)
 			exit = export_without(commands->args[i], env);
 		i++;
 	}
-	return (g_exit_status = exit);
+	return (	get_file_num()->exit_code = exit);
 }

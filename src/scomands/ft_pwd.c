@@ -22,5 +22,5 @@ int	print_pwd(void)
 		printf("%s\n", pwd);
 		free(pwd);
 	}
-	return (g_exit_status = EXIT_SUCCESS);
+	return (	get_file_num()->exit_code = EXIT_SUCCESS);
 }

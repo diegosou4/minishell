@@ -35,7 +35,7 @@ int	ft_unset(t_env **env, t_cmd *commands)
 	if (*env == NULL)
 		return (return_error("Error : env not set\n"));
 	if (len_darray(commands->args) == 1)
-		return (g_exit_status = EXIT_SUCCESS);
+		return (	get_file_num()->exit_code = EXIT_SUCCESS);
 	while (commands->args[i] != NULL)
 	{
 		if (ft_strncmp("_=", commands->args[i], 2) == 0)
@@ -44,5 +44,5 @@ int	ft_unset(t_env **env, t_cmd *commands)
 			exit = parse_env(env, commands->args[i]);
 		i++;
 	}
-	return (g_exit_status = exit);
+	return (	get_file_num()->exit_code = exit);
 }

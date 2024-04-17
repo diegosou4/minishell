@@ -42,5 +42,5 @@ int	execute_env(t_env *env, t_cmd *commands)
 		exit = return_error("Error two or more arguments!!\n");
 	else
 		exit = ft_env(env);
-	return (g_exit_status = exit);
+	return (	get_file_num()->exit_code = exit);
 }

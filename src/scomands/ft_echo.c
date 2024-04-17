@@ -90,5 +90,5 @@ int	ft_echo(t_cmd *cmd)
 		second_flag(cmd);
 		printf("\n");
 	}
-	return (g_exit_status = EXIT_SUCCESS);
+	return (	get_file_num()->exit_code = EXIT_SUCCESS);
 }

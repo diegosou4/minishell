@@ -28,8 +28,6 @@ linha de entrada em busca de erros.
 informações relevantes.
 */
 
-int			g_exit_status;
-
 int	ft_list_creation(t_word_list **words_list, t_bash *bash, char **tokens,
 		char *new_string)
 {
@@ -79,14 +77,14 @@ t_word_list	**ft_tokenizer_manager(char *line, t_bash *bash)
 	memmory here.
 */
 
-void	ft_structure_manager(t_line *line, t_bash *bash)
+void	ft_structure_manager(char *line, t_bash *bash)
 {
 	t_word_list	**list;
 	t_cmd		*cmd_structure;
 
 	get_file_num()->bash = bash;
-	bash->exit_status = g_exit_status;
-	list = ft_tokenizer_manager(line->line, bash);
+	bash->exit_status = 	get_file_num()->exit_code;
+	list = ft_tokenizer_manager(line, bash);
 	if (!list)
 		return ;
 	get_file_num()->list = list;
@@ -95,40 +93,38 @@ void	ft_structure_manager(t_line *line, t_bash *bash)
 	ft_free_double_word_list(list);
 	if (bash->commands)
 		start_execution(bash);
-	bash->exit_status = g_exit_status;
+	bash->exit_status = 	get_file_num()->exit_code;
 	ft_free_cmd_structure(cmd_structure);
 }
 
 void	*ft_parse_manager(char **env)
 {
-	t_line	line;
+	char	*line;
 	t_bash	bash_boss;
 
-	g_exit_status = 0;
 	ft_bash_boss_init(&bash_boss, env);
+	get_file_num()->exit_code = 0;
 	while (1)
 	{
 		ft_signal_manager();
-		ft_line_handler(&line, bash_boss.cpyenv, MAIN);
-		bash_boss.line = &line;
-		if (!line.line)
-		{
-			ft_free_exit_status(&line, bash_boss.cpyenv, bash_boss.env);
+		line = readline("@shell:$ ");
+		if (!line)
 			break ;
-		}
-		if (ft_whitespace(line.line) == 1)
-			add_history(line.line);
-		if (ft_check_input(line.line, &bash_boss))
-			ft_structure_manager(&line, &bash_boss);
-		g_exit_status = bash_boss.exit_status;
-		ft_free_line_struct(&line);
+		if (ft_whitespace(line) == 1)
+			add_history(line);
+		if (ft_check_input(line, &bash_boss))
+			ft_structure_manager(line, &bash_boss);
+		get_file_num()->exit_code = bash_boss.exit_status;
+		free(line);
 	}
 	rl_clear_history();
-	return (NULL);
+	return NULL;
 }
+
 
 int	main(int argc, char *argv[], char **env)
 {
 	if (argc == 1 && argv[0])
 		ft_parse_manager(env);
+	return (1);
 }

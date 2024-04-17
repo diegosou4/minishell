@@ -7,7 +7,7 @@ RED = \033[31m
 
 
 NAME = minishell
-CFLAGS = -g -I./ -Wall -Wextra -Werror
+CFLAGS = -g -I./ #-Wall -Wextra -Werror
 LDFLAGS = -lreadline
 CC = cc
 

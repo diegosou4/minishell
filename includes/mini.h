@@ -44,7 +44,6 @@
 # define MAIN 1
 # define HERE 2
 //_______________________Exit status _________________
-extern int					g_exit_status;
 
 typedef struct s_bash		t_bash;
 typedef struct s_word_list	t_word_list;

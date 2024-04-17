@@ -1,0 +1,11 @@
+includes
+main.c
+Makefile
+minishell
+obj
+pipestest.sh
+readline.supp
+README.md
+src
+teste.c
+user

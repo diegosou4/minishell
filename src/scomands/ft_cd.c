@@ -20,7 +20,7 @@ static int	erro_cd(char *str, char *erro)
 	ft_putstr_fd(erro, 2);
 	ft_putstr_fd("\n", 2);
 	free(str);
-	return (g_exit_status = EXIT_FAILURE);
+	return (	get_file_num()->exit_code = EXIT_FAILURE);
 }
 
 int	case_cd(char *diretory, t_env **env)
@@ -66,7 +66,7 @@ int	ft_cd(t_cmd *comands, t_env **env)
 		str = ft_strdup(comands->args[1]);
 	result = chdir(str);
 	if (result == 0)
-		return (g_exit_status = case_cd(str, env));
+		return (	get_file_num()->exit_code = case_cd(str, env));
 	erro = strerror(errno);
 	erro_cd(str, erro);
 	return (EXIT_FAILURE);

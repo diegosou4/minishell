@@ -15,7 +15,7 @@
 int	return_error(char *str)
 {
 	ft_putstr_fd(str, STDERR_FILENO);
-	g_exit_status = EXIT_FAILURE;
+		get_file_num()->exit_code = EXIT_FAILURE;
 	return (EXIT_FAILURE);
 }
 

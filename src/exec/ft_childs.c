@@ -55,7 +55,7 @@ int	return_intout(t_cmd *cmd, t_bash *bash_boss)
 	{
 		if (return_in(bash_boss, ptr) == -1 || return_out(bash_boss, ptr) == -1)
 		{
-			g_exit_status = 1;
+				get_file_num()->exit_code = 1;
 			cmd->executable = 0;
 			return (-1);
 		}

@@ -78,7 +78,7 @@ static void	badsignal_here(int count, char *delimiter)
 static void	child_heredoc(char *delimiter, t_bash *bash_boss, int out,
 		t_cmd *cmd)
 {
-	t_line	line;
+	char	*line;
 	int		count;
 
 	count = 0;
@@ -86,20 +86,20 @@ static void	child_heredoc(char *delimiter, t_bash *bash_boss, int out,
 	while (1)
 	{
 		ft_signal_manager_here();
-		ft_line_handler(&line, bash_boss->cpyenv, HERE);
-		get_file_num()->line = &line;
-		if (ft_strcmp(delimiter, line.line) == 0 || !line.line)
+		line = readline("heredoc >> ");
+		// get_file_num()->line = &line;
+		if (ft_strcmp(delimiter, line) == 0 || !line)
 		{
-			if (!line.line)
+			if (!line)
 				badsignal_here(count, delimiter);
 			break ;
 		}
 		else
-			count += ft_putforwe(line.line, delimiter, out, bash_boss);
-		free(line.line);
+			count += ft_putforwe(line, delimiter, out, bash_boss);
+		free(line);
 	}
-	if (line.line != NULL)
-		free(line.line);
+	if (line != NULL)
+		free(line);
 	free_here(bash_boss);
 	close(out);
 	exit(EXIT_SUCCESS);

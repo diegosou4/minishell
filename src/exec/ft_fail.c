@@ -24,6 +24,6 @@ void	fail_expander(t_bash *bash_boss)
 		close(bash_boss->pipeout);
 	free_here(bash_boss);
 	free_pids(bash_boss);
-	g_exit_status = 127;
+		get_file_num()->exit_code = 127;
 	exit(127);
 }
