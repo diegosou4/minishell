@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 14:13:14 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/04/17 11:12:03 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:53:45 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	handle_signal(int signal1)
 	if (signal1 == SIGINT)
 	{
 		write(STDIN_FILENO, "\n", 1);
-			get_file_num()->exit_code = 130;
+		get_file_num()->exit_code = 130;
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
@@ -57,7 +57,7 @@ void	handle_signal_here_doc(int signal1)
 		ft_free_exit_status(get_file_num()->bash->line,
 			get_file_num()->bash->cpyenv,
 			get_file_num()->bash->env);
-			get_file_num()->exit_code = 130;
+		get_file_num()->exit_code = 130;
 		if (in != -1)
 			close(in);
 		if (out != -1)

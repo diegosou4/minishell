@@ -6,7 +6,7 @@
 /*   By: diemorei <diemorei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 17:01:11 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/16 16:01:48 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:51:51 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	return_intout(t_cmd *cmd, t_bash *bash_boss)
 	{
 		if (return_in(bash_boss, ptr) == -1 || return_out(bash_boss, ptr) == -1)
 		{
-				get_file_num()->exit_code = 1;
+			get_file_num()->exit_code = 1;
 			cmd->executable = 0;
 			return (-1);
 		}

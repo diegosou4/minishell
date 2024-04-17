@@ -6,7 +6,7 @@
 /*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:51:49 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/16 16:07:51 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:56:01 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	return_error(char *str)
 {
 	ft_putstr_fd(str, STDERR_FILENO);
-		get_file_num()->exit_code = EXIT_FAILURE;
+	get_file_num()->exit_code = EXIT_FAILURE;
 	return (EXIT_FAILURE);
 }
 

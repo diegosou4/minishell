@@ -6,7 +6,7 @@
 /*   By: diemorei <diemorei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 16:01:12 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/04 22:30:46 by diemorei         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:52:12 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	error_path(char *str)
 {
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(": command not found\n", 2);
-		get_file_num()->exit_code = 127;
+	get_file_num()->exit_code = 127;
 	return (EXIT_FAILURE);
 }
 

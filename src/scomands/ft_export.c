@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 19:22:43 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/16 16:11:11 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:56:25 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,5 +127,5 @@ int	ft_export(t_env **env, t_cmd *commands)
 			exit = export_without(commands->args[i], env);
 		i++;
 	}
-	return (	get_file_num()->exit_code = exit);
+	return (get_file_num()->exit_code = exit);
 }

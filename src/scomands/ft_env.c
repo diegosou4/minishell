@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 16:22:20 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/03 19:00:08 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:55:39 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,5 @@ int	execute_env(t_env *env, t_cmd *commands)
 		exit = return_error("Error two or more arguments!!\n");
 	else
 		exit = ft_env(env);
-	return (	get_file_num()->exit_code = exit);
+	return (get_file_num()->exit_code = exit);
 }

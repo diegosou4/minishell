@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 09:42:35 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/04/17 11:23:31 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:53:11 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ t_word_list	*tokenize_and_print(char *token)
 
 	if (!token || !token[0])
 		return (NULL);
-	wls = ft_init_word_lista(token	);
+	wls = ft_init_word_lista(token);
 	while (wls->subtoken != NULL)
 	{
 		help_token(wls);

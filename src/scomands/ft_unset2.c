@@ -6,7 +6,7 @@
 /*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:11:45 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/16 16:23:47 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:57:24 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_unset(t_env **env, t_cmd *commands)
 	if (*env == NULL)
 		return (return_error("Error : env not set\n"));
 	if (len_darray(commands->args) == 1)
-		return (	get_file_num()->exit_code = EXIT_SUCCESS);
+		return (get_file_num()->exit_code = EXIT_SUCCESS);
 	while (commands->args[i] != NULL)
 	{
 		if (ft_strncmp("_=", commands->args[i], 2) == 0)
@@ -44,5 +44,5 @@ int	ft_unset(t_env **env, t_cmd *commands)
 			exit = parse_env(env, commands->args[i]);
 		i++;
 	}
-	return (	get_file_num()->exit_code = exit);
+	return (get_file_num()->exit_code = exit);
 }

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:53:34 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/08 11:10:14 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/17 16:59:02 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	ft_structure_manager(char *line, t_bash *bash)
 	t_cmd		*cmd_structure;
 
 	get_file_num()->bash = bash;
-	bash->exit_status = 	get_file_num()->exit_code;
+	bash->exit_status = get_file_num()->exit_code;
 	list = ft_tokenizer_manager(line, bash);
 	if (!list)
 		return ;
@@ -93,7 +93,7 @@ void	ft_structure_manager(char *line, t_bash *bash)
 	ft_free_double_word_list(list);
 	if (bash->commands)
 		start_execution(bash);
-	bash->exit_status = 	get_file_num()->exit_code;
+	bash->exit_status = get_file_num()->exit_code;
 	ft_free_cmd_structure(cmd_structure);
 }
 
@@ -107,7 +107,7 @@ void	*ft_parse_manager(char **env)
 	while (1)
 	{
 		ft_signal_manager();
-		line = readline("@shell:$ ");
+		line = readline("shell:$");
 		if (!line)
 			break ;
 		if (ft_whitespace(line) == 1)
@@ -118,9 +118,8 @@ void	*ft_parse_manager(char **env)
 		free(line);
 	}
 	rl_clear_history();
-	return NULL;
+	return (NULL);
 }
-
 
 int	main(int argc, char *argv[], char **env)
 {

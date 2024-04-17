@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 12:25:54 by diegmore          #+#    #+#             */
-/*   Updated: 2024/02/20 12:25:56 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:55:26 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,5 @@ int	ft_echo(t_cmd *cmd)
 		second_flag(cmd);
 		printf("\n");
 	}
-	return (	get_file_num()->exit_code = EXIT_SUCCESS);
+	return (get_file_num()->exit_code = EXIT_SUCCESS);
 }

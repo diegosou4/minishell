@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 16:43:29 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/16 16:00:23 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:54:17 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ static void	child_heredoc(char *delimiter, t_bash *bash_boss, int out,
 	{
 		ft_signal_manager_here();
 		line = readline("heredoc >> ");
-		// get_file_num()->line = &line;
 		if (ft_strcmp(delimiter, line) == 0 || !line)
 		{
 			if (!line)
