@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 12:40:39 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/17 11:26:32 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/04/17 11:34:13 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,7 +284,8 @@ t_file_struct				*get_file_num(void);
 void						ft_free_double_pointers(char **split_line);
 
 //__________________LIST_MANAGER ____________________
-void	ft_extract_var(t_word_list *word_list,t_bash *bash);
+void						ft_extract_var(t_word_list *word_list,
+								t_bash *bash);
 t_word_list					*ft_lstlast_(t_word_list *lst);
 
 //__________________QUOTES REMOVAL ___________________
@@ -403,20 +404,20 @@ void						ft_free_double_word_list(t_word_list **word_desc);
 void						ft_free_t_word_list(t_word_list *word_list);
 void						ft_free_cmd_structure(t_cmd *cmd_structure);
 void						ft_free_redir_list(t_redir *redir);
-void	ft_free_tokens_new_string(char **tokens,
+void						ft_free_tokens_new_string(char **tokens,
 								char *new_string);
 void						ft_free_line_env(t_line *line, t_env *cpyenv);
 void						ft_free_exit_status(t_line *line, t_env *cpyenv,
 								char **env);
-void	ft_free_list_tokens(t_word_list **word_list,
-							char **tokens,
-							char *new_string,
-							t_bash *bash);
-void	ft_free_wd_list_char(t_word_list **word_list,
-							char *new_string);
+void						ft_free_list_tokens(t_word_list **word_list,
+								char **tokens,
+								char *new_string,
+								t_bash *bash);
+void						ft_free_wd_list_char(t_word_list **word_list,
+								char *new_string);
 void						ft_print_list_struct(t_word_list *structure, int i);
 void						ft_print_cmd_struct(t_cmd *cmd);
-t_word_list	*ft_init_word_list(t_word_list *word_lists,
+t_word_list					*ft_init_word_list(t_word_list *word_lists,
 								char *token);
 void						ft_flags_tags_assignment(t_word_list *word_list);
 //_________________________INIT_MANAGER____________________________________
@@ -429,9 +430,9 @@ int							ft_export(t_env **env, t_cmd *commands);
 //______________EXPAND_PATH_______________________________________________//
 int							expand_path(t_cmd **commands, char **env);
 int							expand_path_cpy(t_cmd **commands, t_env *cpyenv);
-char						*ft_getpath(char **env);
-char	*ft_string_handle_2(char *line,
-							char *modified_line);
+char								*ft_getpath(char **env);
+char									*ft_string_handle_2(char *line,
+								char *modified_line);
 //______________ft_struct_manager_utils____________________________________
 
 int							ft_lstsize_(t_word_list *lst);
@@ -447,9 +448,9 @@ void						ft_shlvl(char **env);
 char						**newenv_child(t_env *env);
 
 int							ft_check_words_list(t_word_list *tokens);
-int	ft_lexer_analysis(t_word_list *words_list,
-						t_bash *bash,
-						char *new_string);
+int						ft_lexer_analysis(t_word_list *words_list,
+								t_bash *bash,
+								char *new_string);
 
 void						print_dancing_penguin_frame1(void);
 
