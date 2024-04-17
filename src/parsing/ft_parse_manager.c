@@ -68,7 +68,7 @@ t_word_list	*create_word_node(t_word_desc *word)
 	return (new_node);
 }
 
-static void	help_token(t_word_lists *wls, t_word_list *head)
+static void	help_token(t_word_lists *wls)
 {
 	if (wls->subtoken[0] != '\0')
 	{
@@ -94,10 +94,10 @@ t_word_list	*tokenize_and_print(char *token)
 
 	if (!token || !token[0])
 		return (NULL);
-	wls = ft_init_word_lista(token);
+	wls = ft_init_word_lista(token	);
 	while (wls->subtoken != NULL)
 	{
-		help_token(&wls, &head);
+		help_token(wls);
 		wls->subtoken = ft_strtok(NULL, "\2");
 	}
 	head = wls->head;

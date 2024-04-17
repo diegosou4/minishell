@@ -460,5 +460,6 @@ void						exit_error(t_bash *bash_boss, char **new,
 
 int							return_intout(t_cmd *cmd, t_bash *bash_boss);
 void						close_allfd(t_cmd *cmd);
-
+int	ft_flag(char *word);
+t_word_lists	*ft_init_word_lista(char *token);
 #endif
