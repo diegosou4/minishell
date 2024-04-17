@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_path_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: juan-pma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/16 20:22:54 by juan-pma          #+#    #+#             */
+/*   Updated: 2024/04/16 20:22:56 by juan-pma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/mini.h"
 
 static int	ft_index(t_env *env, char *this)
@@ -40,4 +52,56 @@ char	*ft_path_handler(t_env *env, char *variable)
 	}
 	holder = env->value;
 	return (holder);
+}
+
+void	ft_variable_help(t_number *num, char *src, t_env *env)
+{
+	num->token = ft_create_token(src);
+	if (!ft_strcmp(num->token, "?")) 
+		num->path = num->exit_status; 
+	else if (!ft_strcmp(num->token, "$")) 
+		num->path = num->pid; 
+	else if (num->token[0] == '\0')
+		num->path = (num->dolar);
+	else
+		num->path = (ft_path_handler(env, num->token)); 
+}
+
+int	ft_check_variable_helper(char **dest, char **src, t_number *num)
+{
+	if (**src == '\'' && !num->double_quote)
+	{
+		num->in_quotes = !num->in_quotes;
+		**dest++ = **src++;
+		return (1);
+	}
+	return (0);
+}
+
+void	ft_extract_var(t_word_list *word_list, t_bash *bash)
+{
+	char	*dest;
+	char	*word_cpy;
+
+	while (word_list)
+	{
+		if (ft_strcmp(word_list->word->word, "<<") == 0 && word_list->next)
+		{
+			if (word_list->next->word->tags == VARIABLE)
+				word_list->next->word->tags = WORD;
+		}
+		if (word_list->word->tags == VARIABLE)
+		{
+			word_cpy = ft_calloc(10000 + 1, sizeof(char));
+			dest = word_cpy;
+			ft_check_variable_expansion(word_list->word->word, dest,
+				bash->cpyenv);
+			if (ft_strchr(word_cpy, '\''))
+				ft_check_variable_quotes_expansion(dest);
+			free(word_list->word->word);
+			word_list->word->word = ft_strdup(word_cpy);
+			free(word_cpy);
+		}
+		word_list = word_list->next;
+	}
 }
