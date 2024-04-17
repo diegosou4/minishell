@@ -59,16 +59,15 @@ t_word_list	**ft_tokenizer_manager(char *line, t_bash *bash)
 	if (!new_string)
 		return (NULL);
 	tokens = ft_split(new_string, '\3');
-	words_list = (t_word_list **)ft_calloc(ft_double_strlen(tokens) + 1, sizeof(t_word_list *));
+	words_list = (t_word_list **)ft_calloc(ft_double_strlen(tokens) + 1,
+			sizeof(t_word_list *));
 	if (!tokens)
 	{
 		ft_free_list_tokens(words_list, tokens, new_string, NULL);
 		return (NULL);
 	}
 	while (tokens[++i] != NULL)
-	{
 		words_list[i] = tokenize_and_print(tokens[i]);
-	}
 	i = -1;
 	if (!ft_list_creation(words_list, bash, tokens, new_string))
 		return (NULL);
@@ -100,14 +99,12 @@ void	ft_structure_manager(t_line *line, t_bash *bash)
 	ft_free_cmd_structure(cmd_structure);
 }
 
-
 void	*ft_parse_manager(char **env)
 {
 	t_line	line;
 	t_bash	bash_boss;
 
 	g_exit_status = 0;
-
 	ft_bash_boss_init(&bash_boss, env);
 	while (1)
 	{

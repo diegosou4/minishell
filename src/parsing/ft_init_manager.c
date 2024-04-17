@@ -6,7 +6,7 @@
 /*   By: diemorei <diemorei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 14:13:49 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/04/04 22:41:22 by diemorei         ###   ########.fr       */
+/*   Updated: 2024/04/17 11:03:43 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ t_line	*ft_init_manager(t_line *line)
 void	ft_bash_boss_init(t_bash *bash, char **env)
 {
 	bash->pid = NULL;
-
 	bash->env = ft_arrcpy(env);
 	ft_shlvl(bash->env);
 	bash->cpyenv = ft_nenv(bash->env, 1);

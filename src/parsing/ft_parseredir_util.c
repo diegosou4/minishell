@@ -6,7 +6,7 @@
 /*   By: juan-pma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 19:20:51 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/04/16 19:22:00 by juan-pma         ###   ########.fr       */
+/*   Updated: 2024/04/17 11:09:00 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,25 @@ char	*ft_parse_redir(char *str)
 	return (new);
 }
 
+static int	helpclean(char *str, char c)
+{
+	int	i;
+	int	j;
+	int	len;
+
+	i = 0;
+	j = 0;
+	len = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == c)
+			j++;
+		i++;
+	}
+	len = (i - j);
+	return (len);
+}
+
 char	*cleantoken(char *str, int c)
 {
 	int		i;
@@ -65,16 +84,8 @@ char	*cleantoken(char *str, int c)
 
 	i = 0;
 	j = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == c)
-			j++;
-		i++;
-	}
-	len = (i - j);
+	len = helpclean(str, c);
 	newstr = (char *)ft_calloc(sizeof(char), len);
-	i = 0;
-	j = 0;
 	while (str[i] != '\0')
 	{
 		while (str[i] == c)

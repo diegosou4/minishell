@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 09:42:35 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/03/21 20:13:30 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/17 11:23:31 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ t_tags	ft_tags(t_word_desc *word)
 
 	word_cpy = word->word;
 	len = ft_strlen(word_cpy);
-	if (word->flags == 1 || word->flags == 2
-		|| word->flags == 3 || word->flags == 4)
+	if (word->flags == 1 || word->flags == 2 || word->flags == 3
+		|| word->flags == 4)
 	{
 		return (EXCECUTOR);
 	}
@@ -45,24 +45,6 @@ t_tags	ft_tags(t_word_desc *word)
 		return (VARIABLE);
 	else
 		return (WORD);
-}
-
-int	ft_flag(char *word)
-{
-	int	flag;
-
-	flag = 0;
-	if (ft_strcmp(word, ">>") == 0)
-		flag = append_out;
-	else if (ft_strcmp(word, "<<") == 0)
-		flag = here_doc;
-	else if (ft_strcmp(word, "<") == 0)
-		flag = redir_in;
-	else if (ft_strcmp(word, ">") == 0)
-		flag = redir_out;
-	else if (ft_strcmp(word, "<>") == 0)
-		flag = inandout;
-	return (flag);
 }
 
 t_word_desc	*ft_cte_wd_d(char *word, int flag)
@@ -85,16 +67,24 @@ t_word_list	*create_word_node(t_word_desc *word)
 	new_node->next = NULL;
 	return (new_node);
 }
-t_word_lists	*ft_init_word_lista(char *token)
-{
-	t_word_lists *word_lists;
 
-	word_lists = ft_calloc(1, sizeof(t_word_lists));
-	word_lists->current_token = NULL;
-	word_lists->node = NULL;
-	word_lists->head = NULL;
-	word_lists->subtoken = ft_strtok(token, "\2");
-	return (word_lists);
+static void	help_token(t_word_lists *wls, t_word_list *head)
+{
+	if (wls->subtoken[0] != '\0')
+	{
+		wls->word_desc = ft_cte_wd_d((wls->subtoken), ft_flag(wls->subtoken));
+		wls->node = create_word_node(wls->word_desc);
+		if (wls->head == NULL)
+		{
+			wls->head = wls->node;
+			wls->current_token = wls->node;
+		}
+		else
+		{
+			wls->current_token->next = wls->node;
+			wls->current_token = wls->node;
+		}
+	}
 }
 
 t_word_list	*tokenize_and_print(char *token)
@@ -107,25 +97,13 @@ t_word_list	*tokenize_and_print(char *token)
 	wls = ft_init_word_lista(token);
 	while (wls->subtoken != NULL)
 	{
-		if (wls->subtoken[0] != '\0')
-		{
-			wls->word_desc = ft_cte_wd_d((wls->subtoken), ft_flag(wls->subtoken));
-			wls->node = create_word_node(wls->word_desc);
-			if (wls->head == NULL)
-			{
-				wls->head = wls->node;
-				wls->current_token = wls->node;
-			}
-			else
-			{
-				wls->current_token->next = wls->node;
-				wls->current_token = wls->node;
-			}
-		}
+		help_token(&wls, &head);
 		wls->subtoken = ft_strtok(NULL, "\2");
 	}
 	head = wls->head;
-	free(wls->subtoken);
-	free(wls);
+	if (wls->subtoken != NULL)
+		free(wls->subtoken);
+	if (wls != NULL)
+		free(wls);
 	return (head);
 }

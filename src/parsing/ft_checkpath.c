@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 12:26:07 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/16 16:27:57 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/04/17 10:49:06 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ char	*checkpath(char **path, char *command)
 	}
 	return (NULL);
 }
-
 
 char	*ft_duplineenv(t_env *env, char *variable)
 {

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 14:13:14 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/03/26 16:16:58 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/17 11:12:03 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	handle_signal_here_doc(int signal1)
 		exit(127);
 	}
 }
-
 
 void	ft_signal_manager_here(void)
 {

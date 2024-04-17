@@ -15,6 +15,7 @@
 void	ft_free_double_pointers(char **split_line)
 {
 	int	i;
+
 	i = -1;
 	if (split_line == NULL)
 		return ;
@@ -40,9 +41,9 @@ void	ft_free_env_list(t_env *env)
 	{
 		temp = current;
 		current = current->next;
-		if(temp->key != NULL)
+		if (temp->key != NULL)
 			free(temp->key);
-		if(temp->value != NULL)
+		if (temp->value != NULL)
 			free(temp->value);
 		free(temp);
 	}
@@ -54,13 +55,8 @@ void	ft_free_line_struct(t_line *line)
 		free(line->line_text);
 	if (line->color_line)
 		free(line->color_line);
-	// if(line->value_env)
-	// 	free(line->value_env);
-	// if(line->usr)
-	// 	free(line->usr);
 	if (line->line)
 		free(line->line);
-
 }
 
 void	ft_free_exit_status(t_line *line, t_env *cpyenv, char **env)
@@ -71,12 +67,9 @@ void	ft_free_exit_status(t_line *line, t_env *cpyenv, char **env)
 		line = NULL;
 		cpyenv = NULL;
 	}
-	//write(1, "(exit)\n", 7);
-	//printf("%i",ft_atoi(ft_itoa(g_exit_status)));
 	if (env != NULL)
 	{
 		ft_free_double_pointers(env);
 		env = NULL;
 	}
 }
-
