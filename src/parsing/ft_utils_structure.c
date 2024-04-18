@@ -52,3 +52,28 @@ static	void	free_and_null(char **ptr)
 		*ptr = NULL;
 	}
 }
+
+void	ft_line_handler(t_line *line, t_env *cpyenv, int num)
+{
+	if (num == MAIN)
+	{
+		line->color_line = NULL;
+		line->line_text = NULL;
+		if (cpyenv == NULL)
+			line->value_env = ft_strdup("non-env@user");
+		else
+			line->value_env = ft_duplineenv(cpyenv, "USER");
+		if (line->value_env == NULL)
+			line->value_env = ft_strdup("non-env@user");
+		line->line = readline("shell:$ ");
+		if (line->value_env != NULL)
+			free(line->value_env);
+		free_and_null(&line->line_text);
+	}
+	else if (num == HERE)
+	{
+		line->color_line = NULL;
+		line->line_text = NULL;
+		line->line = readline("heredoco> ");
+	}
+}
