@@ -50,13 +50,13 @@ char	*ft_string_handle_2(char *line, char *modified_line)
 			ft_handler_2_help(line, modified_line, &num);
 		else if (!num.flag_quotes && (line[num.i] == '<' || line[num.i] == '>'))
 		{
-			modified_line[num.j++] = '\2';
+			modified_line[num.j++] = '2';
 			modified_line[num.j++] = line[num.i];
 			if (line[num.i + 1] == line[num.i])
 				modified_line[num.j++] = line[++num.i];
 			if (!ft_space(line, (&num)))
 				return (NULL);
-			modified_line[num.j++] = '\2';
+			modified_line[num.j++] = '2';
 			num.i++;
 		}
 		else

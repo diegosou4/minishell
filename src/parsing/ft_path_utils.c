@@ -69,10 +69,11 @@ void	ft_variable_help(t_number *num, char *src, t_env *env)
 
 int	ft_check_variable_helper(char **dest, char **src, t_number *num)
 {
+	while (**src == '\'')
+			**dest++ = **src++;	
 	if (**src == '\'' && !num->double_quote)
-	{
+	{	
 		num->in_quotes = !num->in_quotes;
-		**dest++ = **src++;
 		return (1);
 	}
 	return (0);
@@ -82,7 +83,6 @@ void	ft_extract_var(t_word_list *word_list, t_bash *bash)
 {
 	char	*dest;
 	char	*word_cpy;
-
 	while (word_list)
 	{
 		if (ft_strcmp(word_list->word->word, "<<") == 0 && word_list->next)
