@@ -18,9 +18,9 @@ I believe the most complex builtin to implement is `export`, since it's used in 
 
 In my opinion, the execution of our project was very good. Despite some flaws, we managed to fulfill the most important aspects: commitment to the project, meeting defined deadlines, and organization. These were the key elements that allowed us to complete the project with a sense of accomplishment.
 
-## Resultado 
+## Result 
 
-![RESULTADO](https://i.imgur.com/0twltqs.png)
+![RESULT](https://i.imgur.com/0twltqs.png)
 
 ### LINKS UTEIS
 
