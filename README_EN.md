@@ -18,17 +18,18 @@ I believe the most complex builtin to implement is `export`, since it's used in 
 
 In my opinion, the execution of our project was very good. Despite some flaws, we managed to fulfill the most important aspects: commitment to the project, meeting defined deadlines, and organization. These were the key elements that allowed us to complete the project with a sense of accomplishment.
 
-## Result 
+## Result
 
 ![RESULT](https://i.imgur.com/0twltqs.png)
 
-### LINKS UTEIS
+### Useful Links
 
-https://youtu.be/yHDzFRWmLGA?si=WkXmLU5iD3UsIq9r
-https://github.com/zstenger93/minishell/blob/master/mindmap.png
+[Video Presentation](https://youtu.be/yHDzFRWmLGA?si=WkXmLU5iD3UsIq9r)
 
+[GitHub Repository - Minishell](https://github.com/zstenger93/minishell/blob/master/mindmap.png)
 
-Obrigamos a todos, desejamos uma boa sorte :)
+Thank you all, and best of luck! :)
 
-diegmore e juan-pma
+Diegmore and Juan-pma  
 42 Lisboa
+
