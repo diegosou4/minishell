@@ -6,7 +6,7 @@
 /*   By: diegmore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 19:08:07 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/16 16:08:07 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/04/20 12:28:27 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,22 @@ static void	update_key(char **newvalue, char **key, char **value)
 	free(*newvalue);
 }
 
-static int	free_andexit(char **key, char **value)
+static int	free_andexit(char **key, char **value, t_env *ptr, t_env **env)
 {
+	char	*str;
+
+	if (ptr == NULL)
+	{
+		str = ft_strjoin(*key, *value);
+		addbackenv(str, env, 2);
+		if (str != NULL)
+			free(str);
+	}
 	if (*key != NULL)
 		free((*key));
 	if (*value != NULL)
 		free((*value));
-	return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
 int	case_plus(t_env **env, char *str, int token)
@@ -94,5 +103,5 @@ int	case_plus(t_env **env, char *str, int token)
 		}
 		ptr = ptr->next;
 	}
-	return (free_andexit(&key, &value));
+	return (free_andexit(&key, &value, ptr, env));
 }

@@ -6,7 +6,7 @@
 /*   By: juan-pma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 20:22:54 by juan-pma          #+#    #+#             */
-/*   Updated: 2024/04/16 20:22:56 by juan-pma         ###   ########.fr       */
+/*   Updated: 2024/04/20 12:24:14 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ void	ft_variable_help(t_number *num, char *src, t_env *env)
 int	ft_check_variable_helper(char **dest, char **src, t_number *num)
 {
 	while (**src == '\'')
-			**dest++ = **src++;	
+		**dest++ = **src++;
 	if (**src == '\'' && !num->double_quote)
-	{	
+	{
 		num->in_quotes = !num->in_quotes;
 		return (1);
 	}
@@ -83,6 +83,7 @@ void	ft_extract_var(t_word_list *word_list, t_bash *bash)
 {
 	char	*dest;
 	char	*word_cpy;
+
 	while (word_list)
 	{
 		if (ft_strcmp(word_list->word->word, "<<") == 0 && word_list->next)

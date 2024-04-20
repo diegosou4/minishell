@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:53:34 by diegmore          #+#    #+#             */
-/*   Updated: 2024/04/17 16:59:02 by diegmore         ###   ########.fr       */
+/*   Updated: 2024/04/20 12:18:11 by diegmore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,4 +130,3 @@ int	main(int argc, char *argv[], char **env)
 	if (argc == 1 && argv[0])
 		ft_parse_manager(env);
 }
-
