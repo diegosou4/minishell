@@ -28,7 +28,7 @@ En mi opinión, la ejecución de nuestro proyecto fue muy buena. A pesar de algu
 
 [Presentación en Video](https://youtu.be/yHDzFRWmLGA?si=WkXmLU5iD3UsIq9r)
 
-[Repositorio en GitHub - Minishell](https://github.com/zstenger93/minishell/blob/master/mindmap.png)
+[Mind map- Minishell](https://github.com/zstenger93/minishell/blob/master/mindmap.png)
 
 ¡Gracias a todos, y mucha suerte! :)
 
